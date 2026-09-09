@@ -52,7 +52,7 @@ const SERVICES = [
   {
     icon: Sparkles,
     title: "AI Integration for Your Business",
-    body: "Using AI tools to actually run parts of your business more efficiently — the same kind of automation work built this site.",
+    body: "Custom AI tools built for how your business actually runs — customer support chatbots, automated reports, internal workflow automation. This entire site was built the same way, using AI coding tools.",
   },
   {
     icon: Wrench,
@@ -73,7 +73,7 @@ function Feature() {
           doesn't hit a flat, empty section */}
       <div
         className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
-        style={{ background: "rgba(234,88,12,0.06)", filter: "blur(100px)" }}
+        style={{ background: "rgba(15,23,42,0.05)", filter: "blur(100px)" }}
       />
       <div
         className="absolute bottom-0 -left-20 w-72 h-72 rounded-full pointer-events-none"

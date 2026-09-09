@@ -5,7 +5,7 @@ import Image from "next/image";
 
 /* Self-contained, inline styles — same approach as the hero, so the
    navbar renders identically regardless of which page's Tailwind
-   context it sits in. */
+   context it sits in. Monochrome palette — matches the logo. */
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap');
 
@@ -23,13 +23,13 @@ const STYLES = `
 
   .ru-nav-pill {
     width: 100%;
-    max-width: 56rem;
+    max-width: 60rem;
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(251,146,60,0.25);
+    border: 1px solid rgba(15,23,42,0.08);
     border-radius: 9999px;
-    box-shadow: 0 8px 32px rgba(234,88,12,0.07);
+    box-shadow: 0 8px 32px rgba(15,23,42,0.07);
     padding: 8px 20px;
     display: flex;
     align-items: center;
@@ -53,12 +53,12 @@ const STYLES = `
     color: #0f172a;
     white-space: nowrap;
   }
-  .ru-logo-text span { color: #ea580c; }
+  .ru-logo-text span { color: #475569; }
 
   .ru-nav-links {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.75rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -70,7 +70,7 @@ const STYLES = `
     text-decoration: none;
     transition: color 200ms, transform 200ms;
   }
-  .ru-nav-link:hover { color: #ea580c; transform: scale(1.08); }
+  .ru-nav-link:hover { color: #0f172a; transform: scale(1.08); }
 
   .ru-nav-cta {
     display: inline-flex;
@@ -86,7 +86,7 @@ const STYLES = `
     box-shadow: 0 4px 14px rgba(15,23,42,0.15);
     white-space: nowrap;
   }
-  .ru-nav-cta:hover { background: #ea580c; transform: scale(1.05); box-shadow: 0 6px 18px rgba(234,88,12,0.3); }
+  .ru-nav-cta:hover { background: #334155; transform: scale(1.05); box-shadow: 0 6px 18px rgba(15,23,42,0.25); }
 
   .ru-hamburger {
     display: none;
@@ -123,22 +123,22 @@ const STYLES = `
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.75rem;
     opacity: 0;
     pointer-events: none;
     transition: opacity 200ms;
   }
   .ru-mobile-overlay.open { opacity: 1; pointer-events: auto; }
   .ru-mobile-link {
-    font-size: 1.75rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #0f172a;
     text-decoration: none;
     transition: color 200ms;
   }
-  .ru-mobile-link:hover { color: #ea580c; }
+  .ru-mobile-link:hover { color: #475569; }
   .ru-mobile-cta {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     padding: 12px 32px;
     font-size: 1.125rem;
     font-weight: 700;
@@ -148,7 +148,7 @@ const STYLES = `
     text-decoration: none;
     transition: background 200ms;
   }
-  .ru-mobile-cta:hover { background: #ea580c; }
+  .ru-mobile-cta:hover { background: #334155; }
 
   @media (max-width: 767px) {
     .ru-nav-links,
@@ -161,8 +161,13 @@ const NAV_LINKS = [
   { label: "How We Work", href: "/how-we-work" },
   { label: "Pricing", href: "/pricing" },
   { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
+
+// "Talk to Us" opens an email directly — a genuinely different, faster
+// action than "Contact", which goes to the full form page.
+const TALK_TO_US_HREF = "mailto:rushil@ruvisibility.com?subject=Let's%20talk";
 
 function RuVisibilityLogo() {
   return (
@@ -212,7 +217,7 @@ export default function SiteNavbar() {
           </nav>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <a href="/contact" className="ru-nav-cta">
+            <a href={TALK_TO_US_HREF} className="ru-nav-cta">
               Talk to Us
             </a>
             <button
@@ -245,7 +250,7 @@ export default function SiteNavbar() {
             {l.label}
           </a>
         ))}
-        <a href="/contact" className="ru-mobile-cta" onClick={() => setOpen(false)}>
+        <a href={TALK_TO_US_HREF} className="ru-mobile-cta" onClick={() => setOpen(false)}>
           Talk to Us
         </a>
       </div>

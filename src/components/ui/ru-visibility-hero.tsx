@@ -8,12 +8,10 @@ import Image from "next/image";
    Background is ALWAYS light (#F8FAFC) regardless of
    the host page's color scheme.
 
-   Content/branding reskinned for Ru Visibility (AI/SEO
-   visibility audits). Visual system (colors, canvas
-   background, glitch effect, layout) is unchanged from
-   the source component pending a separate design pass.
-   Navbar lives in ../site-navbar.tsx (site-wide chrome,
-   rendered from the root layout) — not duplicated here.
+   Monochrome palette — matches the logo (pure black
+   mark), no orange. Navbar lives in ../site-navbar.tsx
+   (site-wide chrome, rendered from the root layout) —
+   not duplicated here.
 ───────────────────────────────────────────── */
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap');
@@ -56,7 +54,7 @@ const STYLES = `
   @keyframes qhero-color-toggle {
     0%,  44%   { color: #0f172a; text-shadow: none; }
     42.1%, 44.9% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
-    45%,  94%  { color: #f97316; text-shadow: none; }
+    45%,  94%  { color: #475569; text-shadow: none; }
     92.1%, 94.9% { text-shadow: -2px 0 #a3e635, 2px 0 #ef4444; }
     95%, 100%  { color: #0f172a; text-shadow: none; }
   }
@@ -65,7 +63,7 @@ const STYLES = `
     0%,   42%  { opacity: 0; transform: translate(0); }
     42.1%      { opacity: 1; color: #00ffff; clip-path: polygon(0 0,100% 0,100% 45%,0 45%); transform: translate(-10px,-5px) skew(20deg); }
     43%        { color: #ff00ff; transform: translate(10px,5px) skew(-20deg); clip-path: polygon(0 10%,100% 0,100% 30%,0 35%); }
-    44%        { color: #f97316; transform: translate(-10px,5px); clip-path: polygon(0 40%,100% 50%,100% 80%,0 90%); }
+    44%        { color: #475569; transform: translate(-10px,5px); clip-path: polygon(0 40%,100% 50%,100% 80%,0 90%); }
     44.9%      { opacity: 1; }
     45%        { opacity: 0; }
     45.1%, 92% { opacity: 0; transform: translate(0); }
@@ -108,7 +106,7 @@ const STYLES = `
     gap: 8px;
     padding: 14px 32px;
     border-radius: 9999px;
-    background: linear-gradient(135deg, #f97316, #c2410c);
+    background: linear-gradient(135deg, #1e293b, #0f172a);
     color: #fff;
     font-weight: 700;
     font-size: 1rem;
@@ -117,11 +115,11 @@ const STYLES = `
     text-decoration: none;
     font-family: 'Space Grotesk', sans-serif;
     transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 10px 30px rgba(234,88,12,0.3);
+    box-shadow: 0 10px 30px rgba(15,23,42,0.3);
     position: relative;
     z-index: 30;
   }
-  .qhero-btn:hover { background: linear-gradient(135deg, #fb923c, #ea580c); transform: scale(1.05); box-shadow: 0 14px 40px rgba(234,88,12,0.4); }
+  .qhero-btn:hover { background: linear-gradient(135deg, #334155, #1e293b); transform: scale(1.05); box-shadow: 0 14px 40px rgba(15,23,42,0.4); }
   .qhero-btn:active { transform: scale(0.96); }
   .qhero-btn svg { transition: transform 200ms; }
   .qhero-btn:hover svg { transform: translateX(4px); }
@@ -143,7 +141,7 @@ const STYLES = `
 
 /* ─────────────────────────────────────────────
    Animated dot-grid + floating particle canvas
-   Always white background, orange on hover
+   Always white background, monochrome on hover
 ───────────────────────────────────────────── */
 function DotGridBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -165,7 +163,7 @@ function DotGridBackground() {
     const SCAN_DUR = 2500;
     const SCAN_PAUSE = 4000;
     const DEFAULT_COLOR = "rgba(148,163,184,0.4)";
-    const ACTIVE_COLOR = "#ff5500";
+    const ACTIVE_COLOR = "#1e293b";
 
     class Particle {
       x = 0; y = 0; vx = 0; vy = 0; size = 0;
@@ -185,7 +183,7 @@ function DotGridBackground() {
       draw(c: CanvasRenderingContext2D) {
         c.beginPath();
         c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        c.fillStyle = "rgba(249,115,22,0.15)";
+        c.fillStyle = "rgba(15,23,42,0.12)";
         c.fill();
       }
     }
@@ -226,7 +224,7 @@ function DotGridBackground() {
             const scale = 1 - dist / HOVER_R;
             ctx.fillStyle = ACTIVE_COLOR;
             ctx.shadowBlur = isMobile ? 0 : 15;
-            ctx.shadowColor = isMobile ? "transparent" : "rgba(255,85,0,0.4)";
+            ctx.shadowColor = isMobile ? "transparent" : "rgba(15,23,42,0.4)";
             ctx.beginPath();
             ctx.arc(x, y, BASE_R + scale * (isMobile ? 2 : 3), 0, Math.PI * 2);
             ctx.fill();
@@ -348,14 +346,14 @@ export default function RuVisibilityHero() {
           <Image
             src="/logo-mark.png"
             alt="Ru Visibility"
-            width={72}
-            height={72}
+            width={110}
+            height={110}
             priority
-            style={{ margin: "0 auto 1.5rem", display: "block" }}
+            style={{ margin: "0 auto", display: "block" }}
           />
         </div>
 
-        <div className="qhero-fade-up-delay-1" style={{ marginBottom: "2rem" }}>
+        <div className="qhero-fade-up-delay-1" style={{ marginBottom: "1.5rem" }}>
           <h1
             style={{
               display: "flex",
@@ -369,22 +367,7 @@ export default function RuVisibilityHero() {
               fontFamily: "'Space Grotesk', sans-serif",
             }}
           >
-            {/* Orange tagline */}
-            <span
-              className="qhero-tagline-pulse"
-              style={{
-                fontSize: "clamp(0.8rem, 2.2vw, 1.25rem)",
-                fontWeight: 900,
-                letterSpacing: "0.28em",
-                color: "#ea580c",
-                marginBottom: "1.5rem",
-                display: "block",
-              }}
-            >
-              WE MAKE YOUR BUSINESS VISIBLE
-            </span>
-
-            {/* Large split title */}
+            {/* Large brand wordmark — same name as the logo itself */}
             <div
               style={{
                 fontSize: "clamp(2.25rem, 11vw, 10rem)",
@@ -398,11 +381,27 @@ export default function RuVisibilityHero() {
                 overflowWrap: "break-word",
               }}
             >
-              <span style={{ color: "#0f172a", opacity: 0.9 }}>GET</span>
-              <span className="qhero-glitch" data-text="DISCOVERED">
-                DISCOVERED
+              <span style={{ color: "#0f172a", opacity: 0.9 }}>RU</span>
+              <span className="qhero-glitch" data-text="VISIBILITY">
+                VISIBILITY
               </span>
             </div>
+
+            {/* Tagline, below the wordmark */}
+            <span
+              className="qhero-tagline-pulse"
+              style={{
+                fontSize: "clamp(0.8rem, 2.2vw, 1.25rem)",
+                fontWeight: 700,
+                letterSpacing: "0.2em",
+                color: "#475569",
+                marginTop: "1.5rem",
+                display: "block",
+                textTransform: "none",
+              }}
+            >
+              We make your business visible.
+            </span>
           </h1>
         </div>
 
@@ -419,11 +418,10 @@ export default function RuVisibilityHero() {
             fontFamily: "'Space Grotesk', sans-serif",
           }}
         >
-          We make your business visible to ChatGPT, Gemini, and every other
-          place people search — then keep improving your SEO and GEO every
-          month, not just hand you a one-time report. Ongoing maintenance,
-          content, and a plain-English check-in on how your site is actually
-          performing, all included.
+          To ChatGPT, Gemini, and every other place people search — then we
+          keep improving your SEO and GEO every month, not just hand you a
+          one-time report. Ongoing maintenance, content, and a plain-English
+          check-in on how your site is actually performing, all included.
         </p>
 
         {/* CTAs */}

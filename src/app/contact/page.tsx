@@ -40,7 +40,7 @@ export default function ContactPage() {
       />
       <div
         className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: "rgba(234,88,12,0.08)", filter: "blur(120px)" }}
+        style={{ background: "rgba(15,23,42,0.06)", filter: "blur(120px)" }}
       />
 
       <div className="mx-auto w-full max-w-5xl relative">

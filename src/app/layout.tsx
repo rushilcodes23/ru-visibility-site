@@ -53,6 +53,11 @@ export const metadata: Metadata = {
     "SEO Raipur",
     "SEO Jaipur",
     "AI search visibility",
+    "AI automation for business",
+    "AI integration for business",
+    "AI website builder",
+    "business process automation",
+    "AI chatbot for business",
   ],
   openGraph: {
     title: "Ru Visibility — We Make Your Business Visible",
