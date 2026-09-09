@@ -60,7 +60,7 @@ export default function HowWeWorkPage() {
           {STEPS.map((step) => (
             <div
               key={step.title}
-              className="bg-muted rounded-md p-6 flex flex-col gap-3"
+              className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
             >
               <step.icon className="w-8 h-8 stroke-1" />
               <h3 className="text-xl tracking-tight">{step.title}</h3>

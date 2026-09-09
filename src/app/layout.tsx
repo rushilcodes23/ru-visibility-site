@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
+import { LOCATIONS } from "@/lib/locations";
 import "./globals.css";
 
 // Only confirmed facts — no address/phone/founding date, none exist yet.
+// areaServed reflects Rushil's actual real target markets (see
+// ABOUT-RUSHIL.md for the US cities, confirmed directly for India).
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -12,6 +15,14 @@ const organizationJsonLd = {
   url: "https://ruvisibility.com",
   email: "rushil@ruvisibility.com",
   logo: "https://ruvisibility.com/logo-mark.png",
+  areaServed: [
+    ...LOCATIONS.map((l) => ({
+      "@type": "City",
+      name: l.city,
+      containedInPlace: l.country,
+    })),
+    { "@type": "Country", name: "International" },
+  ],
 };
 
 const geistSans = Geist({
@@ -29,6 +40,20 @@ export const metadata: Metadata = {
   title: "Ru Visibility — We Make Your Business Visible",
   description:
     "Ongoing SEO and GEO management, content, website design, and maintenance — so ChatGPT, Gemini, and Google can all find and recommend your business.",
+  keywords: [
+    "SEO agency",
+    "GEO agency",
+    "AI visibility",
+    "generative engine optimization",
+    "SEO Dallas",
+    "SEO Atlanta",
+    "SEO Houston",
+    "SEO Miami",
+    "SEO Phoenix",
+    "SEO Raipur",
+    "SEO Jaipur",
+    "AI search visibility",
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

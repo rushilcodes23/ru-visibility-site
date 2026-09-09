@@ -7,6 +7,8 @@ import {
   Code,
   DollarSign,
   BarChart3,
+  Megaphone,
+  Sparkles,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -42,6 +44,16 @@ const SERVICES = [
     body: "Turning the traffic you already have into actual revenue — finding the drop-off and fixing it.",
   },
   {
+    icon: Megaphone,
+    title: "Digital Marketing",
+    body: "Beyond SEO and GEO — the paid and organic channels that bring people to your site in the first place.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI Integration for Your Business",
+    body: "Using AI tools to actually run parts of your business more efficiently — the same kind of automation work built this site.",
+  },
+  {
     icon: Wrench,
     title: "Regular Maintenance",
     body: "Ongoing upkeep of your site's technical health — the things that quietly break if nobody's watching.",
@@ -55,8 +67,19 @@ const SERVICES = [
 
 function Feature() {
   return (
-    <div className="w-full py-20 lg:py-40">
-      <div className="container mx-auto px-4">
+    <div className="w-full py-20 lg:py-40 relative overflow-hidden">
+      {/* Soft depth accents — same motif as the hero, so scrolling
+          doesn't hit a flat, empty section */}
+      <div
+        className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
+        style={{ background: "rgba(234,88,12,0.06)", filter: "blur(100px)" }}
+      />
+      <div
+        className="absolute bottom-0 -left-20 w-72 h-72 rounded-full pointer-events-none"
+        style={{ background: "rgba(203,213,225,0.4)", filter: "blur(100px)" }}
+      />
+
+      <div className="container mx-auto px-4 relative">
         <div className="flex flex-col gap-10">
           <div className="flex gap-4 flex-col items-start">
             <div>
@@ -78,9 +101,11 @@ function Feature() {
             {SERVICES.map((s) => (
               <div
                 key={s.title}
-                className="bg-muted rounded-md p-6 sm:aspect-square flex justify-between flex-col gap-4"
+                className="bg-muted rounded-md border border-border/50 p-6 sm:aspect-square flex justify-between flex-col gap-4 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg"
               >
-                <s.icon className="w-8 h-8 stroke-1" />
+                <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
+                  <s.icon className="w-6 h-6 stroke-1 text-primary" />
+                </div>
                 <div className="flex flex-col">
                   <h3 className="text-lg tracking-tight">{s.title}</h3>
                   <p className="text-muted-foreground text-sm">{s.body}</p>

@@ -10,6 +10,7 @@ const COMPANY_LINKS = [
 const RESOURCE_LINKS = [
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
+  { label: "Locations", href: "/locations" },
   { label: "Contact", href: "/contact" },
 ];
 

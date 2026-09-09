@@ -7,8 +7,19 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function ContactPage() {
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center p-4 pt-28">
-      <div className="mx-auto w-full max-w-5xl">
+    <main className="relative flex min-h-screen w-full items-center justify-center p-4 pt-28 overflow-hidden">
+      {/* Same soft-glow motif as the hero and feature section, so this
+          page doesn't feel like a flat, empty form */}
+      <div
+        className="absolute -top-24 -left-24 w-80 h-80 rounded-full pointer-events-none"
+        style={{ background: "rgba(203,213,225,0.4)", filter: "blur(120px)" }}
+      />
+      <div
+        className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
+        style={{ background: "rgba(234,88,12,0.08)", filter: "blur(120px)" }}
+      />
+
+      <div className="mx-auto w-full max-w-5xl relative">
         <ContactCard
           title="Talk to Us"
           description="Questions about an audit, pricing, or anything else — send us a note and we'll get back to you."

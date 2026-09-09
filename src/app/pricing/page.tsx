@@ -68,7 +68,7 @@ export default function PricingPage() {
           </p>
         </div>
 
-        <div className="bg-muted rounded-md p-8 md:p-12 mb-16 max-w-3xl">
+        <div className="bg-muted rounded-md border border-border/50 p-8 md:p-12 mb-16 max-w-3xl">
           <h2 className="text-2xl tracking-tight mb-2">Visibility Management</h2>
           <div className="flex items-baseline gap-3 mb-1">
             <span className="text-4xl md:text-5xl font-semibold tracking-tight">$899</span>
@@ -103,8 +103,13 @@ export default function PricingPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16 max-w-3xl">
           {PROJECT_SERVICES.map((s) => (
-            <div key={s.title} className="bg-muted rounded-md p-6 flex flex-col gap-3">
-              <s.icon className="w-8 h-8 stroke-1" />
+            <div
+              key={s.title}
+              className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg"
+            >
+              <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
+                <s.icon className="w-6 h-6 stroke-1 text-primary" />
+              </div>
               <h3 className="text-xl tracking-tight">{s.title}</h3>
               <p className="text-muted-foreground text-base leading-relaxed">
                 {s.body}
