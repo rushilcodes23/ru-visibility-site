@@ -157,12 +157,10 @@ const STYLES = `
   }
 `;
 
-/* Nav routes — "#" placeholders point at pages not built yet
-   (see WEBSITE-DATA.md for the planned site structure). */
 const NAV_LINKS = [
-  { label: "How We Work", href: "#" },
-  { label: "Pricing", href: "#" },
-  { label: "Blog", href: "#" },
+  { label: "How We Work", href: "/how-we-work" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 

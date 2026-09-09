@@ -26,9 +26,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ruvisibility.com"),
-  title: "Ru Visibility — AI & SEO Visibility Audits",
+  title: "Ru Visibility — We Make Your Business Visible",
   description:
-    "We check whether AI tools and Google can find and recommend your business, then help you fix what's broken.",
+    "Ongoing SEO and GEO management, content, website design, and maintenance — so ChatGPT, Gemini, and Google can all find and recommend your business.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

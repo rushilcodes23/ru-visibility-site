@@ -1,5 +1,57 @@
-import { Accessibility, Bot, Globe, Wrench } from "lucide-react";
+import {
+  Accessibility,
+  Bot,
+  Globe,
+  Wrench,
+  FileText,
+  Code,
+  DollarSign,
+  BarChart3,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+
+const SERVICES = [
+  {
+    icon: Bot,
+    title: "AI Visibility (GEO)",
+    body: "Ongoing work to get your business found and recommended by ChatGPT, Gemini, Perplexity, and Google's AI Overviews — not a one-time check.",
+  },
+  {
+    icon: Globe,
+    title: "Technical SEO",
+    body: "The crawl-level issues keeping Google from ranking you, found and fixed on an ongoing basis, not just flagged once.",
+  },
+  {
+    icon: Accessibility,
+    title: "Accessibility Audits",
+    body: "Real axe-core scans, not guesses. We only flag legal risk when it's actually measured on your site.",
+  },
+  {
+    icon: FileText,
+    title: "Blog & Content",
+    body: "Content written for your site, built around what actually moves your SEO and GEO visibility — included every month.",
+  },
+  {
+    icon: Code,
+    title: "Website Design & Build",
+    body: "Building a new site or redesigning an existing one, done right for SEO and AI visibility from the start.",
+  },
+  {
+    icon: DollarSign,
+    title: "Website Monetization",
+    body: "Turning the traffic you already have into actual revenue — finding the drop-off and fixing it.",
+  },
+  {
+    icon: Wrench,
+    title: "Regular Maintenance",
+    body: "Ongoing upkeep of your site's technical health — the things that quietly break if nobody's watching.",
+  },
+  {
+    icon: BarChart3,
+    title: "Monthly Reporting",
+    body: "A plain-English check-in on how your site is actually performing — real results, not a vanity metrics dump.",
+  },
+];
 
 function Feature() {
   return (
@@ -12,63 +64,29 @@ function Feature() {
             </div>
             <div className="flex gap-2 flex-col">
               <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-left">
-                Four checks. One plain-English report.
+                Not just an audit. Ongoing work, every month.
               </h2>
-              <p className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-muted-foreground  text-left">
-                Every audit covers the same ground — how AI sees you, how
-                Google crawls you, what puts you at legal risk, and what we
-                can fix right now.
+              <p className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-muted-foreground text-left">
+                We don't hand you a report and disappear. Every month we're
+                actively improving your SEO and GEO, writing content,
+                keeping the site maintained, and checking in with real
+                numbers on how it's actually performing.
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-muted rounded-md h-full lg:col-span-2 p-6 aspect-square lg:aspect-auto flex justify-between flex-col">
-              <Bot className="w-8 h-8 stroke-1" />
-              <div className="flex flex-col">
-                <h3 className="text-xl tracking-tight">AI Visibility Audit</h3>
-                <p className="text-muted-foreground max-w-xs text-base">
-                  We check whether ChatGPT, Perplexity, Gemini, and Google’s
-                  AI Overviews can find your business — and whether they’d
-                  actually recommend it.
-                </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {SERVICES.map((s) => (
+              <div
+                key={s.title}
+                className="bg-muted rounded-md p-6 sm:aspect-square flex justify-between flex-col gap-4"
+              >
+                <s.icon className="w-8 h-8 stroke-1" />
+                <div className="flex flex-col">
+                  <h3 className="text-lg tracking-tight">{s.title}</h3>
+                  <p className="text-muted-foreground text-sm">{s.body}</p>
+                </div>
               </div>
-            </div>
-            <div className="bg-muted rounded-md  aspect-square p-6 flex justify-between flex-col">
-              <Globe className="w-8 h-8 stroke-1" />
-              <div className="flex flex-col">
-                <h3 className="text-xl tracking-tight">Technical SEO Audit</h3>
-                <p className="text-muted-foreground max-w-xs text-base">
-                  Missing H1s, broken canonicals, thin meta descriptions,
-                  sitemap gaps — the crawl issues keeping Google from ranking
-                  you.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-muted rounded-md aspect-square p-6 flex justify-between flex-col">
-              <Accessibility className="w-8 h-8 stroke-1" />
-              <div className="flex flex-col">
-                <h3 className="text-xl tracking-tight">
-                  Accessibility Risk Audit
-                </h3>
-                <p className="text-muted-foreground max-w-xs text-base">
-                  Real axe-core scans, not guesses. We only flag legal risk
-                  when it’s actually measured on your site.
-                </p>
-              </div>
-            </div>
-            <div className="bg-muted rounded-md h-full lg:col-span-2 p-6 aspect-square lg:aspect-auto flex justify-between flex-col">
-              <Wrench className="w-8 h-8 stroke-1" />
-              <div className="flex flex-col">
-                <h3 className="text-xl tracking-tight">
-                  A Report You Can Actually Read
-                </h3>
-                <p className="text-muted-foreground max-w-xs text-base">
-                  One plain-English PDF, no dev jargon. We fix what’s safely
-                  automatable and hand you a clear checklist for the rest.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

@@ -115,6 +115,20 @@ const STYLES = `
   .qhero-btn:active { transform: scale(0.96); }
   .qhero-btn svg { transition: transform 200ms; }
   .qhero-btn:hover svg { transform: translateX(4px); }
+
+  /* Secondary hero CTA — outline, doesn't compete with the primary button */
+  .qhero-btn-outline {
+    background: transparent;
+    color: #0f172a;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: none;
+  }
+  .qhero-btn-outline:hover {
+    background: rgba(15,23,42,0.04);
+    color: #0f172a;
+    transform: scale(1.05);
+    box-shadow: none;
+  }
 `;
 
 /* ─────────────────────────────────────────────
@@ -346,7 +360,7 @@ export default function RuVisibilityHero() {
                 display: "block",
               }}
             >
-              AI &amp; SEO VISIBILITY AUDITS
+              WE MAKE YOUR BUSINESS VISIBLE
             </span>
 
             {/* Large split title */}
@@ -377,24 +391,31 @@ export default function RuVisibilityHero() {
             fontSize: "clamp(0.9rem, 1.8vw, 1.1rem)",
             fontWeight: 400,
             color: "#64748b",
-            maxWidth: "38rem",
+            maxWidth: "42rem",
             lineHeight: 1.7,
             margin: "0 0 3rem",
             fontFamily: "'Space Grotesk', sans-serif",
           }}
         >
-          We check whether ChatGPT, Google, and other AI tools can actually find
-          and recommend your business — then send you a plain-English report on
-          what&apos;s broken and fix what we can.
+          We make your business visible to ChatGPT, Gemini, and every other
+          place people search — then keep improving your SEO and GEO every
+          month, not just hand you a one-time report. Ongoing maintenance,
+          content, and a plain-English check-in on how your site is actually
+          performing, all included.
         </p>
 
-        {/* CTA */}
-        <a href="/contact" className="qhero-btn">
-          <span>Get Your Visibility Audit</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
-          </svg>
-        </a>
+        {/* CTAs */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+          <a href="/contact" className="qhero-btn">
+            <span>Get Your Visibility Audit</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+            </svg>
+          </a>
+          <a href="/why-it-matters" className="qhero-btn qhero-btn-outline">
+            <span>Why SEO &amp; GEO Matter</span>
+          </a>
+        </div>
       </main>
     </div>
   );
