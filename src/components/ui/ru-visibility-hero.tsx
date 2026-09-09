@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 
 /* ─────────────────────────────────────────────
    All styles inlined — no Tailwind, no CSS file
@@ -84,6 +85,15 @@ const STYLES = `
     95%        { opacity: 0; }
   }
 
+  /* Hero content entrance */
+  @keyframes qhero-fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .qhero-fade-up { animation: qhero-fade-up 800ms ease-out both; }
+  .qhero-fade-up-delay-1 { animation: qhero-fade-up 800ms 150ms ease-out both; }
+  .qhero-fade-up-delay-2 { animation: qhero-fade-up 800ms 300ms ease-out both; }
+
   /* Tagline pulse */
   @keyframes qhero-pulse {
     0%, 100% { opacity: 1; }
@@ -98,7 +108,7 @@ const STYLES = `
     gap: 8px;
     padding: 14px 32px;
     border-radius: 9999px;
-    background: #ea580c;
+    background: linear-gradient(135deg, #f97316, #c2410c);
     color: #fff;
     font-weight: 700;
     font-size: 1rem;
@@ -107,11 +117,11 @@ const STYLES = `
     text-decoration: none;
     font-family: 'Space Grotesk', sans-serif;
     transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 10px 30px rgba(234,88,12,0.25);
+    box-shadow: 0 10px 30px rgba(234,88,12,0.3);
     position: relative;
     z-index: 30;
   }
-  .qhero-btn:hover { background: #c2410c; transform: scale(1.05); box-shadow: 0 14px 36px rgba(234,88,12,0.35); }
+  .qhero-btn:hover { background: linear-gradient(135deg, #fb923c, #ea580c); transform: scale(1.05); box-shadow: 0 14px 40px rgba(234,88,12,0.4); }
   .qhero-btn:active { transform: scale(0.96); }
   .qhero-btn svg { transition: transform 200ms; }
   .qhero-btn:hover svg { transform: translateX(4px); }
@@ -334,7 +344,18 @@ export default function RuVisibilityHero() {
           margin: "0 auto",
         }}
       >
-        <div style={{ marginBottom: "2rem" }}>
+        <div className="qhero-fade-up" style={{ marginBottom: "1.5rem" }}>
+          <Image
+            src="/logo-mark.png"
+            alt="Ru Visibility"
+            width={72}
+            height={72}
+            priority
+            style={{ margin: "0 auto 1.5rem", display: "block" }}
+          />
+        </div>
+
+        <div className="qhero-fade-up-delay-1" style={{ marginBottom: "2rem" }}>
           <h1
             style={{
               display: "flex",
@@ -377,9 +398,9 @@ export default function RuVisibilityHero() {
                 overflowWrap: "break-word",
               }}
             >
-              <span style={{ color: "#0f172a", opacity: 0.9 }}>GROW YOUR</span>
-              <span className="qhero-glitch" data-text="VISIBILITY">
-                VISIBILITY
+              <span style={{ color: "#0f172a", opacity: 0.9 }}>GET</span>
+              <span className="qhero-glitch" data-text="DISCOVERED">
+                DISCOVERED
               </span>
             </div>
           </h1>
@@ -387,6 +408,7 @@ export default function RuVisibilityHero() {
 
         {/* Subtitle */}
         <p
+          className="qhero-fade-up-delay-2"
           style={{
             fontSize: "clamp(0.9rem, 1.8vw, 1.1rem)",
             fontWeight: 400,
@@ -405,7 +427,7 @@ export default function RuVisibilityHero() {
         </p>
 
         {/* CTAs */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+        <div className="qhero-fade-up-delay-2" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
           <a href="/contact" className="qhero-btn">
             <span>Get Your Visibility Audit</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

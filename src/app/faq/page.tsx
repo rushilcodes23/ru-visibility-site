@@ -1,5 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 
+export const metadata = {
+  title: "FAQ — SEO, GEO & AI Visibility Questions | Ru Visibility",
+  description:
+    "Honest answers about SEO and GEO management: do we guarantee results, how is this different from a regular SEO agency, and what do you actually get.",
+};
+
 const FAQS = [
   {
     q: "Do you guarantee results?",

@@ -1,13 +1,37 @@
 import { ContactCard } from "@/components/ui/contact-card";
-import { MailIcon } from "lucide-react";
+import { MailIcon, Send, UserCheck, MessageSquareReply } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+const WHAT_HAPPENS = [
+  {
+    icon: Send,
+    title: "You submit",
+    body: "This opens your own email app with the message ready to send to rushil@ruvisibility.com — nothing is sent automatically, and nothing leaves your device until you hit send yourself.",
+  },
+  {
+    icon: UserCheck,
+    title: "Rushil reads it",
+    body: "Personally — not a support queue, not a bot. There's no auto-responder loop to sit through.",
+  },
+  {
+    icon: MessageSquareReply,
+    title: "You get a real reply",
+    body: "A direct answer to what you actually asked, not a templated pitch.",
+  },
+];
+
+export const metadata = {
+  title: "Talk to Us — Get Your Visibility Audit | Ru Visibility",
+  description:
+    "Questions about SEO, GEO, pricing, or your visibility audit? Reach out directly — real answers, no sales bot.",
+};
+
 export default function ContactPage() {
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center p-4 pt-28 overflow-hidden">
+    <main className="relative flex flex-col items-center w-full pt-28 pb-20 px-4 overflow-hidden">
       {/* Same soft-glow motif as the hero and feature section, so this
           page doesn't feel like a flat, empty form */}
       <div
@@ -61,6 +85,20 @@ export default function ContactPage() {
             </Button>
           </form>
         </ContactCard>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">
+          {WHAT_HAPPENS.map((step) => (
+            <div key={step.title} className="flex flex-col gap-2">
+              <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">
+                <step.icon className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="font-medium text-sm">{step.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {step.body}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );

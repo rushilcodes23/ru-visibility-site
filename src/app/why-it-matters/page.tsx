@@ -2,6 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, Bot, Accessibility, TrendingDown } from "lucide-react";
 
+export const metadata = {
+  title: "Why SEO & GEO Matter for Your Business | Ru Visibility",
+  description:
+    "The real reasons AI visibility and search rankings matter: Google still decides who's found, AI tools are a growing second front door, and accessibility risk is real.",
+};
+
 const REASONS = [
   {
     icon: Search,

@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import ScrollReveal from "@/components/scroll-reveal";
 import {
   Bot,
   Globe,
@@ -10,9 +11,29 @@ import {
   Code,
   DollarSign,
   Check,
+  ImageIcon,
 } from "lucide-react";
 
-const INCLUDED = [
+export const metadata = {
+  title: "Pricing — SEO & GEO Management Plans | Ru Visibility",
+  description:
+    "Two ongoing SEO and GEO management plans: Essentials at $699/month, and full Visibility Management at $899 first month then $1,199/month. Website design and monetization quoted separately.",
+};
+
+const ESSENTIALS_INCLUDED = [
+  {
+    icon: Bot,
+    title: "SEO + GEO Management",
+    body: "Ongoing improvement of how your business shows up on Google and on AI tools like ChatGPT and Gemini.",
+  },
+  {
+    icon: BarChart3,
+    title: "Monthly Business Check-In",
+    body: "A plain-English report on how your site is actually performing.",
+  },
+];
+
+const FULL_INCLUDED = [
   {
     icon: Bot,
     title: "Full SEO + GEO Management",
@@ -53,6 +74,16 @@ const PROJECT_SERVICES = [
   },
 ];
 
+// ponytail: image slot for a plan graphic Rushil will provide — placeholder
+// only, swap the icon block below for a real <Image> once one exists.
+function PlanImagePlaceholder() {
+  return (
+    <div className="flex items-center justify-center h-32 rounded-md border border-dashed border-border mb-6 text-muted-foreground/50">
+      <ImageIcon className="w-8 h-8" />
+    </div>
+  );
+}
+
 export default function PricingPage() {
   return (
     <div className="w-full py-20 lg:py-32">
@@ -60,35 +91,71 @@ export default function PricingPage() {
         <div className="flex flex-col gap-4 items-start mb-16 max-w-2xl">
           <Badge>Pricing</Badge>
           <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
-            One plan. Everything included.
+            Two plans. Everything is ongoing.
           </h1>
           <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
             This isn't a one-time audit you pay for and never hear from us
-            again. It's ongoing SEO and GEO work, every month.
+            again. Pick the depth of work you need — both are month-over-month.
           </p>
         </div>
 
-        <div className="bg-muted rounded-md border border-border/50 p-8 md:p-12 mb-16 max-w-3xl">
-          <h2 className="text-2xl tracking-tight mb-2">Visibility Management</h2>
-          <div className="flex items-baseline gap-3 mb-1">
-            <span className="text-4xl md:text-5xl font-semibold tracking-tight">$899</span>
-            <span className="text-muted-foreground">first month</span>
-          </div>
-          <p className="text-muted-foreground mb-8">then $1,199/month</p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
-            {INCLUDED.map((item) => (
-              <div key={item.title} className="flex gap-3">
-                <Check className="w-5 h-5 shrink-0 mt-0.5 text-primary" />
-                <div>
-                  <p className="font-medium text-sm">{item.title}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {item.body}
-                  </p>
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          <ScrollReveal>
+            <div className="bg-muted rounded-md border border-border/50 p-8 md:p-10 h-full transition-transform duration-200 hover:scale-[1.01] hover:shadow-lg">
+              <PlanImagePlaceholder />
+              <h2 className="text-2xl tracking-tight mb-2">Essentials</h2>
+              <div className="flex items-baseline gap-3 mb-8">
+                <span className="text-4xl font-semibold tracking-tight">$699</span>
+                <span className="text-muted-foreground">/month</span>
               </div>
-            ))}
-          </div>
+              <div className="flex flex-col gap-4">
+                {ESSENTIALS_INCLUDED.map((item) => (
+                  <div key={item.title} className="flex gap-3">
+                    <Check className="w-5 h-5 shrink-0 mt-0.5 text-primary" />
+                    <div>
+                      <p className="font-medium text-sm">{item.title}</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {item.body}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={100}>
+            <div
+              className="rounded-md p-8 md:p-10 h-full relative overflow-hidden transition-transform duration-200 hover:scale-[1.01] hover:shadow-xl text-white"
+              style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+            >
+              <span className="absolute top-6 right-6 text-xs font-medium tracking-wide uppercase bg-primary text-primary-foreground rounded-full px-3 py-1">
+                Most Complete
+              </span>
+              <div className="flex items-center justify-center h-32 rounded-md border border-dashed border-white/20 mb-6 text-white/30">
+                <ImageIcon className="w-8 h-8" />
+              </div>
+              <h2 className="text-2xl tracking-tight mb-2">Visibility Management</h2>
+              <div className="flex items-baseline gap-3 mb-1">
+                <span className="text-4xl font-semibold tracking-tight">$899</span>
+                <span className="text-white/60">first month</span>
+              </div>
+              <p className="text-white/60 mb-8">then $1,199/month</p>
+              <div className="flex flex-col gap-4">
+                {FULL_INCLUDED.map((item) => (
+                  <div key={item.title} className="flex gap-3">
+                    <Check className="w-5 h-5 shrink-0 mt-0.5 text-primary" />
+                    <div>
+                      <p className="font-medium text-sm">{item.title}</p>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        {item.body}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
 
         <Button size="lg" className="mb-20" render={<a href="/contact">Get Your Visibility Audit</a>} />
@@ -102,19 +169,18 @@ export default function PricingPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16 max-w-3xl">
-          {PROJECT_SERVICES.map((s) => (
-            <div
-              key={s.title}
-              className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg"
-            >
-              <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
-                <s.icon className="w-6 h-6 stroke-1 text-primary" />
+          {PROJECT_SERVICES.map((s, i) => (
+            <ScrollReveal key={s.title} delay={i * 100}>
+              <div className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg h-full">
+                <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
+                  <s.icon className="w-6 h-6 stroke-1 text-primary" />
+                </div>
+                <h3 className="text-xl tracking-tight">{s.title}</h3>
+                <p className="text-muted-foreground text-base leading-relaxed">
+                  {s.body}
+                </p>
               </div>
-              <h3 className="text-xl tracking-tight">{s.title}</h3>
-              <p className="text-muted-foreground text-base leading-relaxed">
-                {s.body}
-              </p>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 

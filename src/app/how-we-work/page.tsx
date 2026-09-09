@@ -8,6 +8,12 @@ import {
   BarChart3,
 } from "lucide-react";
 
+export const metadata = {
+  title: "How We Work — SEO & GEO Process | Ru Visibility",
+  description:
+    "The exact six-step process behind every Ru Visibility engagement: AI visibility testing, full audit, plain-English report, direct fixes, and a real before/after.",
+};
+
 const STEPS = [
   {
     icon: Search,

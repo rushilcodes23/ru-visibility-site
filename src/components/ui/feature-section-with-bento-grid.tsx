@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import ScrollReveal from "@/components/scroll-reveal";
 
 const SERVICES = [
   {
@@ -98,19 +99,18 @@ function Feature() {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {SERVICES.map((s) => (
-              <div
-                key={s.title}
-                className="bg-muted rounded-md border border-border/50 p-6 sm:aspect-square flex justify-between flex-col gap-4 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg"
-              >
-                <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
-                  <s.icon className="w-6 h-6 stroke-1 text-primary" />
+            {SERVICES.map((s, i) => (
+              <ScrollReveal key={s.title} delay={(i % 4) * 80}>
+                <div className="bg-muted rounded-md border border-border/50 p-6 sm:aspect-square flex justify-between flex-col gap-4 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg">
+                  <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
+                    <s.icon className="w-6 h-6 stroke-1 text-primary" />
+                  </div>
+                  <div className="flex flex-col">
+                    <h3 className="text-lg tracking-tight">{s.title}</h3>
+                    <p className="text-muted-foreground text-sm">{s.body}</p>
+                  </div>
                 </div>
-                <div className="flex flex-col">
-                  <h3 className="text-lg tracking-tight">{s.title}</h3>
-                  <p className="text-muted-foreground text-sm">{s.body}</p>
-                </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

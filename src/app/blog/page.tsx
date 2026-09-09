@@ -1,5 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 
+export const metadata = {
+  title: "Blog — SEO & GEO Insights | Ru Visibility",
+  description:
+    "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
+};
+
 const POSTS = [
   {
     slug: "why-geo-matters",

@@ -54,6 +54,23 @@ export const metadata: Metadata = {
     "SEO Jaipur",
     "AI search visibility",
   ],
+  openGraph: {
+    title: "Ru Visibility — We Make Your Business Visible",
+    description:
+      "Ongoing SEO and GEO management so ChatGPT, Gemini, and Google can all find and recommend your business.",
+    url: "https://ruvisibility.com",
+    siteName: "Ru Visibility",
+    images: ["/opengraph-image.png"],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ru Visibility — We Make Your Business Visible",
+    description:
+      "Ongoing SEO and GEO management so ChatGPT, Gemini, and Google can all find and recommend your business.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

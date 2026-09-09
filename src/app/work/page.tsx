@@ -2,6 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { XCircle, CheckCircle2 } from "lucide-react";
 
+export const metadata = {
+  title: "Our Work — Real Results, No Fake Case Studies | Ru Visibility",
+  description:
+    "We don't publish client results until they're real and approved to share. See what kind of AI visibility change we're working toward, honestly labeled.",
+};
+
 export default function WorkPage() {
   return (
     <div className="w-full py-20 lg:py-32">

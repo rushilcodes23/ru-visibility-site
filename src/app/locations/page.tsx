@@ -2,6 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
 import { MapPin } from "lucide-react";
 
+export const metadata = {
+  title: "Where We Work — US & India SEO/GEO Coverage | Ru Visibility",
+  description:
+    "SEO and GEO visibility management for businesses in Dallas, Atlanta, Houston, Miami, Phoenix, Raipur, Jaipur, and beyond.",
+};
+
 export default function LocationsIndexPage() {
   return (
     <div className="w-full py-20 lg:py-32">
