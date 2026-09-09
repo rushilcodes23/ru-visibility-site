@@ -158,8 +158,6 @@ function DotGridBackground() {
     const SPACING = 30;
     const BASE_R = 1.5;
     const HOVER_R = 100;
-    const SCAN_DUR = 2500;
-    const SCAN_PAUSE = 4000;
     const DEFAULT_COLOR = "rgba(148,163,184,0.4)";
     const ACTIVE_COLOR = "#1e293b";
 
@@ -234,34 +232,34 @@ function DotGridBackground() {
       if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
       particles.forEach(p => { p.update(canvas.width, canvas.height); p.draw(ctx); });
 
-      const loopTime = performance.now() % (SCAN_DUR + SCAN_PAUSE);
-      const scanY = isMobile
-        ? (Math.min(loopTime / SCAN_DUR, 1)) * (canvas.height + HOVER_R * 2) - HOVER_R
-        : 0;
+      // The hover-highlight sweep has no purpose on mobile — there's no
+      // hover on touch, so the old code ran a full-width "scan" band as a
+      // purely decorative substitute, recomputing it every single frame
+      // forever. Skip it entirely on mobile: static grid + drifting
+      // particles already give the same ambient feel for a fraction of
+      // the ongoing CPU/battery cost.
+      if (!isMobile) {
+        ctx.fillStyle = ACTIVE_COLOR;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "rgba(15,23,42,0.4)";
 
-      ctx.fillStyle = ACTIVE_COLOR;
-      ctx.shadowBlur = isMobile ? 0 : 15;
-      ctx.shadowColor = isMobile ? "transparent" : "rgba(15,23,42,0.4)";
+        // Only touch the small box around the cursor that can actually be
+        // within HOVER_R, instead of testing every dot on the canvas.
+        const minX = Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
+        const maxX = Math.min(canvas.width, mouseX + HOVER_R);
+        const minY = Math.max(0, Math.floor((mouseY - HOVER_R) / SPACING) * SPACING);
+        const maxY = Math.min(canvas.height, mouseY + HOVER_R);
 
-      // Only touch the small region that can actually be within HOVER_R —
-      // a strip near the scan line on mobile, a box around the cursor on
-      // desktop — instead of testing every dot on the canvas.
-      const minX = isMobile ? 0 : Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
-      const maxX = isMobile ? canvas.width : Math.min(canvas.width, mouseX + HOVER_R);
-      const minY = isMobile
-        ? Math.max(0, Math.floor((scanY - HOVER_R) / SPACING) * SPACING)
-        : Math.max(0, Math.floor((mouseY - HOVER_R) / SPACING) * SPACING);
-      const maxY = isMobile ? Math.min(canvas.height, scanY + HOVER_R) : Math.min(canvas.height, mouseY + HOVER_R);
-
-      for (let x = minX; x < maxX; x += SPACING) {
-        for (let y = minY; y < maxY; y += SPACING) {
-          const dx = x - mouseX, dy = y - mouseY;
-          const dist = isMobile ? Math.abs(y - scanY) : Math.sqrt(dx * dx + dy * dy);
-          if (dist < HOVER_R) {
-            const scale = 1 - dist / HOVER_R;
-            ctx.beginPath();
-            ctx.arc(x, y, BASE_R + scale * (isMobile ? 2 : 3), 0, Math.PI * 2);
-            ctx.fill();
+        for (let x = minX; x < maxX; x += SPACING) {
+          for (let y = minY; y < maxY; y += SPACING) {
+            const dx = x - mouseX, dy = y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < HOVER_R) {
+              const scale = 1 - dist / HOVER_R;
+              ctx.beginPath();
+              ctx.arc(x, y, BASE_R + scale * 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
           }
         }
       }
@@ -272,7 +270,14 @@ function DotGridBackground() {
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
     resize();
-    draw();
+
+    // Respect the OS-level "reduce motion" preference: draw the static
+    // grid once and stop, instead of animating forever regardless.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
+    } else {
+      draw();
+    }
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
