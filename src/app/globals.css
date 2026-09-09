@@ -126,6 +126,12 @@
   }
   html {
     @apply font-sans;
+    /* Site is light-only by design (no dark mode toggle exists). Without
+       this, a visitor's OS/browser dark mode can force native form
+       controls (inputs, scrollbars) into dark UA styling even though
+       every color here is defined light — same fix already applied
+       inside the hero component, now applied site-wide. */
+    color-scheme: light;
   }
 }
 
