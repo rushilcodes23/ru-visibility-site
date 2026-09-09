@@ -1,0 +1,8 @@
+NEXTJS_ENV=development
+
+# Get a key at https://resend.com (free tier is generous). Needed for the
+# contact form to actually send email — see src/lib/send-contact-email.ts.
+# For local dev, copy this file to .dev.vars and fill in the real key
+# yourself (.dev.vars is gitignored, never commit the real value).
+# For production, set it with: npx wrangler secret put RESEND_API_KEY
+RESEND_API_KEY=

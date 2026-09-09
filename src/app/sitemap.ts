@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog`, lastModified: new Date(), priority: 0.6 },
     { url: `${base}/blog/why-geo-matters`, lastModified: new Date(), priority: 0.6 },
     { url: `${base}/contact`, lastModified: new Date(), priority: 0.8 },
+    { url: `${base}/accessibility`, lastModified: new Date(), priority: 0.5 },
     { url: `${base}/locations`, lastModified: new Date(), priority: 0.7 },
     ...locationUrls,
   ];

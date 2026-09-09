@@ -1,15 +1,12 @@
 import { ContactCard } from "@/components/ui/contact-card";
-import { MailIcon, PhoneIcon, Send, UserCheck, MessageSquareReply } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { MailIcon, PhoneIcon, Lock, UserCheck, MessageSquareReply } from "lucide-react";
+import ContactForm from "@/components/contact-form";
 
 const WHAT_HAPPENS = [
   {
-    icon: Send,
-    title: "You submit",
-    body: "This opens your own email app with the message ready to send to rushil@ruvisibility.com — nothing is sent automatically, and nothing leaves your device until you hit send yourself.",
+    icon: Lock,
+    title: "Sent securely",
+    body: "Your message goes straight to us over an encrypted connection — no email client, no forwarding, nothing stored anywhere you can't see.",
   },
   {
     icon: UserCheck,
@@ -62,35 +59,7 @@ export default function ContactPage() {
             },
           ]}
         >
-          {/* ponytail: mailto fallback, no backend yet — swap for a real
-              API route / email service (with server-side validation and
-              rate limiting, see WEBSITE-DATA.md) before launch */}
-          <form
-            action="mailto:rushil@ruvisibility.com"
-            method="post"
-            encType="text/plain"
-            className="w-full space-y-4"
-          >
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="Name" type="text" required />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" name="Email" type="email" required />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="phone">Phone</Label>
-              <Input id="phone" name="Phone" type="tel" />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="message">Message</Label>
-              <Textarea id="message" name="Message" required />
-            </div>
-            <Button className="w-full" type="submit">
-              Submit
-            </Button>
-          </form>
+          <ContactForm />
         </ContactCard>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">

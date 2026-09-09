@@ -1,5 +1,6 @@
 import RuVisibilityHero from "@/components/ui/ru-visibility-hero";
 import { Feature } from "@/components/ui/feature-section-with-bento-grid";
+import { ClosingCta } from "@/components/ui/closing-cta";
 
 export const metadata = {
   title: "Ru Visibility — SEO & GEO Agency | We Make Your Business Visible",
@@ -12,6 +13,7 @@ export default function Home() {
     <>
       <RuVisibilityHero />
       <Feature />
+      <ClosingCta />
     </>
   );
 }
