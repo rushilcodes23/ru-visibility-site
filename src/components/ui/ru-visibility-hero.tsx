@@ -14,8 +14,6 @@ import Image from "next/image";
    not duplicated here.
 ───────────────────────────────────────────── */
 const STYLES = `
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap');
-
   /* Hard-reset: force light palette on the entire component */
   .qhero-shell,
   .qhero-shell *,
@@ -25,7 +23,7 @@ const STYLES = `
   }
 
   .qhero-shell {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     color-scheme: light;          /* tells the browser: render ME in light */
     background: #F8FAFC;
     color: #0f172a;
@@ -113,7 +111,7 @@ const STYLES = `
     border: none;
     cursor: pointer;
     text-decoration: none;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     transition: background 200ms, transform 200ms, box-shadow 200ms;
     box-shadow: 0 10px 30px rgba(15,23,42,0.3);
     position: relative;
@@ -189,6 +187,30 @@ function DotGridBackground() {
     }
 
     const particles: Particle[] = [];
+    // The default-colored grid never changes between mouse moves — redrawing
+    // several thousand dots every single frame forever was the main cost of
+    // this animation. Render it once per resize onto an offscreen canvas and
+    // just blit that each frame, then draw only the handful of dots near the
+    // cursor (or scan line) on top.
+    let staticGrid: HTMLCanvasElement | null = null;
+
+    const renderStaticGrid = (w: number, h: number) => {
+      const grid = document.createElement("canvas");
+      grid.width = w;
+      grid.height = h;
+      const gctx = grid.getContext("2d");
+      if (!gctx) return null;
+      gctx.fillStyle = DEFAULT_COLOR;
+      for (let x = 0; x < w; x += SPACING) {
+        for (let y = 0; y < h; y += SPACING) {
+          gctx.beginPath();
+          gctx.arc(x, y, BASE_R, 0, Math.PI * 2);
+          gctx.fill();
+        }
+      }
+      return grid;
+    };
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -196,6 +218,7 @@ function DotGridBackground() {
       particles.length = 0;
       const n = isMobile ? 12 : 40;
       for (let i = 0; i < n; i++) particles.push(new Particle(canvas.width, canvas.height));
+      staticGrid = renderStaticGrid(canvas.width, canvas.height);
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -208,6 +231,7 @@ function DotGridBackground() {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
       particles.forEach(p => { p.update(canvas.width, canvas.height); p.draw(ctx); });
 
       const loopTime = performance.now() % (SCAN_DUR + SCAN_PAUSE);
@@ -215,25 +239,28 @@ function DotGridBackground() {
         ? (Math.min(loopTime / SCAN_DUR, 1)) * (canvas.height + HOVER_R * 2) - HOVER_R
         : 0;
 
-      for (let x = 0; x < canvas.width; x += SPACING) {
-        for (let y = 0; y < canvas.height; y += SPACING) {
+      ctx.fillStyle = ACTIVE_COLOR;
+      ctx.shadowBlur = isMobile ? 0 : 15;
+      ctx.shadowColor = isMobile ? "transparent" : "rgba(15,23,42,0.4)";
+
+      // Only touch the small region that can actually be within HOVER_R —
+      // a strip near the scan line on mobile, a box around the cursor on
+      // desktop — instead of testing every dot on the canvas.
+      const minX = isMobile ? 0 : Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
+      const maxX = isMobile ? canvas.width : Math.min(canvas.width, mouseX + HOVER_R);
+      const minY = isMobile
+        ? Math.max(0, Math.floor((scanY - HOVER_R) / SPACING) * SPACING)
+        : Math.max(0, Math.floor((mouseY - HOVER_R) / SPACING) * SPACING);
+      const maxY = isMobile ? Math.min(canvas.height, scanY + HOVER_R) : Math.min(canvas.height, mouseY + HOVER_R);
+
+      for (let x = minX; x < maxX; x += SPACING) {
+        for (let y = minY; y < maxY; y += SPACING) {
           const dx = x - mouseX, dy = y - mouseY;
           const dist = isMobile ? Math.abs(y - scanY) : Math.sqrt(dx * dx + dy * dy);
-
           if (dist < HOVER_R) {
             const scale = 1 - dist / HOVER_R;
-            ctx.fillStyle = ACTIVE_COLOR;
-            ctx.shadowBlur = isMobile ? 0 : 15;
-            ctx.shadowColor = isMobile ? "transparent" : "rgba(15,23,42,0.4)";
             ctx.beginPath();
             ctx.arc(x, y, BASE_R + scale * (isMobile ? 2 : 3), 0, Math.PI * 2);
-            ctx.fill();
-          } else {
-            ctx.fillStyle = DEFAULT_COLOR;
-            ctx.shadowBlur = 0;
-            ctx.shadowColor = "transparent";
-            ctx.beginPath();
-            ctx.arc(x, y, BASE_R, 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -364,7 +391,7 @@ export default function RuVisibilityHero() {
               textTransform: "uppercase",
               userSelect: "none",
               margin: 0,
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "var(--font-space-grotesk), sans-serif",
             }}
           >
             {/* Large brand wordmark — same name as the logo itself */}
@@ -415,7 +442,7 @@ export default function RuVisibilityHero() {
             maxWidth: "42rem",
             lineHeight: 1.7,
             margin: "0 0 3rem",
-            fontFamily: "'Space Grotesk', sans-serif",
+            fontFamily: "var(--font-space-grotesk), sans-serif",
           }}
         >
           To ChatGPT, Gemini, and every other place people search — then we

@@ -7,8 +7,6 @@ import Image from "next/image";
    navbar renders identically regardless of which page's Tailwind
    context it sits in. Monochrome palette — matches the logo. */
 const STYLES = `
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap');
-
   .ru-nav-wrap {
     position: fixed;
     top: 16px;
@@ -18,7 +16,7 @@ const STYLES = `
     display: flex;
     justify-content: center;
     padding: 0 16px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
   }
 
   .ru-nav-pill {

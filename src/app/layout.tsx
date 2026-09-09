@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
 import { LOCATIONS } from "@/lib/locations";
@@ -35,6 +35,19 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// Self-hosted via next/font — replaces the render-blocking @import in the
+// hero and navbar (both were separately fetching the same Google Font
+// over the network on every page load).
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
+// Space Grotesk only ships up to weight 700 — the hero's font-weight:900
+// text always relied on the browser synthesizing bold from 700, both
+// before this fix and after. No regression, just noting it's inherent to
+// the typeface, not something introduced here.
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ruvisibility.com"),
@@ -83,7 +96,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script
