@@ -5,7 +5,7 @@ import SiteFooter from "@/components/site-footer";
 import { LOCATIONS } from "@/lib/locations";
 import "./globals.css";
 
-// Only confirmed facts — no address/phone/founding date, none exist yet.
+// Only confirmed facts — no address/founding date, those don't exist yet.
 // areaServed reflects Rushil's actual real target markets (see
 // ABOUT-RUSHIL.md for the US cities, confirmed directly for India).
 const organizationJsonLd = {
@@ -14,6 +14,7 @@ const organizationJsonLd = {
   name: "Ru Visibility",
   url: "https://ruvisibility.com",
   email: "rushil@ruvisibility.com",
+  telephone: "+91-7222999365",
   logo: "https://ruvisibility.com/logo-mark.png",
   areaServed: [
     ...LOCATIONS.map((l) => ({

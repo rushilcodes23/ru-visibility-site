@@ -1,5 +1,5 @@
 import { ContactCard } from "@/components/ui/contact-card";
-import { MailIcon, Send, UserCheck, MessageSquareReply } from "lucide-react";
+import { MailIcon, PhoneIcon, Send, UserCheck, MessageSquareReply } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -52,6 +52,13 @@ export default function ContactPage() {
               icon: MailIcon,
               label: "Email",
               value: "rushil@ruvisibility.com",
+              href: "mailto:rushil@ruvisibility.com",
+            },
+            {
+              icon: PhoneIcon,
+              label: "Call",
+              value: "+91 72229 99365",
+              href: "tel:+917222999365",
             },
           ]}
         >

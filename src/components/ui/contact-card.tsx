@@ -9,6 +9,7 @@ type ContactInfoProps = React.ComponentProps<'div'> & {
 	icon: LucideIcon;
 	label: string;
 	value: string;
+	href?: string;
 };
 
 type ContactCardProps = React.ComponentProps<'div'> & {
@@ -71,11 +72,12 @@ function ContactInfo({
 	icon: Icon,
 	label,
 	value,
+	href,
 	className,
 	...props
 }: ContactInfoProps) {
-	return (
-		<div className={cn('flex items-center gap-3 py-3', className)} {...props}>
+	const content = (
+		<>
 			<div className="bg-muted/40 rounded-lg p-3">
 				<Icon className="h-5 w-5" />
 			</div>
@@ -83,6 +85,23 @@ function ContactInfo({
 				<p className="font-medium">{label}</p>
 				<p className="text-muted-foreground text-xs">{value}</p>
 			</div>
+		</>
+	);
+
+	if (href) {
+		return (
+			<a
+				href={href}
+				className={cn('flex items-center gap-3 py-3 hover:opacity-70 transition-opacity', className)}
+			>
+				{content}
+			</a>
+		);
+	}
+
+	return (
+		<div className={cn('flex items-center gap-3 py-3', className)} {...props}>
+			{content}
 		</div>
 	);
 }

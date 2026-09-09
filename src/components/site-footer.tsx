@@ -39,6 +39,12 @@ export default function SiteFooter() {
           >
             rushil@ruvisibility.com
           </a>
+          <a
+            href="tel:+917222999365"
+            className="text-sm text-muted-foreground hover:text-foreground w-fit"
+          >
+            +91 72229 99365
+          </a>
         </div>
 
         <div className="flex flex-col gap-2">
