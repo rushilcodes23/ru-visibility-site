@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
+import { ThemeProvider } from "@/components/theme-provider";
+import ThemeToggle from "@/components/theme-toggle";
 import { LOCATIONS } from "@/lib/locations";
 import "./globals.css";
 
@@ -96,16 +98,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <SiteNavbar />
-        <div className="flex-1">{children}</div>
-        <SiteFooter />
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          />
+          <SiteNavbar />
+          <div className="flex-1">{children}</div>
+          <SiteFooter />
+          <ThemeToggle />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -33,11 +33,11 @@ export default function ContactPage() {
           page doesn't feel like a flat, empty form */}
       <div
         className="absolute -top-24 -left-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: "rgba(203,213,225,0.4)", filter: "blur(120px)" }}
+        style={{ background: "color-mix(in srgb, var(--muted-foreground) 25%, transparent)", filter: "blur(120px)" }}
       />
       <div
         className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: "rgba(15,23,42,0.06)", filter: "blur(120px)" }}
+        style={{ background: "color-mix(in srgb, var(--foreground) 6%, transparent)", filter: "blur(120px)" }}
       />
 
       <div className="mx-auto w-full max-w-5xl relative">

@@ -84,24 +84,27 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  /* Navy-tinted dark theme, matching the light theme's monochrome
+     navy/white brand rather than a generic neutral gray. */
+  --background: #0a0e17;
+  --foreground: #f1f5f9;
+  --card: #111827;
+  --card-foreground: #f1f5f9;
+  --popover: #111827;
+  --popover-foreground: #f1f5f9;
+  --primary: #f1f5f9;
+  --primary-foreground: #0f172a;
+  --secondary: #1e293b;
+  --secondary-foreground: #f1f5f9;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #1e293b;
+  --accent-foreground: #f1f5f9;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #64748b;
+  color-scheme: dark;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -126,11 +129,9 @@
   }
   html {
     @apply font-sans;
-    /* Site is light-only by design (no dark mode toggle exists). Without
-       this, a visitor's OS/browser dark mode can force native form
-       controls (inputs, scrollbars) into dark UA styling even though
-       every color here is defined light — same fix already applied
-       inside the hero component, now applied site-wide. */
+    /* Defaults to light; .dark above overrides to dark. Keeps native
+       form controls (inputs, scrollbars) in sync with whichever theme
+       is actually active, instead of always forcing light regardless. */
     color-scheme: light;
   }
 }

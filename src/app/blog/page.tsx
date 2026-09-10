@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
 
 export const metadata = {
   title: "Blog — SEO & GEO Insights | Ru Visibility",
@@ -17,6 +18,8 @@ const POSTS = [
 ];
 
 export default function BlogPage() {
+  const [featured, ...rest] = POSTS;
+
   return (
     <div className="w-full py-20 lg:py-32">
       <div className="container mx-auto px-4">
@@ -28,7 +31,29 @@ export default function BlogPage() {
         </div>
 
         <div className="flex flex-col gap-6 max-w-2xl">
-          {POSTS.map((post) => (
+          {featured && (
+            <a
+              href={`/blog/${featured.slug}`}
+              className="group block bg-primary text-primary-foreground rounded-md p-8 transition-transform duration-200 hover:scale-[1.02] hover:shadow-xl"
+            >
+              <span className="inline-block text-xs font-medium tracking-wide uppercase bg-primary-foreground text-primary rounded-full px-3 py-1 mb-4">
+                Latest
+              </span>
+              <h2 className="text-2xl md:text-3xl tracking-tight mb-3">{featured.title}</h2>
+              <p className="opacity-80 text-sm md:text-base leading-relaxed mb-5">
+                {featured.excerpt}
+              </p>
+              <div className="flex items-center justify-between text-sm">
+                <span className="opacity-70">By {featured.author}</span>
+                <span className="inline-flex items-center gap-1 font-medium">
+                  Read post
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </div>
+            </a>
+          )}
+
+          {rest.map((post) => (
             <a
               key={post.slug}
               href={`/blog/${post.slug}`}
