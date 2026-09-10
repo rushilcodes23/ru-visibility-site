@@ -15,9 +15,10 @@ import {
 } from "lucide-react";
 
 export const metadata = {
+  alternates: { canonical: "/pricing" },
   title: "Pricing — SEO & GEO Management Plans | Ru Visibility",
   description:
-    "Two ongoing SEO and GEO management plans: Essentials at $699/month, and full Visibility Management at $899 first month then $1,199/month. Website design and monetization quoted separately.",
+    "Two ongoing SEO and GEO plans: Essentials at $699/month, or full Visibility Management at $899 first month, then $1,199/month.",
 };
 
 const ESSENTIALS_INCLUDED = [

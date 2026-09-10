@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 
 export const metadata = {
+  alternates: { canonical: "/blog" },
   title: "Blog — SEO & GEO Insights | Ru Visibility",
   description:
     "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
@@ -28,7 +29,17 @@ export default function BlogPage() {
           <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
             Real findings, not recycled SEO advice.
           </h1>
+          <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
+            Most SEO writing online is the same handful of tips reworded
+            endlessly, usually by someone who hasn&apos;t run the audit
+            they&apos;re describing. We&apos;d rather write less often and
+            only about things we&apos;ve actually tested — what AI tools
+            genuinely do with a website, what moves visibility, and what
+            turns out not to matter at all.
+          </p>
         </div>
+
+        <h2 className="text-2xl tracking-tight mb-6">Latest writing</h2>
 
         <div className="flex flex-col gap-6 max-w-2xl">
           {featured && (

@@ -21,6 +21,7 @@ const WHAT_HAPPENS = [
 ];
 
 export const metadata = {
+  alternates: { canonical: "/contact" },
   title: "Talk to Us — Get Your Visibility Audit | Ru Visibility",
   description:
     "Questions about SEO, GEO, pricing, or your visibility audit? Reach out directly — real answers, no sales bot.",
@@ -62,7 +63,9 @@ export default function ContactPage() {
           <ContactForm />
         </ContactCard>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">
+        <h2 className="text-2xl tracking-tight mt-12">What happens next</h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
           {WHAT_HAPPENS.map((step) => (
             <div key={step.title} className="flex flex-col gap-2">
               <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">

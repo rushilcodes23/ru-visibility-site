@@ -9,9 +9,10 @@ import {
 } from "lucide-react";
 
 export const metadata = {
+  alternates: { canonical: "/how-we-work" },
   title: "How We Work — SEO & GEO Process | Ru Visibility",
   description:
-    "The exact six-step process behind every Ru Visibility engagement: AI visibility testing, full audit, plain-English report, direct fixes, and a real before/after.",
+    "The six-step process behind every engagement: AI visibility testing, full audit, plain-English report, direct fixes, and a real before/after.",
 };
 
 const STEPS = [
@@ -61,6 +62,10 @@ export default function HowWeWorkPage() {
             time. Here's exactly what happens at each stage.
           </p>
         </div>
+
+        <h2 className="text-2xl tracking-tight mb-6">
+          The six steps, in order
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {STEPS.map((step) => (

@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
+  alternates: { canonical: "/blog/why-geo-matters" },
   title: "Why GEO Matters — Ru Visibility",
   description:
     "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Rushil, founder of Ru Visibility, on why this matters now.",

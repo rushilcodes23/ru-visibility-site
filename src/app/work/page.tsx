@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { XCircle, CheckCircle2 } from "lucide-react";
 
 export const metadata = {
-  title: "Our Work — Real Results, No Fake Case Studies | Ru Visibility",
+  alternates: { canonical: "/work" },
+  title: "Our Work — Real Results Only | Ru Visibility",
   description:
     "We don't publish client results until they're real and approved to share. See what kind of AI visibility change we're working toward, honestly labeled.",
 };
@@ -32,6 +33,10 @@ export default function WorkPage() {
             Rushil chose to include this so the page isn't empty, on the
             condition it's never mistaken for a real claim. Replace with
             real before/after data the moment a real client exists. */}
+        <h2 className="text-2xl tracking-tight mb-6 max-w-2xl">
+          What the change we&apos;re aiming for looks like
+        </h2>
+
         <div className="max-w-2xl mb-16 border-2 border-dashed rounded-md p-6 md:p-8">
           <span className="inline-block text-xs font-medium tracking-wide uppercase text-muted-foreground border rounded-full px-3 py-1 mb-6">
             Illustrative Example — Not a Real Client
@@ -66,6 +71,7 @@ export default function WorkPage() {
         </div>
 
         <div className="max-w-2xl border-t pt-10">
+          <h2 className="text-2xl tracking-tight mb-4">Why we work this way</h2>
           <p className="text-muted-foreground leading-relaxed italic">
             &ldquo;I built Ru Visibility because most SEO agencies either
             overpromise or hide behind jargon. I'd rather show you exactly

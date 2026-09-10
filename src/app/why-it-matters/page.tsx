@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Search, Bot, Accessibility, TrendingDown } from "lucide-react";
 
 export const metadata = {
+  alternates: { canonical: "/why-it-matters" },
   title: "Why SEO & GEO Matter for Your Business | Ru Visibility",
   description:
-    "The real reasons AI visibility and search rankings matter: Google still decides who's found, AI tools are a growing second front door, and accessibility risk is real.",
+    "Why AI visibility and search rankings matter now — and what it actually costs a business to stay invisible to both.",
 };
 
 const REASONS = [
@@ -45,6 +46,10 @@ export default function WhyItMattersPage() {
             anymore for a business with a website.
           </p>
         </div>
+
+        <h2 className="text-2xl tracking-tight mb-6 max-w-2xl">
+          Four reasons this isn&apos;t optional anymore
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
           {REASONS.map((r) => (

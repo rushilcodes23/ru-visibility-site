@@ -4,7 +4,8 @@ import { Accessibility, Eye, Keyboard, Contrast } from "lucide-react";
 import ScrollReveal from "@/components/scroll-reveal";
 
 export const metadata = {
-  title: "Accessibility — Ru Visibility",
+  alternates: { canonical: "/accessibility" },
+  title: "Accessibility Statement | Ru Visibility",
   description:
     "Our accessibility statement, and the real, measured standard we hold client sites to as part of every audit.",
 };
@@ -45,6 +46,8 @@ export default function AccessibilityPage() {
             </p>
           </div>
         </ScrollReveal>
+
+        <h2 className="text-2xl tracking-tight mb-6">What we hold ourselves to</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
           {COMMITMENTS.map((c, i) => (

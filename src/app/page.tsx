@@ -3,9 +3,10 @@ import { Feature } from "@/components/ui/feature-section-with-bento-grid";
 import { ClosingCta } from "@/components/ui/closing-cta";
 
 export const metadata = {
-  title: "Ru Visibility — SEO & GEO Agency | We Make Your Business Visible",
+  alternates: { canonical: "/" },
+  title: "Ru Visibility — SEO & GEO Agency for AI Visibility",
   description:
-    "Ongoing SEO and AI visibility (GEO) management for businesses in the US and India — so ChatGPT, Gemini, and Google all find and recommend you. Real audits, plain-English reports, no guesswork.",
+    "Ongoing SEO and AI visibility (GEO) management for US and India businesses — so ChatGPT, Gemini, and Google can all find and recommend you.",
 };
 
 export default function Home() {

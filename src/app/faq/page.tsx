@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 
 export const metadata = {
+  alternates: { canonical: "/faq" },
   title: "FAQ — SEO, GEO & AI Visibility Questions | Ru Visibility",
   description:
     "Honest answers about SEO and GEO management: do we guarantee results, how is this different from a regular SEO agency, and what do you actually get.",
@@ -61,7 +62,7 @@ export default function FaqPage() {
         <div className="flex flex-col gap-8 max-w-3xl">
           {FAQS.map((item) => (
             <div key={item.q} className="border-b pb-8 last:border-b-0">
-              <h3 className="text-xl tracking-tight mb-2">{item.q}</h3>
+              <h2 className="text-xl tracking-tight mb-2">{item.q}</h2>
               <p className="text-muted-foreground leading-relaxed">{item.a}</p>
             </div>
           ))}

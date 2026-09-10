@@ -1,4 +1,14 @@
 # https://developers.cloudflare.com/workers/static-assets/headers
 # https://opennext.js.org/cloudflare/caching#static-assets-caching
+
+# Static assets are served directly by Cloudflare and never touch the
+# Next.js server, so next.config.ts's headers() doesn't apply to them.
+# Keep this list in sync with SECURITY_HEADERS in next.config.ts.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
 /_next/static/*
   Cache-Control: public,max-age=31536000,immutable
