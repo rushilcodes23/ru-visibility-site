@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
 
 export const metadata = {
   alternates: { canonical: "/faq" },
@@ -34,6 +35,12 @@ const FAQS = [
   },
 ];
 
+const RELATED = [
+  { href: "/how-we-work", label: "How We Work", note: "The six steps, in order." },
+  { href: "/pricing", label: "Pricing", note: "What the plans actually include." },
+  { href: "/why-us", label: "Why Us", note: "What makes us different, and who we are not for." },
+];
+
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -59,13 +66,60 @@ export default function FaqPage() {
           </h1>
         </div>
 
-        <div className="flex flex-col gap-8 max-w-3xl">
-          {FAQS.map((item) => (
-            <div key={item.q} className="border-b pb-8 last:border-b-0">
-              <h2 className="text-xl tracking-tight mb-2">{item.q}</h2>
-              <p className="text-muted-foreground leading-relaxed">{item.a}</p>
+        <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
+          <div className="flex flex-col gap-8 lg:col-span-2">
+            {FAQS.map((item) => (
+              <div key={item.q} className="border-b pb-8 last:border-b-0">
+                <h2 className="text-xl tracking-tight mb-2">{item.q}</h2>
+                <p className="text-muted-foreground leading-relaxed max-w-3xl">
+                  {item.a}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Sticky rail — the answers are capped for line length, which
+              used to leave the right third of the page empty on desktop. */}
+          <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
+            <div className="bg-primary text-primary-foreground rounded-md p-6">
+              <h2 className="text-xl tracking-tight mb-2">
+                Still not answered?
+              </h2>
+              <p className="opacity-80 text-sm leading-relaxed mb-5">
+                Ask us directly. You will get a real answer from the person
+                who would do the work, not a sales script.
+              </p>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-1 rounded-full bg-primary-foreground text-primary text-sm font-medium px-4 py-2 transition-transform duration-200 hover:scale-105"
+              >
+                Talk to Us
+                <ArrowRight className="w-4 h-4" />
+              </a>
             </div>
-          ))}
+
+            <div className="bg-muted rounded-md border border-border/50 p-6">
+              <h2 className="text-lg tracking-tight mb-4">Read next</h2>
+              <ul className="flex flex-col gap-3 text-sm">
+                {RELATED.map((r) => (
+                  <li key={r.href}>
+                    <a
+                      href={r.href}
+                      className="group flex items-start justify-between gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <span>
+                        <span className="block font-medium text-foreground">
+                          {r.label}
+                        </span>
+                        {r.note}
+                      </span>
+                      <ArrowRight className="w-4 h-4 mt-0.5 shrink-0 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

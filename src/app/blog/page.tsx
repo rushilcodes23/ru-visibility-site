@@ -8,6 +8,19 @@ export const metadata = {
     "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
 };
 
+const TOPICS = [
+  "How AI tools decide which businesses to name",
+  "Why a technically perfect site can still be invisible",
+  "What local search actually rewards now",
+  "Which standard SEO advice has quietly stopped being true",
+];
+
+const START_HERE = [
+  { href: "/why-it-matters", label: "Why SEO & GEO Matter" },
+  { href: "/how-we-work", label: "How We Work" },
+  { href: "/why-us", label: "Why Us" },
+];
+
 const POSTS = [
   {
     slug: "why-geo-matters",
@@ -39,9 +52,11 @@ export default function BlogPage() {
           </p>
         </div>
 
+        <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
+          <div className="lg:col-span-2">
         <h2 className="text-2xl tracking-tight mb-6">Latest writing</h2>
 
-        <div className="flex flex-col gap-6 max-w-2xl">
+        <div className="flex flex-col gap-6">
           {featured && (
             <a
               href={`/blog/${featured.slug}`}
@@ -79,7 +94,7 @@ export default function BlogPage() {
           ))}
         </div>
 
-        <div className="max-w-2xl border-t pt-10 mt-20">
+        <div className="border-t pt-10 mt-20">
           <h2 className="text-2xl tracking-tight mb-4">
             What gets written here
           </h2>
@@ -104,7 +119,7 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <div className="max-w-2xl border-t pt-10 mt-16">
+        <div className="border-t pt-10 mt-16">
           <h2 className="text-2xl tracking-tight mb-4">
             Want the version that applies to your site?
           </h2>
@@ -118,6 +133,63 @@ export default function BlogPage() {
             answer than reading everything here and guessing which parts
             apply.
           </p>
+        </div>
+          </div>
+
+          {/* Sticky rail — one post does not fill a page, and the reading
+              column is capped for line length, so the right third was
+              sitting empty on desktop. */}
+          <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
+            <div className="bg-primary text-primary-foreground rounded-md p-6">
+              <h2 className="text-xl tracking-tight mb-2">
+                Skip the reading
+              </h2>
+              <p className="opacity-80 text-sm leading-relaxed mb-5">
+                Send us your website address and we will tell you what we
+                actually see, rather than what tends to be true in general.
+              </p>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-1 rounded-full bg-primary-foreground text-primary text-sm font-medium px-4 py-2 transition-transform duration-200 hover:scale-105"
+              >
+                Talk to Us
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            <div className="bg-muted rounded-md border border-border/50 p-6">
+              <h2 className="text-lg tracking-tight mb-3">
+                What we write about
+              </h2>
+              <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+                {TOPICS.map((t) => (
+                  <li key={t} className="flex gap-2">
+                    <span className="text-foreground">&middot;</span>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-muted rounded-md border border-border/50 p-6">
+              <h2 className="text-lg tracking-tight mb-3">Start here</h2>
+              <ul className="flex flex-col gap-3 text-sm">
+                {START_HERE.map((r) => (
+                  <li key={r.href}>
+                    <a
+                      href={r.href}
+                      className="group flex items-center justify-between gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <span className="font-medium text-foreground">
+                        {r.label}
+                      </span>
+                      <ArrowRight className="w-4 h-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

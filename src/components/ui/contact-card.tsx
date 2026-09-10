@@ -32,7 +32,15 @@ export function ContactCard({
 	return (
 		<div
 			className={cn(
-				'bg-card border relative grid h-full w-full shadow md:grid-cols-2 lg:grid-cols-3',
+					// In light mode --card (#FFFFFF) sits on --background (#F8FAFC),
+				// a ~2% gap that reads as no card at all. Dark mode has a real
+				// surface jump, which is why it already looked fine. Elevation
+				// has to carry the separation in light, so the shadow is
+				// deliberately heavier there than in dark.
+				'bg-card border-border ring-border/60 relative grid h-full w-full border ring-1',
+				'shadow-[0_24px_70px_-20px_rgba(15,23,42,0.28)]',
+				'dark:shadow-[0_24px_70px_-20px_rgba(0,0,0,0.75)]',
+				'md:grid-cols-2 lg:grid-cols-3',
 				className,
 			)}
 			{...props}
@@ -58,7 +66,7 @@ export function ContactCard({
 			</div>
 			<div
 				className={cn(
-					'bg-muted/40 flex h-full w-full items-center border-t p-5 md:col-span-1 md:border-t-0 md:border-l',
+					'bg-primary/5 flex h-full w-full items-center border-t p-5 md:col-span-1 md:border-t-0 md:border-l',
 					formSectionClassName,
 				)}
 			>
@@ -78,7 +86,7 @@ function ContactInfo({
 }: ContactInfoProps) {
 	const content = (
 		<>
-			<div className="bg-muted/40 rounded-lg p-3">
+			<div className="bg-primary/5 border-border/60 rounded-lg border p-3">
 				<Icon className="h-5 w-5" />
 			</div>
 			<div>
