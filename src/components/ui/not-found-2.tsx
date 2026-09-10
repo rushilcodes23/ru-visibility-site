@@ -37,7 +37,7 @@ export function NotFound() {
 							render={
 								<a href="/contact">
 									<MailIcon className="size-4 mr-2" data-icon="inline-start" />
-									Contact Us
+									Talk to Us
 								</a>
 							}
 						/>

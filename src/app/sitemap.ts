@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/pricing`, lastModified: new Date(), priority: 0.8 },
     { url: `${base}/faq`, lastModified: new Date(), priority: 0.7 },
     { url: `${base}/work`, lastModified: new Date(), priority: 0.6 },
+    { url: `${base}/why-us`, lastModified: new Date(), priority: 0.8 },
     { url: `${base}/blog`, lastModified: new Date(), priority: 0.6 },
     { url: `${base}/blog/why-geo-matters`, lastModified: new Date(), priority: 0.6 },
     { url: `${base}/contact`, lastModified: new Date(), priority: 0.8 },

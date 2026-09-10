@@ -78,6 +78,47 @@ export default function BlogPage() {
             </a>
           ))}
         </div>
+
+        <div className="max-w-2xl border-t pt-10 mt-20">
+          <h2 className="text-2xl tracking-tight mb-4">
+            What gets written here
+          </h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Things we have actually tested. If we try a change on a site and
+            it moves something, that is worth writing up. If we try it and
+            nothing happens, that is worth writing up too, and it is the
+            half almost nobody publishes.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            The subjects that keep coming up: how AI tools decide which
+            businesses to name, why a site can be technically perfect and
+            still invisible, what local search actually rewards now, and
+            which bits of standard SEO advice have quietly stopped being
+            true.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            There is no schedule. A post goes up when there is something
+            real to say, which is why there are not many of them. Writing to
+            fill a calendar is how you end up with the recycled advice this
+            page exists to avoid.
+          </p>
+        </div>
+
+        <div className="max-w-2xl border-t pt-10 mt-16">
+          <h2 className="text-2xl tracking-tight mb-4">
+            Want the version that applies to your site?
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            General writing only goes so far. If you want to know what any
+            of this means for your business specifically,{" "}
+            <a href="/contact" className="underline underline-offset-4 text-foreground">
+              send us your website address
+            </a>{" "}
+            and we will tell you what we see. It is a faster route to a real
+            answer than reading everything here and guessing which parts
+            apply.
+          </p>
+        </div>
       </div>
     </div>
   );

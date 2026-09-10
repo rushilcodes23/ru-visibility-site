@@ -78,6 +78,61 @@ export default function ContactPage() {
             </div>
           ))}
         </div>
+
+        <div className="max-w-2xl border-t pt-10 mt-16">
+          <h2 className="text-2xl tracking-tight mb-4">
+            What to put in the message
+          </h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            You do not need a brief. Your website address is enough to get a
+            useful reply, because most of what we need we can see for
+            ourselves once we know where to look.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            If you want a sharper answer, add what you sell and who you sell
+            it to, the city or region you care about, and anything you have
+            already tried. That last one saves us both time. If an agency
+            has worked on your site before, saying so tells us a lot about
+            what we are walking into.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            If you are not sure what to ask, say that too. Plenty of people
+            arrive knowing something is wrong without knowing the words for
+            it. Working that out is part of the job.
+          </p>
+        </div>
+
+        <div className="max-w-2xl border-t pt-10 mt-16">
+          <h2 className="text-2xl tracking-tight mb-4">
+            How fast you will hear back
+          </h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Usually within a day. If it takes longer, it is because we are
+            actually looking at your site before replying, not because your
+            message is sitting in a queue.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            In a hurry, call instead. The number is on this page and it
+            rings a real phone. We would rather you got an answer than sat
+            waiting on an email.
+          </p>
+        </div>
+
+        <div className="max-w-2xl border-t pt-10 mt-16">
+          <h2 className="text-2xl tracking-tight mb-4">
+            What happens to your details
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            The form sends straight to us over an encrypted connection. We
+            use what you send to reply to you and nothing else. You are not
+            added to a mailing list, and your details are never sold or
+            passed to anyone. The full detail is in our{" "}
+            <a href="/privacy" className="underline underline-offset-4 text-foreground">
+              privacy policy
+            </a>
+            , and you can ask us to delete your message at any point.
+          </p>
+        </div>
       </div>
     </main>
   );

@@ -5,6 +5,7 @@ const COMPANY_LINKS = [
   { label: "Why It Matters", href: "/why-it-matters" },
   { label: "Pricing", href: "/pricing" },
   { label: "Our Work", href: "/work" },
+  { label: "Why Us", href: "/why-us" },
 ];
 
 const RESOURCE_LINKS = [
@@ -12,7 +13,7 @@ const RESOURCE_LINKS = [
   { label: "FAQ", href: "/faq" },
   { label: "Locations", href: "/locations" },
   { label: "Accessibility", href: "/accessibility" },
-  { label: "Contact", href: "/contact" },
+  { label: "Talk to Us", href: "/contact" },
 ];
 
 const LEGAL_LINKS = [

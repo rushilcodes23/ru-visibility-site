@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
@@ -35,6 +35,8 @@ const LIGHT = {
   canvasActive: "#1e293b",
   canvasParticle: "rgba(15,23,42,0.12)",
   canvasShadow: "rgba(15,23,42,0.4)",
+  btnRing: "rgba(15,23,42,0.18)",
+  outlineHoverBorder: "#0f172a",
 };
 
 const DARK = {
@@ -61,10 +63,24 @@ const DARK = {
   canvasActive: "#f1f5f9",
   canvasParticle: "rgba(241,245,249,0.12)",
   canvasShadow: "rgba(241,245,249,0.4)",
+  btnRing: "rgba(241,245,249,0.28)",
+  outlineHoverBorder: "#f1f5f9",
 };
 
-function getStyles(t: typeof LIGHT) {
+// Both palettes ship as CSS custom properties in one static stylesheet.
+// next-themes sets .dark on <html> in a blocking script before first
+// paint, so the correct colors apply immediately — no JS round-trip, no
+// white flash on refresh in dark mode.
+const cssVars = (o: typeof LIGHT) =>
+  Object.entries(o)
+    .map(([k, v]) => `--qh-${k}: ${v};`)
+    .join(" ");
+
+function getStyles() {
   return `
+  :root { ${cssVars(LIGHT)} }
+  :root.dark { ${cssVars(DARK)} }
+
   .qhero-shell,
   .qhero-shell *,
   .qhero-shell *::before,
@@ -72,10 +88,14 @@ function getStyles(t: typeof LIGHT) {
     box-sizing: border-box;
   }
 
+  /* The logo mark is black ink on transparent — inverted to white in dark
+     mode via CSS rather than a JS ternary, so it never flashes black. */
+  :root.dark .qhero-logo { filter: invert(1); }
+
   .qhero-shell {
     font-family: var(--font-space-grotesk), sans-serif;
-    background: ${t.shellBg};
-    color: ${t.shellText};
+    background: var(--qh-shellBg);
+    color: var(--qh-shellText);
   }
 
   /* Glitch on "VISIBILITY" */
@@ -83,7 +103,7 @@ function getStyles(t: typeof LIGHT) {
     position: relative;
     display: inline-block;
     font-weight: 900;
-    color: ${t.glitchBase};
+    color: var(--qh-glitchBase);
     animation: qhero-color-toggle 7s infinite step-end;
   }
   .qhero-glitch::before,
@@ -93,24 +113,24 @@ function getStyles(t: typeof LIGHT) {
     top: 0; left: 0;
     width: 100%; height: 100%;
     opacity: 0;
-    background: ${t.shellBg};
+    background: var(--qh-shellBg);
   }
   .qhero-glitch::before { animation: qhero-glitch-1 7s infinite linear; z-index: 2; }
   .qhero-glitch::after  { animation: qhero-glitch-2 7s infinite linear; z-index: 3; }
 
   @keyframes qhero-color-toggle {
-    0%,  44%   { color: ${t.glitchBase}; text-shadow: none; }
+    0%,  44%   { color: var(--qh-glitchBase); text-shadow: none; }
     42.1%, 44.9% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
-    45%,  94%  { color: ${t.glitchMid}; text-shadow: none; }
+    45%,  94%  { color: var(--qh-glitchMid); text-shadow: none; }
     92.1%, 94.9% { text-shadow: -2px 0 #a3e635, 2px 0 #ef4444; }
-    95%, 100%  { color: ${t.glitchBase}; text-shadow: none; }
+    95%, 100%  { color: var(--qh-glitchBase); text-shadow: none; }
   }
 
   @keyframes qhero-glitch-1 {
     0%,   42%  { opacity: 0; transform: translate(0); }
     42.1%      { opacity: 1; color: #00ffff; clip-path: polygon(0 0,100% 0,100% 45%,0 45%); transform: translate(-10px,-5px) skew(20deg); }
     43%        { color: #ff00ff; transform: translate(10px,5px) skew(-20deg); clip-path: polygon(0 10%,100% 0,100% 30%,0 35%); }
-    44%        { color: ${t.glitchMid}; transform: translate(-10px,5px); clip-path: polygon(0 40%,100% 50%,100% 80%,0 90%); }
+    44%        { color: var(--qh-glitchMid); transform: translate(-10px,5px); clip-path: polygon(0 40%,100% 50%,100% 80%,0 90%); }
     44.9%      { opacity: 1; }
     45%        { opacity: 0; }
     45.1%, 92% { opacity: 0; transform: translate(0); }
@@ -153,8 +173,8 @@ function getStyles(t: typeof LIGHT) {
     gap: 8px;
     padding: 14px 32px;
     border-radius: 9999px;
-    background: linear-gradient(135deg, ${t.btnFrom}, ${t.btnTo});
-    color: ${t.btnText};
+    background: linear-gradient(135deg, var(--qh-btnFrom), var(--qh-btnTo));
+    color: var(--qh-btnText);
     font-weight: 700;
     font-size: 1rem;
     border: none;
@@ -162,11 +182,17 @@ function getStyles(t: typeof LIGHT) {
     text-decoration: none;
     font-family: var(--font-space-grotesk), sans-serif;
     transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 10px 30px ${t.btnShadow};
+    box-shadow: 0 10px 30px var(--qh-btnShadow);
     position: relative;
     z-index: 30;
   }
-  .qhero-btn:hover { background: linear-gradient(135deg, ${t.btnHoverFrom}, ${t.btnHoverTo}); transform: scale(1.05); box-shadow: 0 14px 40px ${t.btnHoverShadow}; }
+  .qhero-btn:hover,
+  .qhero-btn:focus-visible {
+    background: linear-gradient(135deg, var(--qh-btnHoverFrom), var(--qh-btnHoverTo));
+    transform: scale(1.05);
+    box-shadow: 0 14px 40px var(--qh-btnHoverShadow), 0 0 0 4px var(--qh-btnRing);
+    outline: none;
+  }
   .qhero-btn:active { transform: scale(0.96); }
   .qhero-btn svg { transition: transform 200ms; }
   .qhero-btn:hover svg { transform: translateX(4px); }
@@ -174,15 +200,17 @@ function getStyles(t: typeof LIGHT) {
   /* Secondary hero CTA — outline, doesn't compete with the primary button */
   .qhero-btn-outline {
     background: transparent;
-    color: ${t.outlineText};
-    border: 1.5px solid ${t.outlineBorder};
+    color: var(--qh-outlineText);
+    border: 1.5px solid var(--qh-outlineBorder);
     box-shadow: none;
   }
-  .qhero-btn-outline:hover {
-    background: ${t.outlineHoverBg};
-    color: ${t.outlineText};
+  .qhero-btn-outline:hover,
+  .qhero-btn-outline:focus-visible {
+    background: var(--qh-outlineHoverBg);
+    color: var(--qh-outlineText);
+    border-color: var(--qh-outlineHoverBorder);
     transform: scale(1.05);
-    box-shadow: none;
+    box-shadow: 0 0 0 4px var(--qh-btnRing);
   }
 `;
 }
@@ -190,7 +218,7 @@ function getStyles(t: typeof LIGHT) {
 /* ─────────────────────────────────────────────
    Animated dot-grid + floating particle canvas
 ───────────────────────────────────────────── */
-function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
+function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -198,6 +226,17 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Pulled off the live CSS variables rather than a React-held palette.
+    // The .dark class is already on <html> before this effect runs, so the
+    // canvas cannot paint one theme and then correct itself.
+    const css = getComputedStyle(document.documentElement);
+    const cv = {
+      canvasDefault: css.getPropertyValue("--qh-canvasDefault").trim(),
+      canvasActive: css.getPropertyValue("--qh-canvasActive").trim(),
+      canvasParticle: css.getPropertyValue("--qh-canvasParticle").trim(),
+      canvasShadow: css.getPropertyValue("--qh-canvasShadow").trim(),
+    };
 
     let raf: number;
     let mouseX = -1000;
@@ -226,7 +265,7 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
       draw(c: CanvasRenderingContext2D) {
         c.beginPath();
         c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        c.fillStyle = t.canvasParticle;
+        c.fillStyle = cv.canvasParticle;
         c.fill();
       }
     }
@@ -245,7 +284,7 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
       grid.height = h;
       const gctx = grid.getContext("2d");
       if (!gctx) return null;
-      gctx.fillStyle = t.canvasDefault;
+      gctx.fillStyle = cv.canvasDefault;
       for (let x = 0; x < w; x += SPACING) {
         for (let y = 0; y < h; y += SPACING) {
           gctx.beginPath();
@@ -284,9 +323,9 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
       // particles already give the same ambient feel for a fraction of the
       // ongoing CPU/battery cost.
       if (!isMobile) {
-        ctx.fillStyle = t.canvasActive;
+        ctx.fillStyle = cv.canvasActive;
         ctx.shadowBlur = 15;
-        ctx.shadowColor = t.canvasShadow;
+        ctx.shadowColor = cv.canvasShadow;
 
         const minX = Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
         const maxX = Math.min(canvas.width, mouseX + HOVER_R);
@@ -327,7 +366,7 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
       window.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(raf);
     };
-  }, [t]);
+  }, [themeKey]);
 
   return (
     <div
@@ -336,7 +375,7 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
         inset: 0,
         zIndex: 0,
         pointerEvents: "none",
-        background: t.shellBg,
+        background: "var(--qh-shellBg)",
       }}
     >
       <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, display: "block" }} />
@@ -344,13 +383,13 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
       <div style={{
         position: "absolute", top: "-20%", left: "-10%",
         width: "50%", height: "50%",
-        background: t.glow,
+        background: "var(--qh-glow)",
         filter: "blur(120px)", borderRadius: "9999px",
       }} />
       <div style={{
         position: "absolute", bottom: "-20%", right: "-10%",
         width: "40%", height: "40%",
-        background: t.glow,
+        background: "var(--qh-glow)",
         filter: "blur(120px)", borderRadius: "9999px",
       }} />
 
@@ -360,11 +399,11 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
         display: "flex", alignItems: "center", justifyContent: "center",
         pointerEvents: "none", userSelect: "none", opacity: 0.025,
       }}>
-        <span style={{ fontSize: "40vw", fontWeight: 900, lineHeight: 1, color: t.bracket }}>
+        <span style={{ fontSize: "40vw", fontWeight: 900, lineHeight: 1, color: "var(--qh-bracket)" }}>
           &lt;
         </span>
         <span style={{ width: "20vw" }} />
-        <span style={{ fontSize: "40vw", fontWeight: 900, lineHeight: 1, color: t.bracket }}>
+        <span style={{ fontSize: "40vw", fontWeight: 900, lineHeight: 1, color: "var(--qh-bracket)" }}>
           &gt;
         </span>
       </div>
@@ -376,14 +415,11 @@ function DotGridBackground({ theme: t }: { theme: typeof LIGHT }) {
    Root export
 ───────────────────────────────────────────── */
 export default function RuVisibilityHero() {
+  // Only the canvas needs to know the theme in JS, and only so it can
+  // repaint when the toggle flips. Every colour in the markup comes from
+  // CSS variables, so there is nothing to gate on a mounted flag and
+  // nothing that renders light-first before correcting itself.
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  // Defaults to light until the theme is known client-side — matches the
-  // provider's defaultTheme, so there's no mismatch on first render.
-  const isDark = mounted && resolvedTheme === "dark";
-  const t = isDark ? DARK : LIGHT;
 
   return (
     <div
@@ -395,13 +431,13 @@ export default function RuVisibilityHero() {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        background: t.shellBg,
+        background: "var(--qh-shellBg)",
       }}
     >
-      <style>{getStyles(t)}</style>
+      <style>{getStyles()}</style>
 
       {/* Layer 0: dot-grid background (fixed) */}
-      <DotGridBackground theme={t} />
+      <DotGridBackground themeKey={resolvedTheme} />
 
       {/* Layer 1: Hero content (navbar is site-wide, see layout.tsx) */}
       <main
@@ -427,12 +463,10 @@ export default function RuVisibilityHero() {
             width={110}
             height={110}
             priority
+            className="qhero-logo"
             style={{
               margin: "0 auto",
               display: "block",
-              // The logo mark is black ink on transparent — invert it to
-              // white in dark mode instead of shipping a second asset.
-              filter: isDark ? "invert(1)" : "none",
             }}
           />
         </div>
@@ -465,7 +499,7 @@ export default function RuVisibilityHero() {
                 overflowWrap: "break-word",
               }}
             >
-              <span style={{ color: t.ruText, opacity: 0.9 }}>RU</span>
+              <span style={{ color: "var(--qh-ruText)", opacity: 0.9 }}>RU</span>
               <span className="qhero-glitch" data-text="VISIBILITY">
                 VISIBILITY
               </span>
@@ -478,7 +512,7 @@ export default function RuVisibilityHero() {
                 fontSize: "clamp(0.8rem, 2.2vw, 1.25rem)",
                 fontWeight: 700,
                 letterSpacing: "0.2em",
-                color: t.tagline,
+                color: "var(--qh-tagline)",
                 marginTop: "1.5rem",
                 display: "block",
                 textTransform: "none",
@@ -495,7 +529,7 @@ export default function RuVisibilityHero() {
           style={{
             fontSize: "clamp(0.9rem, 1.8vw, 1.1rem)",
             fontWeight: 400,
-            color: t.subtitle,
+            color: "var(--qh-subtitle)",
             maxWidth: "42rem",
             lineHeight: 1.7,
             margin: "0 0 3rem",

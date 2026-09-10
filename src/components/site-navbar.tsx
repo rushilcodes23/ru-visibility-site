@@ -58,19 +58,28 @@ const STYLES = `
   .ru-nav-links {
     display: flex;
     align-items: center;
-    gap: 1.75rem;
+    gap: 0.5rem;
     list-style: none;
     margin: 0;
     padding: 0;
   }
   .ru-nav-link {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 9999px;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--muted-foreground);
     text-decoration: none;
-    transition: color 200ms, transform 200ms;
+    transition: color 200ms, transform 200ms, background 200ms;
   }
-  .ru-nav-link:hover { color: var(--foreground); transform: scale(1.08); }
+  .ru-nav-link:hover,
+  .ru-nav-link:focus-visible {
+    color: var(--foreground);
+    transform: scale(1.08);
+    background: color-mix(in srgb, var(--foreground) 8%, transparent);
+    outline: none;
+  }
 
   .ru-nav-cta {
     display: inline-flex;
@@ -86,7 +95,22 @@ const STYLES = `
     box-shadow: 0 4px 14px rgba(0,0,0,0.15);
     white-space: nowrap;
   }
-  .ru-nav-cta:hover { background: color-mix(in srgb, var(--primary) 85%, var(--background)); transform: scale(1.05); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+  /* Ring pulls it off the bar the way the featured blog card sits off the
+     page — token-driven, so it reads correctly in both themes. */
+  .ru-nav-cta {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15),
+                0 0 0 3px color-mix(in srgb, var(--primary) 14%, transparent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ru-nav-cta:hover,
+  .ru-nav-cta:focus-visible {
+    background: color-mix(in srgb, var(--primary) 85%, var(--background));
+    transform: scale(1.06);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.22),
+                0 0 0 5px color-mix(in srgb, var(--primary) 26%, transparent);
+    outline: none;
+  }
 
   .ru-hamburger {
     display: none;
@@ -148,7 +172,17 @@ const STYLES = `
     text-decoration: none;
     transition: background 200ms;
   }
-  .ru-mobile-cta:hover { background: color-mix(in srgb, var(--primary) 85%, var(--background)); }
+  .ru-mobile-cta {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 14%, transparent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ru-mobile-cta:hover,
+  .ru-mobile-cta:focus-visible {
+    background: color-mix(in srgb, var(--primary) 85%, var(--background));
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--primary) 26%, transparent);
+    outline: none;
+  }
 
   @media (max-width: 767px) {
     .ru-nav-links,
@@ -162,12 +196,12 @@ const NAV_LINKS = [
   { label: "Pricing", href: "/pricing" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
+  { label: "Why Us", href: "/why-us" },
 ];
 
-// "Talk to Us" opens an email directly — a genuinely different, faster
-// action than "Contact", which goes to the full form page.
-const TALK_TO_US_HREF = "mailto:rushil@ruvisibility.com?subject=Let's%20talk";
+// Points at the on-site form, not a mailto — visitors shouldn't have to
+// open a mail client to reach us.
+const TALK_TO_US_HREF = "/contact";
 
 function RuVisibilityLogo() {
   return (
