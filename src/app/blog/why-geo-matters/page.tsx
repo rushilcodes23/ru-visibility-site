@@ -7,9 +7,26 @@ export const metadata = {
     "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Rushil, founder of Ru Visibility, on why this matters now.",
 };
 
+const postJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: "Why GEO Matters",
+  description:
+    "GEO isn't a buzzword — it's whether AI tools recommend your business at all.",
+  author: { "@type": "Person", name: "Rushil" },
+  publisher: { "@type": "Organization", name: "Ru Visibility", logo: "https://ruvisibility.com/logo-mark.png" },
+  datePublished: "2026-09-10",
+  dateModified: "2026-09-10",
+  mainEntityOfPage: "https://ruvisibility.com/blog/why-geo-matters",
+};
+
 export default function WhyGeoMattersPost() {
   return (
     <article className="w-full py-20 lg:py-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd) }}
+      />
       <div className="container mx-auto px-4 max-w-2xl">
         <Badge className="mb-4">Blog</Badge>
         <h1 className="text-3xl md:text-5xl tracking-tighter font-regular mb-3">

@@ -12,12 +12,23 @@ import "./globals.css";
 // ABOUT-RUSHIL.md for the US cities, confirmed directly for India).
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "ProfessionalService"],
   name: "Ru Visibility",
   url: "https://ruvisibility.com",
   email: "rushil@ruvisibility.com",
   telephone: "+91-7222999365",
   logo: "https://ruvisibility.com/logo-mark.png",
+  description:
+    "SEO and GEO (Generative Engine Optimization) agency — ongoing management so AI tools and Google can find and recommend a business.",
+  knowsAbout: [
+    "Search Engine Optimization",
+    "Generative Engine Optimization",
+    "AI visibility",
+    "Web accessibility (ADA/WCAG)",
+    "Website development",
+    "Digital marketing",
+    "AI automation for business",
+  ],
   areaServed: [
     ...LOCATIONS.map((l) => ({
       "@type": "City",
@@ -26,6 +37,23 @@ const organizationJsonLd = {
     })),
     { "@type": "Country", name: "International" },
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Ru Visibility Services",
+    itemListElement: [
+      "AI Visibility (GEO) Management",
+      "Technical SEO Management",
+      "Accessibility (ADA) Risk Audits",
+      "Blog & Content Writing",
+      "Website Design & Development",
+      "Website Monetization Consulting",
+      "Digital Marketing",
+      "AI Integration for Business",
+    ].map((name) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name },
+    })),
+  },
 };
 
 const geistSans = Geist({
@@ -74,6 +102,14 @@ export const metadata: Metadata = {
     "AI website builder",
     "business process automation",
     "AI chatbot for business",
+    "GEO audit",
+    "AI visibility audit",
+    "ChatGPT SEO",
+    "accessibility audit",
+    "ADA compliance audit",
+    "website development agency",
+    "digital marketing agency",
+    "Ru Visibility",
   ],
   openGraph: {
     title: "Ru Visibility — We Make Your Business Visible",
