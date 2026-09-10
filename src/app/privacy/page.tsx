@@ -172,6 +172,15 @@ export default function PrivacyPage() {
           </section>
 
           <section>
+            <h2 className="text-2xl tracking-tight mb-4">Who runs this</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Ru Visibility is operated by Rushil, based in Raipur,
+              Chhattisgarh, India. That is who receives the contact form and
+              who you are emailing at rushil@ruvisibility.com.
+            </p>
+          </section>
+
+          <section>
             <h2 className="text-2xl tracking-tight mb-4">
               If this policy changes
             </h2>

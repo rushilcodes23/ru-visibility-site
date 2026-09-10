@@ -192,6 +192,18 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-2xl tracking-tight mb-4">
+              Who you are agreeing with
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Ru Visibility operates out of Raipur, Chhattisgarh, India.
+              These terms are governed by the laws of India, and any dispute
+              that can&apos;t be resolved directly is subject to the
+              jurisdiction of the courts in Raipur, Chhattisgarh.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4">
               Changes to these terms
             </h2>
             <p className="text-muted-foreground leading-relaxed">
