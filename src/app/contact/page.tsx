@@ -79,7 +79,7 @@ export default function ContactPage() {
           ))}
         </div>
 
-        <div className="max-w-2xl border-t pt-10 mt-16">
+        <div className="max-w-2xl rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mt-16">
           <h2 className="text-2xl tracking-tight mb-4">
             What to put in the message
           </h2>
@@ -102,7 +102,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="max-w-2xl border-t pt-10 mt-16">
+        <div className="max-w-2xl rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mt-16">
           <h2 className="text-2xl tracking-tight mb-4">
             How fast you will hear back
           </h2>
@@ -118,7 +118,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="max-w-2xl border-t pt-10 mt-16">
+        <div className="max-w-2xl rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mt-16">
           <h2 className="text-2xl tracking-tight mb-4">
             What happens to your details
           </h2>

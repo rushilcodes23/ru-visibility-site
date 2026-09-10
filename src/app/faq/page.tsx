@@ -59,23 +59,33 @@ export default function FaqPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <div className="container mx-auto px-4">
-        <div className="flex flex-col gap-4 items-start max-w-2xl mb-16">
-          <Badge>FAQ</Badge>
-          <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
-            Questions people actually ask.
-          </h1>
-        </div>
-
         <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
-          <div className="flex flex-col gap-8 lg:col-span-2">
+          <div className="lg:col-span-2">
+            <div className="flex flex-col gap-4 items-start max-w-2xl mb-10">
+              <Badge>FAQ</Badge>
+              <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
+                Questions people actually ask.
+              </h1>
+              <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
+                No hedging and no sales answers. If the honest answer is
+                &ldquo;it depends&rdquo; or &ldquo;no&rdquo;, that is what
+                you will find here.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4">
             {FAQS.map((item) => (
-              <div key={item.q} className="border-b pb-8 last:border-b-0">
+              <div
+                key={item.q}
+                className="rounded-md border border-border/50 bg-muted/50 p-6 transition-transform duration-200 hover:scale-[1.01] hover:shadow-md"
+              >
                 <h2 className="text-xl tracking-tight mb-2">{item.q}</h2>
-                <p className="text-muted-foreground leading-relaxed max-w-3xl">
+                <p className="text-muted-foreground leading-relaxed">
                   {item.a}
                 </p>
               </div>
             ))}
+            </div>
           </div>
 
           {/* Sticky rail — the answers are capped for line length, which

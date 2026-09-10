@@ -66,7 +66,7 @@ export default function AccessibilityPage() {
         </div>
 
         <ScrollReveal>
-          <div className="max-w-2xl border-t pt-10 flex flex-col gap-4">
+          <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 flex flex-col gap-4">
             <h2 className="text-2xl tracking-tight flex items-center gap-2">
               <Accessibility className="w-6 h-6" />
               Found a real issue on this site?

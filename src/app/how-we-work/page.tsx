@@ -82,7 +82,7 @@ export default function HowWeWorkPage() {
           ))}
         </div>
 
-        <div className="max-w-2xl border-t pt-10">
+        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
           <h2 className="text-2xl tracking-tight mb-3">
             How long before you see results?
           </h2>

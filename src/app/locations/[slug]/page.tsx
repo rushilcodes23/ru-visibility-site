@@ -148,7 +148,7 @@ export default async function LocationPage({
         </ScrollReveal>
 
         <ScrollReveal delay={200}>
-          <div className="max-w-2xl border-t pt-10">
+          <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
             <h2 className="text-2xl tracking-tight mb-3">
               Getting started in {place}
             </h2>

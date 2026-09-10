@@ -185,7 +185,7 @@ export default function PricingPage() {
           ))}
         </div>
 
-        <div className="max-w-2xl border-t pt-10">
+        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
           <Button variant="outline" size="lg" render={<a href="/contact">Ask About a Custom Scope</a>} />
         </div>
       </div>

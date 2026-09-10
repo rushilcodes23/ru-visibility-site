@@ -70,7 +70,7 @@ export default function WorkPage() {
           </div>
         </div>
 
-        <div className="max-w-2xl border-t pt-10">
+        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
           <h2 className="text-2xl tracking-tight mb-4">Why we work this way</h2>
           <p className="text-muted-foreground leading-relaxed italic">
             &ldquo;I built Ru Visibility because most SEO agencies either

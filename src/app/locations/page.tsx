@@ -50,7 +50,7 @@ export default function LocationsIndexPage() {
           Don&apos;t see your city? We work beyond this list too →
         </a>
 
-        <div className="max-w-2xl border-t pt-10 mb-16">
+        <div className="max-w-2xl rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mb-16">
           <h2 className="text-2xl tracking-tight mb-4">
             What a city page covers
           </h2>
@@ -72,7 +72,7 @@ export default function LocationsIndexPage() {
           </p>
         </div>
 
-        <div className="max-w-2xl border-t pt-10">
+        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
           <h2 className="text-2xl tracking-tight mb-4">
             Not on the list?
           </h2>

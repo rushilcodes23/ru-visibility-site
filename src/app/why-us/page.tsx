@@ -111,7 +111,7 @@ export default function WhyUsPage() {
           </div>
 
           <ScrollReveal>
-            <div className="max-w-2xl border-t pt-10 mb-16">
+            <div className="max-w-2xl rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mb-16">
               <h2 className="text-2xl tracking-tight mb-4">
                 What we will not tell you
               </h2>
@@ -130,7 +130,7 @@ export default function WhyUsPage() {
           </ScrollReveal>
 
           <ScrollReveal>
-            <div className="max-w-2xl border-t pt-10">
+            <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
               <h2 className="text-2xl tracking-tight mb-4">
                 Who this is not for
               </h2>
