@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal from "@/components/scroll-reveal";
 import { ClosingCta } from "@/components/ui/closing-cta";
+import { pageMetadata } from "@/lib/seo";
 import {
   UserCheck,
   Wrench,
@@ -10,12 +11,11 @@ import {
   Eye,
 } from "lucide-react";
 
-export const metadata = {
-  alternates: { canonical: "/why-us" },
+export const metadata = pageMetadata({
+  path: "/why-us",
   title: "Why Us — What Makes Us Different | Ru Visibility",
-  description:
-    "No guaranteed rankings, no account managers, no invented numbers. What you actually get working with Ru Visibility, and who it isn't for.",
-};
+  description: "No guaranteed rankings, no account managers, no invented numbers. What you actually get working with Ru Visibility, and who it isn't for.",
+});
 
 const REASONS = [
   {

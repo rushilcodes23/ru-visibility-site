@@ -1,12 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/blog/why-geo-matters" },
+export const metadata = pageMetadata({
+  path: "/blog/why-geo-matters",
   title: "Why GEO Matters — Ru Visibility",
-  description:
-    "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Rushil, founder of Ru Visibility, on why this matters now.",
-};
+  description: "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Rushil, founder of Ru Visibility, on why this matters now.",
+  type: "article",
+});
 
 /** Inline emphasis for the lines worth remembering. */
 function Mark({ children }: { children: React.ReactNode }) {

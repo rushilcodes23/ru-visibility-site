@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { pageMetadata } from "@/lib/seo";
 import {
   Search,
   ScanSearch,
@@ -8,12 +9,11 @@ import {
   BarChart3,
 } from "lucide-react";
 
-export const metadata = {
-  alternates: { canonical: "/how-we-work" },
+export const metadata = pageMetadata({
+  path: "/how-we-work",
   title: "How We Work — SEO & GEO Process | Ru Visibility",
-  description:
-    "The six-step process behind every engagement: AI visibility testing, full audit, plain-English report, direct fixes, and a real before/after.",
-};
+  description: "The six-step process behind every engagement: AI visibility testing, full audit, plain-English report, direct fixes, and a real before/after.",
+});
 
 const STEPS = [
   {

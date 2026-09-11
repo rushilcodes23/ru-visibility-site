@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal from "@/components/scroll-reveal";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/terms" },
+export const metadata = pageMetadata({
+  path: "/terms",
   title: "Terms of Service | Ru Visibility",
-  description:
-    "The plain-English terms for working with us: what we do, what we need from you, and what nobody in this industry can honestly promise.",
-};
+  description: "The plain-English terms for working with us: what we do, what we need from you, and what nobody in this industry can honestly promise.",
+});
 
 const LAST_UPDATED = "11 September 2026";
 

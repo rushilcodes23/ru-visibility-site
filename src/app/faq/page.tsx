@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/faq" },
+export const metadata = pageMetadata({
+  path: "/faq",
   title: "FAQ — SEO, GEO & AI Visibility Questions | Ru Visibility",
-  description:
-    "Honest answers about SEO and GEO management: do we guarantee results, how is this different from a regular SEO agency, and what do you actually get.",
-};
+  description: "Honest answers about SEO and GEO management: do we guarantee results, how is this different from a regular SEO agency, and what do you actually get.",
+});
 
 // `lead` is the part that actually answers the question and gets visual
 // weight; `rest` is the reasoning. Schema below joins them back together so

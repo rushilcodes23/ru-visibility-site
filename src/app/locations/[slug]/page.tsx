@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import ScrollReveal from "@/components/scroll-reveal";
 import { Bot, Globe, Accessibility, FileText } from "lucide-react";
 
@@ -19,22 +20,22 @@ export async function generateMetadata({
   const loc = LOCATIONS.find((l) => l.slug === slug);
 
   if (!loc) {
-    return {
+    return pageMetadata({
+      path: `/locations/${OTHER_AREAS.slug}`,
       title: "Other Areas We Serve | Ru Visibility",
       description:
         "Not in one of our named cities? We work with businesses anywhere — same SEO and GEO visibility management, same process.",
-      alternates: { canonical: `/locations/${OTHER_AREAS.slug}` },
-    };
+    });
   }
 
   // Kept deliberately short — a Screaming Frog crawl flagged descriptions
   // over 155 characters as truncating in search results, and the old
   // version pasted the full city intro in here.
-  return {
+  return pageMetadata({
+    path: `/locations/${loc.slug}`,
     title: `SEO & GEO in ${loc.city} | Ru Visibility`,
     description: `SEO and AI visibility (GEO) management for ${loc.city} businesses — so Google, ChatGPT, and Gemini can all find and recommend you.`,
-    alternates: { canonical: `/locations/${loc.slug}` },
-  };
+  });
 }
 
 const WHAT_WE_DO = [

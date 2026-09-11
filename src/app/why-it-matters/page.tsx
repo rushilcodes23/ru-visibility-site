@@ -1,13 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, Bot, Accessibility, TrendingDown } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/why-it-matters" },
+export const metadata = pageMetadata({
+  path: "/why-it-matters",
   title: "Why SEO & GEO Matter for Your Business | Ru Visibility",
-  description:
-    "Why AI visibility and search rankings matter now — and what it actually costs a business to stay invisible to both.",
-};
+  description: "Why AI visibility and search rankings matter now — and what it actually costs a business to stay invisible to both.",
+});
 
 const REASONS = [
   {

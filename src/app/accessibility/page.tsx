@@ -2,13 +2,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accessibility, Eye, Keyboard, Contrast } from "lucide-react";
 import ScrollReveal from "@/components/scroll-reveal";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/accessibility" },
+export const metadata = pageMetadata({
+  path: "/accessibility",
   title: "Accessibility Statement | Ru Visibility",
-  description:
-    "Our accessibility statement, and the real, measured standard we hold client sites to as part of every audit.",
-};
+  description: "Our accessibility statement, and the real, measured standard we hold client sites to as part of every audit.",
+});
 
 const COMMITMENTS = [
   {

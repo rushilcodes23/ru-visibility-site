@@ -1,13 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { XCircle, CheckCircle2 } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/work" },
+export const metadata = pageMetadata({
+  path: "/work",
   title: "Our Work — Real Results Only | Ru Visibility",
-  description:
-    "We don't publish client results until they're real and approved to share. See what kind of AI visibility change we're working toward, honestly labeled.",
-};
+  description: "We don't publish client results until they're real and approved to share. See what kind of AI visibility change we're working toward, honestly labeled.",
+});
 
 export default function WorkPage() {
   return (

@@ -1,13 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
 import { MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/locations" },
+export const metadata = pageMetadata({
+  path: "/locations",
   title: "Where We Work — US & India SEO/GEO | Ru Visibility",
-  description:
-    "SEO and GEO visibility management for businesses in Dallas, Atlanta, Houston, Miami, Phoenix, Raipur, Jaipur, and beyond.",
-};
+  description: "SEO and GEO visibility management for businesses in Dallas, Atlanta, Houston, Miami, Phoenix, Raipur, Jaipur, and beyond.",
+});
 
 export default function LocationsIndexPage() {
   return (

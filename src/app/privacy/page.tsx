@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal from "@/components/scroll-reveal";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/privacy" },
+export const metadata = pageMetadata({
+  path: "/privacy",
   title: "Privacy Policy | Ru Visibility",
-  description:
-    "What we collect, why, and who touches it. No analytics, no tracking pixels, no ad networks — just the contact form and email.",
-};
+  description: "What we collect, why, and who touches it. No analytics, no tracking pixels, no ad networks — just the contact form and email.",
+});
 
 // Bump this whenever the substance of the policy changes, not on every
 // wording tweak. It's a real "last updated" date, so keep it honest.

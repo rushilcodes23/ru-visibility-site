@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  alternates: { canonical: "/blog" },
+export const metadata = pageMetadata({
+  path: "/blog",
   title: "Blog — SEO & GEO Insights | Ru Visibility",
-  description:
-    "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
-};
+  description: "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
+});
 
 const TOPICS = [
   "How AI tools decide which businesses to name",

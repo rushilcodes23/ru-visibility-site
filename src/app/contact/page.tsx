@@ -1,6 +1,7 @@
 import { ContactCard } from "@/components/ui/contact-card";
 import { MailIcon, PhoneIcon, Lock, UserCheck, MessageSquareReply } from "lucide-react";
 import ContactForm from "@/components/contact-form";
+import { pageMetadata } from "@/lib/seo";
 
 const WHAT_HAPPENS = [
   {
@@ -20,12 +21,11 @@ const WHAT_HAPPENS = [
   },
 ];
 
-export const metadata = {
-  alternates: { canonical: "/contact" },
+export const metadata = pageMetadata({
+  path: "/contact",
   title: "Talk to Us — Get Your Visibility Audit | Ru Visibility",
-  description:
-    "Questions about SEO, GEO, pricing, or your visibility audit? Reach out directly — real answers, no sales bot.",
-};
+  description: "Questions about SEO, GEO, pricing, or your visibility audit? Reach out directly — real answers, no sales bot.",
+});
 
 export default function ContactPage() {
   return (

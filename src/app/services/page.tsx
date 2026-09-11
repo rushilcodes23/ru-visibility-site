@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/scroll-reveal";
+import { pageMetadata } from "@/lib/seo";
 import {
   Bot,
   Globe,
@@ -21,12 +22,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export const metadata = {
-  alternates: { canonical: "/services" },
+export const metadata = pageMetadata({
+  path: "/services",
   title: "What We Do — SEO, GEO & AI Services | Ru Visibility",
-  description:
-    "Everything we can do for your business: SEO, AI visibility, local search, site speed, content, web design, and AI tools. Ask us what it costs.",
-};
+  description: "Everything we can do for your business: SEO, AI visibility, local search, site speed, content, web design, and AI tools. Ask us what it costs.",
+});
 
 type Item = {
   icon: LucideIcon;
