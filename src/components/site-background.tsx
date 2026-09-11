@@ -256,15 +256,19 @@ export default function SiteBackground() {
            shorter and pushed further off the edges keeps them reading as
            light rather than as shapes. */
         @media (max-width: 767px) {
+          /* Smaller and much weaker than desktop. At 110% wide and 0.9
+             opacity these filled most of a phone screen, and stacked with
+             the heading glow and the dot grid the whole thing read as noise
+             rather than as depth. */
           .qh-glow-a {
-            top: -14%; left: -35%;
-            width: 110%; height: 38%;
-            opacity: 0.9;
+            top: -10%; left: -25%;
+            width: 80%; height: 26%;
+            opacity: 0.45;
           }
           .qh-glow-b {
-            bottom: -14%; right: -35%;
-            width: 105%; height: 34%;
-            opacity: 0.85;
+            bottom: -10%; right: -25%;
+            width: 75%; height: 24%;
+            opacity: 0.4;
           }
         }
       `}</style>

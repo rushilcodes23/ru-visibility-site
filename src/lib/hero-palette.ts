@@ -12,8 +12,8 @@ export const LIGHT = {
   tagline: "#475569",
   subtitle: "#475569",
   bracket: "#0f172a",
-  glowRgb: "120 150 215",
-  glowA: "0.42",
+  glowRgb: "150 180 250",
+  glowA: "0.30",
   btnText: "#fff",
   btnFrom: "#1e293b",
   btnTo: "#0f172a",
@@ -29,8 +29,8 @@ export const LIGHT = {
   canvasParticle: "rgba(15,23,42,0.28)",
   canvasShadow: "rgba(15,23,42,0.55)",
   btnRing: "rgba(15,23,42,0.18)",
-  headingGlowRgb: "110 145 215",
-  headingGlowA: "0.34",
+  headingGlowRgb: "145 175 250",
+  headingGlowA: "0.24",
   outlineHoverBorder: "#0f172a",
 };
 

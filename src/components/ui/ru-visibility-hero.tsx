@@ -43,6 +43,22 @@ function getStyles() {
     }
   }
 
+
+  .qhero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+  }
+  @media (max-width: 640px) {
+    /* Stacked and full width on phones. Side by side they wrapped mid-label
+       and each button was only as wide as its own text, which makes a small
+       target on a device you are using one-handed. */
+    .qhero-cta-row { flex-direction: column; align-items: stretch; }
+    .qhero-cta-row .qhero-btn { justify-content: center; width: 100%; }
+  }
+
   .qhero-shell,
   .qhero-shell *,
   .qhero-shell *::before,
@@ -253,7 +269,7 @@ export default function RuVisibilityHero() {
             {/* Large brand wordmark — same name as the logo itself */}
             <div
               style={{
-                fontSize: "clamp(2.25rem, 11vw, 10rem)",
+                fontSize: "clamp(2.75rem, 13vw, 10rem)",
                 fontWeight: 900,
                 lineHeight: 0.85,
                 display: "flex",
@@ -274,7 +290,7 @@ export default function RuVisibilityHero() {
             <span
               className="qhero-tagline-pulse"
               style={{
-                fontSize: "clamp(0.8rem, 2.2vw, 1.25rem)",
+                fontSize: "clamp(0.95rem, 2.6vw, 1.25rem)",
                 fontWeight: 700,
                 letterSpacing: "0.2em",
                 color: "var(--qh-tagline)",
@@ -292,7 +308,7 @@ export default function RuVisibilityHero() {
         <p
           className="qhero-fade-up-delay-2"
           style={{
-            fontSize: "clamp(0.9rem, 1.8vw, 1.1rem)",
+            fontSize: "clamp(1.02rem, 2.4vw, 1.1rem)",
             fontWeight: 400,
             color: "var(--qh-subtitle)",
             maxWidth: "42rem",
@@ -308,7 +324,7 @@ export default function RuVisibilityHero() {
         </p>
 
         {/* CTAs */}
-        <div className="qhero-fade-up-delay-2" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+        <div className="qhero-fade-up-delay-2 qhero-cta-row">
           <a href="/contact" className="qhero-btn">
             <span>Get Your Visibility Audit</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

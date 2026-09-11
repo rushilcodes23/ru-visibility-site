@@ -35,13 +35,13 @@ const FEATURED_CITIES = FEATURED_CITY_SLUGS.map((slug) =>
 export default function SiteFooter() {
   return (
     <footer className="page-surface border-t">
-      <div className="container mx-auto px-4 py-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
-        <div className="flex flex-col gap-3 sm:col-span-2">
+      <div className="container mx-auto px-4 py-12 md:py-16 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-5">
+        <div className="flex flex-col gap-3 col-span-2">
           <a href="/" className="flex items-center gap-2">
             <Image src="/logo-mark-220.png" alt="" width={28} height={28} className="dark:invert" unoptimized />
             <span className="font-semibold tracking-tight text-lg">Ru Visibility</span>
           </a>
-          <p className="text-sm text-muted-foreground max-w-xs">
+          <p className="text-sm text-muted-foreground max-w-md lg:max-w-xs">
             We make your business visible. Ongoing SEO and GEO management,
             content, website design, and maintenance — real, measured work,
             plain-English reporting, no jargon.
@@ -52,7 +52,7 @@ export default function SiteFooter() {
           <a href="tel:+917222999365" className="footer-link text-sm">
             +91 72229 99365
           </a>
-          <p className="text-xs text-muted-foreground mt-2 max-w-xs">
+          <p className="text-xs text-muted-foreground mt-2 max-w-md lg:max-w-xs">
             Send us a website address and you get a real answer, usually within
             a day. Not a calendar link.
           </p>
@@ -76,16 +76,21 @@ export default function SiteFooter() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-2">
+        {/* Full width on phones with the cities wrapping inline, rather than
+            a third narrow column stranded on its own row with half the width
+            empty beside it. Back to a normal column from lg up. */}
+        <div className="col-span-2 flex flex-col gap-2 lg:col-span-1">
           <span className="text-sm font-medium mb-1">Where We Work</span>
-          {FEATURED_CITIES.map((l) => (
-            <a key={l.slug} href={`/locations/${l.slug}`} className="footer-link text-sm">
-              {l.city}
+          <div className="flex flex-wrap gap-x-5 gap-y-2 lg:flex-col lg:gap-2">
+            {FEATURED_CITIES.map((l) => (
+              <a key={l.slug} href={`/locations/${l.slug}`} className="footer-link text-sm">
+                {l.city}
+              </a>
+            ))}
+            <a href="/locations" className="footer-link text-sm">
+              All {LOCATIONS.length} cities →
             </a>
-          ))}
-          <a href="/locations" className="footer-link text-sm">
-            All {LOCATIONS.length} cities →
-          </a>
+          </div>
         </div>
       </div>
 

@@ -72,11 +72,11 @@ function Feature() {
       {/* Soft depth accents — same motif as the hero, so scrolling
           doesn't hit a flat, empty section */}
       <div
-        className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
+        className="absolute -top-20 -right-20 w-40 h-40 sm:w-72 sm:h-72 rounded-full pointer-events-none opacity-60 sm:opacity-100"
         style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--foreground) 5%, transparent) 0%, transparent 70%)" }}
       />
       <div
-        className="absolute bottom-0 -left-20 w-72 h-72 rounded-full pointer-events-none"
+        className="absolute bottom-0 -left-20 w-40 h-40 sm:w-72 sm:h-72 rounded-full pointer-events-none opacity-60 sm:opacity-100"
         style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--muted-foreground) 25%, transparent) 0%, transparent 70%)" }}
       />
 
@@ -105,9 +105,9 @@ function Feature() {
                   <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                     <s.icon className="w-6 h-6 stroke-1 text-primary" />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col gap-1">
                     <h3 className="text-lg tracking-tight">{s.title}</h3>
-                    <p className="text-muted-foreground text-sm">{s.body}</p>
+                    <p className="text-muted-foreground text-[0.95rem] leading-relaxed sm:text-sm">{s.body}</p>
                   </div>
                 </div>
               </ScrollReveal>
