@@ -8,6 +8,15 @@ export const metadata = {
     "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Rushil, founder of Ru Visibility, on why this matters now.",
 };
 
+/** Inline emphasis for the lines worth remembering. */
+function Mark({ children }: { children: React.ReactNode }) {
+  return (
+    <mark className="rounded bg-primary/10 px-1 py-0.5 font-medium text-foreground">
+      {children}
+    </mark>
+  );
+}
+
 const postJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -43,30 +52,36 @@ export default function WhyGeoMattersPost() {
             ChatGPT, Gemini, or Perplexity directly for a recommendation
             instead of typing into a search bar. If those tools don&apos;t
             know your business exists, or have no reason to recommend it
-            over a competitor, you&apos;re invisible to that entire channel —
-            one that barely existed a few years ago and is only growing.
+            over a competitor,{" "}
+            <Mark>you&apos;re invisible to that entire channel</Mark> — one
+            that barely existed a few years ago and is only growing.
           </p>
 
           <p>
             That&apos;s what GEO — Generative Engine Optimization — actually
-            is. Not a buzzword, not a rebrand of SEO. It&apos;s the practice
-            of making sure AI systems can actually read your site, understand
-            what you offer, and have real reasons to recommend you when
-            someone asks.
+            is. Not a buzzword, not a rebrand of SEO.
           </p>
+
+          <blockquote className="my-2 rounded-md border-l-4 border-primary bg-muted/50 py-5 pl-6 pr-5 text-lg font-medium leading-relaxed text-foreground md:text-xl">
+            GEO is making sure AI systems can read your site, understand what
+            you offer, and have real reasons to recommend you when someone
+            asks.
+          </blockquote>
 
           <h2 className="text-2xl text-foreground tracking-tight mt-4">
             Why it&apos;s different from regular SEO
           </h2>
           <p>
             Traditional SEO is largely about ranking in a list of blue links.
-            GEO is about being the answer itself — the one thing an AI tool
-            says out loud, with no other options shown alongside it. That&apos;s
-            a much higher bar, and a much bigger prize. It also means the old
+            <Mark>GEO is about being the answer itself</Mark> — the one thing
+            an AI tool says out loud, with no other options shown alongside
+            it. That&apos;s a much higher bar, and a much bigger prize. It also means the old
             playbook — keyword stuffing, backlink schemes, thin content —
-            doesn&apos;t work the same way. AI models are reading for
-            substance, clarity, and whether your site actually answers the
-            question a real person is asking.
+            doesn&apos;t work the same way.{" "}
+            <Mark>
+              AI models are reading for substance, clarity, and whether your
+              site actually answers the question a real person is asking.
+            </Mark>
           </p>
 
           <h2 className="text-2xl text-foreground tracking-tight mt-4">

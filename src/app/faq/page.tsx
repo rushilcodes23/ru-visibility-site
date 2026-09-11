@@ -8,30 +8,39 @@ export const metadata = {
     "Honest answers about SEO and GEO management: do we guarantee results, how is this different from a regular SEO agency, and what do you actually get.",
 };
 
+// `lead` is the part that actually answers the question and gets visual
+// weight; `rest` is the reasoning. Schema below joins them back together so
+// search engines still see the whole answer.
 const FAQS = [
   {
     q: "Do you guarantee results?",
-    a: "No — and be skeptical of anyone who does. AI models retrain regularly and Google's algorithm changes constantly; nobody controls either. What we do guarantee is a real, measured audit and a report that only says what we can actually verify, not inflated claims to close a sale.",
+    lead: "No, and be skeptical of anyone who does.",
+    rest: "AI models retrain regularly and Google's algorithm changes constantly; nobody controls either. What we do guarantee is a real, measured audit and a report that only says what we can actually verify, not inflated claims to close a sale.",
   },
   {
     q: "How is this different from a regular SEO agency?",
-    a: "Most SEO work only covers Google. We check that too, but we also test how ChatGPT, Perplexity, Gemini, and Google's AI Overviews actually see your business — a growing share of how people find providers now. We also run real accessibility scans (axe-core, not guesses), which most SEO shops don't touch at all.",
+    lead: "Most SEO work only covers Google. We cover the AI tools too.",
+    rest: "We check Google as well, but we also test how ChatGPT, Perplexity, Gemini, and Google's AI Overviews actually see your business, which is a growing share of how people find providers now. We also run real accessibility scans with axe-core, not guesses, which most SEO shops don't touch at all.",
   },
   {
     q: "What do I actually get at the end of an audit?",
-    a: "One plain-English report — not a 40-page technical document. It tells you what's broken, why it matters, and what we're fixing directly versus what needs your input.",
+    lead: "One plain-English report, not a 40-page technical document.",
+    rest: "It tells you what's broken, why it matters, and what we're fixing directly versus what needs your input.",
   },
   {
     q: "Do you fix everything yourselves?",
-    a: "Whatever's safe to automate, yes — we fix it directly. Anything that needs a real judgment call (content rewrites, design decisions, choices specific to your business) gets a clear checklist instead, so nothing changes on your site without your say-so.",
+    lead: "Anything safe to automate, we fix directly.",
+    rest: "Anything that needs a real judgment call, like content rewrites, design decisions, or choices specific to your business, gets a clear checklist instead. Nothing changes on your site without your say-so.",
   },
   {
     q: "What if the audit doesn't find much wrong?",
-    a: "Then we tell you that. The same rule that keeps us from inflating a problem applies here too — we're not going to manufacture issues to justify the engagement.",
+    lead: "Then we tell you that.",
+    rest: "The same rule that keeps us from inflating a problem applies here too. We're not going to manufacture issues to justify the engagement.",
   },
   {
     q: "How fast will I see AI or search visibility change?",
-    a: "It genuinely depends on your starting point — see the How We Work page for the honest version of this answer. Short version: AI visibility can shift faster than traditional Google rankings, but neither is instant.",
+    lead: "It depends on where you're starting from, and neither is instant.",
+    rest: "AI visibility can shift faster than traditional Google rankings, because AI tools can pick up a fix without waiting on a full re-crawl. See the How We Work page for the longer version of this answer.",
   },
 ];
 
@@ -47,7 +56,7 @@ const faqJsonLd = {
   mainEntity: FAQS.map((item) => ({
     "@type": "Question",
     name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
+    acceptedAnswer: { "@type": "Answer", text: `${item.lead} ${item.rest}` },
   })),
 };
 
@@ -79,9 +88,12 @@ export default function FaqPage() {
                 key={item.q}
                 className="rounded-md border border-border/50 bg-muted/50 p-6 transition-transform duration-200 hover:scale-[1.01] hover:shadow-md"
               >
-                <h2 className="text-xl tracking-tight mb-2">{item.q}</h2>
+                <h2 className="text-xl tracking-tight mb-3">{item.q}</h2>
+                <p className="text-base md:text-lg font-medium leading-relaxed text-foreground mb-3 border-l-2 border-primary pl-4">
+                  {item.lead}
+                </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  {item.a}
+                  {item.rest}
                 </p>
               </div>
             ))}

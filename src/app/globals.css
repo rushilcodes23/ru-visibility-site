@@ -104,7 +104,7 @@
   --border: #1e293b;
   --input: #1e293b;
   --ring: #64748b;
-  color-scheme: dark;
+  color-scheme: only dark;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -132,7 +132,7 @@
     /* Defaults to light; .dark above overrides to dark. Keeps native
        form controls (inputs, scrollbars) in sync with whichever theme
        is actually active, instead of always forcing light regardless. */
-    color-scheme: light;
+    color-scheme: only light;
   }
 }
 

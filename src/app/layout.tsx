@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
@@ -87,6 +87,17 @@ const spaceGrotesk = Space_Grotesk({
 // text always relied on the browser synthesizing bold from 700, both
 // before this fix and after. No regression, just noting it's inherent to
 // the typeface, not something introduced here.
+
+// Chrome and Brave on Android auto-darken any page they think has no dark
+// mode of its own. Declaring support here is the documented opt-out, and it
+// has to be a meta tag because the heuristic runs before our CSS applies.
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F8FAFC" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e17" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ruvisibility.com"),
