@@ -63,7 +63,7 @@ export default function WhyItMattersPage() {
           ))}
         </div>
 
-        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
+        <div className="mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
           <p className="text-muted-foreground leading-relaxed mb-6">
             None of this means you need to panic — it means it's worth
             actually checking where you stand today, rather than guessing.

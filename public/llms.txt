@@ -4,11 +4,13 @@
 
 ## Services
 
-- [Pricing](https://ruvisibility.com/pricing): Two ongoing plans — Essentials ($699/month: SEO+GEO management, monthly reporting) and Visibility Management ($899 first month, then $1,199/month: adds accessibility monitoring, maintenance, and content). Website design/development and monetization consulting are quoted separately per project.
+- [What We Do](https://ruvisibility.com/services): Twelve services and three packages — Essentials (ongoing SEO and GEO management plus a monthly plain-English report), Complete (adds accessibility monitoring, site maintenance, and content writing), and Custom (pick individual services or one-off projects). Services include AI visibility (GEO), technical SEO, local SEO and Google Business Profile, site speed and Core Web Vitals, e-commerce and product SEO, analytics and conversion tracking, accessibility (ADA) audits, blog and content writing, website design and development, digital marketing, AI tooling for business operations, and conversion work. Pricing is not published; it depends on site size and scope, and is quoted after we look at the site.
 - [How We Work](https://ruvisibility.com/how-we-work): Six-step process — AI visibility test, full audit, plain-English categorization, a one-page report, direct fixes plus a checklist for anything unsafe to automate, then a real before/after re-test.
 - [Why It Matters](https://ruvisibility.com/why-it-matters): The honest case for why SEO and GEO matter now — Google still decides who's found, AI tools are a growing second channel, and accessibility is real legal exposure.
 - [FAQ](https://ruvisibility.com/faq): Direct answers, including that we do not guarantee results.
 - [Accessibility](https://ruvisibility.com/accessibility): Our own accessibility statement — we audit others for this, so we hold our own site to the same standard.
+- [Why Us](https://ruvisibility.com/why-us): What separates us — founder-run rather than an account-manager chain, ongoing work instead of a one-time report, real scan data only, and no guaranteed-ranking promises. Includes an explicit "who this is not for".
+- [Blog](https://ruvisibility.com/blog): Writing on AI visibility and SEO, published only when there is something tested to report.
 
 ## Locations
 

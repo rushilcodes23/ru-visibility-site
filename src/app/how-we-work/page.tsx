@@ -82,11 +82,11 @@ export default function HowWeWorkPage() {
           ))}
         </div>
 
-        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
+        <div className="mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
           <h2 className="text-2xl tracking-tight mb-3">
             How long before you see results?
           </h2>
-          <p className="text-muted-foreground leading-relaxed mb-3">
+          <p className="text-muted-foreground leading-relaxed mb-3 max-w-3xl">
             Nobody can honestly guarantee AI or search rankings — AI models
             retrain regularly and Google's algorithm changes constantly, and
             that's true no matter who you hire. What we can tell you: AI
@@ -95,7 +95,7 @@ export default function HowWeWorkPage() {
             cycle the way Google's index does. Traditional SEO tends to build
             more gradually, as topical authority compounds over time.
           </p>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="text-muted-foreground leading-relaxed max-w-3xl">
             We'll give you real numbers once we've run the before/after on
             your own site — not a industry-wide average that may not apply to
             you.

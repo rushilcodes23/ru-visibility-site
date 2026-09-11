@@ -93,18 +93,18 @@ export default async function LocationPage({
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
-          <div className="max-w-2xl mb-16">
+          <div className="mb-16">
             <h2 className="text-2xl tracking-tight mb-3">
               What we actually do for {place} businesses
             </h2>
-            <p className="text-muted-foreground leading-relaxed mb-8">
+            <p className="text-muted-foreground leading-relaxed mb-8 max-w-2xl">
               The work itself doesn&apos;t change by location — what changes
               is who you&apos;re competing against for the same searches and
               the same AI recommendations. Every engagement covers the same
               four areas, every month, not as a one-time audit you never hear
               about again.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {WHAT_WE_DO.map((item) => (
                 <div
                   key={item.title}
@@ -123,12 +123,13 @@ export default async function LocationPage({
           </div>
         </ScrollReveal>
 
+        <div className="grid gap-6 lg:grid-cols-2">
         <ScrollReveal delay={150}>
-          <div className="max-w-2xl mb-16">
+          <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
             <h2 className="text-2xl tracking-tight mb-3">
               Why being findable locally changed
             </h2>
-            <p className="text-muted-foreground leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4 max-w-3xl">
               For years, showing up locally meant ranking on Google and
               little else. That still matters — most people still start with
               a search. But a growing share now ask an AI tool directly for a
@@ -137,7 +138,7 @@ export default async function LocationPage({
               one of them, you aren&apos;t further down the list; you&apos;re
               simply absent from that conversation.
             </p>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed max-w-3xl">
               We won&apos;t promise you a specific ranking or a guaranteed
               citation — nobody honestly can, and anyone who does is selling
               you something. What we can do is measure exactly where you
@@ -148,7 +149,7 @@ export default async function LocationPage({
         </ScrollReveal>
 
         <ScrollReveal delay={200}>
-          <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
+          <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
             <h2 className="text-2xl tracking-tight mb-3">
               Getting started in {place}
             </h2>
@@ -161,14 +162,15 @@ export default async function LocationPage({
               </a>
               , and{" "}
               <a href="/services" className="underline underline-offset-4 hover:text-foreground">
-                pricing
+                what we do
               </a>{" "}
-              is published openly — no discovery call required to find out
-              what it costs.
+              lists every service and package, so you know what you are
+              getting before you ask.
             </p>
             <Button size="lg" render={<a href="/contact">Get Your Visibility Audit</a>} />
           </div>
         </ScrollReveal>
+        </div>
       </div>
     </div>
   );

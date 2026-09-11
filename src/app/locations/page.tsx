@@ -50,7 +50,8 @@ export default function LocationsIndexPage() {
           Don&apos;t see your city? We work beyond this list too →
         </a>
 
-        <div className="max-w-2xl rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mb-16">
+        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">
             What a city page covers
           </h2>
@@ -72,7 +73,7 @@ export default function LocationsIndexPage() {
           </p>
         </div>
 
-        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
+        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">
             Not on the list?
           </h2>
@@ -86,6 +87,7 @@ export default function LocationsIndexPage() {
             missing, the answer is still yes. Just tell us where you are and
             who you sell to.
           </p>
+        </div>
         </div>
       </div>
     </div>

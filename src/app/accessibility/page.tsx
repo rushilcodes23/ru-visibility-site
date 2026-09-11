@@ -66,12 +66,12 @@ export default function AccessibilityPage() {
         </div>
 
         <ScrollReveal>
-          <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 flex flex-col gap-4">
+          <div className="mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 flex flex-col gap-4">
             <h2 className="text-2xl tracking-tight flex items-center gap-2">
               <Accessibility className="w-6 h-6" />
               Found a real issue on this site?
             </h2>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed max-w-3xl">
               Tell us directly and we'll fix it — no ticket system, no
               runaround. This isn't a legal disclaimer page; it's an open
               invitation to actually flag what's broken.

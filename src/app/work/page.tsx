@@ -37,7 +37,8 @@ export default function WorkPage() {
           What the change we&apos;re aiming for looks like
         </h2>
 
-        <div className="max-w-2xl mb-16 border-2 border-dashed rounded-md p-6 md:p-8">
+        <div className="grid gap-6 lg:grid-cols-2 mb-16">
+        <div className="border-2 border-dashed rounded-md p-6 md:p-8 h-full">
           <span className="inline-block text-xs font-medium tracking-wide uppercase text-muted-foreground border rounded-full px-3 py-1 mb-6">
             Illustrative Example — Not a Real Client
           </span>
@@ -70,7 +71,7 @@ export default function WorkPage() {
           </div>
         </div>
 
-        <div className="max-w-2xl mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
+        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">Why we work this way</h2>
           <p className="text-muted-foreground leading-relaxed italic">
             &ldquo;I built Ru Visibility because most SEO agencies either
@@ -80,6 +81,7 @@ export default function WorkPage() {
             control.&rdquo;
           </p>
           <p className="text-sm font-medium mt-3">— Rushil, Founder</p>
+        </div>
         </div>
       </div>
     </div>
