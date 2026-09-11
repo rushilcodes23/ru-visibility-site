@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: base, lastModified: new Date(), priority: 1 },
     { url: `${base}/how-we-work`, lastModified: new Date(), priority: 0.8 },
     { url: `${base}/why-it-matters`, lastModified: new Date(), priority: 0.7 },
-    { url: `${base}/pricing`, lastModified: new Date(), priority: 0.8 },
+    { url: `${base}/services`, lastModified: new Date(), priority: 0.9 },
     { url: `${base}/faq`, lastModified: new Date(), priority: 0.7 },
     { url: `${base}/work`, lastModified: new Date(), priority: 0.6 },
     { url: `${base}/why-us`, lastModified: new Date(), priority: 0.8 },

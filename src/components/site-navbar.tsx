@@ -193,7 +193,7 @@ const STYLES = `
 
 const NAV_LINKS = [
   { label: "How We Work", href: "/how-we-work" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "What We Do", href: "/services" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
   { label: "Why Us", href: "/why-us" },

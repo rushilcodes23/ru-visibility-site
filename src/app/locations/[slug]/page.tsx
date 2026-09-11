@@ -160,7 +160,7 @@ export default async function LocationPage({
                 How We Work
               </a>
               , and{" "}
-              <a href="/pricing" className="underline underline-offset-4 hover:text-foreground">
+              <a href="/services" className="underline underline-offset-4 hover:text-foreground">
                 pricing
               </a>{" "}
               is published openly — no discovery call required to find out

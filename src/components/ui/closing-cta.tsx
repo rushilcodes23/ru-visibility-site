@@ -17,7 +17,7 @@ export function ClosingCta() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" render={<a href="/contact">Get Your Visibility Audit</a>} />
-              <Button variant="outline" size="lg" render={<a href="/pricing">See Pricing</a>} />
+              <Button variant="outline" size="lg" render={<a href="/services">See What We Do</a>} />
             </div>
           </div>
         </ScrollReveal>

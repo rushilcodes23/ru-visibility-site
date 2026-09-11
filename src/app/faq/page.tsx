@@ -37,7 +37,7 @@ const FAQS = [
 
 const RELATED = [
   { href: "/how-we-work", label: "How We Work", note: "The six steps, in order." },
-  { href: "/pricing", label: "Pricing", note: "What the plans actually include." },
+  { href: "/services", label: "What We Do", note: "Our packages, and everything we handle." },
   { href: "/why-us", label: "Why Us", note: "What makes us different, and who we are not for." },
 ];
 
