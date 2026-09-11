@@ -26,7 +26,7 @@ function getStyles() {
        final stop of / 0 rather than transparent, so the blue stays blue all
        the way out instead of greying toward black. */
     background: radial-gradient(
-      ellipse at center,
+      ellipse closest-side at center,
       rgb(var(--qh-headingGlowRgb) / var(--qh-headingGlowA)) 0%,
       rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.80)) 24%,
       rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.50)) 45%,

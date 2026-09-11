@@ -238,7 +238,7 @@ export default function SiteBackground() {
         .qh-glow-a,
         .qh-glow-b {
           background: radial-gradient(
-            circle at center,
+            ellipse closest-side at center,
             rgb(var(--qh-glowRgb) / var(--qh-glowA)) 0%,
             rgb(var(--qh-glowRgb) / calc(var(--qh-glowA) * 0.82)) 22%,
             rgb(var(--qh-glowRgb) / calc(var(--qh-glowA) * 0.54)) 42%,
