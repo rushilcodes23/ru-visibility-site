@@ -4,6 +4,7 @@ import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import ThemeToggle from "@/components/theme-toggle";
+import SiteBackground from "@/components/site-background";
 import { LOCATIONS } from "@/lib/locations";
 import "./globals.css";
 
@@ -173,9 +174,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
           />
-          <SiteNavbar />
-          <div className="flex-1">{children}</div>
-          <SiteFooter />
+          {/* Fixed layer at z-index 0; everything else sits above it. */}
+          <SiteBackground />
+          <div className="relative z-10 flex min-h-full flex-1 flex-col">
+            <SiteNavbar />
+            <div className="flex-1">{children}</div>
+            <SiteFooter />
+          </div>
           <ThemeToggle />
         </ThemeProvider>
       </body>

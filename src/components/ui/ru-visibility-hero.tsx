@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import Image from "next/image";
-import { useTheme } from "next-themes";
 
 /* ─────────────────────────────────────────────
    Self-contained styles, theme-aware. Monochrome
@@ -11,77 +9,9 @@ import { useTheme } from "next-themes";
    chrome, rendered from the root layout) — not
    duplicated here.
 ───────────────────────────────────────────── */
-const LIGHT = {
-  shellBg: "#F8FAFC",
-  shellText: "#0f172a",
-  glitchBase: "#0f172a",
-  glitchMid: "#475569",
-  ruText: "#0f172a",
-  tagline: "#475569",
-  subtitle: "#64748b",
-  bracket: "#0f172a",
-  glow: "rgba(203,213,225,0.4)",
-  btnText: "#fff",
-  btnFrom: "#1e293b",
-  btnTo: "#0f172a",
-  btnHoverFrom: "#334155",
-  btnHoverTo: "#1e293b",
-  btnShadow: "rgba(15,23,42,0.3)",
-  btnHoverShadow: "rgba(15,23,42,0.4)",
-  outlineText: "#0f172a",
-  outlineBorder: "#cbd5e1",
-  outlineHoverBg: "rgba(15,23,42,0.04)",
-  canvasDefault: "rgba(100,116,139,0.55)",
-  canvasActive: "#0f172a",
-  canvasParticle: "rgba(15,23,42,0.28)",
-  canvasShadow: "rgba(15,23,42,0.55)",
-  btnRing: "rgba(15,23,42,0.18)",
-  headingGlow: "rgba(148,163,184,0.30)",
-  outlineHoverBorder: "#0f172a",
-};
-
-const DARK = {
-  shellBg: "#0a0e17",
-  shellText: "#f1f5f9",
-  glitchBase: "#f1f5f9",
-  glitchMid: "#94a3b8",
-  ruText: "#f1f5f9",
-  tagline: "#cbd5e1",
-  subtitle: "#94a3b8",
-  bracket: "#f1f5f9",
-  glow: "rgba(30,41,59,0.6)",
-  btnText: "#0f172a",
-  btnFrom: "#f1f5f9",
-  btnTo: "#cbd5e1",
-  btnHoverFrom: "#ffffff",
-  btnHoverTo: "#e2e8f0",
-  btnShadow: "rgba(241,245,249,0.15)",
-  btnHoverShadow: "rgba(241,245,249,0.25)",
-  outlineText: "#f1f5f9",
-  outlineBorder: "#334155",
-  outlineHoverBg: "rgba(241,245,249,0.06)",
-  canvasDefault: "rgba(148,163,184,0.5)",
-  canvasActive: "#f1f5f9",
-  canvasParticle: "rgba(241,245,249,0.3)",
-  canvasShadow: "rgba(241,245,249,0.6)",
-  btnRing: "rgba(241,245,249,0.28)",
-  headingGlow: "rgba(51,65,85,0.55)",
-  outlineHoverBorder: "#f1f5f9",
-};
-
-// Both palettes ship as CSS custom properties in one static stylesheet.
-// next-themes sets .dark on <html> in a blocking script before first
-// paint, so the correct colors apply immediately — no JS round-trip, no
-// white flash on refresh in dark mode.
-const cssVars = (o: typeof LIGHT) =>
-  Object.entries(o)
-    .map(([k, v]) => `--qh-${k}: ${v};`)
-    .join(" ");
 
 function getStyles() {
   return `
-  :root { ${cssVars(LIGHT)} }
-  :root.dark { ${cssVars(DARK)} }
 
   .qhero-shell,
   .qhero-shell *,
@@ -96,7 +26,7 @@ function getStyles() {
 
   .qhero-shell {
     font-family: var(--font-space-grotesk), sans-serif;
-    background: var(--qh-shellBg);
+    /* Transparent: the animated grid is a site-wide layer behind this. */
     color: var(--qh-shellText);
   }
 
@@ -217,254 +147,11 @@ function getStyles() {
 `;
 }
 
-/* ─────────────────────────────────────────────
-   Animated dot-grid + floating particle canvas
-───────────────────────────────────────────── */
-function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // themeKey is next-themes' resolvedTheme, and it is the only reliable
-    // source here. Reading the class instead looks correct but is a frame
-    // behind on every toggle: React runs this child effect before the
-    // provider's own effect has flipped the class, so switching to dark
-    // painted the light palette on a dark page and vice versa. The class is
-    // only the fallback for the very first mount, before resolvedTheme is
-    // populated — at that point the blocking theme script has already set it.
-    const isDark = themeKey
-      ? themeKey === "dark"
-      : document.documentElement.classList.contains("dark");
-    const t = isDark ? DARK : LIGHT;
-
-    let raf = 0;
-    let mouseX = -1000;
-    let mouseY = -1000;
-    let isMobile = false;
-    let running = false;
-    let last = 0;
-
-    const SPACING = 30;
-    const BASE_R = 1.6;
-    const HOVER_R = 150;
-
-    class Particle {
-      x = 0; y = 0; vx = 0; vy = 0; size = 0;
-      constructor(w: number, h: number) { this.reset(w, h); }
-      reset(w: number, h: number) {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2;
-      }
-      update(w: number, h: number) {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > w) this.vx *= -1;
-        if (this.y < 0 || this.y > h) this.vy *= -1;
-      }
-      draw(c: CanvasRenderingContext2D) {
-        c.beginPath();
-        c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        c.fillStyle = t.canvasParticle;
-        c.fill();
-      }
-    }
-
-    const particles: Particle[] = [];
-    // The plain grid never changes between frames, so it is rendered once per
-    // resize onto an offscreen canvas and blitted, rather than redrawing
-    // several thousand dots every frame forever.
-    let staticGrid: HTMLCanvasElement | null = null;
-
-    const renderStaticGrid = (w: number, h: number) => {
-      const grid = document.createElement("canvas");
-      grid.width = w;
-      grid.height = h;
-      const gctx = grid.getContext("2d");
-      if (!gctx) return null;
-      gctx.fillStyle = t.canvasDefault;
-      for (let x = 0; x < w; x += SPACING) {
-        for (let y = 0; y < h; y += SPACING) {
-          gctx.beginPath();
-          gctx.arc(x, y, BASE_R, 0, Math.PI * 2);
-          gctx.fill();
-        }
-      }
-      return grid;
-    };
-
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      isMobile = window.innerWidth < 768;
-      particles.length = 0;
-      const n = isMobile ? 18 : 40;
-      for (let i = 0; i < n; i++) particles.push(new Particle(canvas.width, canvas.height));
-      staticGrid = renderStaticGrid(canvas.width, canvas.height);
-      if (prefersReduced && staticGrid) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(staticGrid, 0, 0);
-      }
-    };
-
-    // The canvas scrolls with the hero now, so viewport coords have to be
-    // mapped back into canvas space. As a fixed layer the two were identical
-    // and this conversion was unnecessary.
-    const toCanvas = (clientX: number, clientY: number) => {
-      const r = canvas.getBoundingClientRect();
-      mouseX = clientX - r.left;
-      mouseY = clientY - r.top;
-    };
-    const onMouseMove = (e: MouseEvent) => toCanvas(e.clientX, e.clientY);
-    const onMouseLeave = () => { mouseX = -1000; mouseY = -1000; };
-    // Touch has no hover, but a finger dragging across the hero can light the
-    // grid the same way a cursor does.
-    const onTouchMove = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (touch) toCanvas(touch.clientX, touch.clientY);
-    };
-    const onTouchEnd = () => { mouseX = -1000; mouseY = -1000; };
-
-    const draw = (now: number) => {
-      if (!running) return;
-      raf = requestAnimationFrame(draw);
-
-      // Phones animate at half rate. The cost was always the 60fps
-      // full-screen repaint, not the motion itself, so throttling keeps the
-      // effect without the battery drain that made the page feel slow.
-      if (isMobile && now - last < 1000 / 30) return;
-      last = now;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
-      particles.forEach((p) => { p.update(canvas.width, canvas.height); p.draw(ctx); });
-
-      ctx.fillStyle = t.canvasActive;
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = t.canvasShadow;
-
-      const minX = Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
-      const maxX = Math.min(canvas.width, mouseX + HOVER_R);
-      const minY = Math.max(0, Math.floor((mouseY - HOVER_R) / SPACING) * SPACING);
-      const maxY = Math.min(canvas.height, mouseY + HOVER_R);
-
-      for (let x = minX; x < maxX; x += SPACING) {
-        for (let y = minY; y < maxY; y += SPACING) {
-          const dx = x - mouseX, dy = y - mouseY;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < HOVER_R) {
-            const scale = 1 - dist / HOVER_R;
-            ctx.globalAlpha = Math.min(1, 0.25 + scale);
-            ctx.beginPath();
-            ctx.arc(x, y, BASE_R + scale * 4, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-      }
-      // Reset both, or the shadow and alpha bleed into next frame's grid blit.
-      ctx.globalAlpha = 1;
-      ctx.shadowBlur = 0;
-    };
-
-    const start = () => {
-      if (!running && !prefersReduced) {
-        running = true;
-        raf = requestAnimationFrame(draw);
-      }
-    };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    // This canvas is a fixed, full-viewport layer, so it would otherwise keep
-    // compositing long after the hero has scrolled out of view.
-    const onScroll = () => {
-      if (window.scrollY > window.innerHeight) stop();
-      else start();
-    };
-
-    window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseleave", onMouseLeave);
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    resize();
-    start();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseleave", onMouseLeave);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, [themeKey]);
-
-  return (
-    <div
-      style={{
-        // Absolute, not fixed. As a fixed layer this stayed pinned to the
-        // viewport for the whole page, and the sections below the hero have
-        // no background of their own — so the grid showed through behind the
-        // What We Do cards, frozen on the last frame before the scroll
-        // handler parked it. Absolute keeps it inside the hero, which is
-        // clipped by the shell's overflow: hidden.
-        position: "absolute",
-        inset: 0,
-        zIndex: 0,
-        pointerEvents: "none",
-        background: "var(--qh-shellBg)",
-      }}
-    >
-      {/* Glows render before the canvas so the grid sits on top of them.
-          Painted over it, they washed the dots out entirely in light mode. */}
-      <div style={{
-        position: "absolute", top: "-25%", left: "-15%",
-        width: "70%", height: "70%",
-        background: "radial-gradient(circle, var(--qh-glow) 0%, transparent 70%)",
-      }} />
-      <div style={{
-        position: "absolute", bottom: "-25%", right: "-15%",
-        width: "60%", height: "60%",
-        background: "radial-gradient(circle, var(--qh-glow) 0%, transparent 70%)",
-      }} />
-      {/* A pool of light under the wordmark, so the heading sits on something
-          instead of floating on flat colour. */}
-      <div style={{
-        // Sized to sit under the wordmark only. At 36rem it reached far
-        // enough down the hero to wash over the CTA row, which made the
-        // outline button — transparent by design — look faded out.
-        position: "absolute", top: "38%", left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: "min(88vw, 54rem)", height: "min(46vh, 22rem)",
-        background: "radial-gradient(ellipse at center, var(--qh-headingGlow) 0%, transparent 70%)",
-      }} />
-
-      <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, display: "block" }} />
-    </div>
-  );
-}
 
 /* ─────────────────────────────────────────────
    Root export
 ───────────────────────────────────────────── */
 export default function RuVisibilityHero() {
-  // Only the canvas needs to know the theme in JS, and only so it can
-  // repaint when the toggle flips. Every colour in the markup comes from
-  // CSS variables, so there is nothing to gate on a mounted flag and
-  // nothing that renders light-first before correcting itself.
-  const { resolvedTheme } = useTheme();
 
   return (
     <div
@@ -476,13 +163,22 @@ export default function RuVisibilityHero() {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        background: "var(--qh-shellBg)",
       }}
     >
       <style>{getStyles()}</style>
 
-      {/* Layer 0: dot-grid background (fixed) */}
-      <DotGridBackground themeKey={resolvedTheme} />
+      {/* A pool of light under the wordmark. The dot grid itself is
+          site-wide now and lives in the root layout. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", top: "38%", left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "min(88vw, 54rem)", height: "min(46vh, 22rem)",
+          pointerEvents: "none",
+          background: "radial-gradient(ellipse at center, var(--qh-headingGlow) 0%, transparent 70%)",
+        }}
+      />
 
       {/* Layer 1: Hero content (navbar is site-wide, see layout.tsx) */}
       <main

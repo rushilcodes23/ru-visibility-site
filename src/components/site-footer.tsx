@@ -23,7 +23,7 @@ const LEGAL_LINKS = [
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t bg-background">
+    <footer className="border-t bg-background/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-16 grid grid-cols-1 gap-10 md:grid-cols-4">
         <div className="flex flex-col gap-3 md:col-span-2">
           <a href="/" className="flex items-center gap-2">
