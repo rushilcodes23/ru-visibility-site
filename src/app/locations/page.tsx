@@ -25,7 +25,7 @@ export default function LocationsIndexPage() {
           </p>
         </div>
 
-        <h2 className="text-2xl tracking-tight mb-6">Cities we work in</h2>
+        <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">Cities we work in</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {LOCATIONS.map((l) => (
@@ -52,7 +52,7 @@ export default function LocationsIndexPage() {
 
         <div className="grid gap-6 lg:grid-cols-2">
         <div className="card-surface rounded-md p-6 md:p-8 h-full">
-          <h2 className="text-2xl tracking-tight mb-4">
+          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
             What a city page covers
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -74,7 +74,7 @@ export default function LocationsIndexPage() {
         </div>
 
         <div className="card-surface rounded-md p-6 md:p-8 h-full">
-          <h2 className="text-2xl tracking-tight mb-4">
+          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
             Not on the list?
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">

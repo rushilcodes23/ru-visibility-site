@@ -8,7 +8,7 @@ export const metadata = {
     "The plain-English terms for working with us: what we do, what we need from you, and what nobody in this industry can honestly promise.",
 };
 
-const LAST_UPDATED = "10 September 2026";
+const LAST_UPDATED = "11 September 2026";
 
 export default function TermsPage() {
   return (
@@ -34,7 +34,7 @@ export default function TermsPage() {
 
         <div className="max-w-2xl flex flex-col gap-10">
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">What we do</h2>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">What we do</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Ru Visibility provides ongoing SEO and GEO work: improving how a
               business shows up in search engines and in AI tools, plus the
@@ -50,7 +50,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               What we do not promise
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -71,7 +71,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               What we need from you
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -88,24 +88,94 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Fees and payment
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Fees, billing dates, and the length of the engagement are set out
-              in your written agreement before work begins. Prices shown on
-              this site are the current published rates and can change, but a
-              change never applies retroactively to an engagement already
-              agreed.
+              in your written agreement before work begins. We do not publish
+              prices, because what the work costs depends on the size of your
+              site and how much of it needs fixing. You get a real figure after
+              we have looked, not a guess before.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              <strong className="text-foreground font-medium">
+                We ask for 30% to 45% of the fee up front
+              </strong>{" "}
+              before work starts. The exact share is set in your agreement. This
+              is normal for this kind of work and it protects both sides: it
+              covers the hours that go in before anything is visible, and it
+              means we are committed to your project rather than juggling it
+              against whoever pays first.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              The balance is invoiced as set out in your agreement — on
+              completion for one-off projects, or monthly for ongoing work.
+              Monthly retainers are billed in advance for the month ahead.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              If an invoice goes unpaid, we may pause work until it is
-              settled. We will tell you before we pause anything.
+              If an invoice goes unpaid, we may pause work until it is settled.
+              We will tell you before we pause anything. The advance is applied
+              against your total, not charged on top of it, and it is
+              non-refundable once work has started, since the time it covers has
+              already been spent.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              Tax, currency, and third-party costs
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              Quoted fees are exclusive of tax. Any tax that applies — GST or
+              equivalent — is added to the invoice and shown separately. The
+              currency of your invoice is set in your agreement before work
+              begins, and bank or conversion charges are yours.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Some work needs things we do not supply: ad spend, paid tools,
+              domain or hosting fees, stock licences. Those are billed at cost
+              or paid by you directly, and we will never commit you to one
+              without asking first.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              When the work changes
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              Projects grow. If you ask for something outside what was agreed,
+              we will tell you what it adds in time and cost before we start
+              it, and you decide. We do not quietly absorb extra work and we do
+              not quietly bill for it either.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Small adjustments inside the agreed scope are just part of the
+              job and are not charged separately.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              Refunds
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              Work already done is payable. The advance is non-refundable once
+              work has started, because it covers time already spent. If you
+              cancel before we begin, it is returned in full.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              For monthly work, cancelling part-way through a month does not
+              refund that month, but you keep everything delivered in it and we
+              will not bill the next one. We do not refund on the basis of
+              rankings or traffic, for the reason set out above: nobody
+              controls those, so nobody can sell a guarantee on them.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Who owns what
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -122,7 +192,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Confidentiality
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -142,7 +212,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Ending the engagement
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -154,7 +224,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Limits on liability
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -172,7 +242,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Using this website
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -191,7 +261,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Who you are agreeing with
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -203,7 +273,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Changes to these terms
             </h2>
             <p className="text-muted-foreground leading-relaxed">

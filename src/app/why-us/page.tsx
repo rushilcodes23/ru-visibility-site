@@ -92,7 +92,7 @@ export default function WhyUsPage() {
           </ScrollReveal>
           </div>
 
-          <h2 className="text-2xl tracking-tight mb-6">
+          <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">
             What working with us actually looks like
           </h2>
 
@@ -115,7 +115,7 @@ export default function WhyUsPage() {
           <div className="grid gap-6 lg:grid-cols-2">
           <ScrollReveal>
             <div className="card-surface rounded-md p-6 md:p-8 h-full">
-              <h2 className="text-2xl tracking-tight mb-4">
+              <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
                 What we will not tell you
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
@@ -134,7 +134,7 @@ export default function WhyUsPage() {
 
           <ScrollReveal>
             <div className="card-surface rounded-md p-6 md:p-8 h-full">
-              <h2 className="text-2xl tracking-tight mb-4">
+              <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
                 Who this is not for
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">

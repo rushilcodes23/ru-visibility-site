@@ -47,7 +47,7 @@ export default function AccessibilityPage() {
           </div>
         </ScrollReveal>
 
-        <h2 className="text-2xl tracking-tight mb-6">What we hold ourselves to</h2>
+        <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">What we hold ourselves to</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
           {COMMITMENTS.map((c, i) => (
@@ -67,7 +67,7 @@ export default function AccessibilityPage() {
 
         <ScrollReveal>
           <div className="mt-12 card-surface rounded-md p-6 md:p-8 flex flex-col gap-4">
-            <h2 className="text-2xl tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl tracking-tight flex items-center gap-2 md:text-3xl">
               <Accessibility className="w-6 h-6" />
               Found a real issue on this site?
             </h2>

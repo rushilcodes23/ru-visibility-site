@@ -63,7 +63,7 @@ export default function HowWeWorkPage() {
           </p>
         </div>
 
-        <h2 className="text-2xl tracking-tight mb-6">
+        <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">
           The six steps, in order
         </h2>
 
@@ -83,7 +83,7 @@ export default function HowWeWorkPage() {
         </div>
 
         <div className="mt-12 card-surface rounded-md p-6 md:p-8">
-          <h2 className="text-2xl tracking-tight mb-3">
+          <h2 className="text-2xl tracking-tight mb-3 md:text-3xl">
             How long before you see results?
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-3 max-w-3xl">

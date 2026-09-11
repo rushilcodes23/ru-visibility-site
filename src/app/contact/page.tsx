@@ -81,7 +81,7 @@ export default function ContactPage() {
 
         <div className="grid gap-6 lg:grid-cols-3 mt-16">
         <div className="card-surface rounded-md p-6 md:p-8 h-full">
-          <h2 className="text-2xl tracking-tight mb-4">
+          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
             What to put in the message
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -104,7 +104,7 @@ export default function ContactPage() {
         </div>
 
         <div className="card-surface rounded-md p-6 md:p-8 h-full">
-          <h2 className="text-2xl tracking-tight mb-4">
+          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
             How fast you will hear back
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -120,7 +120,7 @@ export default function ContactPage() {
         </div>
 
         <div className="card-surface rounded-md p-6 md:p-8 h-full">
-          <h2 className="text-2xl tracking-tight mb-4">
+          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
             What happens to your details
           </h2>
           <p className="text-muted-foreground leading-relaxed">

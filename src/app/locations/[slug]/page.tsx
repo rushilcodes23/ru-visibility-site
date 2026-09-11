@@ -94,9 +94,14 @@ export default async function LocationPage({
 
         <ScrollReveal delay={100}>
           <div className="mb-16">
-            <h2 className="text-2xl tracking-tight mb-3">
+            <h2 className="text-2xl tracking-tight mb-3 md:text-3xl">
               What we actually do for {place} businesses
             </h2>
+            {loc?.sectors && (
+              <p className="text-foreground leading-relaxed mb-4 max-w-2xl font-medium">
+                {loc.sectors}
+              </p>
+            )}
             <p className="text-muted-foreground leading-relaxed mb-8 max-w-2xl">
               The work itself doesn&apos;t change by location — what changes
               is who you&apos;re competing against for the same searches and
@@ -126,13 +131,19 @@ export default async function LocationPage({
         <div className="grid gap-6 lg:grid-cols-2">
         <ScrollReveal delay={150}>
           <div className="card-surface rounded-md p-6 md:p-8 h-full">
-            <h2 className="text-2xl tracking-tight mb-3">
+            <h2 className="text-2xl tracking-tight mb-3 md:text-3xl">
               Why being found in {place} changed
             </h2>
+            {loc?.angle && (
+              <p className="text-foreground leading-relaxed mb-4 max-w-3xl font-medium">
+                {loc.angle}
+              </p>
+            )}
             <p className="text-muted-foreground leading-relaxed mb-4 max-w-3xl">
-              For years, showing up locally meant ranking on Google and
-              little else. That still matters — most people still start with
-              a search. But a growing share now ask an AI tool directly for a
+              Underneath that, the shift is the same everywhere. For years,
+              showing up locally meant ranking on Google and little else.
+              That still matters — most people still start with a search.
+              But a growing share now ask an AI tool directly for a
               recommendation instead, and those tools answer with one or two
               businesses, not a page of ten blue links. If yours isn&apos;t
               one of them, you aren&apos;t further down the list; you&apos;re
@@ -150,7 +161,7 @@ export default async function LocationPage({
 
         <ScrollReveal delay={200}>
           <div className="card-surface rounded-md p-6 md:p-8 h-full">
-            <h2 className="text-2xl tracking-tight mb-3">
+            <h2 className="text-2xl tracking-tight mb-3 md:text-3xl">
               Getting started in {place}
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">

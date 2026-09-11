@@ -233,14 +233,27 @@ export default function ServicesPage() {
       <div className="band-surface w-full border-y py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-10 max-w-2xl">
-            <h2 className="mb-3 text-2xl tracking-tight md:text-3xl">
+            <h2 className="mb-3 text-3xl tracking-tight md:text-4xl">
               Our packages
             </h2>
-            <p className="leading-relaxed text-muted-foreground">
+            <p className="leading-relaxed text-muted-foreground mb-4">
               What each one costs depends on how big your site is and how much
               of it needs work. That is why there is no number here. Tell us
               about your business and we will give you a real price, not a
               guess.
+            </p>
+            <p className="leading-relaxed text-muted-foreground">
+              Once you agree, we ask for 30&ndash;45% up front and the rest as
+              set out in your agreement. That is standard for this kind of work,
+              and we would rather you read it here than find it in the small
+              print later. The full detail is in our{" "}
+              <a
+                href="/terms"
+                className="underline underline-offset-4 text-foreground"
+              >
+                terms
+              </a>
+              .
             </p>
           </div>
 
@@ -299,7 +312,7 @@ export default function ServicesPage() {
       <div className="page-surface w-full py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-10 max-w-2xl">
-            <h2 className="mb-3 text-2xl tracking-tight md:text-3xl">
+            <h2 className="mb-3 text-3xl tracking-tight md:text-4xl">
               The full list
             </h2>
             <p className="leading-relaxed text-muted-foreground">

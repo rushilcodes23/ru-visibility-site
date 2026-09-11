@@ -10,7 +10,7 @@ export const metadata = {
 
 // Bump this whenever the substance of the policy changes, not on every
 // wording tweak. It's a real "last updated" date, so keep it honest.
-const LAST_UPDATED = "10 September 2026";
+const LAST_UPDATED = "11 September 2026";
 
 export default function PrivacyPage() {
   return (
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
 
         <div className="max-w-2xl flex flex-col gap-10">
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               What we actually collect
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               What we use it for
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Who else touches it
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Cookies and what your browser stores
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               How long we keep it
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -134,7 +134,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Your rights over your data
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -155,7 +155,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               Client data during a project
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -172,7 +172,85 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">Who runs this</h2>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              Why we are allowed to hold it
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              You sent it to us and you asked us to reply. That is the whole
+              basis. In GDPR language it is your consent for an enquiry, and
+              our legitimate interest in answering someone who contacted our
+              business.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              We never rely on a pre-ticked box or bury permission in a longer
+              agreement. If you want that consent withdrawn, say so and it is
+              withdrawn.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              Where in the world it goes
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              We are based in India, so if you write to us from the US, the UK,
+              or the EU, your message is read in India. Cloudflare serves this
+              site from whichever of its locations is nearest you, and Resend
+              processes the email that carries your enquiry to us.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              We are telling you this plainly rather than hiding it in a
+              sub-clause, because a transfer outside your own country is the
+              kind of thing you are entitled to know about before you type
+              anything into a form.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              How it is kept safe
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              The form is served over HTTPS, so what you type is encrypted in
+              transit. It is not written to any database on this site — it goes
+              straight out as an email, which means there is no stored copy
+              here for anyone to break into.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              No system is perfect, and we are not going to claim otherwise. If
+              something ever did go wrong with data you had given us, we would
+              tell you directly and quickly rather than waiting to see whether
+              you noticed.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              Children
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              This is a service for businesses. It is not aimed at children and
+              we do not knowingly collect anything from one. If you believe a
+              child has sent us their details, tell us and we will delete them.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              If you are unhappy with any of this
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Tell us first — most things are a two-minute fix. If that does
+              not satisfy you, you are entitled to complain to a data
+              protection regulator: in India that is the Data Protection Board,
+              in the UK the ICO, and in the EU your national supervisory
+              authority. You do not need our permission to do that, and we are
+              not going to make it awkward if you do.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">Who runs this</h2>
             <p className="text-muted-foreground leading-relaxed">
               Ru Visibility is operated by Rushil, based in Raipur,
               Chhattisgarh, India. That is who receives the contact form and
@@ -181,7 +259,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl tracking-tight mb-4">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
               If this policy changes
             </h2>
             <p className="text-muted-foreground leading-relaxed">

@@ -54,7 +54,7 @@ export default function BlogPage() {
               </p>
             </div>
 
-            <h2 className="text-2xl tracking-tight mb-6">Latest writing</h2>
+            <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">Latest writing</h2>
 
         <div className="flex flex-col gap-6">
           {featured && (
@@ -95,7 +95,7 @@ export default function BlogPage() {
         </div>
 
         <div className="card-surface rounded-md p-6 md:p-8 mt-20">
-          <h2 className="text-2xl tracking-tight mb-4">
+          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
             What gets written here
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -120,7 +120,7 @@ export default function BlogPage() {
         </div>
 
         <div className="card-surface rounded-md p-6 md:p-8 mt-16">
-          <h2 className="text-2xl tracking-tight mb-4">
+          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
             Want the version that applies to your site?
           </h2>
           <p className="text-muted-foreground leading-relaxed">
