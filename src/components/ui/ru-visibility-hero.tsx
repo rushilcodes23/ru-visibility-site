@@ -31,11 +31,12 @@ const LIGHT = {
   outlineText: "#0f172a",
   outlineBorder: "#cbd5e1",
   outlineHoverBg: "rgba(15,23,42,0.04)",
-  canvasDefault: "rgba(148,163,184,0.4)",
-  canvasActive: "#1e293b",
-  canvasParticle: "rgba(15,23,42,0.12)",
-  canvasShadow: "rgba(15,23,42,0.4)",
+  canvasDefault: "rgba(100,116,139,0.55)",
+  canvasActive: "#0f172a",
+  canvasParticle: "rgba(15,23,42,0.28)",
+  canvasShadow: "rgba(15,23,42,0.55)",
   btnRing: "rgba(15,23,42,0.18)",
+  headingGlow: "rgba(148,163,184,0.30)",
   outlineHoverBorder: "#0f172a",
 };
 
@@ -59,11 +60,12 @@ const DARK = {
   outlineText: "#f1f5f9",
   outlineBorder: "#334155",
   outlineHoverBg: "rgba(241,245,249,0.06)",
-  canvasDefault: "rgba(100,116,139,0.4)",
+  canvasDefault: "rgba(148,163,184,0.5)",
   canvasActive: "#f1f5f9",
-  canvasParticle: "rgba(241,245,249,0.12)",
-  canvasShadow: "rgba(241,245,249,0.4)",
+  canvasParticle: "rgba(241,245,249,0.3)",
+  canvasShadow: "rgba(241,245,249,0.6)",
   btnRing: "rgba(241,245,249,0.28)",
+  headingGlow: "rgba(51,65,85,0.55)",
   outlineHoverBorder: "#f1f5f9",
 };
 
@@ -227,25 +229,22 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Pulled off the live CSS variables rather than a React-held palette.
-    // The .dark class is already on <html> before this effect runs, so the
-    // canvas cannot paint one theme and then correct itself.
-    const css = getComputedStyle(document.documentElement);
-    const cv = {
-      canvasDefault: css.getPropertyValue("--qh-canvasDefault").trim(),
-      canvasActive: css.getPropertyValue("--qh-canvasActive").trim(),
-      canvasParticle: css.getPropertyValue("--qh-canvasParticle").trim(),
-      canvasShadow: css.getPropertyValue("--qh-canvasShadow").trim(),
-    };
+    // Read the palette from the class on <html>. The theme script sets that
+    // before first paint, so this is right on the very first frame without
+    // waiting on React state — and unlike reading CSS custom properties, it
+    // cannot quietly resolve to an empty string and leave the grid unpainted.
+    const t = document.documentElement.classList.contains("dark") ? DARK : LIGHT;
 
-    let raf: number;
+    let raf = 0;
     let mouseX = -1000;
     let mouseY = -1000;
     let isMobile = false;
+    let running = false;
+    let last = 0;
 
     const SPACING = 30;
-    const BASE_R = 1.5;
-    const HOVER_R = 100;
+    const BASE_R = 1.6;
+    const HOVER_R = 150;
 
     class Particle {
       x = 0; y = 0; vx = 0; vy = 0; size = 0;
@@ -265,17 +264,15 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       draw(c: CanvasRenderingContext2D) {
         c.beginPath();
         c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        c.fillStyle = cv.canvasParticle;
+        c.fillStyle = t.canvasParticle;
         c.fill();
       }
     }
 
     const particles: Particle[] = [];
-    // The default-colored grid never changes between mouse moves — redrawing
-    // several thousand dots every single frame forever was the main cost of
-    // this animation. Render it once per resize onto an offscreen canvas and
-    // just blit that each frame, then draw only the handful of dots near the
-    // cursor on top.
+    // The plain grid never changes between frames, so it is rendered once per
+    // resize onto an offscreen canvas and blitted, rather than redrawing
+    // several thousand dots every frame forever.
     let staticGrid: HTMLCanvasElement | null = null;
 
     const renderStaticGrid = (w: number, h: number) => {
@@ -284,7 +281,7 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       grid.height = h;
       const gctx = grid.getContext("2d");
       if (!gctx) return null;
-      gctx.fillStyle = cv.canvasDefault;
+      gctx.fillStyle = t.canvasDefault;
       for (let x = 0; x < w; x += SPACING) {
         for (let y = 0; y < h; y += SPACING) {
           gctx.beginPath();
@@ -295,76 +292,80 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       return grid;
     };
 
-    // On a phone the particles are twelve barely-visible dots, and clearing
-    // and re-blitting a full-viewport canvas sixty times a second to drift
-    // them is the most expensive thing on this page. Draw the grid once.
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const staticOnly = () => isMobile || prefersReduced;
-    let running = false;
 
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       isMobile = window.innerWidth < 768;
       particles.length = 0;
-      const n = isMobile ? 12 : 40;
+      const n = isMobile ? 18 : 40;
       for (let i = 0; i < n; i++) particles.push(new Particle(canvas.width, canvas.height));
       staticGrid = renderStaticGrid(canvas.width, canvas.height);
-      if (staticOnly() && staticGrid) {
-        running = false;
+      if (prefersReduced && staticGrid) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(staticGrid, 0, 0);
       }
     };
 
     const onMouseMove = (e: MouseEvent) => {
-      if (isMobile) return;
-      const r = canvas.getBoundingClientRect();
-      mouseX = e.clientX - r.left;
-      mouseY = e.clientY - r.top;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
     const onMouseLeave = () => { mouseX = -1000; mouseY = -1000; };
+    // Touch has no hover, but a finger dragging across the hero can light the
+    // grid the same way a cursor does.
+    const onTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (touch) { mouseX = touch.clientX; mouseY = touch.clientY; }
+    };
+    const onTouchEnd = () => { mouseX = -1000; mouseY = -1000; };
 
-    const draw = () => {
+    const draw = (now: number) => {
       if (!running) return;
+      raf = requestAnimationFrame(draw);
+
+      // Phones animate at half rate. The cost was always the 60fps
+      // full-screen repaint, not the motion itself, so throttling keeps the
+      // effect without the battery drain that made the page feel slow.
+      if (isMobile && now - last < 1000 / 30) return;
+      last = now;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
-      particles.forEach(p => { p.update(canvas.width, canvas.height); p.draw(ctx); });
+      particles.forEach((p) => { p.update(canvas.width, canvas.height); p.draw(ctx); });
 
-      // No hover-highlight sweep on mobile — there's no hover on touch, and
-      // it has no functional purpose there. Static grid + drifting
-      // particles already give the same ambient feel for a fraction of the
-      // ongoing CPU/battery cost.
-      if (!isMobile) {
-        ctx.fillStyle = cv.canvasActive;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = cv.canvasShadow;
+      ctx.fillStyle = t.canvasActive;
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = t.canvasShadow;
 
-        const minX = Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
-        const maxX = Math.min(canvas.width, mouseX + HOVER_R);
-        const minY = Math.max(0, Math.floor((mouseY - HOVER_R) / SPACING) * SPACING);
-        const maxY = Math.min(canvas.height, mouseY + HOVER_R);
+      const minX = Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
+      const maxX = Math.min(canvas.width, mouseX + HOVER_R);
+      const minY = Math.max(0, Math.floor((mouseY - HOVER_R) / SPACING) * SPACING);
+      const maxY = Math.min(canvas.height, mouseY + HOVER_R);
 
-        for (let x = minX; x < maxX; x += SPACING) {
-          for (let y = minY; y < maxY; y += SPACING) {
-            const dx = x - mouseX, dy = y - mouseY;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < HOVER_R) {
-              const scale = 1 - dist / HOVER_R;
-              ctx.beginPath();
-              ctx.arc(x, y, BASE_R + scale * 3, 0, Math.PI * 2);
-              ctx.fill();
-            }
+      for (let x = minX; x < maxX; x += SPACING) {
+        for (let y = minY; y < maxY; y += SPACING) {
+          const dx = x - mouseX, dy = y - mouseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < HOVER_R) {
+            const scale = 1 - dist / HOVER_R;
+            ctx.globalAlpha = Math.min(1, 0.25 + scale);
+            ctx.beginPath();
+            ctx.arc(x, y, BASE_R + scale * 4, 0, Math.PI * 2);
+            ctx.fill();
           }
         }
       }
-      raf = requestAnimationFrame(draw);
+      // Reset both, or the shadow and alpha bleed into next frame's grid blit.
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur = 0;
     };
 
     const start = () => {
-      if (!running && !staticOnly()) {
+      if (!running && !prefersReduced) {
         running = true;
-        draw();
+        raf = requestAnimationFrame(draw);
       }
     };
     const stop = () => {
@@ -372,9 +373,8 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       cancelAnimationFrame(raf);
     };
 
-    // This canvas is a fixed, full-viewport layer, so it kept compositing
-    // long after the hero had scrolled away — burning frames on something
-    // nobody can see. Park it once the hero is off screen.
+    // This canvas is a fixed, full-viewport layer, so it would otherwise keep
+    // compositing long after the hero has scrolled out of view.
     const onScroll = () => {
       if (window.scrollY > window.innerHeight) stop();
       else start();
@@ -383,6 +383,8 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
     window.addEventListener("scroll", onScroll, { passive: true });
     resize();
     start();
@@ -391,6 +393,8 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
     };
@@ -406,12 +410,8 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
         background: "var(--qh-shellBg)",
       }}
     >
-      <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, display: "block" }} />
-
-      {/* Radial gradients, not blur(120px). A 120px Gaussian over a
-          viewport-sized fixed layer is one of the most expensive things you
-          can ask a mobile GPU to do, and it recomposites on every scroll.
-          The gradient is visually equivalent here and essentially free. */}
+      {/* Glows render before the canvas so the grid sits on top of them.
+          Painted over it, they washed the dots out entirely in light mode. */}
       <div style={{
         position: "absolute", top: "-25%", left: "-15%",
         width: "70%", height: "70%",
@@ -422,21 +422,16 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
         width: "60%", height: "60%",
         background: "radial-gradient(circle, var(--qh-glow) 0%, transparent 70%)",
       }} />
-
-      {/* Giant < > brackets, barely visible */}
+      {/* A pool of light under the wordmark, so the heading sits on something
+          instead of floating on flat colour. */}
       <div style={{
-        position: "absolute", inset: 0,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        pointerEvents: "none", userSelect: "none", opacity: 0.025,
-      }}>
-        <span style={{ fontSize: "40vw", fontWeight: 900, lineHeight: 1, color: "var(--qh-bracket)" }}>
-          &lt;
-        </span>
-        <span style={{ width: "20vw" }} />
-        <span style={{ fontSize: "40vw", fontWeight: 900, lineHeight: 1, color: "var(--qh-bracket)" }}>
-          &gt;
-        </span>
-      </div>
+        position: "absolute", top: "42%", left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "min(92vw, 62rem)", height: "min(72vh, 36rem)",
+        background: "radial-gradient(ellipse at center, var(--qh-headingGlow) 0%, transparent 70%)",
+      }} />
+
+      <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, display: "block" }} />
     </div>
   );
 }
@@ -488,11 +483,12 @@ export default function RuVisibilityHero() {
       >
         <div className="qhero-fade-up" style={{ marginBottom: "1.5rem" }}>
           <Image
-            src="/logo-mark.png"
+            src="/logo-mark-220.png"
             alt="Ru Visibility"
             width={110}
             height={110}
             priority
+            unoptimized
             className="qhero-logo"
             style={{
               margin: "0 auto",

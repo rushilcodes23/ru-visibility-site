@@ -40,7 +40,12 @@ const nextConfig: NextConfig = {
     return [{ source: "/pricing", destination: "/services", permanent: true }];
   },
   async headers() {
-    return [{ source: "/:path*", headers: SECURITY_HEADERS }];
+    return [
+      { source: "/:path*", headers: SECURITY_HEADERS },
+      // Next excludes /_next/* from the wildcard above, so the image
+      // optimiser endpoint was serving real image bytes with no nosniff.
+      { source: "/_next/image", headers: SECURITY_HEADERS },
+    ];
   },
 };
 

@@ -27,7 +27,7 @@ export default function SiteFooter() {
       <div className="container mx-auto px-4 py-16 grid grid-cols-1 gap-10 md:grid-cols-4">
         <div className="flex flex-col gap-3 md:col-span-2">
           <a href="/" className="flex items-center gap-2">
-            <Image src="/logo-mark.png" alt="" width={28} height={28} className="dark:invert" />
+            <Image src="/logo-mark-220.png" alt="" width={28} height={28} className="dark:invert" unoptimized />
             <span className="font-semibold tracking-tight text-lg">Ru Visibility</span>
           </a>
           <p className="text-sm text-muted-foreground max-w-xs">

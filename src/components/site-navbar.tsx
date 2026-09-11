@@ -206,7 +206,7 @@ const TALK_TO_US_HREF = "/contact";
 function RuVisibilityLogo() {
   return (
     <a href="/" className="ru-logo-link">
-      <Image src="/logo-mark.png" alt="" width={28} height={28} priority />
+      <Image src="/logo-mark-220.png" alt="" width={28} height={28} priority unoptimized />
       <span className="ru-logo-text">
         RU <span>VISIBILITY</span>
       </span>

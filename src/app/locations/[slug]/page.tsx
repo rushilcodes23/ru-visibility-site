@@ -127,7 +127,7 @@ export default async function LocationPage({
         <ScrollReveal delay={150}>
           <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
             <h2 className="text-2xl tracking-tight mb-3">
-              Why being findable locally changed
+              Why being found in {place} changed
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4 max-w-3xl">
               For years, showing up locally meant ranking on Google and
