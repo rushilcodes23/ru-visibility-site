@@ -73,11 +73,11 @@ function Feature() {
           doesn't hit a flat, empty section */}
       <div
         className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
-        style={{ background: "color-mix(in srgb, var(--foreground) 5%, transparent)", filter: "blur(100px)" }}
+        style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--foreground) 5%, transparent) 0%, transparent 70%)" }}
       />
       <div
         className="absolute bottom-0 -left-20 w-72 h-72 rounded-full pointer-events-none"
-        style={{ background: "color-mix(in srgb, var(--muted-foreground) 25%, transparent)", filter: "blur(100px)" }}
+        style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--muted-foreground) 25%, transparent) 0%, transparent 70%)" }}
       />
 
       <div className="container mx-auto px-4 relative">

@@ -33,12 +33,12 @@ export default function ContactPage() {
       {/* Same soft-glow motif as the hero and feature section, so this
           page doesn't feel like a flat, empty form */}
       <div
-        className="absolute -top-24 -left-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: "color-mix(in srgb, var(--muted-foreground) 25%, transparent)", filter: "blur(120px)" }}
+        className="absolute -top-40 -left-40 w-[34rem] h-[34rem] pointer-events-none"
+        style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--muted-foreground) 25%, transparent) 0%, transparent 70%)" }}
       />
       <div
-        className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: "color-mix(in srgb, var(--foreground) 6%, transparent)", filter: "blur(120px)" }}
+        className="absolute -bottom-40 -right-40 w-[34rem] h-[34rem] pointer-events-none"
+        style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--foreground) 6%, transparent) 0%, transparent 70%)" }}
       />
 
       <div className="mx-auto w-full max-w-5xl relative">

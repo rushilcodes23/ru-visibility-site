@@ -295,6 +295,13 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       return grid;
     };
 
+    // On a phone the particles are twelve barely-visible dots, and clearing
+    // and re-blitting a full-viewport canvas sixty times a second to drift
+    // them is the most expensive thing on this page. Draw the grid once.
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const staticOnly = () => isMobile || prefersReduced;
+    let running = false;
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -303,6 +310,11 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       const n = isMobile ? 12 : 40;
       for (let i = 0; i < n; i++) particles.push(new Particle(canvas.width, canvas.height));
       staticGrid = renderStaticGrid(canvas.width, canvas.height);
+      if (staticOnly() && staticGrid) {
+        running = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(staticGrid, 0, 0);
+      }
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -314,6 +326,7 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
     const onMouseLeave = () => { mouseX = -1000; mouseY = -1000; };
 
     const draw = () => {
+      if (!running) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
       particles.forEach(p => { p.update(canvas.width, canvas.height); p.draw(ctx); });
@@ -348,22 +361,37 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       raf = requestAnimationFrame(draw);
     };
 
+    const start = () => {
+      if (!running && !staticOnly()) {
+        running = true;
+        draw();
+      }
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    // This canvas is a fixed, full-viewport layer, so it kept compositing
+    // long after the hero had scrolled away — burning frames on something
+    // nobody can see. Park it once the hero is off screen.
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight) stop();
+      else start();
+    };
+
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
+    window.addEventListener("scroll", onScroll, { passive: true });
     resize();
+    start();
 
-    // Respect the OS-level "reduce motion" preference: draw the static
-    // grid once and stop, instead of animating forever regardless.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
-    } else {
-      draw();
-    }
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
     };
   }, [themeKey]);
@@ -380,17 +408,19 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
     >
       <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, display: "block" }} />
 
+      {/* Radial gradients, not blur(120px). A 120px Gaussian over a
+          viewport-sized fixed layer is one of the most expensive things you
+          can ask a mobile GPU to do, and it recomposites on every scroll.
+          The gradient is visually equivalent here and essentially free. */}
       <div style={{
-        position: "absolute", top: "-20%", left: "-10%",
-        width: "50%", height: "50%",
-        background: "var(--qh-glow)",
-        filter: "blur(120px)", borderRadius: "9999px",
+        position: "absolute", top: "-25%", left: "-15%",
+        width: "70%", height: "70%",
+        background: "radial-gradient(circle, var(--qh-glow) 0%, transparent 70%)",
       }} />
       <div style={{
-        position: "absolute", bottom: "-20%", right: "-10%",
-        width: "40%", height: "40%",
-        background: "var(--qh-glow)",
-        filter: "blur(120px)", borderRadius: "9999px",
+        position: "absolute", bottom: "-25%", right: "-15%",
+        width: "60%", height: "60%",
+        background: "radial-gradient(circle, var(--qh-glow) 0%, transparent 70%)",
       }} />
 
       {/* Giant < > brackets, barely visible */}
