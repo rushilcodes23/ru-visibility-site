@@ -52,7 +52,7 @@ export default function AccessibilityPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
           {COMMITMENTS.map((c, i) => (
             <ScrollReveal key={c.title} delay={i * 100}>
-              <div className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 h-full transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg">
+              <div className="card-surface rounded-md p-6 flex flex-col gap-3 h-full transition-transform duration-200 hover:scale-[1.02]">
                 <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                   <c.icon className="w-6 h-6 stroke-1 text-primary" />
                 </div>
@@ -66,7 +66,7 @@ export default function AccessibilityPage() {
         </div>
 
         <ScrollReveal>
-          <div className="mt-12 rounded-md border border-border/50 bg-muted p-6 md:p-8 flex flex-col gap-4">
+          <div className="mt-12 card-surface rounded-md p-6 md:p-8 flex flex-col gap-4">
             <h2 className="text-2xl tracking-tight flex items-center gap-2">
               <Accessibility className="w-6 h-6" />
               Found a real issue on this site?

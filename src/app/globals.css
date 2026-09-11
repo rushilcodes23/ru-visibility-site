@@ -187,3 +187,34 @@
     transparent 100%
   );
 }
+
+/* ── Card surface ──────────────────────────────────────────────────────
+   Light and dark need opposite treatments here. In dark, --muted (#1e293b)
+   sits well clear of the page (#0a0e17), so the fill alone carries it. In
+   light, every candidate surface is within a few percent of the page
+   colour, so fill can never separate a card — elevation has to. Hence a
+   white card with a real shadow in light, and a lifted fill with no shadow
+   in dark. */
+.card-surface {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, #0f172a 5%, transparent),
+    0 10px 28px -12px color-mix(in srgb, #0f172a 22%, transparent);
+  transition: box-shadow 200ms, transform 200ms, border-color 200ms;
+}
+.card-surface:hover {
+  border-color: color-mix(in srgb, var(--accent-line) 45%, var(--border));
+  box-shadow:
+    0 2px 4px color-mix(in srgb, #0f172a 6%, transparent),
+    0 18px 44px -14px color-mix(in srgb, #0f172a 30%, transparent);
+}
+.dark .card-surface {
+  background: var(--muted);
+  border-color: color-mix(in srgb, var(--foreground) 10%, transparent);
+  box-shadow: none;
+}
+.dark .card-surface:hover {
+  border-color: color-mix(in srgb, var(--accent-line) 55%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-line) 30%, transparent);
+}

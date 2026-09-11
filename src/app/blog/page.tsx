@@ -83,7 +83,7 @@ export default function BlogPage() {
             <a
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="block bg-muted rounded-md p-6 transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
+              className="card-surface block rounded-md p-6 transition-transform duration-200 hover:scale-[1.02]"
             >
               <h2 className="text-xl tracking-tight mb-2">{post.title}</h2>
               <p className="text-muted-foreground text-sm leading-relaxed mb-3">
@@ -94,7 +94,7 @@ export default function BlogPage() {
           ))}
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 mt-20">
+        <div className="card-surface rounded-md p-6 md:p-8 mt-20">
           <h2 className="text-2xl tracking-tight mb-4">
             What gets written here
           </h2>
@@ -119,7 +119,7 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 mt-16">
+        <div className="card-surface rounded-md p-6 md:p-8 mt-16">
           <h2 className="text-2xl tracking-tight mb-4">
             Want the version that applies to your site?
           </h2>
@@ -157,7 +157,7 @@ export default function BlogPage() {
               </a>
             </div>
 
-            <div className="bg-muted rounded-md border border-border/50 p-6">
+            <div className="card-surface rounded-md p-6">
               <h2 className="text-lg tracking-tight mb-3">
                 What we write about
               </h2>
@@ -171,7 +171,7 @@ export default function BlogPage() {
               </ul>
             </div>
 
-            <div className="bg-muted rounded-md border border-border/50 p-6">
+            <div className="card-surface rounded-md p-6">
               <h2 className="text-lg tracking-tight mb-3">Start here</h2>
               <ul className="flex flex-col gap-3 text-sm">
                 {START_HERE.map((r) => (

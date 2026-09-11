@@ -99,7 +99,7 @@ export default function WhyUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
             {REASONS.map((r, i) => (
               <ScrollReveal key={r.title} delay={i * 80}>
-                <div className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 h-full transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg">
+                <div className="card-surface rounded-md p-6 flex flex-col gap-3 h-full transition-transform duration-200 hover:scale-[1.03]">
                   <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                     <r.icon className="w-6 h-6 stroke-1 text-primary" />
                   </div>
@@ -114,7 +114,7 @@ export default function WhyUsPage() {
 
           <div className="grid gap-6 lg:grid-cols-2">
           <ScrollReveal>
-            <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
+            <div className="card-surface rounded-md p-6 md:p-8 h-full">
               <h2 className="text-2xl tracking-tight mb-4">
                 What we will not tell you
               </h2>
@@ -133,7 +133,7 @@ export default function WhyUsPage() {
           </ScrollReveal>
 
           <ScrollReveal>
-            <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
+            <div className="card-surface rounded-md p-6 md:p-8 h-full">
               <h2 className="text-2xl tracking-tight mb-4">
                 Who this is not for
               </h2>

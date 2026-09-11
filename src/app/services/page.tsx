@@ -312,7 +312,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {ALL_SERVICES.map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 60}>
-                <div className="flex h-full flex-col gap-3 rounded-md border border-border/50 bg-muted p-6 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg">
+                <div className="flex h-full flex-col gap-3 card-surface rounded-md p-6 transition-transform duration-200 hover:scale-[1.03]">
                   <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                     <s.icon className="h-6 w-6 stroke-1 text-primary" />
                   </div>

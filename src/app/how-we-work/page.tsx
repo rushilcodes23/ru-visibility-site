@@ -71,7 +71,7 @@ export default function HowWeWorkPage() {
           {STEPS.map((step) => (
             <div
               key={step.title}
-              className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
+              className="card-surface rounded-md p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02]"
             >
               <step.icon className="w-8 h-8 stroke-1" />
               <h3 className="text-xl tracking-tight">{step.title}</h3>
@@ -82,7 +82,7 @@ export default function HowWeWorkPage() {
           ))}
         </div>
 
-        <div className="mt-12 rounded-md border border-border/50 bg-muted p-6 md:p-8">
+        <div className="mt-12 card-surface rounded-md p-6 md:p-8">
           <h2 className="text-2xl tracking-tight mb-3">
             How long before you see results?
           </h2>

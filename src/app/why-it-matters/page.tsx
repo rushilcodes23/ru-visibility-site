@@ -53,7 +53,7 @@ export default function WhyItMattersPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
           {REASONS.map((r) => (
-            <div key={r.title} className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg">
+            <div key={r.title} className="card-surface rounded-md p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02]">
               <r.icon className="w-8 h-8 stroke-1" />
               <h3 className="text-xl tracking-tight">{r.title}</h3>
               <p className="text-muted-foreground text-base leading-relaxed">
@@ -63,7 +63,7 @@ export default function WhyItMattersPage() {
           ))}
         </div>
 
-        <div className="mt-12 rounded-md border border-border/50 bg-muted p-6 md:p-8">
+        <div className="mt-12 card-surface rounded-md p-6 md:p-8">
           <p className="text-muted-foreground leading-relaxed mb-6">
             None of this means you need to panic — it means it's worth
             actually checking where you stand today, rather than guessing.

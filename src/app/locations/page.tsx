@@ -32,7 +32,7 @@ export default function LocationsIndexPage() {
             <a
               key={l.slug}
               href={`/locations/${l.slug}`}
-              className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-2 transition-transform hover:scale-[1.03] hover:shadow-lg"
+              className="card-surface rounded-md p-6 flex flex-col gap-2 transition-transform hover:scale-[1.03]"
             >
               <MapPin className="w-6 h-6 stroke-1 text-primary" />
               <span className="font-medium">{l.city}</span>
@@ -51,7 +51,7 @@ export default function LocationsIndexPage() {
         </a>
 
         <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
+        <div className="card-surface rounded-md p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">
             What a city page covers
           </h2>
@@ -73,7 +73,7 @@ export default function LocationsIndexPage() {
           </p>
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
+        <div className="card-surface rounded-md p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">
             Not on the list?
           </h2>

@@ -86,7 +86,7 @@ export default function FaqPage() {
             {FAQS.map((item) => (
               <div
                 key={item.q}
-                className="rounded-md border border-border/50 bg-muted p-6 transition-transform duration-200 hover:scale-[1.01] hover:shadow-md"
+                className="card-surface rounded-md p-6 transition-transform duration-200 hover:scale-[1.01]"
               >
                 <h2 className="text-xl tracking-tight mb-3">{item.q}</h2>
                 <p className="text-base md:text-lg font-medium leading-relaxed text-foreground mb-3 border-l-2 border-primary pl-4">
@@ -120,7 +120,7 @@ export default function FaqPage() {
               </a>
             </div>
 
-            <div className="bg-muted rounded-md border border-border/50 p-6">
+            <div className="card-surface rounded-md p-6">
               <h2 className="text-lg tracking-tight mb-4">Read next</h2>
               <ul className="flex flex-col gap-3 text-sm">
                 {RELATED.map((r) => (

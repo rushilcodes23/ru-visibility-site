@@ -108,7 +108,7 @@ export default async function LocationPage({
               {WHAT_WE_DO.map((item) => (
                 <div
                   key={item.title}
-                  className="bg-muted rounded-md border border-border/50 p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
+                  className="card-surface rounded-md p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02]"
                 >
                   <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                     <item.icon className="w-6 h-6 stroke-1 text-primary" />
@@ -125,7 +125,7 @@ export default async function LocationPage({
 
         <div className="grid gap-6 lg:grid-cols-2">
         <ScrollReveal delay={150}>
-          <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
+          <div className="card-surface rounded-md p-6 md:p-8 h-full">
             <h2 className="text-2xl tracking-tight mb-3">
               Why being found in {place} changed
             </h2>
@@ -149,7 +149,7 @@ export default async function LocationPage({
         </ScrollReveal>
 
         <ScrollReveal delay={200}>
-          <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
+          <div className="card-surface rounded-md p-6 md:p-8 h-full">
             <h2 className="text-2xl tracking-tight mb-3">
               Getting started in {place}
             </h2>

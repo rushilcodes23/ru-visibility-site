@@ -71,7 +71,7 @@ export default function WorkPage() {
           </div>
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
+        <div className="card-surface rounded-md p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">Why we work this way</h2>
           <p className="text-muted-foreground leading-relaxed italic">
             &ldquo;I built Ru Visibility because most SEO agencies either
