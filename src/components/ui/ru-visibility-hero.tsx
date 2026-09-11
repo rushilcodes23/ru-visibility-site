@@ -229,11 +229,17 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Read the palette from the class on <html>. The theme script sets that
-    // before first paint, so this is right on the very first frame without
-    // waiting on React state — and unlike reading CSS custom properties, it
-    // cannot quietly resolve to an empty string and leave the grid unpainted.
-    const t = document.documentElement.classList.contains("dark") ? DARK : LIGHT;
+    // themeKey is next-themes' resolvedTheme, and it is the only reliable
+    // source here. Reading the class instead looks correct but is a frame
+    // behind on every toggle: React runs this child effect before the
+    // provider's own effect has flipped the class, so switching to dark
+    // painted the light palette on a dark page and vice versa. The class is
+    // only the fallback for the very first mount, before resolvedTheme is
+    // populated — at that point the blocking theme script has already set it.
+    const isDark = themeKey
+      ? themeKey === "dark"
+      : document.documentElement.classList.contains("dark");
+    const t = isDark ? DARK : LIGHT;
 
     let raf = 0;
     let mouseX = -1000;
@@ -308,16 +314,21 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       }
     };
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    // The canvas scrolls with the hero now, so viewport coords have to be
+    // mapped back into canvas space. As a fixed layer the two were identical
+    // and this conversion was unnecessary.
+    const toCanvas = (clientX: number, clientY: number) => {
+      const r = canvas.getBoundingClientRect();
+      mouseX = clientX - r.left;
+      mouseY = clientY - r.top;
     };
+    const onMouseMove = (e: MouseEvent) => toCanvas(e.clientX, e.clientY);
     const onMouseLeave = () => { mouseX = -1000; mouseY = -1000; };
     // Touch has no hover, but a finger dragging across the hero can light the
     // grid the same way a cursor does.
     const onTouchMove = (e: TouchEvent) => {
       const touch = e.touches[0];
-      if (touch) { mouseX = touch.clientX; mouseY = touch.clientY; }
+      if (touch) toCanvas(touch.clientX, touch.clientY);
     };
     const onTouchEnd = () => { mouseX = -1000; mouseY = -1000; };
 
@@ -403,7 +414,13 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
   return (
     <div
       style={{
-        position: "fixed",
+        // Absolute, not fixed. As a fixed layer this stayed pinned to the
+        // viewport for the whole page, and the sections below the hero have
+        // no background of their own — so the grid showed through behind the
+        // What We Do cards, frozen on the last frame before the scroll
+        // handler parked it. Absolute keeps it inside the hero, which is
+        // clipped by the shell's overflow: hidden.
+        position: "absolute",
         inset: 0,
         zIndex: 0,
         pointerEvents: "none",
@@ -425,9 +442,12 @@ function DotGridBackground({ themeKey }: { themeKey: string | undefined }) {
       {/* A pool of light under the wordmark, so the heading sits on something
           instead of floating on flat colour. */}
       <div style={{
-        position: "absolute", top: "42%", left: "50%",
+        // Sized to sit under the wordmark only. At 36rem it reached far
+        // enough down the hero to wash over the CTA row, which made the
+        // outline button — transparent by design — look faded out.
+        position: "absolute", top: "38%", left: "50%",
         transform: "translate(-50%, -50%)",
-        width: "min(92vw, 62rem)", height: "min(72vh, 36rem)",
+        width: "min(88vw, 54rem)", height: "min(46vh, 22rem)",
         background: "radial-gradient(ellipse at center, var(--qh-headingGlow) 0%, transparent 70%)",
       }} />
 
