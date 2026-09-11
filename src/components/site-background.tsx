@@ -221,7 +221,48 @@ export default function SiteBackground() {
 
   return (
     <>
-      <style>{`:root { ${cssVars(LIGHT)} } :root.dark { ${cssVars(DARK)} }`}</style>
+      <style>{`
+        :root { ${cssVars(LIGHT)} }
+        :root.dark { ${cssVars(DARK)} }
+
+        .qh-glow { position: absolute; pointer-events: none; }
+
+        /* A two-stop gradient ramps linearly and leaves a visible rim where
+           it meets the page. These extra stops ease the falloff instead, so
+           the colour dissolves rather than stopping. */
+        .qh-glow-a,
+        .qh-glow-b {
+          background: radial-gradient(
+            circle at center,
+            var(--qh-glow) 0%,
+            color-mix(in srgb, var(--qh-glow) 58%, transparent) 26%,
+            color-mix(in srgb, var(--qh-glow) 26%, transparent) 45%,
+            color-mix(in srgb, var(--qh-glow) 9%, transparent) 63%,
+            color-mix(in srgb, var(--qh-glow) 2%, transparent) 78%,
+            transparent 90%
+          );
+        }
+
+        .qh-glow-a { top: -25%; left: -15%; width: 70%; height: 70%; }
+        .qh-glow-b { bottom: -25%; right: -15%; width: 60%; height: 60%; }
+
+        /* On a narrow, tall viewport those two proportions put both blobs in
+           roughly the same place, and they merge into one muddy wash. Wider,
+           shorter and pushed further off the edges keeps them reading as
+           light rather than as shapes. */
+        @media (max-width: 767px) {
+          .qh-glow-a {
+            top: -14%; left: -35%;
+            width: 110%; height: 38%;
+            opacity: 0.6;
+          }
+          .qh-glow-b {
+            bottom: -14%; right: -35%;
+            width: 105%; height: 34%;
+            opacity: 0.55;
+          }
+        }
+      `}</style>
       <div
         aria-hidden="true"
         style={{
@@ -233,16 +274,8 @@ export default function SiteBackground() {
         }}
       >
         {/* Glows render before the canvas so the grid sits on top of them. */}
-        <div style={{
-          position: "absolute", top: "-25%", left: "-15%",
-          width: "70%", height: "70%",
-          background: "radial-gradient(circle, var(--qh-glow) 0%, transparent 70%)",
-        }} />
-        <div style={{
-          position: "absolute", bottom: "-25%", right: "-15%",
-          width: "60%", height: "60%",
-          background: "radial-gradient(circle, var(--qh-glow) 0%, transparent 70%)",
-        }} />
+        <div className="qh-glow qh-glow-a" />
+        <div className="qh-glow qh-glow-b" />
         <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, display: "block" }} />
       </div>
     </>

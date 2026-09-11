@@ -13,6 +13,32 @@ import Image from "next/image";
 function getStyles() {
   return `
 
+
+  .qhero-heading-glow {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(88vw, 54rem);
+    height: min(46vh, 22rem);
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      var(--qh-headingGlow) 0%,
+      color-mix(in srgb, var(--qh-headingGlow) 55%, transparent) 28%,
+      color-mix(in srgb, var(--qh-headingGlow) 22%, transparent) 48%,
+      color-mix(in srgb, var(--qh-headingGlow) 7%, transparent) 66%,
+      transparent 86%
+    );
+  }
+  @media (max-width: 767px) {
+    .qhero-heading-glow {
+      width: 105vw;
+      height: min(34vh, 15rem);
+      opacity: 0.65;
+    }
+  }
+
   .qhero-shell,
   .qhero-shell *,
   .qhero-shell *::before,
@@ -171,16 +197,7 @@ export default function RuVisibilityHero() {
 
       {/* A pool of light under the wordmark. The dot grid itself is
           site-wide now and lives in the root layout. */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute", top: "38%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "min(88vw, 54rem)", height: "min(46vh, 22rem)",
-          pointerEvents: "none",
-          background: "radial-gradient(ellipse at center, var(--qh-headingGlow) 0%, transparent 70%)",
-        }}
-      />
+      <div aria-hidden="true" className="qhero-heading-glow" />
 
       {/* Layer 1: Hero content (navbar is site-wide, see layout.tsx) */}
       <main

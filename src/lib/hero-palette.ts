@@ -12,7 +12,7 @@ export const LIGHT = {
   tagline: "#475569",
   subtitle: "#475569",
   bracket: "#0f172a",
-  glow: "rgba(148,175,222,0.38)",
+  glow: "rgba(148,175,222,0.30)",
   btnText: "#fff",
   btnFrom: "#1e293b",
   btnTo: "#0f172a",
@@ -28,7 +28,7 @@ export const LIGHT = {
   canvasParticle: "rgba(15,23,42,0.28)",
   canvasShadow: "rgba(15,23,42,0.55)",
   btnRing: "rgba(15,23,42,0.18)",
-  headingGlow: "rgba(132,160,215,0.32)",
+  headingGlow: "rgba(132,160,215,0.24)",
   outlineHoverBorder: "#0f172a",
 };
 
@@ -42,7 +42,7 @@ export const DARK = {
   tagline: "#cbd5e1",
   subtitle: "#cbd5e1",
   bracket: "#f1f5f9",
-  glow: "rgba(42,66,120,0.55)",
+  glow: "rgba(42,66,120,0.44)",
   btnText: "#0f172a",
   btnFrom: "#f1f5f9",
   btnTo: "#cbd5e1",
@@ -58,7 +58,7 @@ export const DARK = {
   canvasParticle: "rgba(241,245,249,0.3)",
   canvasShadow: "rgba(241,245,249,0.6)",
   btnRing: "rgba(241,245,249,0.28)",
-  headingGlow: "rgba(48,74,140,0.5)",
+  headingGlow: "rgba(48,74,140,0.40)",
   outlineHoverBorder: "#f1f5f9",
 };
 
