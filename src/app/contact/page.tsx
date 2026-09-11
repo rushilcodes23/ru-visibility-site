@@ -29,7 +29,7 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="relative flex flex-col items-center w-full pt-28 pb-20 px-4 overflow-hidden">
+    <main className="page-surface relative flex flex-col items-center w-full pt-28 pb-20 px-4 overflow-hidden">
       {/* Same soft-glow motif as the hero and feature section, so this
           page doesn't feel like a flat, empty form */}
       <div
@@ -80,7 +80,7 @@ export default function ContactPage() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3 mt-16">
-        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
+        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">
             What to put in the message
           </h2>
@@ -103,7 +103,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
+        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">
             How fast you will hear back
           </h2>
@@ -119,7 +119,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
+        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
           <h2 className="text-2xl tracking-tight mb-4">
             What happens to your details
           </h2>

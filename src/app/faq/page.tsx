@@ -62,7 +62,7 @@ const faqJsonLd = {
 
 export default function FaqPage() {
   return (
-    <div className="w-full py-20 lg:py-32">
+    <div className="page-surface w-full py-20 lg:py-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -70,7 +70,7 @@ export default function FaqPage() {
       <div className="container mx-auto px-4">
         <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
           <div className="lg:col-span-2">
-            <div className="flex flex-col gap-4 items-start max-w-2xl mb-10">
+            <div className="page-head flex flex-col gap-4 items-start max-w-2xl mb-10">
               <Badge>FAQ</Badge>
               <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
                 Questions people actually ask.
@@ -86,7 +86,7 @@ export default function FaqPage() {
             {FAQS.map((item) => (
               <div
                 key={item.q}
-                className="rounded-md border border-border/50 bg-muted/50 p-6 transition-transform duration-200 hover:scale-[1.01] hover:shadow-md"
+                className="rounded-md border border-border/50 bg-muted p-6 transition-transform duration-200 hover:scale-[1.01] hover:shadow-md"
               >
                 <h2 className="text-xl tracking-tight mb-3">{item.q}</h2>
                 <p className="text-base md:text-lg font-medium leading-relaxed text-foreground mb-3 border-l-2 border-primary pl-4">

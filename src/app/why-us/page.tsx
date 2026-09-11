@@ -53,11 +53,11 @@ const REASONS = [
 export default function WhyUsPage() {
   return (
     <>
-      <div className="w-full py-20 lg:py-32">
+      <div className="page-surface w-full py-20 lg:py-32">
         <div className="container mx-auto px-4">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16 mb-20">
           <ScrollReveal>
-            <div className="flex flex-col gap-4 items-start">
+            <div className="page-head flex flex-col gap-4 items-start">
               <Badge>Why Us</Badge>
               <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
                 We fix our own site first.
@@ -114,7 +114,7 @@ export default function WhyUsPage() {
 
           <div className="grid gap-6 lg:grid-cols-2">
           <ScrollReveal>
-            <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
+            <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
               <h2 className="text-2xl tracking-tight mb-4">
                 What we will not tell you
               </h2>
@@ -133,7 +133,7 @@ export default function WhyUsPage() {
           </ScrollReveal>
 
           <ScrollReveal>
-            <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
+            <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
               <h2 className="text-2xl tracking-tight mb-4">
                 Who this is not for
               </h2>

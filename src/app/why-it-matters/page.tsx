@@ -34,9 +34,9 @@ const REASONS = [
 
 export default function WhyItMattersPage() {
   return (
-    <div className="w-full py-20 lg:py-32">
+    <div className="page-surface w-full py-20 lg:py-32">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col gap-4 items-start max-w-2xl mb-16">
+        <div className="page-head flex flex-col gap-4 items-start max-w-2xl mb-16">
           <Badge>Why It Matters</Badge>
           <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
             Why SEO and GEO actually matter.
@@ -63,7 +63,7 @@ export default function WhyItMattersPage() {
           ))}
         </div>
 
-        <div className="mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8">
+        <div className="mt-12 rounded-md border border-border/50 bg-muted p-6 md:p-8">
           <p className="text-muted-foreground leading-relaxed mb-6">
             None of this means you need to panic — it means it's worth
             actually checking where you stand today, rather than guessing.

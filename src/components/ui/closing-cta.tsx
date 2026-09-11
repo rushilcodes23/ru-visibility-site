@@ -3,7 +3,7 @@ import ScrollReveal from "@/components/scroll-reveal";
 
 export function ClosingCta() {
   return (
-    <div className="w-full py-20 lg:py-32 border-t bg-muted/30">
+    <div className="page-surface w-full py-20 lg:py-32 border-t">
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="flex flex-col items-center text-center gap-6 max-w-2xl mx-auto">

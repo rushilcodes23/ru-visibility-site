@@ -30,10 +30,10 @@ const COMMITMENTS = [
 
 export default function AccessibilityPage() {
   return (
-    <div className="w-full py-20 lg:py-32">
+    <div className="page-surface w-full py-20 lg:py-32">
       <div className="container mx-auto px-4">
         <ScrollReveal>
-          <div className="flex flex-col gap-4 items-start max-w-2xl mb-16">
+          <div className="page-head flex flex-col gap-4 items-start max-w-2xl mb-16">
             <Badge>Accessibility</Badge>
             <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
               We hold our own site to the standard we sell.
@@ -66,7 +66,7 @@ export default function AccessibilityPage() {
         </div>
 
         <ScrollReveal>
-          <div className="mt-12 rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 flex flex-col gap-4">
+          <div className="mt-12 rounded-md border border-border/50 bg-muted p-6 md:p-8 flex flex-col gap-4">
             <h2 className="text-2xl tracking-tight flex items-center gap-2">
               <Accessibility className="w-6 h-6" />
               Found a real issue on this site?

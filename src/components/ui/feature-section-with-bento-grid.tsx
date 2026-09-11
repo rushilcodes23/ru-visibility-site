@@ -68,7 +68,7 @@ const SERVICES = [
 
 function Feature() {
   return (
-    <div className="w-full py-20 lg:py-40 relative overflow-hidden">
+    <div className="page-surface w-full py-20 lg:py-40 relative overflow-hidden">
       {/* Soft depth accents — same motif as the hero, so scrolling
           doesn't hit a flat, empty section */}
       <div
@@ -82,7 +82,7 @@ function Feature() {
 
       <div className="container mx-auto px-4 relative">
         <div className="flex flex-col gap-10">
-          <div className="flex gap-4 flex-col items-start">
+          <div className="page-head flex gap-4 flex-col items-start">
             <div>
               <Badge>What We Do</Badge>
             </div>

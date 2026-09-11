@@ -143,3 +143,47 @@
   from { transform: translateY(0); }
   to { transform: translateY(-50%); }
 }
+/* ── Reading surfaces ──────────────────────────────────────────────────
+   The animated dot grid is a fixed layer behind the whole site. Text set
+   straight onto it competes with the dots, so every section that carries
+   copy sits on a scrim. Deliberately opacity rather than backdrop-filter:
+   the grid animates, and a blur over moving pixels has to be recomputed
+   every frame, which is exactly what made the phone build slow before.
+   The hero is the one place with no scrim, so the effect reads boldly in
+   one spot instead of weakly everywhere. */
+.page-surface {
+  position: relative;
+  background: color-mix(in srgb, var(--background) 86%, transparent);
+}
+
+/* A band inside an already-scrimmed section, still distinct from it. */
+.band-surface {
+  background: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+
+/* A restrained blue, the one non-monochrome note on the site. Used for the
+   page-header rule and the ambient glows, nowhere loud. */
+:root { --accent-line: #5b7fc4; }
+.dark { --accent-line: #7ea0e0; }
+
+/* Page headers were badge + heading + paragraph on flat colour, which read
+   as nothing. The rule gives every page one consistent anchor point. */
+.page-head {
+  position: relative;
+  padding-left: 1.35rem;
+}
+.page-head::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-line) 0%,
+    color-mix(in srgb, var(--accent-line) 35%, transparent) 55%,
+    transparent 100%
+  );
+}

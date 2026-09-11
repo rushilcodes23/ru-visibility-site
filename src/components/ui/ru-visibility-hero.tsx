@@ -131,7 +131,9 @@ function getStyles() {
 
   /* Secondary hero CTA — outline, doesn't compete with the primary button */
   .qhero-btn-outline {
-    background: transparent;
+    /* Not transparent: the hero is the one section with no scrim over the
+       dot grid, so a see-through button put the dots behind its own label. */
+    background: color-mix(in srgb, var(--qh-shellBg) 78%, transparent);
     color: var(--qh-outlineText);
     border: 1.5px solid var(--qh-outlineBorder);
     box-shadow: none;

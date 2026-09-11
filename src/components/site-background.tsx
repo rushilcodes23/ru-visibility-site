@@ -42,6 +42,10 @@ export default function SiteBackground() {
     const SPACING = 30;
     const BASE_R = 1.6;
     const HOVER_R = 150;
+    // Mobile sweep: how tall the lit band is, and how long one pass takes.
+    const SCAN_R = 130;
+    const SCAN_SECONDS = 4;
+    let scanY = -SCAN_R;
 
     class Particle {
       x = 0; y = 0; vx = 0; vy = 0; size = 0;
@@ -137,13 +141,30 @@ export default function SiteBackground() {
       if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
       particles.forEach((p) => { p.update(canvas.width, canvas.height); p.draw(ctx); });
 
-      // No cursor on a touch screen, so phones get the drifting particles
-      // only and skip the highlight sweep entirely.
-      if (!isMobile) {
-        ctx.fillStyle = t.canvasActive;
-        ctx.shadowBlur = 18;
-        ctx.shadowColor = t.canvasShadow;
+      ctx.fillStyle = t.canvasActive;
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = t.canvasShadow;
 
+      if (isMobile) {
+        // There is no cursor to follow on a phone, so the highlight is a band
+        // that travels down the screen instead — the same lit-dot effect,
+        // driven by time rather than a pointer.
+        scanY += canvas.height / (SCAN_SECONDS * 30);
+        if (scanY > canvas.height + SCAN_R) scanY = -SCAN_R;
+
+        const minY = Math.max(0, Math.floor((scanY - SCAN_R) / SPACING) * SPACING);
+        const maxY = Math.min(canvas.height, scanY + SCAN_R);
+        for (let y = minY; y < maxY; y += SPACING) {
+          const scale = 1 - Math.abs(y - scanY) / SCAN_R;
+          if (scale <= 0) continue;
+          ctx.globalAlpha = Math.min(1, 0.2 + scale * 0.9);
+          for (let x = 0; x < canvas.width; x += SPACING) {
+            ctx.beginPath();
+            ctx.arc(x, y, BASE_R + scale * 3.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      } else {
         const minX = Math.max(0, Math.floor((mouseX - HOVER_R) / SPACING) * SPACING);
         const maxX = Math.min(canvas.width, mouseX + HOVER_R);
         const minY = Math.max(0, Math.floor((mouseY - HOVER_R) / SPACING) * SPACING);
@@ -162,10 +183,10 @@ export default function SiteBackground() {
             }
           }
         }
-        // Reset both, or the shadow and alpha bleed into the next frame.
-        ctx.globalAlpha = 1;
-        ctx.shadowBlur = 0;
       }
+      // Reset both, or the shadow and alpha bleed into the next frame.
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur = 0;
     };
 
     const start = () => {

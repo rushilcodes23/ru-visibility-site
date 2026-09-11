@@ -62,7 +62,7 @@ export default function WhyGeoMattersPost() {
             is. Not a buzzword, not a rebrand of SEO.
           </p>
 
-          <blockquote className="my-2 rounded-md border-l-4 border-primary bg-muted/50 py-5 pl-6 pr-5 text-lg font-medium leading-relaxed text-foreground md:text-xl">
+          <blockquote className="my-2 rounded-md border-l-4 border-primary bg-muted py-5 pl-6 pr-5 text-lg font-medium leading-relaxed text-foreground md:text-xl">
             GEO is making sure AI systems can read your site, understand what
             you offer, and have real reasons to recommend you when someone
             asks.

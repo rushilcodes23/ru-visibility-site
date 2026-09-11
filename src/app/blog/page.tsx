@@ -35,11 +35,11 @@ export default function BlogPage() {
   const [featured, ...rest] = POSTS;
 
   return (
-    <div className="w-full py-20 lg:py-32">
+    <div className="page-surface w-full py-20 lg:py-32">
       <div className="container mx-auto px-4">
         <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
           <div className="lg:col-span-2">
-            <div className="flex flex-col gap-4 items-start max-w-2xl mb-10">
+            <div className="page-head flex flex-col gap-4 items-start max-w-2xl mb-10">
               <Badge>Blog</Badge>
               <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
                 Real findings, not recycled SEO advice.
@@ -94,7 +94,7 @@ export default function BlogPage() {
           ))}
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mt-20">
+        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 mt-20">
           <h2 className="text-2xl tracking-tight mb-4">
             What gets written here
           </h2>
@@ -119,7 +119,7 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 mt-16">
+        <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 mt-16">
           <h2 className="text-2xl tracking-tight mb-4">
             Want the version that applies to your site?
           </h2>

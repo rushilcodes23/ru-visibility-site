@@ -208,9 +208,9 @@ function PicSlot({
 export default function ServicesPage() {
   return (
     <div className="w-full">
-      <div className="w-full py-20 lg:py-28">
+      <div className="page-surface w-full py-20 lg:py-28">
         <div className="container mx-auto px-4">
-          <div className="flex max-w-2xl flex-col items-start gap-4">
+          <div className="page-head flex max-w-2xl flex-col items-start gap-4">
             <Badge>What We Do</Badge>
             <h1 className="text-left text-3xl font-regular tracking-tighter md:text-5xl">
               Everything we can do for your business.
@@ -230,7 +230,7 @@ export default function ServicesPage() {
       </div>
 
       {/* Tinted band so the packages read as their own section */}
-      <div className="w-full border-y bg-muted/30 py-20 lg:py-28">
+      <div className="band-surface w-full border-y py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-10 max-w-2xl">
             <h2 className="mb-3 text-2xl tracking-tight md:text-3xl">
@@ -296,7 +296,7 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      <div className="w-full py-20 lg:py-28">
+      <div className="page-surface w-full py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-10 max-w-2xl">
             <h2 className="mb-3 text-2xl tracking-tight md:text-3xl">
@@ -312,7 +312,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {ALL_SERVICES.map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 60}>
-                <div className="flex h-full flex-col gap-3 rounded-md border border-border/50 bg-muted/50 p-6 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg">
+                <div className="flex h-full flex-col gap-3 rounded-md border border-border/50 bg-muted p-6 transition-transform duration-200 hover:scale-[1.03] hover:shadow-lg">
                   <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                     <s.icon className="h-6 w-6 stroke-1 text-primary" />
                   </div>
@@ -327,7 +327,7 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      <div className="w-full border-t bg-muted/30 py-20 lg:py-28">
+      <div className="band-surface w-full border-t py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 text-center">

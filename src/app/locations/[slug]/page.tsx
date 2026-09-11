@@ -78,10 +78,10 @@ export default async function LocationPage({
   const intro = loc ? loc.intro : OTHER_AREAS.intro;
 
   return (
-    <div className="w-full py-20 lg:py-32">
+    <div className="page-surface w-full py-20 lg:py-32">
       <div className="container mx-auto px-4">
         <ScrollReveal>
-          <div className="flex flex-col gap-4 items-start max-w-2xl mb-12">
+          <div className="page-head flex flex-col gap-4 items-start max-w-2xl mb-12">
             <Badge>{badge}</Badge>
             <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
               {heading}
@@ -125,7 +125,7 @@ export default async function LocationPage({
 
         <div className="grid gap-6 lg:grid-cols-2">
         <ScrollReveal delay={150}>
-          <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
+          <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
             <h2 className="text-2xl tracking-tight mb-3">
               Why being found in {place} changed
             </h2>
@@ -149,7 +149,7 @@ export default async function LocationPage({
         </ScrollReveal>
 
         <ScrollReveal delay={200}>
-          <div className="rounded-md border border-border/50 bg-muted/50 p-6 md:p-8 h-full">
+          <div className="rounded-md border border-border/50 bg-muted p-6 md:p-8 h-full">
             <h2 className="text-2xl tracking-tight mb-3">
               Getting started in {place}
             </h2>
