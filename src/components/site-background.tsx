@@ -227,19 +227,24 @@ export default function SiteBackground() {
 
         .qh-glow { position: absolute; pointer-events: none; }
 
-        /* A two-stop gradient ramps linearly and leaves a visible rim where
-           it meets the page. These extra stops ease the falloff instead, so
-           the colour dissolves rather than stopping. */
+        /* Alpha is set per stop from raw channels rather than by mixing
+           toward transparent. Mixing a translucent colour with transparent
+           in sRGB drags its channels toward black, so the blue greyed out as
+           it faded — and because the base colour already carried alpha, each
+           mix compounded it until nothing was left in light mode. The final
+           stop is an explicit zero alpha for the same reason: transparent is
+           rgba(0,0,0,0),
+           and interpolating toward it tints the tail grey. */
         .qh-glow-a,
         .qh-glow-b {
           background: radial-gradient(
             circle at center,
-            var(--qh-glow) 0%,
-            color-mix(in srgb, var(--qh-glow) 58%, transparent) 26%,
-            color-mix(in srgb, var(--qh-glow) 26%, transparent) 45%,
-            color-mix(in srgb, var(--qh-glow) 9%, transparent) 63%,
-            color-mix(in srgb, var(--qh-glow) 2%, transparent) 78%,
-            transparent 90%
+            rgb(var(--qh-glowRgb) / var(--qh-glowA)) 0%,
+            rgb(var(--qh-glowRgb) / calc(var(--qh-glowA) * 0.82)) 22%,
+            rgb(var(--qh-glowRgb) / calc(var(--qh-glowA) * 0.54)) 42%,
+            rgb(var(--qh-glowRgb) / calc(var(--qh-glowA) * 0.28)) 60%,
+            rgb(var(--qh-glowRgb) / calc(var(--qh-glowA) * 0.09)) 78%,
+            rgb(var(--qh-glowRgb) / 0) 93%
           );
         }
 
@@ -254,12 +259,12 @@ export default function SiteBackground() {
           .qh-glow-a {
             top: -14%; left: -35%;
             width: 110%; height: 38%;
-            opacity: 0.6;
+            opacity: 0.9;
           }
           .qh-glow-b {
             bottom: -14%; right: -35%;
             width: 105%; height: 34%;
-            opacity: 0.55;
+            opacity: 0.85;
           }
         }
       `}</style>

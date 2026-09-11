@@ -22,20 +22,24 @@ function getStyles() {
     width: min(88vw, 54rem);
     height: min(46vh, 22rem);
     pointer-events: none;
+    /* Same reasoning as the corner glows: explicit alpha per stop, and a
+       final stop of / 0 rather than transparent, so the blue stays blue all
+       the way out instead of greying toward black. */
     background: radial-gradient(
       ellipse at center,
-      var(--qh-headingGlow) 0%,
-      color-mix(in srgb, var(--qh-headingGlow) 55%, transparent) 28%,
-      color-mix(in srgb, var(--qh-headingGlow) 22%, transparent) 48%,
-      color-mix(in srgb, var(--qh-headingGlow) 7%, transparent) 66%,
-      transparent 86%
+      rgb(var(--qh-headingGlowRgb) / var(--qh-headingGlowA)) 0%,
+      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.80)) 24%,
+      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.50)) 45%,
+      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.24)) 63%,
+      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.07)) 79%,
+      rgb(var(--qh-headingGlowRgb) / 0) 93%
     );
   }
   @media (max-width: 767px) {
     .qhero-heading-glow {
       width: 105vw;
       height: min(34vh, 15rem);
-      opacity: 0.65;
+      opacity: 0.9;
     }
   }
 
