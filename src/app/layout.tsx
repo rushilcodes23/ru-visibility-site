@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
@@ -182,6 +183,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <SiteFooter />
           </div>
           <ThemeToggle />
+          {/* Cloudflare Web Analytics — cookieless, no persistent visitor ID,
+              aggregated page-view/performance data only. Guarded on the env
+              var so a missing token skips the tag entirely rather than
+              rendering a beacon with nothing to report. NEXT_PUBLIC_ vars are
+              inlined at build time, so the value must be set before `next
+              build` runs (in .env.local for local builds), not only as a
+              runtime Cloudflare secret. */}
+          {process.env.NEXT_PUBLIC_CF_BEACON_TOKEN && (
+            <Script
+              strategy="afterInteractive"
+              src="https://static.cloudflareinsights.com/beacon.min.js"
+              data-cf-beacon={JSON.stringify({ token: process.env.NEXT_PUBLIC_CF_BEACON_TOKEN })}
+            />
+          )}
         </ThemeProvider>
       </body>
     </html>

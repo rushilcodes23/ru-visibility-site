@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   path: "/privacy",
   title: "Privacy Policy | Ru Visibility",
-  description: "What we collect, why, and who touches it. No analytics, no tracking pixels, no ad networks — just the contact form and email.",
+  description: "What we collect, why, and who touches it. Cookieless analytics only, no tracking pixels, no ad networks — just the contact form and email.",
 });
 
 // Bump this whenever the substance of the policy changes, not on every
@@ -24,9 +24,11 @@ export default function PrivacyPage() {
             </h1>
             <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
               Most privacy policies are long because the site behind them is
-              doing a lot. This one is short because ours is not. There is no
-              analytics tool on this site, no tracking pixel, no advertising
-              network, and no account to sign up for.
+              doing a lot. This one is short because ours is not. This site
+              uses Cloudflare Web Analytics, a privacy-first tool that does
+              not use cookies or track individual visitors. It collects only
+              aggregated page-view and performance data. There is no tracking
+              pixel, no advertising network, and no account to sign up for.
             </p>
             <p className="text-sm text-muted-foreground">
               Last updated: {LAST_UPDATED}
@@ -92,10 +94,12 @@ export default function PrivacyPage() {
                 <strong className="text-foreground font-medium">
                   Cloudflare
                 </strong>{" "}
-                hosts and serves this site. Like any web host, it handles the
+                hosts and serves this site, and runs the cookieless Web
+                Analytics mentioned above. Like any web host, it handles the
                 network requests that load these pages, which includes your IP
-                address. That is how the site gets to your browser and how it
-                is protected from attacks.
+                address. That is how the site gets to your browser, how it is
+                protected from attacks, and how it counts page views without
+                identifying who you are.
               </li>
             </ul>
             <p className="text-muted-foreground leading-relaxed">
