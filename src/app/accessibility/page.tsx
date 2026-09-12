@@ -10,6 +10,11 @@ export const metadata = pageMetadata({
   description: "Our accessibility statement, and the real, measured standard we hold client sites to as part of every audit.",
 });
 
+// Update both of these whenever the scan is re-run, so the page never claims
+// a result that is older than it looks.
+const LAST_SCAN = "12 September 2026";
+const SCAN_PAGES = 15;
+
 const COMMITMENTS = [
   {
     icon: Eye,
@@ -66,7 +71,37 @@ export default function AccessibilityPage() {
         </div>
 
         <ScrollReveal>
-          <div className="mt-12 card-surface rounded-md p-6 md:p-8 flex flex-col gap-4">
+          <div className="mt-12 card-surface rounded-md p-6 md:p-8">
+            <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
+              What our own last scan found
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4 max-w-3xl">
+              Claiming to run real scans is easy, so here is ours. On{" "}
+              {LAST_SCAN}, every page on this site was run through axe-core in
+              a real browser, against WCAG 2.1 level A and AA, in both light
+              and dark mode &mdash; {SCAN_PAGES} pages, {SCAN_PAGES * 2}{" "}
+              page-and-theme combinations.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-4 max-w-3xl">
+              It found two things, and both are fixed. Muted body text in
+              light mode sat at a contrast ratio of 4.16 against some
+              backgrounds, under the 4.5 that AA requires for normal text, so
+              that colour was darkened until it cleared on every surface we
+              use. And the fade-in that runs as you scroll ignored the
+              operating system&apos;s reduce-motion setting, so it now stops
+              animating for anyone who has asked for less movement.
+            </p>
+            <p className="text-muted-foreground leading-relaxed max-w-3xl">
+              The current result is zero violations across all{" "}
+              {SCAN_PAGES * 2} combinations. That is a real number from a real
+              tool, not a badge we awarded ourselves, and we will update it
+              here when it changes.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <div className="mt-6 card-surface rounded-md p-6 md:p-8 flex flex-col gap-4">
             <h2 className="text-2xl tracking-tight flex items-center gap-2 md:text-3xl">
               <Accessibility className="w-6 h-6" />
               Found a real issue on this site?

@@ -16,6 +16,19 @@ export default function ScrollReveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    // The hero canvas already honours reduce-motion; this did not, so every
+    // section on the site still slid and faded for someone who had asked the
+    // OS for less movement. Reading it in an effect rather than at render
+    // keeps the server and first client render identical.
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -33,14 +46,21 @@ export default function ScrollReveal({
     return () => observer.disconnect();
   }, []);
 
+  // Content still has to be readable if the observer never fires — a stuck
+  // opacity: 0 would hide the section outright, which is worse than no
+  // animation at all.
+  const shown = visible || reduced;
+
   return (
     <div
       ref={ref}
       className={className}
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`,
+        opacity: shown ? 1 : 0,
+        transform: shown ? "translateY(0)" : "translateY(24px)",
+        transition: reduced
+          ? "none"
+          : `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`,
       }}
     >
       {children}
