@@ -6,11 +6,10 @@ export type ContactFormState = {
 };
 
 const TO_EMAIL = "rushil@ruvisibility.com";
-// Resend's shared onboarding sender works with no domain setup. Once
-// ruvisibility.com is verified in Resend (a couple of DNS records, added
-// via the Cloudflare dashboard), switch this to something like
-// "Ru Visibility <contact@ruvisibility.com>" for a fully branded sender.
-const FROM_EMAIL = "Ru Visibility <onboarding@resend.dev>";
+// ruvisibility.com is verified in Resend (DKIM + SPF confirmed 2026-09-12),
+// so the contact form sends from our own domain instead of Resend's shared
+// onboarding address.
+const FROM_EMAIL = "Ru Visibility <contact@ruvisibility.com>";
 
 export async function sendContactMessage(
   _prevState: ContactFormState,
