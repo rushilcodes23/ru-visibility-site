@@ -15,6 +15,9 @@ import "./globals.css";
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": ["Organization", "ProfessionalService"],
+  // Stable id so the homepage's WebSite node can point its publisher here
+  // instead of duplicating the organisation details in a second place.
+  "@id": "https://ruvisibility.com/#organization",
   name: "Ru Visibility",
   url: "https://ruvisibility.com",
   email: "rushil@ruvisibility.com",
