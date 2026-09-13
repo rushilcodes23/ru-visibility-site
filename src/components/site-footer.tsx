@@ -37,7 +37,7 @@ export default function SiteFooter() {
     <footer className="page-surface border-t">
       <div className="container mx-auto px-4 py-12 md:py-16 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-5">
         <div className="flex flex-col gap-3 col-span-2">
-          <a href="/" className="flex items-center gap-2">
+          <a href="/" className="flex min-h-11 items-center gap-2">
             <Image src="/logo-mark-220.png" alt="" width={28} height={28} className="dark:invert" unoptimized />
             <span className="font-semibold tracking-tight text-lg">Ru Visibility</span>
           </a>

@@ -54,7 +54,7 @@ export default function ContactForm() {
         <p className="text-destructive text-sm">{state.message}</p>
       )}
 
-      <Button className="w-full" type="submit" disabled={pending}>
+      <Button className="w-full h-11 md:h-8" type="submit" disabled={pending}>
         {pending ? "Sending…" : "Submit"}
       </Button>
     </form>

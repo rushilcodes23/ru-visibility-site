@@ -44,6 +44,7 @@ const STYLES = `
     gap: 8px;
     text-decoration: none;
     flex-shrink: 0;
+    min-height: 44px;
   }
   .dark .ru-logo-link img { filter: invert(1); }
   .ru-logo-text {

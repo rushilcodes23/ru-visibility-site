@@ -12,9 +12,16 @@ import "./globals.css";
 // Only confirmed facts — no address/founding date, those don't exist yet.
 // areaServed reflects Rushil's actual real target markets (see
 // ABOUT-RUSHIL.md for the US cities, confirmed directly for India).
+//
+// Plain Organization, deliberately. This used to also declare
+// ProfessionalService, which is a subtype of LocalBusiness — so it was
+// telling Google "physical local business" while carrying no address or geo,
+// which is both incomplete markup and wrong for a remote service working
+// across the US, India and elsewhere. areaServed below already carries the
+// real coverage without implying a storefront.
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": ["Organization", "ProfessionalService"],
+  "@type": "Organization",
   // Stable id so the homepage's WebSite node can point its publisher here
   // instead of duplicating the organisation details in a second place.
   "@id": "https://ruvisibility.com/#organization",

@@ -229,6 +229,19 @@
   text-decoration: none;
   transition: color 180ms ease, transform 180ms ease;
 }
+
+/* Footer links rendered 20px tall on a phone, under even the 24px WCAG 2.2
+   AA minimum and well under the 44px comfortable-touch figure. The text
+   position is unchanged; only the hit area grows. Mobile only, so the
+   desktop footer keeps its current density. */
+@media (max-width: 767px) {
+  .footer-link,
+  .footer-legal {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
 .footer-link:hover,
 .footer-link:focus-visible {
   color: var(--accent-line);
