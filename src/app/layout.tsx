@@ -32,6 +32,24 @@ const organizationJsonLd = {
   logo: "https://ruvisibility.com/logo-mark.png",
   description:
     "SEO and GEO (Generative Engine Optimization) agency — ongoing management so AI tools and Google can find and recommend a business.",
+  // Active profiles only. This is the markup AI systems use to confirm that
+  // this site and those profiles describe the same entity — so an inactive or
+  // abandoned profile listed here is worse than no entry at all.
+  sameAs: [
+    "https://www.linkedin.com/in/rushil-a-bajpai-21b99a3a9",
+    "https://x.com/RushilA_Bajpai",
+  ],
+  founder: {
+    "@type": "Person",
+    "@id": "https://ruvisibility.com/#founder",
+    name: "Rushil A. Bajpai",
+    jobTitle: "AI Visibility (GEO) & SEO Consultant",
+    url: "https://ruvisibility.com/about",
+    sameAs: [
+      "https://www.linkedin.com/in/rushil-a-bajpai-21b99a3a9",
+      "https://x.com/RushilA_Bajpai",
+    ],
+  },
   knowsAbout: [
     "Search Engine Optimization",
     "Generative Engine Optimization",

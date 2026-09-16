@@ -22,6 +22,7 @@ const OUT = join(root, "src/lib/page-dates.json");
 const FILES = [
   "src/app/page.tsx",
   "src/components/ui/ru-visibility-hero.tsx",
+  "src/app/about/page.tsx",
   "src/app/how-we-work/page.tsx",
   "src/app/why-it-matters/page.tsx",
   "src/app/services/page.tsx",

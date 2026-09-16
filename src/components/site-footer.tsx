@@ -2,6 +2,7 @@ import Image from "next/image";
 import { LOCATIONS } from "@/lib/locations";
 
 const COMPANY_LINKS = [
+  { label: "About", href: "/about" },
   { label: "How We Work", href: "/how-we-work" },
   { label: "Why It Matters", href: "/why-it-matters" },
   { label: "What We Do", href: "/services" },
@@ -53,6 +54,28 @@ export default function SiteFooter() {
           <a href="tel:+917222999365" className="footer-link text-sm">
             +91 72229 99365
           </a>
+          {/* Linked, not just declared in schema — a crawler can follow these
+              to corroborate the site and the profiles are the same entity.
+              rel="me" is the established signal for that. Active profiles
+              only; listing a dormant one is worse than listing none. */}
+          <div className="flex items-center gap-4 mt-1">
+            <a
+              href="https://www.linkedin.com/in/rushil-a-bajpai-21b99a3a9"
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="footer-link text-sm"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://x.com/RushilA_Bajpai"
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="footer-link text-sm"
+            >
+              X
+            </a>
+          </div>
           <p className="text-xs text-muted-foreground mt-2 max-w-md lg:max-w-xs">
             Send us a website address and you get a real answer, usually within
             a day. Not a calendar link.

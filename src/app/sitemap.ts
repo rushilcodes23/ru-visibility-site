@@ -59,6 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     entry("/", 1, "src/app/page.tsx", "src/components/ui/ru-visibility-hero.tsx"),
+    entry("/about", 0.8, "src/app/about/page.tsx"),
     entry("/how-we-work", 0.8, "src/app/how-we-work/page.tsx"),
     entry("/why-it-matters", 0.7, "src/app/why-it-matters/page.tsx"),
     entry("/services", 0.9, "src/app/services/page.tsx"),
