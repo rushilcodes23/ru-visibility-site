@@ -25,7 +25,7 @@
  *    JSON module is bundled and served whether a component reads it or not.
  */
 
-import { readdir, readFile, writeFile, stat } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const args = process.argv.slice(2);

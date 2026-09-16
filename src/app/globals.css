@@ -219,6 +219,18 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-line) 30%, transparent);
 }
 
+/* A form inside a card had invisible field boundaries in dark mode: the Input
+   border is var(--input) (#1e293b) and .dark .card-surface's background is
+   var(--muted), which is the same #1e293b — so the border was drawn in exactly
+   the colour behind it. Only the placeholder hinted where to type.
+   Scoped to cards so the standalone forms elsewhere keep their existing look. */
+.dark .card-surface :is(input, select, textarea) {
+  border-color: color-mix(in srgb, var(--foreground) 26%, transparent);
+}
+.dark .card-surface :is(input, select, textarea):hover {
+  border-color: color-mix(in srgb, var(--foreground) 38%, transparent);
+}
+
 /* ── Footer links ──────────────────────────────────────────────────────
    Accent blue on hover, matching the page-header rule and the ambient
    glows, so the one non-monochrome colour on the site is used
