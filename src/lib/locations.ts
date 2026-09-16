@@ -14,12 +14,25 @@ export type Location = {
   sectors: string;
   /** A different argument per city, so no two pages make the same case. */
   angle: string;
+  /**
+   * Why this city has a page at all — the honest record, because an earlier
+   * handoff wrongly claimed all 24 were backed by real outreach.
+   *
+   *   "campaign" — a real outreach campaign ran here, with audited prospect
+   *                sites on disk under `usa/<tier>/<city>/reports/`.
+   *   "home"     — where the business actually operates from.
+   *   undefined  — a major target metro added in Round 7 with no campaign
+   *                behind it yet. Per CONTENT_RULES.md these are the pages to
+   *                consolidate rather than multiply.
+   */
+  basis?: "campaign" | "home";
 };
 
 export const LOCATIONS: Location[] = [
   // --- US: original Tier 1 outreach markets (see ABOUT-RUSHIL.md) ---
   {
     slug: "dallas",
+    basis: "campaign",
     city: "Dallas",
     region: "Texas",
     country: "USA",
@@ -32,6 +45,7 @@ export const LOCATIONS: Location[] = [
   },
   {
     slug: "atlanta",
+    basis: "campaign",
     city: "Atlanta",
     region: "Georgia",
     country: "USA",
@@ -44,6 +58,7 @@ export const LOCATIONS: Location[] = [
   },
   {
     slug: "houston",
+    basis: "campaign",
     city: "Houston",
     region: "Texas",
     country: "USA",
@@ -56,6 +71,7 @@ export const LOCATIONS: Location[] = [
   },
   {
     slug: "miami",
+    basis: "campaign",
     city: "Miami",
     region: "Florida",
     country: "USA",
@@ -68,6 +84,7 @@ export const LOCATIONS: Location[] = [
   },
   {
     slug: "phoenix",
+    basis: "campaign",
     city: "Phoenix",
     region: "Arizona",
     country: "USA",
@@ -189,6 +206,7 @@ export const LOCATIONS: Location[] = [
   },
   {
     slug: "charlotte",
+    basis: "campaign",
     city: "Charlotte",
     region: "North Carolina",
     country: "USA",
@@ -202,6 +220,7 @@ export const LOCATIONS: Location[] = [
   // --- India: original ---
   {
     slug: "raipur",
+    basis: "home",
     city: "Raipur",
     region: "Chhattisgarh",
     country: "India",
