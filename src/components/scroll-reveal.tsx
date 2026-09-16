@@ -1,6 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+function subscribeReducedMotion(onChange: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+const getReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const getReducedMotionServer = () => false;
 
 // Fades content in once when it scrolls into view. Plain IntersectionObserver
 // + CSS transition — no animation library, same approach used everywhere
@@ -16,19 +24,16 @@ export default function ScrollReveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    // The hero canvas already honours reduce-motion; this did not, so every
-    // section on the site still slid and faded for someone who had asked the
-    // OS for less movement. Reading it in an effect rather than at render
-    // keeps the server and first client render identical.
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const onChange = () => setReduced(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
+  // The hero canvas already honours reduce-motion; this did not, so every
+  // section on the site still slid and faded for someone who had asked the OS
+  // for less movement. useSyncExternalStore reads it directly rather than via
+  // an effect + setState, so there's no extra render between hydration and
+  // the real value, and the server snapshot (false) matches the first paint.
+  const reduced = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    getReducedMotionServer
+  );
 
   useEffect(() => {
     const el = ref.current;
