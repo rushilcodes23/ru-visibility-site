@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
+import { POSTS, formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -19,16 +20,18 @@ function Mark({ children }: { children: React.ReactNode }) {
   );
 }
 
+const post = POSTS.find((p) => p.slug === "why-geo-matters")!;
+
 const postJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: "Why GEO Matters",
   description:
     "GEO isn't a buzzword — it's whether AI tools recommend your business at all.",
-  author: { "@type": "Person", name: "Rushil" },
+  author: { "@type": "Person", name: post.author },
   publisher: { "@type": "Organization", name: "Ru Visibility", logo: "https://ruvisibility.com/logo-mark.png" },
-  datePublished: "2026-09-10",
-  dateModified: "2026-09-10",
+  datePublished: post.published,
+  dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/why-geo-matters",
 };
 
@@ -44,7 +47,17 @@ export default function WhyGeoMattersPost() {
         <h1 className="text-3xl md:text-5xl tracking-tighter font-regular mb-3">
           Why GEO Matters
         </h1>
-        <p className="text-sm text-muted-foreground mb-10">By Rushil, Founder</p>
+        <p className="text-sm text-muted-foreground mb-10">
+          By {post.author}, Founder ·{" "}
+          <time dateTime={post.published}>{formatPostDate(post.published)}</time>
+          {post.updated && (
+            <>
+              {" "}
+              · Updated{" "}
+              <time dateTime={post.updated}>{formatPostDate(post.updated)}</time>
+            </>
+          )}
+        </p>
 
         <div className="flex flex-col gap-6 text-muted-foreground leading-relaxed">
           <p>

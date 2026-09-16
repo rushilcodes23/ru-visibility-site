@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import { AuditCta } from "@/components/ui/audit-cta";
+import { POSTS, formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -22,15 +23,6 @@ const START_HERE = [
   { href: "/why-us", label: "Why Us" },
 ];
 
-const POSTS = [
-  {
-    slug: "why-geo-matters",
-    title: "Why GEO Matters",
-    excerpt:
-      "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Why that's different from regular SEO, and what to actually do about it.",
-    author: "Rushil",
-  },
-];
 
 export default function BlogPage() {
   const [featured, ...rest] = POSTS;
@@ -71,9 +63,14 @@ export default function BlogPage() {
               <p className="opacity-80 text-sm md:text-base leading-relaxed mb-5">
                 {featured.excerpt}
               </p>
-              <div className="flex items-center justify-between text-sm">
-                <span className="opacity-70">By {featured.author}</span>
-                <span className="inline-flex items-center gap-1 font-medium">
+              <div className="flex items-center justify-between gap-4 text-sm">
+                <span className="opacity-70">
+                  By {featured.author} ·{" "}
+                  <time dateTime={featured.published}>
+                    {formatPostDate(featured.published)}
+                  </time>
+                </span>
+                <span className="inline-flex items-center gap-1 font-medium shrink-0">
                   Read post
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </span>
@@ -91,7 +88,10 @@ export default function BlogPage() {
               <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                 {post.excerpt}
               </p>
-              <span className="text-xs text-muted-foreground">By {post.author}</span>
+              <span className="text-xs text-muted-foreground">
+                By {post.author} ·{" "}
+                <time dateTime={post.published}>{formatPostDate(post.published)}</time>
+              </span>
             </a>
           ))}
         </div>
