@@ -91,10 +91,10 @@ function Feature() {
                 Not just an audit. Ongoing work, every month.
               </h2>
               <p className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-muted-foreground text-left">
-                We don't hand you a report and disappear. Every month we're
-                actively improving your SEO and GEO, writing content,
-                keeping the site maintained, and checking in with real
-                numbers on how it's actually performing.
+                We don&apos;t hand you a report and disappear. Every month
+                we&apos;re actively improving your SEO and GEO, writing
+                content, keeping the site maintained, and checking in with
+                real numbers on how it&apos;s actually performing.
               </p>
             </div>
           </div>
