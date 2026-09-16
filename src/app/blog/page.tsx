@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
+import { AuditCta } from "@/components/ui/audit-cta";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -35,6 +36,7 @@ export default function BlogPage() {
   const [featured, ...rest] = POSTS;
 
   return (
+    <>
     <div className="page-surface w-full py-20 lg:py-32">
       <div className="container mx-auto px-4">
         <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
@@ -119,21 +121,6 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <div className="card-surface rounded-md p-6 md:p-8 mt-16">
-          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
-            Want the version that applies to your site?
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            General writing only goes so far. If you want to know what any
-            of this means for your business specifically,{" "}
-            <a href="/contact" className="underline underline-offset-4 text-foreground">
-              send us your website address
-            </a>{" "}
-            and we will tell you what we see. It is a faster route to a real
-            answer than reading everything here and guessing which parts
-            apply.
-          </p>
-        </div>
           </div>
 
           {/* Sticky rail — one post does not fill a page, and the reading
@@ -149,10 +136,10 @@ export default function BlogPage() {
                 actually see, rather than what tends to be true in general.
               </p>
               <a
-                href="/contact"
+                href="#audit"
                 className="inline-flex items-center gap-1 rounded-full bg-primary-foreground text-primary text-sm font-medium px-4 py-2 transition-transform duration-200 hover:scale-105"
               >
-                Talk to Us
+                Get the free check
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>
@@ -193,5 +180,7 @@ export default function BlogPage() {
         </div>
       </div>
     </div>
+    <AuditCta />
+    </>
   );
 }

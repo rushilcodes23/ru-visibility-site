@@ -325,7 +325,7 @@ export default function RuVisibilityHero() {
 
         {/* CTAs */}
         <div className="qhero-fade-up-delay-2 qhero-cta-row">
-          <a href="/contact" className="qhero-btn">
+          <a href="#audit" className="qhero-btn">
             <span>Get Your Visibility Audit</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />

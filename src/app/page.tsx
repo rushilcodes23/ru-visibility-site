@@ -1,6 +1,8 @@
 import RuVisibilityHero from "@/components/ui/ru-visibility-hero";
 import { Feature } from "@/components/ui/feature-section-with-bento-grid";
 import { ClosingCta } from "@/components/ui/closing-cta";
+import { AuditCta } from "@/components/ui/audit-cta";
+import { TestimonialsStrip } from "@/components/ui/testimonials";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -31,8 +33,10 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
       />
       <RuVisibilityHero />
+      <AuditCta />
       <Feature />
-      <ClosingCta />
+      <TestimonialsStrip />
+      <ClosingCta ctaHref="#audit" />
     </>
   );
 }

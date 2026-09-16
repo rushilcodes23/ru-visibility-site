@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AuditCta } from "@/components/ui/audit-cta";
 import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -179,11 +180,12 @@ export default async function LocationPage({
               lists every service and package, so you know what you are
               getting before you ask.
             </p>
-            <Button size="lg" render={<a href="/contact">Get Your Visibility Audit</a>} />
+            <Button size="lg" render={<a href="#audit">Get Your Visibility Audit</a>} />
           </div>
         </ScrollReveal>
         </div>
       </div>
+      <AuditCta />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AuditCta } from "@/components/ui/audit-cta";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -118,9 +119,10 @@ export default function WhyGeoMattersPost() {
         </div>
 
         <div className="mt-12 pt-8 border-t">
-          <Button render={<a href="/contact">Get Your Visibility Audit</a>} />
+          <Button render={<a href="#audit">Get Your Visibility Audit</a>} />
         </div>
       </div>
+      <AuditCta />
     </article>
   );
 }
