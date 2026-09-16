@@ -40,6 +40,30 @@ relying on an npm `prebuild` hook.
   build time), so it must exist before `next build`/`deploy` runs. See
   `.env.example`.
 
+## Research data (`/research`)
+
+`src/lib/research-findings.json` is generated from the audit reports on the
+machine that ran the campaigns — it is **not** hand-edited:
+
+```bash
+node scripts/aggregate-findings.mjs --root "C:/Users/hp/Desktop" \
+  --out src/lib/research-findings.json \
+  --csv ../research-findings.csv \
+  --full ../research-findings.full.json   # private, do not commit
+```
+
+Three rules the script enforces, all of which exist for a reason:
+
+- **No client data ever reaches the committed file** — counts and percentages
+  only, never a domain. Verify with a grep for `\.com` before committing.
+- **No scoring internals in the public file** — component weights,
+  recommendation ids and pitch-type taxonomy go to `--full` only. This matters
+  even for data the page never renders: an imported JSON module is bundled and
+  served whether a component reads it or not.
+- **Subset fields keep their own denominator** — anything not present on all
+  records is reported separately under `subsetOnly`, never averaged against
+  the full corpus.
+
 ## Stack notes
 
 - **shadcn here uses the Base UI registry**, not classic Radix — e.g.

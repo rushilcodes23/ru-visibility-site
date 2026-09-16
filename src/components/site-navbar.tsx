@@ -195,6 +195,7 @@ const STYLES = `
 const NAV_LINKS = [
   { label: "How We Work", href: "/how-we-work" },
   { label: "What We Do", href: "/services" },
+  { label: "Research", href: "/research" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
   { label: "Why Us", href: "/why-us" },
