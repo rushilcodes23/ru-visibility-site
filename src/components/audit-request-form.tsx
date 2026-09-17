@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Select } from "@/components/ui/select";
 import { sendAuditRequest, type AuditRequestState } from "@/lib/send-audit-request";
 
 const initialState: AuditRequestState = { status: "idle", message: "" };
@@ -11,6 +12,7 @@ const initialState: AuditRequestState = { status: "idle", message: "" };
 // Lives here rather than in the action: a "use server" module can only export
 // async functions, so a plain array exported from there arrives as a proxy and
 // blows up on .map during prerender.
+const OTHER = "Something else";
 const BUSINESS_TYPES = [
   "Local service business",
   "Clinic or healthcare practice",
@@ -18,16 +20,14 @@ const BUSINESS_TYPES = [
   "SaaS or software",
   "Professional services (legal, finance, consulting)",
   "Restaurant, hotel, or hospitality",
-  "Something else",
+  "Trades and home services",
+  "Property, real estate or hospitality venue",
+  OTHER,
 ];
-
-// Matches the Input primitive's classes — a native select rather than a
-// popover component, so it uses the OS picker on mobile.
-const SELECT_CLASS =
-  "h-11 md:h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm dark:bg-input/30";
 
 export default function AuditRequestForm() {
   const [state, formAction, pending] = useActionState(sendAuditRequest, initialState);
+  const [businessType, setBusinessType] = useState("");
 
   if (state.status === "success") {
     return (
@@ -75,22 +75,44 @@ export default function AuditRequestForm() {
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="audit-business-type">Business type</Label>
-        <select id="audit-business-type" name="businessType" className={SELECT_CLASS} defaultValue="">
-          <option value="" disabled>
-            Select one
-          </option>
-          {BUSINESS_TYPES.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
+        <Select
+          id="audit-business-type"
+          name="businessType"
+          items={BUSINESS_TYPES}
+          onValueChange={setBusinessType}
+        />
       </div>
 
+      {businessType === OTHER && (
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="audit-business-other">What kind of business is it?</Label>
+          <Input
+            id="audit-business-other"
+            name="businessTypeOther"
+            type="text"
+            placeholder="In your own words — e.g. wedding venue, driving school"
+            maxLength={120}
+            autoFocus
+          />
+          <p className="text-muted-foreground text-xs">
+            A sentence is plenty. It tells us which prompts a real customer
+            would actually type.
+          </p>
+        </div>
+      )}
+
       {state.status === "error" && (
-        <p className="text-destructive text-sm" role="alert">
-          {state.message}
-        </p>
+        <div role="alert" className="flex flex-col gap-2 rounded-lg border border-destructive/40 bg-destructive/5 p-3">
+          <p className="text-destructive text-sm">{state.message}</p>
+          {state.mailto && (
+            <a
+              href={state.mailto}
+              className="text-sm font-medium underline underline-offset-4 text-foreground w-fit min-h-11 inline-flex items-center"
+            >
+              Open it as an email instead →
+            </a>
+          )}
+        </div>
       )}
 
       <Button className="w-full h-11 md:h-10" type="submit" disabled={pending}>
