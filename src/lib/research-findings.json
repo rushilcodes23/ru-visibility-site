@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T18:07:55.692Z",
+  "generatedAt": "2026-09-17T08:25:33.087Z",
   "corpus": {
     "uniqueDomains": 1503,
     "jsonFilesScanned": 2230,
@@ -165,6 +165,68 @@
       "aiBlockedPct": 0,
       "missingMetaPct": 72.7,
       "noFaqPct": 81.8
+    }
+  ],
+  "cities": [
+    {
+      "slug": "dallas",
+      "city": "Dallas",
+      "sites": 114,
+      "geoMean": 70,
+      "seoMean": 83.3,
+      "noSameAsPct": 44.7,
+      "noFaqPct": 64,
+      "aiBlockedPct": 8.8
+    },
+    {
+      "slug": "charlotte",
+      "city": "Charlotte",
+      "sites": 96,
+      "geoMean": 69.5,
+      "seoMean": 84.3,
+      "noSameAsPct": 42.7,
+      "noFaqPct": 69.8,
+      "aiBlockedPct": 11.5
+    },
+    {
+      "slug": "miami",
+      "city": "Miami",
+      "sites": 91,
+      "geoMean": 71.3,
+      "seoMean": 82.7,
+      "noSameAsPct": 38.5,
+      "noFaqPct": 49.5,
+      "aiBlockedPct": 7.7
+    },
+    {
+      "slug": "atlanta",
+      "city": "Atlanta",
+      "sites": 57,
+      "geoMean": 67.6,
+      "seoMean": 80.9,
+      "noSameAsPct": 49.1,
+      "noFaqPct": 59.6,
+      "aiBlockedPct": 14
+    },
+    {
+      "slug": "houston",
+      "city": "Houston",
+      "sites": 52,
+      "geoMean": 69.9,
+      "seoMean": 86.1,
+      "noSameAsPct": 44.2,
+      "noFaqPct": 59.6,
+      "aiBlockedPct": 11.5
+    },
+    {
+      "slug": "phoenix",
+      "city": "Phoenix",
+      "sites": 42,
+      "geoMean": 71.9,
+      "seoMean": 84.5,
+      "noSameAsPct": 26.2,
+      "noFaqPct": 54.8,
+      "aiBlockedPct": 7.1
     }
   ],
   "platforms": {

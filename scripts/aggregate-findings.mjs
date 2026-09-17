@@ -80,6 +80,23 @@ function isAuditReport(j) {
  * segment for any other industry — if one is ever wanted, it has to come from
  * running real audits in that industry, not from relabelling these.
  */
+/**
+ * The US campaign city a report came from, for the per-city blocks on the
+ * location pages. Only cities with a real campaign folder appear here — a city
+ * page without one gets no stats block rather than an invented one.
+ */
+const CAMPAIGN_CITIES = {
+  dallas: "Dallas", miami: "Miami", atlanta: "Atlanta",
+  houston: "Houston", phoenix: "Phoenix", charlotte: "Charlotte",
+};
+function cityOf(filePath) {
+  const p = filePath.replace(/\\/g, "/").toLowerCase();
+  for (const slug of Object.keys(CAMPAIGN_CITIES)) {
+    if (p.includes(`/usa/`) && p.includes(`/${slug}/`)) return slug;
+  }
+  return null;
+}
+
 function segmentOf(filePath) {
   const p = filePath.replace(/\\/g, "/").toLowerCase();
   if (p.includes("/hair transplant dubai/")) return { key: "hair-uae", industry: "Hair transplant clinics", market: "Dubai" };
@@ -136,7 +153,7 @@ async function main() {
     const domain = String(j.raw.domain).toLowerCase();
     const when = Date.parse(j.raw.checkedAt || 0) || 0;
     const prev = byDomain.get(domain);
-    if (!prev || when > prev.when) byDomain.set(domain, { when, j, segment: segmentOf(f) });
+    if (!prev || when > prev.when) byDomain.set(domain, { when, j, segment: segmentOf(f), city: cityOf(f) });
   }
 
   const entries = [...byDomain.values()].sort((a, b) => a.when - b.when);
@@ -187,6 +204,7 @@ async function main() {
 
   // Per-market rollup. Only a handful of metrics — enough to show that the
   // pattern holds across markets, without turning /research into a spreadsheet.
+  const cityAcc = new Map();
   const segAcc = new Map();
   function seg(entry) {
     if (!entry.segment) return null;
@@ -223,6 +241,26 @@ async function main() {
         /SearchBot|ChatGPT-User|Claude-User|PerplexityBot|Perplexity-User/.test(n)
       );
       if (answerBots.some(([, i]) => i && i.status && i.status !== "ok")) s.aiBlocked++;
+    }
+
+    // Per-city rollup for the location pages.
+    if (entry.city) {
+      if (!cityAcc.has(entry.city)) {
+        cityAcc.set(entry.city, { slug: entry.city, city: CAMPAIGN_CITIES[entry.city], sites: 0, geoSum: 0, seoSum: 0, noSameAs: 0, noFaq: 0, aiBlocked: 0 });
+      }
+      const c = cityAcc.get(entry.city);
+      c.sites++;
+      if (typeof scored.geo?.total === "number") c.geoSum += scored.geo.total;
+      if (typeof scored.seo?.total === "number") c.seoSum += scored.seo.total;
+      const pgs = (raw.pages || []).filter((p) => p && p.ok !== false);
+      if (pgs.length) {
+        if (!pgs.some((p) => (p.schema?.sameAs?.length || 0) > 0)) c.noSameAs++;
+        if (!pgs.some((p) => (p.faqBlocks || 0) > 0)) c.noFaq++;
+      }
+      const ab = Object.entries(raw.bots || {}).filter(([n]) =>
+        /SearchBot|ChatGPT-User|Claude-User|PerplexityBot|Perplexity-User/.test(n)
+      );
+      if (ab.some(([, i]) => i && i.status && i.status !== "ok")) c.aiBlocked++;
     }
 
     if (typeof scored.geo?.total === "number") geoScores.push(scored.geo.total);
@@ -383,6 +421,21 @@ async function main() {
         aiBlockedPct: pct(s.aiBlocked, s.sites),
         missingMetaPct: pct(s.missingMeta, s.sites),
         noFaqPct: pct(s.noFaq, s.sites),
+      }))
+      .sort((a, b) => b.sites - a.sites),
+    // Per-city, for the location pages. Only cities with a real campaign
+    // behind them appear; the rest get no stats block rather than a made-up one.
+    cities: [...cityAcc.values()]
+      .filter((c) => c.sites >= 20)
+      .map((c) => ({
+        slug: c.slug,
+        city: c.city,
+        sites: c.sites,
+        geoMean: Math.round((c.geoSum / c.sites) * 10) / 10,
+        seoMean: Math.round((c.seoSum / c.sites) * 10) / 10,
+        noSameAsPct: pct(c.noSameAs, c.sites),
+        noFaqPct: pct(c.noFaq, c.sites),
+        aiBlockedPct: pct(c.aiBlocked, c.sites),
       }))
       .sort((a, b) => b.sites - a.sites),
     platforms,

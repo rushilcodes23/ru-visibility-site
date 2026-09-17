@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
+import { CityAuditStats } from "@/components/ui/city-audit-stats";
 import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -94,6 +95,12 @@ export default async function LocationPage({
           </div>
         </ScrollReveal>
 
+        {loc && (
+          <ScrollReveal delay={50}>
+            <CityAuditStats slug={loc.slug} city={loc.city} />
+          </ScrollReveal>
+        )}
+
         <ScrollReveal delay={100}>
           <div className="mb-16">
             <h2 className="text-2xl tracking-tight mb-3 md:text-3xl">
@@ -141,22 +148,22 @@ export default async function LocationPage({
                 {loc.angle}
               </p>
             )}
-            <p className="text-muted-foreground leading-relaxed mb-4 max-w-3xl">
-              Underneath that, the shift is the same everywhere. For years,
-              showing up locally meant ranking on Google and little else.
-              That still matters — most people still start with a search.
-              But a growing share now ask an AI tool directly for a
-              recommendation instead, and those tools answer with one or two
-              businesses, not a page of ten blue links. If yours isn&apos;t
-              one of them, you aren&apos;t further down the list; you&apos;re
-              simply absent from that conversation.
-            </p>
+            {/* Deliberately short. The general argument lives on one page
+                instead of being restated on all 24 city pages — repeating it
+                everywhere was most of what made these pages near-identical
+                (82% wording overlap between the worst pair). */}
             <p className="text-muted-foreground leading-relaxed max-w-3xl">
-              We won&apos;t promise you a specific ranking or a guaranteed
-              citation — nobody honestly can, and anyone who does is selling
-              you something. What we can do is measure exactly where you
-              stand today, fix what&apos;s genuinely holding you back, and
-              show you the before-and-after using the same prompts.
+              The wider shift behind that — why AI answers name one or two
+              businesses instead of listing ten — is set out in{" "}
+              <a href="/why-it-matters" className="underline underline-offset-4 hover:text-foreground">
+                why it matters
+              </a>
+              , with the measured evidence on our{" "}
+              <a href="/research" className="underline underline-offset-4 hover:text-foreground">
+                research page
+              </a>
+              . We won&apos;t promise a ranking or a citation; nobody honestly
+              can.
             </p>
           </div>
         </ScrollReveal>
@@ -167,18 +174,20 @@ export default async function LocationPage({
               Getting started in {place}
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              It starts with an audit: we run the real prompts, crawl the
-              site, and hand you a plain-English report on what&apos;s
-              actually wrong. The full six-step process is laid out on{" "}
+              It starts with an audit — the same one behind the numbers above.
+              The six-step process is on{" "}
               <a href="/how-we-work" className="underline underline-offset-4 hover:text-foreground">
                 How We Work
               </a>
-              , and{" "}
+              , every package is on{" "}
               <a href="/services" className="underline underline-offset-4 hover:text-foreground">
                 what we do
+              </a>
+              , and{" "}
+              <a href="/about" className="underline underline-offset-4 hover:text-foreground">
+                who you&apos;d be working with
               </a>{" "}
-              lists every service and package, so you know what you are
-              getting before you ask.
+              is one person, not an account team.
             </p>
             <Button size="lg" render={<a href="#audit">Get Your Visibility Audit</a>} />
           </div>
