@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -95,15 +95,16 @@ const organizationJsonLd = {
   },
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Geist and Geist Mono used to be loaded here and were never rendered by
+// anything: globals.css maps --font-sans to var(--font-sans), which is
+// self-referential and resolves to nothing, so body copy has always fallen
+// back to the browser's default serif. Measured on the live site: 187
+// elements rendering as Times New Roman, 14 as Space Grotesk, zero as Geist.
+//
+// That is ~52KB of webfont and two render-blocking requests bought nothing on
+// every page load. Removing them changes no pixel — the serif you see today
+// is the fallback, not Geist. Wiring Geist up properly is a design decision,
+// not a performance one, so it is left alone here.
 
 // Self-hosted via next/font — replaces the render-blocking @import in the
 // hero and navbar (both were separately fetching the same Google Font
@@ -195,7 +196,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>

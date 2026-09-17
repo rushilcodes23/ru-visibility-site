@@ -1,5 +1,8 @@
-"use client";
-
+// Deliberately NOT a client component. It has no state, no effects, no event
+// handlers — every animation here is CSS. Marking it "use client" shipped the
+// whole thing, including the large style string below, into the browser
+// bundle and made it part of hydration for no benefit. Lighthouse attributed
+// ~2.3s of script evaluation to the homepage bundle before this was removed.
 import Image from "next/image";
 
 /* ─────────────────────────────────────────────
@@ -133,9 +136,17 @@ function getStyles() {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  /* Delays are deliberately small. The "both" fill mode holds the element at
+     opacity 0 for the whole delay, and Chrome will not count an element with
+     zero opacity as the Largest Contentful Paint — the subtitle below IS the
+     LCP element on this page, so every millisecond of delay was added
+     straight onto the metric. The stagger is still visible at these values;
+     the previous 150ms/300ms bought ~300ms of LCP for choreography nobody
+     could consciously perceive. Duration is untouched: LCP fires when opacity
+     first exceeds 0, not when the fade completes. */
   .qhero-fade-up { animation: qhero-fade-up 800ms ease-out both; }
-  .qhero-fade-up-delay-1 { animation: qhero-fade-up 800ms 150ms ease-out both; }
-  .qhero-fade-up-delay-2 { animation: qhero-fade-up 800ms 300ms ease-out both; }
+  .qhero-fade-up-delay-1 { animation: qhero-fade-up 800ms 60ms ease-out both; }
+  .qhero-fade-up-delay-2 { animation: qhero-fade-up 800ms 110ms ease-out both; }
 
   /* Tagline pulse */
   @keyframes qhero-pulse {
