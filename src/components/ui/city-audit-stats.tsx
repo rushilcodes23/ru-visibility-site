@@ -18,9 +18,9 @@ export function CityAuditStats({ slug, city }: { slug: string; city: string }) {
   if (!data) return null;
 
   const stats = [
-    { v: data.noSameAsPct, suffix: "%", label: "had not declared their own profiles in schema" },
-    { v: data.noFaqPct, suffix: "%", label: "answered no questions anywhere on the site" },
-    { v: data.aiBlockedPct, suffix: "%", label: "were blocking a crawler that feeds AI answers" },
+    { v: data.noSameAsPct, suffix: "%", label: "had never linked their own social pages to their website" },
+    { v: data.noFaqPct, suffix: "%", label: "answered no questions anywhere on their site" },
+    { v: data.aiBlockedPct, suffix: "%", label: "were shutting out the AI that answers people" },
   ];
 
   return (
@@ -33,12 +33,12 @@ export function CityAuditStats({ slug, city }: { slug: string; city: string }) {
         <strong className="text-foreground font-medium">
           <CountUp value={data.sites} /> local dental practices
         </strong>{" "}
-        in {city} with our own tool, as outreach research — not clients, and
-        none of them named here. They averaged {data.seoMean} out of 100 on
-        conventional Google SEO but only{" "}
+        in {city} with our own tool. Not clients — just research, and none of
+        them named here. They scored {data.seoMean} out of 100 on normal Google
+        search, but only{" "}
         <strong className="text-foreground font-medium">{data.geoMean}</strong>{" "}
-        on AI visibility. The businesses competing with you locally are, on
-        average, in the same position.
+        on AI. The businesses you compete with locally are, on average, in the
+        same spot.
       </p>
 
       <dl className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -56,8 +56,8 @@ export function CityAuditStats({ slug, city }: { slug: string; city: string }) {
       </dl>
 
       <p className="text-muted-foreground text-sm leading-relaxed mt-6">
-        Audited between {findings.corpus.firstAudit} and {findings.corpus.lastAudit}. The
-        same method is published in full on our{" "}
+        Checked between {findings.corpus.firstAudit} and {findings.corpus.lastAudit}. How
+        we did it is written out in full on our{" "}
         <a href="/research" className="underline underline-offset-4 text-foreground">
           research page
         </a>

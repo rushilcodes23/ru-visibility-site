@@ -5,18 +5,18 @@ import { Bot, ListChecks, Gauge } from "lucide-react";
 const WHAT_YOU_GET = [
   {
     icon: Bot,
-    title: "Whether AI crawlers can reach you at all",
-    body: "We test the eleven real crawler user-agents — OAI-SearchBot, PerplexityBot, Claude-SearchBot, Googlebot and the rest — against your robots.txt and your server. A block here makes everything else moot.",
+    title: "Whether AI can even read your site",
+    body: "ChatGPT, Claude, Perplexity, Google and Bing all send a small program to read your pages. We knock on your door as each one and see who gets let in. If they are being turned away, nothing else matters until that is fixed.",
   },
   {
     icon: Gauge,
-    title: "A GEO score and an SEO score, out of 100",
-    body: "With the breakdown: what was measured, what was inferred, and what can't be checked from outside your site. Anything we couldn't measure is labelled, not guessed.",
+    title: "Two scores out of 100 — one for Google, one for AI",
+    body: "Plus what is behind each number. Where we could only make a fair guess, we say so instead of dressing it up as a measurement.",
   },
   {
     icon: ListChecks,
-    title: "A prioritised fix list",
-    body: "Sorted by points recovered per unit of effort, so the top of the list is the cheapest real win. Yours to act on with or without us.",
+    title: "A list of fixes, best one first",
+    body: "Ordered by what gives you the most for the least work, so the top of the list is the quickest win. It is yours either way — use it with us or without us.",
   },
 ];
 
@@ -33,12 +33,12 @@ export function AuditCta() {
           <ScrollReveal>
             <div className="flex flex-col gap-6">
               <h2 className="text-3xl md:text-4xl tracking-tighter">
-                Find out what AI search says about you.
+                Find out what AI says about you.
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Send us your website and we&apos;ll run our own audit tool
-                against it, free. You get the real output — not a teaser with
-                the useful parts removed.
+                Send us your web address. We run our own tool on it, free, and
+                send you what it says. The whole thing — not a taster with the
+                useful bits taken out.
               </p>
 
               <div className="flex flex-col gap-5">
@@ -60,18 +60,17 @@ export function AuditCta() {
               {/* Real output from the same tool, run on this site — so the
                   offer is demonstrable rather than described. */}
               <p className="text-muted-foreground text-sm leading-relaxed border-l-2 border-border pl-4">
-                We ran it on this site too, on 16 September 2026: <strong className="text-foreground font-medium">GEO 75, SEO 96</strong>,
-                with &ldquo;add sameAs schema links&rdquo; as our own top fix. We
-                publish our own score because a tool you won&apos;t point at
-                yourself isn&apos;t worth much.
+                We ran it on our own site too. It told us what we were getting
+                wrong, and we published that. A tool you will not point at
+                yourself is not worth much.
               </p>
 
               <p className="text-muted-foreground text-sm leading-relaxed">
-                What the free check does <em>not</em> include: the paid prompt
-                testing, where we ask ChatGPT, Perplexity and Gemini for
-                businesses like yours across dozens of real prompts and count
-                how often you actually come up. That one costs us API money to
-                run, so it&apos;s part of a paid engagement.
+                One thing the free check does <em>not</em> do: actually ask
+                ChatGPT, Perplexity and Gemini for businesses like yours,
+                dozens of times, and count how often your name comes up. That
+                costs us real money each time we run it, so it comes with paid
+                work.
               </p>
             </div>
           </ScrollReveal>

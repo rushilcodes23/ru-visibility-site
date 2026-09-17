@@ -17,23 +17,23 @@ const REVIEWED = "2026-09-17";
 const EVIDENCE = [
   {
     stat: "45%",
-    claim: "of shoppers used AI to find a local business in the past year",
-    detail: "Up from 6% the year before. Counting Google's own AI answers, it reaches 76%.",
+    claim: "of shoppers used AI to find a local business last year",
+    detail: "The year before it was 6%. Count Google's own AI answers and it reaches 76%.",
     source: "BrightLocal, Local Consumer Review Survey 2026",
     href: "https://www.brightlocal.com/research/local-consumer-review-survey/",
   },
   {
     stat: "+41%",
-    claim: "visibility gain from adding a quoted passage",
-    detail: "Adding statistics and citing sources follow close behind. Keyword stuffing measured worse than making no change at all.",
+    claim: "more likely to be quoted, just by adding a quote",
+    detail: "Adding real numbers and linking your sources help almost as much. Stuffing the page with keywords did worse than changing nothing.",
     source: "GEO, ACM SIGKDD 2024",
     href: "https://dl.acm.org/doi/10.1145/3637528.3671900",
   },
   {
     stat: `1 in ${findings.corpus.uniqueDomains.toLocaleString("en-US")}`,
-    claim: "businesses we audited were genuinely ready for it",
-    detail: `The same sites average ${findings.scores.seo.mean} out of 100 on ordinary Google SEO. This is not a story about bad websites.`,
-    source: "Our own audits — see the method",
+    claim: "of the businesses we checked were ready for it",
+    detail: `Those same sites score ${findings.scores.seo.mean} out of 100 on normal Google search. These are not bad websites.`,
+    source: "Our own checks — see how we did it",
     href: "/research",
   },
 ];
@@ -48,22 +48,22 @@ const REASONS = [
   {
     icon: Search,
     title: "Google still decides who gets found first",
-    body: "Most people still start looking for a business by searching. If your site has technical issues keeping Google from crawling or ranking it properly, you're invisible to that search before a person ever sees you — no matter how good the business actually is.",
+    body: "Most people still start with a search. If something on your site stops Google reading it properly, you are already out of the running before anyone lays eyes on you — however good you actually are.",
   },
   {
     icon: Bot,
     title: "AI tools are becoming a second front door",
-    body: "People are increasingly asking ChatGPT, Gemini, and Perplexity directly for recommendations instead of typing into a search bar. If those tools can't read your site, don't know what you offer, or have no reason to recommend you over a competitor, you're invisible there too — a channel that barely existed a few years ago.",
+    body: "More and more people now just ask ChatGPT, Gemini or Perplexity who to use. If those tools cannot read your site, or have no reason to pick you over the shop down the road, you are missing from that conversation entirely. A few years ago it did not exist. Now it does.",
   },
   {
     icon: Accessibility,
     title: "Accessibility is a real legal exposure, not a nice-to-have",
-    body: "ADA-style web accessibility lawsuits are a real and growing category of legal risk for businesses with an online presence. It's also simply more customers you can actually serve — visitors using a screen reader or keyboard navigation are real potential customers, not an edge case.",
+    body: "Businesses do get sued over websites that blind or disabled customers cannot use, and it is happening more, not less. It is also just more customers. Someone using a screen reader or only a keyboard is a real buyer, not a rare exception.",
   },
   {
     icon: TrendingDown,
     title: "Doing nothing has a cost, even if it's invisible to you",
-    body: "If a competitor shows up — on Google, on an AI answer, or both — and you don't, they get the customer instead. That loss doesn't show up as an error message anywhere. It just looks like a customer who went somewhere else.",
+    body: "If a rival turns up on Google or in an AI answer and you do not, they get the customer. Nothing breaks. No warning appears. It just looks like a quiet week.",
   },
 ];
 
@@ -77,8 +77,8 @@ export default function WhyItMattersPage() {
             Why SEO and GEO actually matter.
           </h1>
           <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
-            Not marketing speak — the actual reasons this isn&apos;t optional
-            anymore for a business with a website.
+            No sales talk. Just the plain reasons this now matters for any
+            business with a website.
           </p>
           <p className="text-sm text-muted-foreground">
             By Rushil A. Bajpai, founder · Last reviewed{" "}
@@ -87,7 +87,7 @@ export default function WhyItMattersPage() {
         </div>
 
         <h2 className="text-2xl tracking-tight mb-6 max-w-2xl">
-          Four reasons this isn&apos;t optional anymore
+          Four reasons this now matters
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
@@ -103,11 +103,11 @@ export default function WhyItMattersPage() {
         </div>
 
         <h2 className="text-2xl tracking-tight mb-3 max-w-2xl">
-          What the evidence actually says
+          Where the proof comes from
         </h2>
         <p className="text-muted-foreground leading-relaxed mb-8 max-w-3xl">
-          Three findings, each linked to its source so you can check it rather
-          than take our word for it.
+          Three facts, each with a link so you can check it yourself instead
+          of taking our word for it.
         </p>
 
         <div className="grid gap-6 md:grid-cols-3 mb-16">
@@ -153,9 +153,9 @@ export default function WhyItMattersPage() {
 
         <div className="mt-12 card-surface rounded-md p-6 md:p-8">
           <p className="text-muted-foreground leading-relaxed mb-6">
-            None of this means you need to panic — it means it&apos;s worth
-            actually checking where you stand today, rather than guessing.
-            That&apos;s what the audit is for.
+            None of this is a reason to panic. It is a reason to find out
+            where you actually stand instead of guessing. That is all the free
+            check does.
           </p>
           <Button size="lg" render={<a href="#audit">Get Your Visibility Audit</a>} />
         </div>

@@ -317,10 +317,10 @@ export default function RuVisibilityHero() {
             fontFamily: "var(--font-space-grotesk), sans-serif",
           }}
         >
-          To ChatGPT, Gemini, and every other place people search — then we
-          keep improving your SEO and GEO every month, not just hand you a
-          one-time report. Ongoing maintenance, content, and a plain-English
-          check-in on how your site is actually performing, all included.
+          So ChatGPT, Gemini and Google can all find you and name you. We
+          keep at it every month — fixing, writing, checking — and tell you in
+          plain words what changed. Not a one-off report you never hear about
+          again.
         </p>
 
         {/* CTAs */}

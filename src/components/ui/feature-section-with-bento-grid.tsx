@@ -17,52 +17,52 @@ const SERVICES = [
   {
     icon: Bot,
     title: "AI Visibility (GEO)",
-    body: "Ongoing work to get your business found and recommended by ChatGPT, Gemini, Perplexity, and Google's AI Overviews — not a one-time check.",
+    body: "We work every month to get you named by ChatGPT, Gemini, Perplexity and Google's AI answers. Not one check and done.",
   },
   {
     icon: Globe,
     title: "Technical SEO",
-    body: "The crawl-level issues keeping Google from ranking you, found and fixed on an ongoing basis, not just flagged once.",
+    body: "The hidden faults that stop Google ranking you. We find them, fix them, and keep checking. We do not just hand you a list.",
   },
   {
     icon: Accessibility,
     title: "Accessibility Audits",
-    body: "Real axe-core scans, not guesses. We only flag legal risk when it's actually measured on your site.",
+    body: "We test whether people with a disability can actually use your site. Real tests, not guesswork. We only warn you about legal risk if we have measured it.",
   },
   {
     icon: FileText,
     title: "Blog & Content",
-    body: "Content written for your site, built around what actually moves your SEO and GEO visibility — included every month.",
+    body: "Pages and posts written for your site, on the topics that actually help people find you. Included every month.",
   },
   {
     icon: Code,
     title: "Website Design & Build",
-    body: "Building a new site or redesigning an existing one, done right for SEO and AI visibility from the start.",
+    body: "A new site, or a fresh look for the one you have — built to be found by Google and AI from day one.",
   },
   {
     icon: DollarSign,
     title: "Website Monetization",
-    body: "Turning the traffic you already have into actual revenue — finding the drop-off and fixing it.",
+    body: "You already have visitors. We find where they give up and leave, then fix that spot.",
   },
   {
     icon: Megaphone,
     title: "Digital Marketing",
-    body: "Beyond SEO and GEO — the paid and organic channels that bring people to your site in the first place.",
+    body: "The other ways people reach you — ads, social, email — so visitors arrive in the first place.",
   },
   {
     icon: Sparkles,
     title: "AI Integration for Your Business",
-    body: "Custom AI tools built for how your business actually runs — customer support chatbots, automated reports, internal workflow automation. This entire site was built the same way, using AI coding tools.",
+    body: "AI tools built around how your business really works: a chatbot to answer customers, reports that write themselves, jobs that run without you. This whole site was built that way.",
   },
   {
     icon: Wrench,
     title: "Regular Maintenance",
-    body: "Ongoing upkeep of your site's technical health — the things that quietly break if nobody's watching.",
+    body: "Websites break quietly. We keep watch and fix things before they cost you visitors.",
   },
   {
     icon: BarChart3,
     title: "Monthly Reporting",
-    body: "A plain-English check-in on how your site is actually performing — real results, not a vanity metrics dump.",
+    body: "A short update each month in plain words. What we did, what changed, what is next. No jargon, no padding.",
   },
 ];
 
@@ -91,10 +91,9 @@ function Feature() {
                 Not just an audit. Ongoing work, every month.
               </h2>
               <p className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-muted-foreground text-left">
-                We don&apos;t hand you a report and disappear. Every month
-                we&apos;re actively improving your SEO and GEO, writing
-                content, keeping the site maintained, and checking in with
-                real numbers on how it&apos;s actually performing.
+                We do not hand you a report and vanish. Every month we keep
+                working on your site, write new pages for it, watch for things
+                breaking, and send you real numbers on how it is doing.
               </p>
             </div>
           </div>

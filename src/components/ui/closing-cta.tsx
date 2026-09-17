@@ -13,9 +13,9 @@ export function ClosingCta({ ctaHref = "/contact" }: { ctaHref?: string }) {
               See where you actually stand.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              One audit tells you whether ChatGPT, Gemini, and Google can
-              actually find and recommend your business — no guessing, no
-              guaranteed-results sales pitch, just the real, current answer.
+              One check tells you whether ChatGPT, Gemini and Google can
+              actually find you and name you. No guessing. No promises we
+              cannot keep. Just where you stand today.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" render={<a href={ctaHref}>Get Your Visibility Audit</a>} />

@@ -18,7 +18,7 @@ const STATS = [
   {
     value: corpus.uniqueDomains,
     label: "websites audited",
-    detail: "Real businesses, crawled and scored with our own tool.",
+    detail: "Real businesses, checked and scored with our own tool.",
     href: "/research",
   },
   {
@@ -29,8 +29,8 @@ const STATS = [
   },
   {
     value: 11,
-    label: "AI crawlers we test for",
-    detail: "ChatGPT, Claude, Perplexity, Google and Bing, by their real names.",
+    label: "AI readers we test for",
+    detail: "We knock as each one — ChatGPT, Claude, Perplexity, Google, Bing — and see who gets in.",
     href: "/research",
   },
   {

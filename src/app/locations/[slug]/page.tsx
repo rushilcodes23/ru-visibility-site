@@ -44,22 +44,22 @@ const WHAT_WE_DO = [
   {
     icon: Bot,
     title: "AI visibility (GEO)",
-    body: "We test what ChatGPT, Gemini, and Perplexity actually say when someone asks for a business like yours — then work on the reasons you're not the answer.",
+    body: "We ask ChatGPT, Gemini and Perplexity for a business like yours and see who they name. Then we work on why it is not you.",
   },
   {
     icon: Globe,
     title: "Technical SEO",
-    body: "The crawl-level problems keeping Google from ranking you at all: missing headings, broken canonicals, sitemap gaps, accidental crawler blocks.",
+    body: "The hidden faults that stop Google ranking you: missing headlines, pages that look like copies, no list of your pages, doors accidentally shut.",
   },
   {
     icon: Accessibility,
     title: "Accessibility scans",
-    body: "Real axe-core scans, not guesses. We only raise legal risk when it's genuinely measured on your site.",
+    body: "We test whether people with a disability can use your site. Real tests. We only mention legal risk if we have actually measured it.",
   },
   {
     icon: FileText,
     title: "Content and reporting",
-    body: "Content written for your site each month, plus a plain-English check-in on what actually changed.",
+    body: "New pages written for your site each month, and a short update in plain words on what changed.",
   },
 ];
 
@@ -112,11 +112,9 @@ export default async function LocationPage({
               </p>
             )}
             <p className="text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-              The work itself doesn&apos;t change by location — what changes
-              is who you&apos;re competing against for the same searches and
-              the same AI recommendations. Every engagement covers the same
-              four areas, every month, not as a one-time audit you never hear
-              about again.
+              The work is the same wherever you are. What changes is who you
+              are up against for the same searches. Everyone gets the same four
+              things, every month — not one report and then silence.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {WHAT_WE_DO.map((item) => (
