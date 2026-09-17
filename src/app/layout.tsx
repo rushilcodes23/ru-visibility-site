@@ -199,6 +199,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* next-themes injects a blocking inline script that sets the theme
+            class before first paint. OpenNext bundles the server with esbuild
+            using keepNames, which rewrites that function and injects a call to
+            its __name() helper — a helper that only exists inside the server
+            bundle, never in the browser. So the script threw
+            "ReferenceError: __name is not defined" and never ran: the site
+            rendered LIGHT for ~1.2s on every load and then flipped to dark the
+            moment React hydrated. A full-page colour inversion mid-load is
+            also exactly what Speed Index measures.
+
+            This defines the helper as an identity function before that script
+            parses. It has to be the first thing in <body>, because that is
+            where next-themes puts its script. If a future OpenNext release
+            stops emitting __name, this becomes a harmless no-op. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "window.__name||(window.__name=function(f){return f});",
+          }}
+        />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <script
             type="application/ld+json"
