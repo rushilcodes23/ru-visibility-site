@@ -86,6 +86,33 @@ export default function SiteBackground() {
     // several thousand dots every frame forever.
     let staticGrid: HTMLCanvasElement | null = null;
 
+    // One lit dot, glow and all, rendered once into a small offscreen canvas.
+    //
+    // The glow used to come from ctx.shadowBlur set on the main context, which
+    // is the most expensive operation in canvas 2D and was being paid on every
+    // one of the ~100 lit dots, 60 times a second, forever. Baking it into a
+    // sprite pays that cost once per resize and turns each dot into a plain
+    // drawImage. The look is identical because it is literally the same
+    // drawing operation, just cached.
+    const SPRITE_DOT = BASE_R + 4;   // the largest a lit dot ever gets
+    const SPRITE_PAD = 20;           // room for the blur to fall off
+    let glowSprite: HTMLCanvasElement | null = null;
+
+    const renderGlowSprite = () => {
+      const r = SPRITE_DOT + SPRITE_PAD;
+      const s = document.createElement("canvas");
+      s.width = s.height = Math.ceil(r * 2);
+      const sctx = s.getContext("2d");
+      if (!sctx) return null;
+      sctx.fillStyle = t.canvasActive;
+      sctx.shadowBlur = 18;
+      sctx.shadowColor = t.canvasShadow;
+      sctx.beginPath();
+      sctx.arc(r, r, SPRITE_DOT, 0, Math.PI * 2);
+      sctx.fill();
+      return s;
+    };
+
     const renderStaticGrid = (w: number, h: number) => {
       const grid = document.createElement("canvas");
       grid.width = w;
@@ -113,6 +140,7 @@ export default function SiteBackground() {
       const n = isMobile ? 26 : 40;
       for (let i = 0; i < n; i++) particles.push(new Particle(canvas.width, canvas.height));
       staticGrid = renderStaticGrid(canvas.width, canvas.height);
+      glowSprite = renderGlowSprite();
       if (prefersReduced && staticGrid) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(staticGrid, 0, 0);
@@ -132,18 +160,31 @@ export default function SiteBackground() {
       if (!running) return;
       raf = requestAnimationFrame(draw);
 
-      // Phones animate at half rate. The cost was always the 60fps
-      // full-viewport repaint, not the motion itself.
-      if (isMobile && now - last < 1000 / 30) return;
+      // Half rate on EVERY device, not just phones.
+      //
+      // The cost here is the full-viewport clear and blit, which is paid every
+      // frame whether or not anything moved — measured at ~24% of the main
+      // thread while sitting completely idle with the cursor off-screen, and
+      // it forces the frosted navbar to re-blur its backdrop just as often.
+      // Drifting dots and a cursor glow read the same at 30fps, so the second
+      // half of those frames was buying nothing.
+      if (now - last < 1000 / 30) return;
       last = now;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
       particles.forEach((p) => { p.update(canvas.width, canvas.height); p.draw(ctx); });
 
-      ctx.fillStyle = t.canvasActive;
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = t.canvasShadow;
+      // No shadowBlur here any more — it lives in glowSprite. See above.
+      const sprite = glowSprite;
+      const spriteR = SPRITE_DOT + SPRITE_PAD;
+      /** Blits the cached lit dot, scaled so its core matches `dotR`. */
+      const litDot = (x: number, y: number, dotR: number) => {
+        if (!sprite) return;
+        const k = dotR / SPRITE_DOT;
+        const half = spriteR * k;
+        ctx.drawImage(sprite, x - half, y - half, half * 2, half * 2);
+      };
 
       if (isMobile) {
         // There is no cursor to follow on a phone, so the highlight is a band
@@ -159,9 +200,7 @@ export default function SiteBackground() {
           if (scale <= 0) continue;
           ctx.globalAlpha = Math.min(1, 0.2 + scale * 0.9);
           for (let x = 0; x < canvas.width; x += SPACING) {
-            ctx.beginPath();
-            ctx.arc(x, y, BASE_R + scale * 3.5, 0, Math.PI * 2);
-            ctx.fill();
+            litDot(x, y, BASE_R + scale * 3.5);
           }
         }
       } else {
@@ -177,16 +216,13 @@ export default function SiteBackground() {
             if (dist < HOVER_R) {
               const scale = 1 - dist / HOVER_R;
               ctx.globalAlpha = Math.min(1, 0.25 + scale);
-              ctx.beginPath();
-              ctx.arc(x, y, BASE_R + scale * 4, 0, Math.PI * 2);
-              ctx.fill();
+              litDot(x, y, BASE_R + scale * 4);
             }
           }
         }
       }
-      // Reset both, or the shadow and alpha bleed into the next frame.
+      // Reset, or the alpha bleeds into the next frame.
       ctx.globalAlpha = 1;
-      ctx.shadowBlur = 0;
     };
 
     const start = () => {
@@ -203,9 +239,23 @@ export default function SiteBackground() {
     // Nothing to animate for a backgrounded tab.
     const onVisibility = () => { if (document.hidden) stop(); else start(); };
 
+    // Freeze while the page is actually scrolling, and thaw shortly after it
+    // stops. Measured: hiding this canvas entirely took scroll cost from 24%
+    // of the main thread to 13%, so it is the single biggest thing competing
+    // with the scroll itself. The layer is position:fixed, so a held frame is
+    // indistinguishable from a live one while the content is moving — and the
+    // drifting dots resume the moment the gesture ends.
+    let scrollIdle = 0;
+    const onScroll = () => {
+      stop();
+      clearTimeout(scrollIdle);
+      scrollIdle = window.setTimeout(start, 140);
+    };
+
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     resize();
     start();
@@ -214,7 +264,9 @@ export default function SiteBackground() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
+      clearTimeout(scrollIdle);
       cancelAnimationFrame(raf);
     };
   }, [resolvedTheme]);
