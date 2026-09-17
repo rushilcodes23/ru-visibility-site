@@ -317,10 +317,9 @@ export default function RuVisibilityHero() {
             fontFamily: "var(--font-space-grotesk), sans-serif",
           }}
         >
-          So ChatGPT, Gemini and Google can all find you and name you. We
-          keep at it every month — fixing, writing, checking — and tell you in
-          plain words what changed. Not a one-off report you never hear about
-          again.
+          Get found and recommended by ChatGPT, Gemini and Google. Real work
+          every month, explained in plain English — never a report you file
+          and forget.
         </p>
 
         {/* CTAs */}
