@@ -3,6 +3,12 @@
 export type ContactFormState = {
   status: "idle" | "success" | "error";
   message: string;
+  /**
+   * Set only when the send itself failed, never on a validation error. A
+   * visitor who gets "try again" just leaves and the message is gone, so a
+   * delivery failure hands back a mailto with what they already typed.
+   */
+  mailto?: string;
 };
 
 const TO_EMAIL = "rushil@ruvisibility.com";
@@ -34,15 +40,27 @@ export async function sendContactMessage(
     return { status: "error", message: "That email address doesn't look right." };
   }
 
+  const undelivered: ContactFormState = {
+    status: "error",
+    message:
+      "Our mail service wouldn't accept that just now — nothing you did. Send it as an email instead and it reaches us the same way.",
+    mailto: `mailto:${TO_EMAIL}?subject=${encodeURIComponent(
+      `Message from ${name} via ruvisibility.com`
+    )}&body=${encodeURIComponent(
+      `Name: ${name}
+Email: ${email}
+Phone: ${phone || "(not provided)"}
+
+${message}`
+    )}`,
+  };
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     // No key configured yet — fail loudly in a way that's obvious to fix,
     // rather than silently pretending to succeed.
     console.error("RESEND_API_KEY is not set — contact form cannot send email.");
-    return {
-      status: "error",
-      message: "Sorry, something's misconfigured on our end. Please email rushil@ruvisibility.com directly for now.",
-    };
+    return undelivered;
   }
 
   try {
@@ -64,12 +82,12 @@ export async function sendContactMessage(
     if (!res.ok) {
       const body = await res.text();
       console.error("Resend API error:", res.status, body);
-      return { status: "error", message: "Something went wrong sending your message. Please try again or email us directly." };
+      return undelivered;
     }
 
     return { status: "success", message: "Thanks — your message is sent. We'll get back to you directly." };
   } catch (err) {
     console.error("Contact form send failed:", err);
-    return { status: "error", message: "Something went wrong sending your message. Please try again or email us directly." };
+    return undelivered;
   }
 }

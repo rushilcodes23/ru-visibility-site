@@ -51,7 +51,17 @@ export default function ContactForm() {
       </div>
 
       {state.status === "error" && (
-        <p className="text-destructive text-sm">{state.message}</p>
+        <div role="alert" className="flex flex-col gap-2 rounded-lg border border-destructive/40 bg-destructive/5 p-3">
+          <p className="text-destructive text-sm">{state.message}</p>
+          {state.mailto && (
+            <a
+              href={state.mailto}
+              className="text-sm font-medium underline underline-offset-4 text-foreground w-fit min-h-11 inline-flex items-center"
+            >
+              Open it as an email instead →
+            </a>
+          )}
+        </div>
       )}
 
       <Button className="w-full h-11 md:h-8" type="submit" disabled={pending}>

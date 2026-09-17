@@ -3,7 +3,24 @@
 export type AuditRequestState = {
   status: "idle" | "success" | "error";
   message: string;
+  /**
+   * Set only when the send itself failed. A visitor who filled in a form and
+   * got "try again" just leaves, and the lead is gone with no trace — so on a
+   * delivery failure we hand back a mailto with everything they typed already
+   * in it, and they can send it in one click instead.
+   */
+  mailto?: string;
 };
+
+function mailtoFallback(fields: Record<string, string>) {
+  const body = Object.entries(fields)
+    .filter(([, v]) => v)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join("\n");
+  return `mailto:rushil@ruvisibility.com?subject=${encodeURIComponent(
+    "Audit request via ruvisibility.com"
+  )}&body=${encodeURIComponent(body)}`;
+}
 
 const TO_EMAIL = "rushil@ruvisibility.com";
 const FROM_EMAIL = "Ru Visibility <contact@ruvisibility.com>";
@@ -37,7 +54,12 @@ export async function sendAuditRequest(
   const name = field("name", 100);
   const email = field("email", 200);
   const website = field("website", 200);
-  const businessType = field("businessType", 100);
+  const businessTypeRaw = field("businessType", 100);
+  const businessTypeOther = field("businessTypeOther", 120);
+  const businessType =
+    businessTypeRaw === "Something else" && businessTypeOther
+      ? `Something else — ${businessTypeOther}`
+      : businessTypeRaw;
 
   if (!name || !email || !website) {
     return { status: "error", message: "Please fill in your name, email, and website." };
@@ -50,13 +72,23 @@ export async function sendAuditRequest(
     return { status: "error", message: "That website address doesn't look right — something like example.com is fine." };
   }
 
+  const fallback = mailtoFallback({
+    Name: name,
+    Email: email,
+    Website: site,
+    "Business type": businessType,
+  });
+  const undelivered = {
+    status: "error" as const,
+    message:
+      "Our mail service wouldn't accept that just now — nothing you did. Send it as an email instead and it reaches us the same way.",
+    mailto: fallback,
+  };
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error("RESEND_API_KEY is not set — audit request form cannot send email.");
-    return {
-      status: "error",
-      message: "Sorry, something's misconfigured on our end. Please email rushil@ruvisibility.com directly for now.",
-    };
+    return undelivered;
   }
 
   try {
@@ -78,7 +110,7 @@ export async function sendAuditRequest(
     if (!res.ok) {
       const body = await res.text();
       console.error("Resend API error (audit request):", res.status, body);
-      return { status: "error", message: "Something went wrong sending that. Please try again or email us directly." };
+      return undelivered;
     }
 
     return {
@@ -87,6 +119,6 @@ export async function sendAuditRequest(
     };
   } catch (err) {
     console.error("Audit request send failed:", err);
-    return { status: "error", message: "Something went wrong sending that. Please try again or email us directly." };
+    return undelivered;
   }
 }
