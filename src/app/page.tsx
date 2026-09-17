@@ -2,6 +2,7 @@ import RuVisibilityHero from "@/components/ui/ru-visibility-hero";
 import { Feature } from "@/components/ui/feature-section-with-bento-grid";
 import { ClosingCta } from "@/components/ui/closing-cta";
 import { AuditCta } from "@/components/ui/audit-cta";
+import { ProofBand } from "@/components/ui/proof-band";
 import { TestimonialsStrip } from "@/components/ui/testimonials";
 import { pageMetadata } from "@/lib/seo";
 
@@ -33,6 +34,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
       />
       <RuVisibilityHero />
+      <ProofBand />
       <AuditCta />
       <Feature />
       <TestimonialsStrip />
