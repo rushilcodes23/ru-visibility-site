@@ -26,7 +26,7 @@ export default function CountUp({
   decimals = 0,
   prefix = "",
   suffix = "",
-  durationMs = 1600,
+  durationMs = 2600,
   className,
 }: {
   value: number;
