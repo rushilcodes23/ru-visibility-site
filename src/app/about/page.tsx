@@ -27,7 +27,9 @@ const AUDITED = findings.corpus.uniqueDomains.toLocaleString("en-US");
 export const metadata = pageMetadata({
   path: "/about",
   title: "About — Rushil A. Bajpai, Founder | Ru Visibility",
-  description: `Ru Visibility is run by Rushil A. Bajpai, an AI visibility (GEO) and SEO consultant working with businesses internationally, on research from ${AUDITED} website audits.`,
+  // Kept under 155 characters — longer descriptions truncate in search
+  // results, which an earlier Screaming Frog crawl flagged across the site.
+  description: `Ru Visibility is Rushil A. Bajpai — an AI visibility (GEO) and SEO consultant working internationally, on research from ${AUDITED} site audits.`,
 });
 
 const PROFILES = [
