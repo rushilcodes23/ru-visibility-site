@@ -120,6 +120,16 @@ export default function ResearchPage() {
                 {fmtDate(corpus.lastAudit)}. No site is named. None were
                 clients — most never heard from us.
               </p>
+              <p className="text-sm text-muted-foreground">
+                Research and analysis by{" "}
+                <a href="/about" className="underline underline-offset-4">
+                  Rushil A. Bajpai
+                </a>
+                , founder · Data collected to{" "}
+                <time dateTime={corpus.lastAudit ?? undefined}>
+                  {fmtDate(corpus.lastAudit)}
+                </time>
+              </p>
             </div>
           </ScrollReveal>
 
@@ -247,7 +257,14 @@ export default function ResearchPage() {
                   </ul>
                 </div>
 
-                <div className="card-surface rounded-md overflow-x-auto mt-3">
+                {/* Focusable for the same reason as the services table: a
+                    region that scrolls must be reachable by keyboard. */}
+                <div
+                  className="card-surface rounded-md overflow-x-auto mt-3 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                  tabIndex={0}
+                  role="region"
+                  aria-label="Per-crawler blocking rates, scrollable"
+                >
                   <table className="w-full text-sm">
                     <caption className="sr-only">
                       Share of audited sites blocking each individual crawler

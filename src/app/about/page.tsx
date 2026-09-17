@@ -4,6 +4,7 @@ import ScrollReveal from "@/components/scroll-reveal";
 import { pageMetadata } from "@/lib/seo";
 import findings from "@/lib/research-findings.json";
 import { Mail, Phone } from "lucide-react";
+import { formatPostDate } from "@/lib/posts";
 
 // Inline rather than from lucide — v1 dropped brand icons.
 function LinkedInIcon({ className }: { className?: string }) {
@@ -23,6 +24,9 @@ function XIcon({ className }: { className?: string }) {
 }
 
 const AUDITED = findings.corpus.uniqueDomains.toLocaleString("en-US");
+
+// Moves only when this page's substance does — see CONTENT_RULES.md.
+const REVIEWED = "2026-09-17";
 
 export const metadata = pageMetadata({
   path: "/about",
@@ -76,7 +80,27 @@ export default function AboutPage() {
                 When you send a message here, it reaches me — there is no
                 account manager in between, and no team to hand you off to.
               </p>
+              <p className="text-sm text-muted-foreground">
+                By Rushil A. Bajpai · Last reviewed{" "}
+                <time dateTime={REVIEWED}>{formatPostDate(REVIEWED)}</time>
+              </p>
             </div>
+          </ScrollReveal>
+
+          {/* A position already stated across this site, marked up as the
+              quotation it is. Generative engines lift self-contained quoted
+              passages with attribution; this was one, just not marked. */}
+          <ScrollReveal delay={50}>
+            <figure className="max-w-3xl mb-16">
+              <blockquote className="rounded-md border-l-4 border-primary bg-muted py-5 pl-6 pr-5 text-lg font-medium leading-relaxed text-foreground md:text-xl">
+                We publish our own audit score, including the parts that
+                undercut a sales pitch. A tool you will not point at yourself
+                is not worth much.
+              </blockquote>
+              <figcaption className="text-muted-foreground text-sm mt-3">
+                — Rushil A. Bajpai, founder
+              </figcaption>
+            </figure>
           </ScrollReveal>
 
           <div className="grid gap-6 lg:grid-cols-3 mb-16">
