@@ -317,9 +317,11 @@ export default function RuVisibilityHero() {
             fontFamily: "var(--font-space-grotesk), sans-serif",
           }}
         >
-          Get found and recommended by ChatGPT, Gemini and Google. Real work
-          every month, explained in plain English — never a report you file
-          and forget.
+          Your customers are asking AI for recommendations. We make sure your
+          business is ready to be found. Through continuous SEO, GEO, and
+          technical improvements, we increase your visibility across ChatGPT,
+          Gemini, and Google—with clear monthly updates you can actually
+          understand.
         </p>
 
         {/* CTAs */}
