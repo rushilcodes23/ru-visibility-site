@@ -44,6 +44,24 @@ type Package = {
   includes: Item[];
 };
 
+/**
+ * Rows for the side-by-side table, in PACKAGES order (Essentials, Complete,
+ * Custom). Kept literal rather than derived: the cards describe what each
+ * package *contains*, and the useful comparison is the difference between
+ * them, which is a judgement the card data does not encode. Change both
+ * together — a table that disagrees with the cards above it is worse than no
+ * table at all.
+ */
+const COMPARISON: { label: string; cells: (boolean | string)[] }[] = [
+  { label: "SEO and GEO management, every month", cells: [true, true, "Optional"] },
+  { label: "Monthly plain-English check-in", cells: [true, true, "Optional"] },
+  { label: "Deeper technical fixes", cells: [false, true, "Optional"] },
+  { label: "Accessibility scans", cells: [false, true, "Optional"] },
+  { label: "Site maintenance and monitoring", cells: [false, true, "Optional"] },
+  { label: "Blog and content written for you", cells: [false, true, "Optional"] },
+  { label: "Pick only the parts you want", cells: [false, false, true] },
+];
+
 const PACKAGES: Package[] = [
   {
     name: "Essentials",
@@ -306,6 +324,96 @@ export default function ServicesPage() {
               </ScrollReveal>
             ))}
           </div>
+
+          {/* Side by side, because the three cards above answer "what is in
+              this one" but not "what is the difference". A table is also the
+              one format AI answers lift intact rather than paraphrasing. */}
+          <ScrollReveal delay={100}>
+            <div className="mt-16">
+              <h3 className="mb-3 text-2xl tracking-tight">
+                The three side by side
+              </h3>
+              <p className="mb-6 max-w-2xl leading-relaxed text-muted-foreground">
+                Same information as the cards above, arranged so you can see
+                what actually changes between them.
+              </p>
+              {/* tabIndex + role/label: this scrolls sideways on a phone, and
+                  a scrollable region that cannot be focused is unreachable by
+                  keyboard. axe flags it as scrollable-region-focusable. */}
+              <div
+                className="card-surface overflow-x-auto rounded-md focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                tabIndex={0}
+                role="region"
+                aria-label="Package comparison, scrollable"
+              >
+                <table className="w-full text-sm">
+                  <caption className="sr-only">
+                    What each package includes, compared
+                  </caption>
+                  <thead>
+                    <tr className="border-b">
+                      <th scope="col" className="p-4 text-left font-medium">
+                        What you get
+                      </th>
+                      {PACKAGES.map((p) => (
+                        <th key={p.name} scope="col" className="p-4 text-left font-medium whitespace-nowrap">
+                          {p.name}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {COMPARISON.map((row) => (
+                      <tr key={row.label} className="border-b last:border-0">
+                        <th scope="row" className="p-4 text-left font-normal">
+                          {row.label}
+                        </th>
+                        {row.cells.map((cell, i) => (
+                          <td key={i} className="p-4 text-muted-foreground">
+                            {cell === true ? (
+                              <>
+                                <Check className="inline h-4 w-4 text-primary" aria-hidden="true" />
+                                <span className="sr-only">Included</span>
+                              </>
+                            ) : cell === false ? (
+                              <>
+                                <span aria-hidden="true">—</span>
+                                <span className="sr-only">Not included</span>
+                              </>
+                            ) : (
+                              cell
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Pricing is quoted per business rather than listed, because the
+                work genuinely differs — see{" "}
+                <a href="/faq" className="underline underline-offset-4 hover:text-foreground">
+                  the FAQ
+                </a>{" "}
+                for how that is worked out. Accessibility scans are run against{" "}
+                <a
+                  href="https://www.w3.org/WAI/standards-guidelines/wcag/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 hover:text-foreground"
+                >
+                  WCAG 2.1 AA
+                </a>
+                , the standard ADA web claims are generally measured against —
+                not a checklist of our own invention. Our own results are{" "}
+                <a href="/accessibility" className="underline underline-offset-4 hover:text-foreground">
+                  published with their date
+                </a>
+                .
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
 
