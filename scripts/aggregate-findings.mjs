@@ -71,6 +71,25 @@ function isAuditReport(j) {
   return Boolean(j && j.raw && j.scored && j.raw.domain && Array.isArray(j.raw.pages));
 }
 
+/**
+ * Which campaign a report came from, derived from its path on disk. Used for
+ * the per-market breakdown on /research.
+ *
+ * These labels describe what was actually audited and nothing more. Every
+ * campaign so far has been dental or hair-transplant clinics, so there is no
+ * segment for any other industry — if one is ever wanted, it has to come from
+ * running real audits in that industry, not from relabelling these.
+ */
+function segmentOf(filePath) {
+  const p = filePath.replace(/\\/g, "/").toLowerCase();
+  if (p.includes("/hair transplant dubai/")) return { key: "hair-uae", industry: "Hair transplant clinics", market: "Dubai" };
+  if (p.includes("/dental implant dubai/")) return { key: "dental-dubai", industry: "Dental clinics", market: "Dubai" };
+  if (p.includes("/dental implant abu dhabi/")) return { key: "dental-ad", industry: "Dental clinics", market: "Abu Dhabi" };
+  if (p.includes("/france dental implant/")) return { key: "dental-fr", industry: "Dental clinics", market: "France" };
+  if (p.includes("/usa/")) return { key: "dental-us", industry: "Dental clinics", market: "United States" };
+  return null;
+}
+
 const pct = (n, d) => (d ? Math.round((n / d) * 1000) / 10 : 0);
 const mean = (xs) => (xs.length ? Math.round((xs.reduce((a, b) => a + b, 0) / xs.length) * 10) / 10 : 0);
 function median(xs) {
@@ -117,10 +136,11 @@ async function main() {
     const domain = String(j.raw.domain).toLowerCase();
     const when = Date.parse(j.raw.checkedAt || 0) || 0;
     const prev = byDomain.get(domain);
-    if (!prev || when > prev.when) byDomain.set(domain, { when, j });
+    if (!prev || when > prev.when) byDomain.set(domain, { when, j, segment: segmentOf(f) });
   }
 
-  const reports = [...byDomain.values()].sort((a, b) => a.when - b.when).map((r) => r.j);
+  const entries = [...byDomain.values()].sort((a, b) => a.when - b.when);
+  const reports = entries.map((r) => r.j);
   const N = reports.length;
   if (!N) throw new Error(`no audit reports found under ${ROOT}`);
 
@@ -165,9 +185,45 @@ async function main() {
     businessValueScored: signal(),
   };
 
-  for (const r of reports) {
+  // Per-market rollup. Only a handful of metrics — enough to show that the
+  // pattern holds across markets, without turning /research into a spreadsheet.
+  const segAcc = new Map();
+  function seg(entry) {
+    if (!entry.segment) return null;
+    const k = entry.segment.key;
+    if (!segAcc.has(k)) {
+      segAcc.set(k, {
+        ...entry.segment,
+        sites: 0, geoSum: 0, seoSum: 0,
+        noSameAs: 0, noPress: 0, aiBlocked: 0, missingMeta: 0, noFaq: 0,
+      });
+    }
+    return segAcc.get(k);
+  }
+
+  for (const entry of entries) {
+    const r = entry.j;
+    const s = seg(entry);
     const { raw, scored } = r;
     if (raw.checkedAt) checkedDates.push(raw.checkedAt.slice(0, 10));
+
+    if (s) {
+      s.sites++;
+      if (typeof scored.geo?.total === "number") s.geoSum += scored.geo.total;
+      if (typeof scored.seo?.total === "number") s.seoSum += scored.seo.total;
+      const pgs = (raw.pages || []).filter((p) => p && p.ok !== false);
+      if (pgs.length) {
+        if (!pgs.some((p) => (p.schema?.sameAs?.length || 0) > 0)) s.noSameAs++;
+        if (!pgs.some((p) => p.pressSection)) s.noPress++;
+        if (pgs.some((p) => !p.metaDescription)) s.missingMeta++;
+        if (!pgs.some((p) => (p.faqBlocks || 0) > 0)) s.noFaq++;
+      }
+      // Blocked to at least one crawler that feeds live AI answers.
+      const answerBots = Object.entries(raw.bots || {}).filter(([n]) =>
+        /SearchBot|ChatGPT-User|Claude-User|PerplexityBot|Perplexity-User/.test(n)
+      );
+      if (answerBots.some(([, i]) => i && i.status && i.status !== "ok")) s.aiBlocked++;
+    }
 
     if (typeof scored.geo?.total === "number") geoScores.push(scored.geo.total);
     if (typeof scored.seo?.total === "number") seoScores.push(scored.seo.total);
@@ -314,6 +370,21 @@ async function main() {
       seo: { mean: mean(seoScores), median: median(seoScores), grades: seoGrades, denominator: seoScores.length },
     },
     crawlerBlocks: botArr,
+    segments: [...segAcc.values()]
+      .map((s) => ({
+        key: s.key,
+        industry: s.industry,
+        market: s.market,
+        sites: s.sites,
+        geoMean: Math.round((s.geoSum / s.sites) * 10) / 10,
+        seoMean: Math.round((s.seoSum / s.sites) * 10) / 10,
+        noSameAsPct: pct(s.noSameAs, s.sites),
+        noPressPct: pct(s.noPress, s.sites),
+        aiBlockedPct: pct(s.aiBlocked, s.sites),
+        missingMetaPct: pct(s.missingMeta, s.sites),
+        noFaqPct: pct(s.noFaq, s.sites),
+      }))
+      .sort((a, b) => b.sites - a.sites),
     platforms,
     universal,
     subsetOnly,

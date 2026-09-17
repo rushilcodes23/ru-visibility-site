@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T13:32:53.630Z",
+  "generatedAt": "2026-09-16T18:07:55.692Z",
   "corpus": {
     "uniqueDomains": 1503,
     "jsonFilesScanned": 2230,
@@ -98,6 +98,73 @@
       "blockedCount": 76,
       "blockedPct": 5.1,
       "denominator": 1503
+    }
+  ],
+  "segments": [
+    {
+      "key": "dental-us",
+      "industry": "Dental clinics",
+      "market": "United States",
+      "sites": 1147,
+      "geoMean": 69.9,
+      "seoMean": 84.4,
+      "noSameAsPct": 40.6,
+      "noPressPct": 96.2,
+      "aiBlockedPct": 9.9,
+      "missingMetaPct": 38.4,
+      "noFaqPct": 61.3
+    },
+    {
+      "key": "dental-fr",
+      "industry": "Dental clinics",
+      "market": "France",
+      "sites": 225,
+      "geoMean": 63.4,
+      "seoMean": 80.6,
+      "noSameAsPct": 79.1,
+      "noPressPct": 99.6,
+      "aiBlockedPct": 5.8,
+      "missingMetaPct": 68.4,
+      "noFaqPct": 81.3
+    },
+    {
+      "key": "dental-dubai",
+      "industry": "Dental clinics",
+      "market": "Dubai",
+      "sites": 78,
+      "geoMean": 69.5,
+      "seoMean": 80.9,
+      "noSameAsPct": 42.3,
+      "noPressPct": 96.2,
+      "aiBlockedPct": 14.1,
+      "missingMetaPct": 44.9,
+      "noFaqPct": 55.1
+    },
+    {
+      "key": "dental-ad",
+      "industry": "Dental clinics",
+      "market": "Abu Dhabi",
+      "sites": 41,
+      "geoMean": 61,
+      "seoMean": 76.2,
+      "noSameAsPct": 70.7,
+      "noPressPct": 100,
+      "aiBlockedPct": 19.5,
+      "missingMetaPct": 70.7,
+      "noFaqPct": 68.3
+    },
+    {
+      "key": "hair-uae",
+      "industry": "Hair transplant clinics",
+      "market": "Dubai",
+      "sites": 11,
+      "geoMean": 66,
+      "seoMean": 77.4,
+      "noSameAsPct": 72.7,
+      "noPressPct": 90.9,
+      "aiBlockedPct": 0,
+      "missingMetaPct": 72.7,
+      "noFaqPct": 81.8
     }
   ],
   "platforms": {

@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal from "@/components/scroll-reveal";
 import { ClosingCta } from "@/components/ui/closing-cta";
+import { AiShift } from "@/components/ui/ai-shift";
 import { pageMetadata } from "@/lib/seo";
 import {
   UserCheck,
@@ -150,6 +151,12 @@ export default function WhyUsPage() {
               </p>
             </div>
           </ScrollReveal>
+          </div>
+
+          {/* The evidence behind the pitch, rather than another claim about
+              ourselves — real audit data plus a cited demand figure. */}
+          <div className="mt-20 lg:mt-28">
+            <AiShift heading="The reason any of this matters" />
           </div>
         </div>
       </div>

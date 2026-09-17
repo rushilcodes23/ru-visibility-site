@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { AuditCta } from "@/components/ui/audit-cta";
+import { AiShift } from "@/components/ui/ai-shift";
 import ScrollReveal from "@/components/scroll-reveal";
 import { pageMetadata } from "@/lib/seo";
 import findings from "@/lib/research-findings.json";
@@ -135,26 +136,18 @@ export default function ResearchPage() {
                 </span>
               </p>
 
-              <dl className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-8 pt-8 border-t">
-                {[
-                  { v: N, k: "sites audited" },
-                  { v: scores.seo.mean, k: "average SEO score" },
-                  { v: scores.geo.mean, k: "average GEO score" },
-                  { v: `${universal.noSameAs.sitesPct}%`, k: "with no sameAs links" },
-                ].map((s) => (
-                  <div key={s.k} className="flex flex-col gap-1">
-                    <dt className="sr-only">{s.k}</dt>
-                    <dd className="text-2xl md:text-3xl tracking-tighter font-medium tabular-nums">
-                      {s.v}
-                    </dd>
-                    <span aria-hidden="true" className="text-muted-foreground text-xs leading-snug">
-                      {s.k}
-                    </span>
-                  </div>
-                ))}
-              </dl>
+              {/* No stat row here on purpose — the section immediately below
+                  carries these same numbers, and repeating them two screens
+                  apart made the page feel longer than it is. */}
             </div>
           </ScrollReveal>
+
+          {/* Plain-English argument first. The tables below are the evidence
+              for it, but a business owner should not have to read a crawler
+              table to find out why any of this concerns them. */}
+          <div className="mb-16">
+            <AiShift heading="What this means if you run one of these businesses" />
+          </div>
 
           <ScrollReveal delay={100}>
             <div className="mb-14">
