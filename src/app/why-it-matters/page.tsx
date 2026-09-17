@@ -1,7 +1,42 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AuditCta } from "@/components/ui/audit-cta";
 import { Search, Bot, Accessibility, TrendingDown } from "lucide-react";
+import { formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
+import findings from "@/lib/research-findings.json";
+
+// The date this page's substance was last changed, not the build date. Per
+// CONTENT_RULES.md it only moves when the content genuinely does.
+const REVIEWED = "2026-09-17";
+
+/**
+ * Every figure here is linked to its source. Nothing is quoted from memory,
+ * and no figure appears that could not be checked at the link beside it.
+ */
+const EVIDENCE = [
+  {
+    stat: "45%",
+    claim: "of shoppers used AI to find a local business in the past year",
+    detail: "Up from 6% the year before. Counting Google's own AI answers, it reaches 76%.",
+    source: "BrightLocal, Local Consumer Review Survey 2026",
+    href: "https://www.brightlocal.com/research/local-consumer-review-survey/",
+  },
+  {
+    stat: "+41%",
+    claim: "visibility gain from adding a quoted passage",
+    detail: "Adding statistics and citing sources follow close behind. Keyword stuffing measured worse than making no change at all.",
+    source: "GEO, ACM SIGKDD 2024",
+    href: "https://dl.acm.org/doi/10.1145/3637528.3671900",
+  },
+  {
+    stat: `1 in ${findings.corpus.uniqueDomains.toLocaleString("en-US")}`,
+    claim: "businesses we audited were genuinely ready for it",
+    detail: `The same sites average ${findings.scores.seo.mean} out of 100 on ordinary Google SEO. This is not a story about bad websites.`,
+    source: "Our own audits — see the method",
+    href: "/research",
+  },
+];
 
 export const metadata = pageMetadata({
   path: "/why-it-matters",
@@ -42,8 +77,12 @@ export default function WhyItMattersPage() {
             Why SEO and GEO actually matter.
           </h1>
           <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
-            Not marketing speak — the actual reasons this isn't optional
+            Not marketing speak — the actual reasons this isn&apos;t optional
             anymore for a business with a website.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            By Rushil A. Bajpai, founder · Last reviewed{" "}
+            <time dateTime={REVIEWED}>{formatPostDate(REVIEWED)}</time>
           </p>
         </div>
 
@@ -63,15 +102,65 @@ export default function WhyItMattersPage() {
           ))}
         </div>
 
+        <h2 className="text-2xl tracking-tight mb-3 max-w-2xl">
+          What the evidence actually says
+        </h2>
+        <p className="text-muted-foreground leading-relaxed mb-8 max-w-3xl">
+          Three findings, each linked to its source so you can check it rather
+          than take our word for it.
+        </p>
+
+        <div className="grid gap-6 md:grid-cols-3 mb-16">
+          {EVIDENCE.map((e) => (
+            <div key={e.stat} className="card-surface rounded-md p-6 flex flex-col gap-3">
+              <span className="text-3xl md:text-4xl tracking-tighter font-medium">
+                {e.stat}
+              </span>
+              <p className="text-foreground font-medium text-sm">{e.claim}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed flex-1">
+                {e.detail}
+              </p>
+              <a
+                href={e.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors w-fit"
+              >
+                {e.source}
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* A position already stated on /about, marked up as the quotation it
+            is. AI answers lift self-contained quoted passages; this was one,
+            it just wasn't marked as one. */}
+        <figure className="max-w-3xl mb-16">
+          <blockquote className="rounded-md border-l-4 border-primary bg-muted py-5 pl-6 pr-5 text-lg font-medium leading-relaxed text-foreground md:text-xl">
+            I will not promise you a ranking or a guaranteed AI citation,
+            because nobody can honestly promise either. What I can do is
+            measure where you stand now, fix what is genuinely holding you
+            back, and show you the before and after using the same prompts
+            both times.
+          </blockquote>
+          <figcaption className="text-muted-foreground text-sm mt-3">
+            — Rushil A. Bajpai, founder,{" "}
+            <a href="/about" className="underline underline-offset-4">
+              Ru Visibility
+            </a>
+          </figcaption>
+        </figure>
+
         <div className="mt-12 card-surface rounded-md p-6 md:p-8">
           <p className="text-muted-foreground leading-relaxed mb-6">
-            None of this means you need to panic — it means it's worth
+            None of this means you need to panic — it means it&apos;s worth
             actually checking where you stand today, rather than guessing.
-            That's what the audit is for.
+            That&apos;s what the audit is for.
           </p>
-          <Button size="lg" render={<a href="/contact">Get Your Visibility Audit</a>} />
+          <Button size="lg" render={<a href="#audit">Get Your Visibility Audit</a>} />
         </div>
       </div>
+      <AuditCta />
     </div>
   );
 }
