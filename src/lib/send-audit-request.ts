@@ -36,14 +36,33 @@ function normalizeWebsite(raw: string): string | null {
   return trimmed;
 }
 
+/**
+ * Shared by the real success path and the honeypot path, so a bot cannot tell
+ * it was caught by comparing the response.
+ */
+const SENT_MESSAGE =
+  "Thanks for reaching out. We'll run the check on your site and send the results to that address, usually within a day. If you'd rather talk it through first, call or text +91 72229 99365.";
+
+/** Same reasoning as the contact form — see MIN_PENDING_MS there. */
+const MIN_PENDING_MS = 1000;
+const atLeast = <T,>(work: Promise<T>): Promise<T> =>
+  Promise.all([work, new Promise((r) => setTimeout(r, MIN_PENDING_MS))]).then(([v]) => v);
+
 export async function sendAuditRequest(
+  prevState: AuditRequestState,
+  formData: FormData
+): Promise<AuditRequestState> {
+  return atLeast(deliverAuditRequest(prevState, formData));
+}
+
+async function deliverAuditRequest(
   _prevState: AuditRequestState,
   formData: FormData
 ): Promise<AuditRequestState> {
   // Same honeypot approach as the contact form: pretend it worked rather than
   // telling a bot which field gave it away.
   if (formData.get("company")) {
-    return { status: "success", message: "Thanks — we'll be in touch." };
+    return { status: "success", message: SENT_MESSAGE };
   }
 
   // Capped before use: these go straight into an email body, and nothing here
@@ -113,10 +132,7 @@ export async function sendAuditRequest(
       return undelivered;
     }
 
-    return {
-      status: "success",
-      message: "We'll run the check and send your results to that address, usually within a day.",
-    };
+    return { status: "success", message: SENT_MESSAGE };
   } catch (err) {
     console.error("Audit request send failed:", err);
     return undelivered;

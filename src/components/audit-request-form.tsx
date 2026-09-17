@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import { Check } from "lucide-react";
 import { sendAuditRequest, type AuditRequestState } from "@/lib/send-audit-request";
 
 const initialState: AuditRequestState = { status: "idle", message: "" };
@@ -31,9 +32,23 @@ export default function AuditRequestForm() {
 
   if (state.status === "success") {
     return (
-      <div className="w-full text-center py-8" role="status">
-        <p className="text-lg font-medium mb-2">Request received.</p>
-        <p className="text-muted-foreground text-sm max-w-md mx-auto">{state.message}</p>
+      <div
+        role="status"
+        className="w-full text-center py-8 flex flex-col items-center gap-3 motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-300"
+      >
+        <span className="flex size-12 items-center justify-center rounded-full bg-primary/10">
+          <Check className="size-6 text-primary" />
+        </span>
+        <p className="text-lg font-medium">Request received.</p>
+        <p className="text-muted-foreground text-sm max-w-sm leading-relaxed">
+          {state.message}
+        </p>
+        <a
+          href="tel:+917222999365"
+          className="text-sm font-medium underline underline-offset-4 min-h-11 inline-flex items-center"
+        >
+          Call or text instead
+        </a>
       </div>
     );
   }
@@ -115,8 +130,20 @@ export default function AuditRequestForm() {
         </div>
       )}
 
-      <Button className="w-full h-11 md:h-10" type="submit" disabled={pending}>
+      <Button
+        className="w-full h-11 md:h-10 relative overflow-hidden"
+        type="submit"
+        disabled={pending}
+      >
         {pending ? "Sending…" : "Get my free visibility check"}
+        {pending && (
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-[3px] bg-primary-foreground/25"
+          >
+            <span className="send-progress block h-full w-full bg-primary-foreground/90" />
+          </span>
+        )}
       </Button>
 
       <p className="text-muted-foreground text-xs leading-relaxed">

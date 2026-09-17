@@ -17,7 +17,34 @@ const TO_EMAIL = "rushil@ruvisibility.com";
 // onboarding address.
 const FROM_EMAIL = "Ru Visibility <contact@ruvisibility.com>";
 
+/**
+ * Resend usually answers in a few hundred milliseconds, which is fast enough
+ * that the submit button flickered and the visitor could not tell whether
+ * anything had happened. Holding the pending state to a floor lets the
+ * progress bar actually complete, so the send reads as finished rather than
+ * skipped. Only ever delays a send that already succeeded or failed — it
+ * never delays the network call itself.
+ */
+/**
+ * Shared by the real success path and the honeypot path. A bot that got a
+ * different message from a real visitor could tell it had been caught, which
+ * is the one thing the honeypot must not reveal.
+ */
+const SENT_MESSAGE =
+  "Thanks for reaching out. Your message is with Rushil and you'll get a real reply, usually within a day. If anything's urgent or you'd rather just talk it through, call or text +91 72229 99365.";
+
+const MIN_PENDING_MS = 1000;
+const atLeast = <T,>(work: Promise<T>): Promise<T> =>
+  Promise.all([work, new Promise((r) => setTimeout(r, MIN_PENDING_MS))]).then(([v]) => v);
+
 export async function sendContactMessage(
+  prevState: ContactFormState,
+  formData: FormData
+): Promise<ContactFormState> {
+  return atLeast(deliverContactMessage(prevState, formData));
+}
+
+async function deliverContactMessage(
   _prevState: ContactFormState,
   formData: FormData
 ): Promise<ContactFormState> {
@@ -25,7 +52,7 @@ export async function sendContactMessage(
   // auto-fill every field will trip this; we just pretend it worked so we
   // don't tip them off, and skip actually sending.
   if (formData.get("company")) {
-    return { status: "success", message: "Thanks — we'll be in touch." };
+    return { status: "success", message: SENT_MESSAGE };
   }
 
   const name = String(formData.get("name") || "").trim();
@@ -85,7 +112,7 @@ ${message}`
       return undelivered;
     }
 
-    return { status: "success", message: "Thanks — your message is sent. We'll get back to you directly." };
+    return { status: "success", message: SENT_MESSAGE };
   } catch (err) {
     console.error("Contact form send failed:", err);
     return undelivered;

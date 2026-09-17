@@ -219,6 +219,24 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-line) 30%, transparent);
 }
 
+/* ── Send progress ─────────────────────────────────────────────────────
+   Fills across the submit button while a form is in flight. The server
+   action holds its pending state to a 1s floor (MIN_PENDING_MS), so this
+   always has time to reach the end instead of flashing and vanishing.
+   With reduce-motion it is shown complete rather than animated — it is
+   feedback, so it still needs to be visible, just not moving. */
+@keyframes send-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.send-progress {
+  transform-origin: left;
+  animation: send-progress 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .send-progress { animation: none; transform: scaleX(1); }
+}
+
 /* A form inside a card had invisible field boundaries in dark mode: the Input
    border is var(--input) (#1e293b) and .dark .card-surface's background is
    var(--muted), which is the same #1e293b — so the border was drawn in exactly
