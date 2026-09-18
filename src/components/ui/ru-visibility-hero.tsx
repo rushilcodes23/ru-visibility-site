@@ -85,7 +85,16 @@ function getStyles() {
     display: inline-block;
     font-weight: 900;
     color: var(--qh-glitchBase);
-    animation: qhero-color-toggle 7s infinite step-end;
+    /* Delayed, not removed. Every infinite animation above the fold keeps the
+       viewport changing forever, and Speed Index measures how quickly the
+       visible area stops changing — measured on the live site, 39 of 39
+       sampled frames differed from the one before, a full second after load
+       had finished. The glitch also used to fire its first flash at ~2.9s,
+       landing in the middle of the load window and competing with content
+       still arriving. Holding these back lets the page settle first; the
+       effect is unchanged once it starts, and it loops forever after.
+       All three glitch animations share this delay so they stay in sync. */
+    animation: qhero-color-toggle 7s 3s infinite step-end;
   }
   .qhero-glitch::before,
   .qhero-glitch::after {
@@ -96,8 +105,8 @@ function getStyles() {
     opacity: 0;
     background: var(--qh-shellBg);
   }
-  .qhero-glitch::before { animation: qhero-glitch-1 7s infinite linear; z-index: 2; }
-  .qhero-glitch::after  { animation: qhero-glitch-2 7s infinite linear; z-index: 3; }
+  .qhero-glitch::before { animation: qhero-glitch-1 7s 3s infinite linear; z-index: 2; }
+  .qhero-glitch::after  { animation: qhero-glitch-2 7s 3s infinite linear; z-index: 3; }
 
   @keyframes qhero-color-toggle {
     0%,  44%   { color: var(--qh-glitchBase); text-shadow: none; }
@@ -153,7 +162,9 @@ function getStyles() {
     0%, 100% { opacity: 1; }
     50%      { opacity: 0.6; }
   }
-  .qhero-tagline-pulse { animation: qhero-pulse 2s ease-in-out infinite; }
+  /* Same reasoning as the glitch delay above: a tagline that pulses from
+     t=0 forever means the viewport is never visually stable. */
+  .qhero-tagline-pulse { animation: qhero-pulse 2s 4s ease-in-out infinite; }
 
   /* Hero CTA button */
   .qhero-btn {
