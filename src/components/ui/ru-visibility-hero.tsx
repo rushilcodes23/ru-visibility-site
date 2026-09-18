@@ -4,6 +4,7 @@
 // bundle and made it part of hydration for no benefit. Lighthouse attributed
 // ~2.3s of script evaluation to the homepage bundle before this was removed.
 import Image from "next/image";
+import logoMark from "@/../public/logo-mark-220.png";
 
 /* ─────────────────────────────────────────────
    Self-contained styles, theme-aware. Monochrome
@@ -260,7 +261,7 @@ export default function RuVisibilityHero() {
       >
         <div className="qhero-fade-up" style={{ marginBottom: "1.5rem" }}>
           <Image
-            src="/logo-mark-220.png"
+            src={logoMark}
             alt="Ru Visibility"
             width={110}
             height={110}

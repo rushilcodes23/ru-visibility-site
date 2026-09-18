@@ -19,7 +19,22 @@
 # A week of browser caching with a day of stale-while-revalidate keeps repeat
 # visits instant without pinning a stale logo for a year. Lighthouse flagged
 # these as having no usable cache lifetime at all.
-/*.png
+#
+# Listed by name rather than as `/*.png`. The wildcard also matched
+# /_next/static/media/*.png, which the immutable rule above already covers, so
+# those files went out with two different Cache-Control headers in one
+# response — ambiguous, and not what either rule intended. The only PNGs
+# served from the asset root are these two.
+#
+# logo-mark.png is the canonical logo URL in the Organization JSON-LD, so it
+# has to keep this stable, unhashed path. logo-mark-220.png is no longer
+# referenced by the site (components import it, so it is served hashed and
+# immutable from /_next/static/media) but is kept reachable in case an old
+# link points at it.
+/logo-mark.png
+  Cache-Control: public,max-age=604800,stale-while-revalidate=86400
+
+/logo-mark-220.png
   Cache-Control: public,max-age=604800,stale-while-revalidate=86400
 
 /*.txt

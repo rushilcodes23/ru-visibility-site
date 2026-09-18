@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import logoMark from "@/../public/logo-mark-220.png";
 
 /* Self-contained, inline styles — same approach as the hero. Uses the
    site's CSS variables directly (var(--foreground) etc.) so it follows
@@ -208,7 +209,7 @@ const TALK_TO_US_HREF = "/contact";
 function RuVisibilityLogo() {
   return (
     <a href="/" className="ru-logo-link">
-      <Image src="/logo-mark-220.png" alt="" width={28} height={28} priority unoptimized />
+      <Image src={logoMark} alt="" width={28} height={28} priority unoptimized />
       <span className="ru-logo-text">
         RU <span>VISIBILITY</span>
       </span>
