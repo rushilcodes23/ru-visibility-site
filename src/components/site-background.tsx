@@ -141,10 +141,7 @@ export default function SiteBackground() {
       for (let i = 0; i < n; i++) particles.push(new Particle(canvas.width, canvas.height));
       staticGrid = renderStaticGrid(canvas.width, canvas.height);
       glowSprite = renderGlowSprite();
-      // Always paint the grid immediately, not only under reduce-motion. The
-      // animation loop is held back for a few seconds after load (see below),
-      // and without this the background would be empty until it starts.
-      if (staticGrid) {
+      if (prefersReduced && staticGrid) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(staticGrid, 0, 0);
       }
@@ -228,22 +225,8 @@ export default function SiteBackground() {
       ctx.globalAlpha = 1;
     };
 
-    // Phones get the static dot grid and nothing else. Measured on a throttled
-    // phone (4x CPU, slow 4G), within a single page load so there is no
-    // run-to-run variance in the comparison: in the window before this loop
-    // starts the main thread is 0.1% busy, and in the window after it starts it
-    // is 86.7% busy. A decorative drifting-dot field is not worth 87% of a
-    // phone's main thread — it starves paint, which is what Speed Index
-    // measures, and it is why scrolling felt laggy on a phone.
-    //
-    // The grid itself is still painted by resize(), so the background looks the
-    // same at rest; what stops is the drift and the cursor glow, neither of
-    // which a touch device can really show anyway (there is no cursor).
-    // Desktop is untouched.
-    const isSmallScreen = () => window.innerWidth < 768;
-
     const start = () => {
-      if (!running && !prefersReduced && !isSmallScreen() && !document.hidden) {
+      if (!running && !prefersReduced && !document.hidden) {
         running = true;
         raf = requestAnimationFrame(draw);
       }
@@ -275,14 +258,7 @@ export default function SiteBackground() {
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     resize();
-    // Held back so the page can reach a visually stable state before anything
-    // starts moving. Speed Index scores how quickly the visible area stops
-    // changing, and between this canvas, the tagline pulse and the wordmark
-    // glitch, it never did — 39 of 39 sampled frames differed from the one
-    // before, measured a full second after load had finished. The grid itself
-    // is already painted by resize(), so nothing looks empty in the meantime;
-    // only the drift and the cursor glow wait.
-    const kickoff = window.setTimeout(start, 3500);
+    start();
 
     return () => {
       window.removeEventListener("resize", resize);
@@ -291,7 +267,6 @@ export default function SiteBackground() {
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
       clearTimeout(scrollIdle);
-      clearTimeout(kickoff);
       cancelAnimationFrame(raf);
     };
   }, [resolvedTheme]);
