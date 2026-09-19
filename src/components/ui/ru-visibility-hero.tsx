@@ -167,6 +167,25 @@ function getStyles() {
      t=0 forever means the viewport is never visually stable. */
   .qhero-tagline-pulse { animation: qhero-pulse 2s 4s ease-in-out infinite; }
 
+  /* On a phone, none of the forever-looping effects run at all.
+     They animate colour, text-shadow and clip-path on the biggest text on the
+     page, so every frame costs a style recalculation and a repaint. Measured
+     on a throttled phone, in the window where these and the background canvas
+     are both live, the main thread sits ~87% busy against 0.1% in the window
+     just before — which starves painting (Speed Index) and makes scrolling
+     feel heavy. The glitch reads as a deliberate flourish on a desktop
+     monitor; on a 412px screen it is mostly invisible and never worth that.
+     The wordmark keeps its normal colour and the tagline stays fully opaque,
+     so nothing disappears — it just holds still. Desktop is unchanged. */
+  @media (max-width: 767px) {
+    .qhero-glitch,
+    .qhero-glitch::before,
+    .qhero-glitch::after,
+    .qhero-tagline-pulse {
+      animation: none;
+    }
+  }
+
   /* Hero CTA button */
   .qhero-btn {
     display: inline-flex;

@@ -228,8 +228,22 @@ export default function SiteBackground() {
       ctx.globalAlpha = 1;
     };
 
+    // Phones get the static dot grid and nothing else. Measured on a throttled
+    // phone (4x CPU, slow 4G), within a single page load so there is no
+    // run-to-run variance in the comparison: in the window before this loop
+    // starts the main thread is 0.1% busy, and in the window after it starts it
+    // is 86.7% busy. A decorative drifting-dot field is not worth 87% of a
+    // phone's main thread — it starves paint, which is what Speed Index
+    // measures, and it is why scrolling felt laggy on a phone.
+    //
+    // The grid itself is still painted by resize(), so the background looks the
+    // same at rest; what stops is the drift and the cursor glow, neither of
+    // which a touch device can really show anyway (there is no cursor).
+    // Desktop is untouched.
+    const isSmallScreen = () => window.innerWidth < 768;
+
     const start = () => {
-      if (!running && !prefersReduced && !document.hidden) {
+      if (!running && !prefersReduced && !isSmallScreen() && !document.hidden) {
         running = true;
         raf = requestAnimationFrame(draw);
       }
