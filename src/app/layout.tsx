@@ -239,8 +239,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               build` runs (in .env.local for local builds), not only as a
               runtime Cloudflare secret. */}
           {process.env.NEXT_PUBLIC_CF_BEACON_TOKEN && (
+            // lazyOnload, not afterInteractive. afterInteractive makes Next
+            // emit a <link rel="preload"> for this, so a third-party analytics
+            // script was competing for bandwidth with the stylesheet and the
+            // font during the first load. Measured on a throttled phone: the
+            // beacon finished at 1656ms, in the middle of the window that
+            // decides when the page first paints. lazyOnload drops the preload
+            // and fetches it once the page is idle. Same analytics, just no
+            // longer ahead of the content in the queue.
             <Script
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               src="https://static.cloudflareinsights.com/beacon.min.js"
               data-cf-beacon={JSON.stringify({ token: process.env.NEXT_PUBLIC_CF_BEACON_TOKEN })}
             />

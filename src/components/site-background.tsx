@@ -81,10 +81,19 @@ export default function SiteBackground() {
     }
 
     const particles: Particle[] = [];
-    // The plain grid never changes between frames, so it is rendered once per
-    // resize onto an offscreen canvas and blitted, rather than redrawing
-    // several thousand dots every frame forever.
-    let staticGrid: HTMLCanvasElement | null = null;
+    // The plain grid is no longer drawn here at all — it is a CSS background on
+    // the canvas element (see .qh-dots in the style block below), so it paints
+    // with the rest of the page instead of waiting for React to hydrate.
+    //
+    // Measured on a throttled phone before this: first paint at 2184ms but the
+    // canvas had no pixels until 4299ms, because this is a client component and
+    // nothing here runs until hydration finishes. A full-screen background
+    // arriving 2.1s after the text is exactly what Speed Index penalises.
+    //
+    // It also removes a full-viewport clear-and-blit from every single frame,
+    // which was the one fixed cost the loop paid whether or not anything moved.
+    // The canvas now carries only what actually changes: the drifting particles
+    // and the lit dots.
 
     // One lit dot, glow and all, rendered once into a small offscreen canvas.
     //
@@ -113,23 +122,6 @@ export default function SiteBackground() {
       return s;
     };
 
-    const renderStaticGrid = (w: number, h: number) => {
-      const grid = document.createElement("canvas");
-      grid.width = w;
-      grid.height = h;
-      const gctx = grid.getContext("2d");
-      if (!gctx) return null;
-      gctx.fillStyle = t.canvasDefault;
-      for (let x = 0; x < w; x += SPACING) {
-        for (let y = 0; y < h; y += SPACING) {
-          gctx.beginPath();
-          gctx.arc(x, y, BASE_R, 0, Math.PI * 2);
-          gctx.fill();
-        }
-      }
-      return grid;
-    };
-
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const resize = () => {
@@ -139,12 +131,10 @@ export default function SiteBackground() {
       particles.length = 0;
       const n = isMobile ? 26 : 40;
       for (let i = 0; i < n; i++) particles.push(new Particle(canvas.width, canvas.height));
-      staticGrid = renderStaticGrid(canvas.width, canvas.height);
       glowSprite = renderGlowSprite();
-      if (prefersReduced && staticGrid) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(staticGrid, 0, 0);
-      }
+      // Nothing to pre-paint: the dot grid is CSS and is already on screen,
+      // including under reduce-motion, where this loop never starts.
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
 
     // The layer is fixed to the viewport, so client coordinates map straight
@@ -171,8 +161,9 @@ export default function SiteBackground() {
       if (now - last < 1000 / 30) return;
       last = now;
 
+      // Clear only. The grid underneath is the element's CSS background, so it
+      // survives the clear for free instead of being redrawn 30 times a second.
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (staticGrid) ctx.drawImage(staticGrid, 0, 0);
       particles.forEach((p) => { p.update(canvas.width, canvas.height); p.draw(ctx); });
 
       // No shadowBlur here any more — it lives in glowSprite. See above.
@@ -279,6 +270,27 @@ export default function SiteBackground() {
 
         .qh-glow { position: absolute; pointer-events: none; }
 
+        /* The dot grid, as a CSS background rather than something the canvas
+           redraws. It has to line up with the canvas exactly, because the
+           moving particles and the lit hover/scan dots are still drawn on the
+           canvas on top of it:
+             - canvas draws dots at x,y = 0, 30, 60 ... with radius BASE_R
+             - a radial-gradient's default centre is the middle of its tile, so
+               shifting the tile origin by half a step puts those centres back
+               on the same multiples of 30
+           Keep SPACING and BASE_R in the effect above in step with these two
+           numbers. The stops are feathered rather than a hard cut so the edge
+           matches the antialiasing of a filled canvas arc. */
+        .qh-dots {
+          background-image: radial-gradient(
+            circle,
+            var(--qh-canvasDefault) 1.15px,
+            transparent 1.95px
+          );
+          background-size: 30px 30px;
+          background-position: -15px -15px;
+        }
+
         /* Alpha is set per stop from raw channels rather than by mixing
            toward transparent. Mixing a translucent colour with transparent
            in sRGB drags its channels toward black, so the blue greyed out as
@@ -337,7 +349,11 @@ export default function SiteBackground() {
         {/* Glows render before the canvas so the grid sits on top of them. */}
         <div className="qh-glow qh-glow-a" />
         <div className="qh-glow qh-glow-b" />
-        <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, display: "block" }} />
+        <canvas
+          ref={canvasRef}
+          className="qh-dots"
+          style={{ position: "absolute", inset: 0, display: "block" }}
+        />
       </div>
     </>
   );
