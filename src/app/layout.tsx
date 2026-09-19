@@ -109,9 +109,15 @@ const organizationJsonLd = {
 // Self-hosted via next/font — replaces the render-blocking @import in the
 // hero and navbar (both were separately fetching the same Google Font
 // over the network on every page load).
+// 600 is not in this list because nothing uses it. Checked by walking every
+// element on all 14 page types and reading the computed font-weight of
+// anything set in Space Grotesk: 400 (174 elements), 500 (84, the navbar
+// links), 700 (47) and 900 (4, synthesized from 700 since the typeface stops
+// at 700). Zero at 600. Each declared weight adds @font-face rules to the
+// render-blocking stylesheet, so an unused one is pure cost.
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
 });
 // Space Grotesk only ships up to weight 700 — the hero's font-weight:900
