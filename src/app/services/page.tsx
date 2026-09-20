@@ -132,6 +132,91 @@ const PACKAGES: Package[] = [
   },
 ];
 
+/**
+ * One-off projects, as a second grid below the monthly packages.
+ *
+ * The three cards above are ongoing retainers, and the full list further down
+ * already named website builds, local search, online-store work, tracking and
+ * monetisation — but none of those were buyable, they were only mentioned.
+ * Anyone who wanted just a website had to read to the bottom and then guess.
+ *
+ * Three of them on purpose: the grid is lg:grid-cols-3, so three fills a row
+ * exactly and the layout is untouched. They reuse PackageCard, so these look
+ * identical to the cards above rather than introducing a second style.
+ *
+ * Deliberately NOT added to the COMPARISON table. That table compares the
+ * three monthly plans against each other, which is a fair comparison; a
+ * one-off build has no monthly column to fill and would only add empty cells.
+ */
+const PROJECTS: Package[] = [
+  {
+    name: "Website Build",
+    tagline: "A new site, or a rebuild of the one you have.",
+    icon: Code,
+    includes: [
+      {
+        icon: Code,
+        title: "Design and Development",
+        body: "A site built to be fast, to be found, and to work on a phone. Not a template with your logo dropped on it.",
+      },
+      {
+        icon: Gauge,
+        title: "Speed and Core Web Vitals",
+        body: "Built quick from the start, so you are not paying someone later to undo a slow build.",
+      },
+      {
+        icon: Accessibility,
+        title: "Accessibility Built In",
+        body: "Checked against the real standards as it is built, rather than bolted on after a complaint.",
+      },
+    ],
+  },
+  {
+    name: "Local and Maps",
+    tagline: "For a business people search for nearby.",
+    icon: MapPin,
+    includes: [
+      {
+        icon: MapPin,
+        title: "Google Business Profile",
+        body: "Your listing set up properly, so you turn up in the map results and not just the blue links.",
+      },
+      {
+        icon: Globe,
+        title: "Local Search Work",
+        body: "The details that decide whether you show up for someone searching in your town, not the whole country.",
+      },
+      {
+        icon: FileText,
+        title: "Consistent Details Everywhere",
+        body: "Name, address and phone matched across every listing. A mismatch quietly costs you rankings.",
+      },
+    ],
+  },
+  {
+    name: "Store and Revenue",
+    tagline: "For selling online, and measuring it.",
+    icon: ShoppingCart,
+    includes: [
+      {
+        icon: ShoppingCart,
+        title: "Online Store SEO",
+        body: "Product and category pages written and structured so they can actually be found and compared.",
+      },
+      {
+        icon: LineChart,
+        title: "Tracking and Reports",
+        body: "Set up so you can see what is working. Without this you are guessing about where sales come from.",
+      },
+      {
+        icon: DollarSign,
+        title: "Turning Visits Into Money",
+        body: "Traffic that never buys anything is a cost. We look at what happens after someone lands.",
+      },
+    ],
+  },
+];
+
 // Plain-English definitions of the acronyms this industry throws around.
 // Written so a business owner who has never heard any of them can follow it,
 // and honest about the two that are the same thing under different names.
@@ -265,6 +350,60 @@ function PicSlot({
   );
 }
 
+/**
+ * One package card. Lifted out of the packages grid unchanged so the one-off
+ * projects grid below can render with exactly the same markup — the point of
+ * extracting it was to add a second grid without a second copy of the card
+ * drifting away from this one.
+ */
+function PackageCard({ pkg, delay }: { pkg: Package; delay: number }) {
+  return (
+    <ScrollReveal delay={delay}>
+      <div
+        className={
+          (pkg.featured
+            ? "border-primary/40 ring-2 ring-primary/20 "
+            : "border-border/50 ") +
+          "flex h-full flex-col rounded-md border bg-card p-8 shadow-sm transition-transform duration-200 hover:scale-[1.01] hover:shadow-lg"
+        }
+      >
+        <PicSlot icon={pkg.icon} image={pkg.image} alt={pkg.name} />
+
+        <div className="mb-1 flex flex-wrap items-center gap-3">
+          <h3 className="text-2xl tracking-tight">{pkg.name}</h3>
+          {pkg.featured && (
+            <span className="rounded-full bg-primary px-3 py-1 text-xs font-medium uppercase tracking-wide text-primary-foreground">
+              Most chosen
+            </span>
+          )}
+        </div>
+        <p className="mb-6 text-sm text-muted-foreground">{pkg.tagline}</p>
+
+        <div className="mb-8 flex flex-1 flex-col gap-4">
+          {pkg.includes.map((item) => (
+            <div key={item.title} className="flex gap-3">
+              <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+              <div>
+                <p className="text-sm font-medium">{item.title}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {item.body}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Button
+          size="lg"
+          variant={pkg.featured ? "default" : "outline"}
+          className="w-full"
+          render={<a href="/contact">Talk to Us</a>}
+        />
+      </div>
+    </ScrollReveal>
+  );
+}
+
 export default function ServicesPage() {
   return (
     <div className="w-full">
@@ -285,6 +424,30 @@ export default function ServicesPage() {
               package below, or tell us what you need and we will build one
               around it.
             </p>
+          </div>
+
+          {/* The acronyms, up front rather than only explained at the bottom
+              of the page. People shopping for this arrive searching one of
+              these words and need to see it covered before they scroll. Uses
+              the same Badge already on this page, so it introduces no new
+              visual language — and each one links to the table lower down
+              that says what it actually means. */}
+          <div className="mt-10 max-w-3xl">
+            <p className="mb-3 text-sm text-muted-foreground">
+              Covered here, whichever name you know it by:
+            </p>
+            <ul className="flex flex-wrap gap-2">
+              {ACRONYMS.map((a) => (
+                <li key={a.term}>
+                  <a
+                    href="#what-these-mean"
+                    className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  >
+                    <Badge variant="secondary">{a.term}</Badge>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
@@ -319,51 +482,7 @@ export default function ServicesPage() {
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {PACKAGES.map((pkg, i) => (
-              <ScrollReveal key={pkg.name} delay={i * 100}>
-                <div
-                  className={
-                    (pkg.featured
-                      ? "border-primary/40 ring-2 ring-primary/20 "
-                      : "border-border/50 ") +
-                    "flex h-full flex-col rounded-md border bg-card p-8 shadow-sm transition-transform duration-200 hover:scale-[1.01] hover:shadow-lg"
-                  }
-                >
-                  <PicSlot icon={pkg.icon} image={pkg.image} alt={pkg.name} />
-
-                  <div className="mb-1 flex flex-wrap items-center gap-3">
-                    <h3 className="text-2xl tracking-tight">{pkg.name}</h3>
-                    {pkg.featured && (
-                      <span className="rounded-full bg-primary px-3 py-1 text-xs font-medium uppercase tracking-wide text-primary-foreground">
-                        Most chosen
-                      </span>
-                    )}
-                  </div>
-                  <p className="mb-6 text-sm text-muted-foreground">
-                    {pkg.tagline}
-                  </p>
-
-                  <div className="mb-8 flex flex-1 flex-col gap-4">
-                    {pkg.includes.map((item) => (
-                      <div key={item.title} className="flex gap-3">
-                        <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                        <div>
-                          <p className="text-sm font-medium">{item.title}</p>
-                          <p className="text-sm leading-relaxed text-muted-foreground">
-                            {item.body}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Button
-                    size="lg"
-                    variant={pkg.featured ? "default" : "outline"}
-                    className="w-full"
-                    render={<a href="/contact">Talk to Us</a>}
-                  />
-                </div>
-              </ScrollReveal>
+              <PackageCard key={pkg.name} pkg={pkg} delay={i * 100} />
             ))}
           </div>
 
@@ -459,7 +578,31 @@ export default function ServicesPage() {
         </div>
       </div>
 
+      {/* One-off projects. Same card, same three-column grid as the monthly
+          packages above, so this reads as a second row of the same thing
+          rather than a new section style. */}
       <div className="page-surface w-full py-20 lg:py-28">
+        <div className="container mx-auto px-4">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="mb-3 text-3xl tracking-tight md:text-4xl">
+              One-off projects
+            </h2>
+            <p className="leading-relaxed text-muted-foreground">
+              Not everything needs a monthly plan. Some jobs have a start and
+              an end. These are priced as a single project, and you can take
+              one on its own or add it to a package above.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {PROJECTS.map((pkg, i) => (
+              <PackageCard key={pkg.name} pkg={pkg} delay={i * 100} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="page-surface w-full border-t py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-10 max-w-2xl">
             <h2 className="mb-3 text-3xl tracking-tight md:text-4xl">
@@ -498,7 +641,10 @@ export default function ServicesPage() {
       <div className="page-surface w-full border-t py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-10 max-w-2xl">
-            <h2 className="mb-3 text-3xl tracking-tight md:text-4xl">
+            <h2
+              id="what-these-mean"
+              className="mb-3 scroll-mt-28 text-3xl tracking-tight md:text-4xl"
+            >
               AEO, GEO, LLMO, AI SEO, E-E-A-T — what these mean
             </h2>
             <p className="leading-relaxed text-muted-foreground">
