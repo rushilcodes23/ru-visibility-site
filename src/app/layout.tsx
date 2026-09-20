@@ -29,19 +29,17 @@ const organizationJsonLd = {
   url: "https://ruvisibility.com",
   email: "rushil@ruvisibility.com",
   telephone: "+91-7222999365",
-  // City, region and country only — no street address, because there is no
-  // office and inventing one would be worse than omitting it. This is still
-  // the thing that was missing: areaServed below lists everywhere the work is
-  // done, but nothing said where the business actually IS, so every AI answer
-  // and every search engine could only place it as "India".
+  // Country only, and deliberately no finer than that. Rushil does not want
+  // the specific city published, so nothing here — and nothing on the About
+  // page — narrows it below "India". areaServed below still lists every city
+  // the work is done in, which is a different claim: where clients are, not
+  // where the business sits.
   //
   // Deliberately on the plain Organization, which carries no storefront
   // implication. Upgrading to LocalBusiness to hold an address would claim a
   // physical place customers can visit, which is not true of a remote service.
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Raipur",
-    addressRegion: "Chhattisgarh",
     addressCountry: "IN",
   },
   logo: "https://ruvisibility.com/logo-mark.png",
@@ -60,15 +58,13 @@ const organizationJsonLd = {
     name: "Rushil A. Bajpai",
     jobTitle: "AI Visibility (GEO) & SEO Consultant",
     url: "https://ruvisibility.com/about",
-    // Same reasoning as the organisation address above: where the person
-    // actually works from, stated once so it is machine-readable rather than
-    // left to be inferred from the list of cities served.
+    // Country only, same reasoning as the organisation address above. A
+    // homeLocation naming the city is exactly the detail that should not be
+    // published, so this states the country and stops there.
     homeLocation: {
       "@type": "Place",
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Raipur",
-        addressRegion: "Chhattisgarh",
         addressCountry: "IN",
       },
     },
@@ -192,9 +188,6 @@ export const metadata: Metadata = {
     "LLM optimization",
     "AI SEO agency",
     "E-E-A-T audit",
-    "SEO Raipur",
-    "GEO agency Raipur",
-    "AI visibility consultant Raipur",
     "AI visibility",
     "generative engine optimization",
     "SEO Dallas",

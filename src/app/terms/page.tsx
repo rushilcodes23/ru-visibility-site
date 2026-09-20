@@ -265,10 +265,9 @@ export default function TermsPage() {
               Who you are agreeing with
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              Ru Visibility operates out of Raipur, Chhattisgarh, India.
-              These terms are governed by the laws of India, and any dispute
-              that can&apos;t be resolved directly is subject to the
-              jurisdiction of the courts in Raipur, Chhattisgarh.
+              Ru Visibility operates out of India. These terms are governed by
+              the laws of India, and any dispute that can&apos;t be resolved
+              directly is subject to the jurisdiction of the courts of India.
             </p>
           </section>
 
