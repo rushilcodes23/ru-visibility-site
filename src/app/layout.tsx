@@ -29,6 +29,21 @@ const organizationJsonLd = {
   url: "https://ruvisibility.com",
   email: "rushil@ruvisibility.com",
   telephone: "+91-7222999365",
+  // City, region and country only — no street address, because there is no
+  // office and inventing one would be worse than omitting it. This is still
+  // the thing that was missing: areaServed below lists everywhere the work is
+  // done, but nothing said where the business actually IS, so every AI answer
+  // and every search engine could only place it as "India".
+  //
+  // Deliberately on the plain Organization, which carries no storefront
+  // implication. Upgrading to LocalBusiness to hold an address would claim a
+  // physical place customers can visit, which is not true of a remote service.
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Raipur",
+    addressRegion: "Chhattisgarh",
+    addressCountry: "IN",
+  },
   logo: "https://ruvisibility.com/logo-mark.png",
   description:
     "SEO and GEO (Generative Engine Optimization) agency — ongoing management so AI tools and Google can find and recommend a business.",
@@ -45,6 +60,18 @@ const organizationJsonLd = {
     name: "Rushil A. Bajpai",
     jobTitle: "AI Visibility (GEO) & SEO Consultant",
     url: "https://ruvisibility.com/about",
+    // Same reasoning as the organisation address above: where the person
+    // actually works from, stated once so it is machine-readable rather than
+    // left to be inferred from the list of cities served.
+    homeLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Raipur",
+        addressRegion: "Chhattisgarh",
+        addressCountry: "IN",
+      },
+    },
     sameAs: [
       "https://www.linkedin.com/in/rushil-a-bajpai-21b99a3a9",
       "https://x.com/RushilA_Bajpai",
@@ -53,6 +80,18 @@ const organizationJsonLd = {
   knowsAbout: [
     "Search Engine Optimization",
     "Generative Engine Optimization",
+    // The same discipline is sold under several names, and a prospect or an
+    // AI system searching one of them should still land here. These are the
+    // terms in current use, spelled out rather than abbreviated so the
+    // abbreviation and the full phrase both match.
+    "Answer Engine Optimization",
+    "AEO",
+    "GEO",
+    "Large Language Model Optimization",
+    "LLMO",
+    "AI SEO",
+    "E-E-A-T",
+    "Experience Expertise Authoritativeness Trustworthiness",
     "AI visibility",
     "Web accessibility (ADA/WCAG)",
     "Website development",
@@ -77,6 +116,9 @@ const organizationJsonLd = {
     name: "Ru Visibility Services",
     itemListElement: [
       "AI Visibility (GEO) Management",
+      "Answer Engine Optimization (AEO)",
+      "LLM Optimization (LLMO) & AI SEO",
+      "E-E-A-T Content & Authority Building",
       "Technical SEO Management",
       "Accessibility (ADA) Risk Audits",
       "Blog & Content Writing",
@@ -144,6 +186,15 @@ export const metadata: Metadata = {
   keywords: [
     "SEO agency",
     "GEO agency",
+    "AEO agency",
+    "answer engine optimization",
+    "LLMO",
+    "LLM optimization",
+    "AI SEO agency",
+    "E-E-A-T audit",
+    "SEO Raipur",
+    "GEO agency Raipur",
+    "AI visibility consultant Raipur",
     "AI visibility",
     "generative engine optimization",
     "SEO Dallas",

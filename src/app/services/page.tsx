@@ -132,6 +132,48 @@ const PACKAGES: Package[] = [
   },
 ];
 
+// Plain-English definitions of the acronyms this industry throws around.
+// Written so a business owner who has never heard any of them can follow it,
+// and honest about the two that are the same thing under different names.
+const ACRONYMS: { term: string; means: string; where: string }[] = [
+  {
+    term: "SEO",
+    means:
+      "Search engine optimisation. Getting found on Google when someone searches.",
+    where: "The base. Everything else is built on top of it.",
+  },
+  {
+    term: "GEO",
+    means:
+      "Generative engine optimisation. Getting named when someone asks ChatGPT, Gemini or Perplexity for a recommendation.",
+    where: "Its own score in your audit.",
+  },
+  {
+    term: "AEO",
+    means:
+      "Answer engine optimisation. Writing so the answer can be lifted straight off your page, instead of the machine having to work it out.",
+    where: "Its own score in your audit.",
+  },
+  {
+    term: "LLMO",
+    means:
+      "Large language model optimisation. A newer name for the same work as GEO and AEO together.",
+    where: "Covered by GEO and AEO. Not a separate job.",
+  },
+  {
+    term: "AI SEO",
+    means:
+      "An umbrella term some agencies use for all of the above. There is no separate technique behind it.",
+    where: "Covered by GEO and AEO. Not a separate job.",
+  },
+  {
+    term: "E-E-A-T",
+    means:
+      "Experience, expertise, authoritativeness and trust. Google's own test of whether your site looks like it was written by someone who knows the subject.",
+    where: "Its own score in your audit.",
+  },
+];
+
 const ALL_SERVICES: Item[] = [
   {
     icon: Bot,
@@ -445,6 +487,64 @@ export default function ServicesPage() {
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* The same work is sold under half a dozen names. Prospects arrive
+          searching one of them and need to know it is covered, so the terms
+          are stated plainly and mapped to what is actually done — rather than
+          listed as six separate services, which would be six names for two
+          jobs. */}
+      <div className="page-surface w-full border-t py-20 lg:py-28">
+        <div className="container mx-auto px-4">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="mb-3 text-3xl tracking-tight md:text-4xl">
+              AEO, GEO, LLMO, AI SEO, E-E-A-T — what these mean
+            </h2>
+            <p className="leading-relaxed text-muted-foreground">
+              You will see these on other websites, often with no explanation.
+              Here is what each one actually means, in plain words, and where
+              it sits in the work we do. Two of them are different names for
+              the same thing, and we would rather tell you that than sell it
+              to you twice.
+            </p>
+          </div>
+
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="What AEO, GEO, LLMO, AI SEO and E-E-A-T mean"
+            className="overflow-x-auto card-surface rounded-md"
+          >
+            <table className="w-full min-w-[34rem] text-left text-sm">
+              <thead>
+                <tr className="border-b">
+                  <th scope="col" className="p-4 font-medium">Term</th>
+                  <th scope="col" className="p-4 font-medium">What it means</th>
+                  <th scope="col" className="p-4 font-medium">Where it sits</th>
+                </tr>
+              </thead>
+              <tbody className="text-muted-foreground">
+                {ACRONYMS.map((a) => (
+                  <tr key={a.term} className="border-b last:border-0">
+                    <th scope="row" className="p-4 align-top font-medium text-foreground whitespace-nowrap">
+                      {a.term}
+                    </th>
+                    <td className="p-4 align-top leading-relaxed">{a.means}</td>
+                    <td className="p-4 align-top leading-relaxed">{a.where}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+            Our audit gives a separate score for SEO, GEO, AEO and E-E-A-T, so
+            you can see which one is actually holding you back. LLMO and AI SEO
+            get no score of their own on purpose — they are measured from the
+            same evidence as GEO and AEO, and inventing two more numbers out of
+            it would just be the same answer written four times.
+          </p>
         </div>
       </div>
 

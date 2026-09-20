@@ -33,7 +33,7 @@ export const metadata = pageMetadata({
   title: "About — Rushil A. Bajpai, Founder | Ru Visibility",
   // Kept under 155 characters — longer descriptions truncate in search
   // results, which an earlier Screaming Frog crawl flagged across the site.
-  description: `Ru Visibility is Rushil A. Bajpai — an AI visibility (GEO) and SEO consultant working internationally, on research from ${AUDITED} site audits.`,
+  description: `Ru Visibility is Rushil A. Bajpai — an AI visibility (GEO) and SEO consultant based in Raipur, working across India and the US, on research from ${AUDITED} site audits.`,
 });
 
 const PROFILES = [
@@ -76,9 +76,10 @@ export default function AboutPage() {
               </h1>
               <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
                 Founder, and the person who does the work. AI visibility (GEO)
-                and SEO consultant, working with businesses internationally.
-                When you send a message here, it reaches me — there is no
-                account manager in between, and no team to hand you off to.
+                and SEO consultant, based in Raipur, Chhattisgarh, and working
+                with businesses across India and the US. When you send a
+                message here, it reaches me — there is no account manager in
+                between, and no team to hand you off to.
               </p>
               <p className="text-sm text-muted-foreground">
                 By Rushil A. Bajpai · Last reviewed{" "}
