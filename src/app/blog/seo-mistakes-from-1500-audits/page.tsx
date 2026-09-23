@@ -26,7 +26,9 @@ function Mark({ children }: { children: React.ReactNode }) {
         // break instead of restarting it on each fragment.
         boxDecorationBreak: "clone",
         WebkitBoxDecorationBreak: "clone",
-        background: "color-mix(in oklch, var(--primary) 16%, transparent)",
+        // --primary is near-white in dark mode, so mixing it produced a
+        // grey box. The editorial accent is the green one.
+        background: "color-mix(in oklch, var(--accent-green) 22%, transparent)",
         borderRadius: "3px",
         padding: "0.08em 0.24em",
         margin: "0 -0.06em",
@@ -738,7 +740,23 @@ export default function SeoMistakesPost() {
       />
       <ReadingProgress />
 
-      <div className="article-scrim container mx-auto max-w-[42rem] px-4">
+      <div className="container mx-auto max-w-[78rem] px-4">
+        <div className="article-shell">
+          {/* Sticky contents. On a wide screen this is what the empty left
+              margin becomes: the list stays reachable for the whole article
+              instead of being scrolled past once near the top. */}
+          <aside className="article-rail" aria-label="Article contents">
+            <p className="article-rail-title">The 21, in order</p>
+            <nav>
+              {MISTAKES.map((m) => (
+                <a key={m.n} href={`#mistake-${m.n}`}>
+                  {m.n}. {m.title}
+                </a>
+              ))}
+            </nav>
+          </aside>
+
+          <div className="article-scrim min-w-0">
         {/* No eyebrow above the headline. The title says what this is. */}
         <header className="mb-12">
           <h1
@@ -942,6 +960,8 @@ export default function SeoMistakesPost() {
 
         <div className="mt-12 pt-8 border-t">
           <Button render={<a href="#audit">Get Your Visibility Audit</a>} />
+        </div>
+          </div>
         </div>
       </div>
       <AuditCta />

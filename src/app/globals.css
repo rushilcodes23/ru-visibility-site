@@ -166,6 +166,14 @@
 :root { --accent-line: #5b7fc4; }
 .dark { --accent-line: #7ea0e0; }
 
+/* Signal green. The blue accent-line above is the site's structural colour —
+   rules, focus, borders. This one is the editorial accent: it marks the thing
+   that was measured. Emerald rather than a pure green because the palette is
+   a cool navy, and a warm green fights it. Both values clear 4.5:1 against
+   their own background so it can carry text, not just decoration. */
+:root { --accent-green: #047857; }
+.dark  { --accent-green: #34d399; }
+
 /* Page headers were badge + heading + paragraph on flat colour, which read
    as nothing. The rule gives every page one consistent anchor point. */
 .page-head {
@@ -538,4 +546,155 @@
   opacity: 0.72;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* ── Post cards, wide ──────────────────────────────────────────────────────
+   The previous index capped itself at a reading measure, which is right for
+   prose and wrong for an index: on a 1360px screen it left ~400px dead on
+   each side. An index is scanned, not read, so it gets the width — and every
+   card carries a graphic drawn from that post's own numbers, which is what
+   actually fills the space rather than stretched whitespace.                */
+.post-visual {
+  aspect-ratio: 16 / 7;
+  width: 100%;
+  border-radius: 10px;
+  padding: 1.25rem 1.125rem;
+  color: var(--foreground);
+  background:
+    radial-gradient(120% 140% at 12% 0%,
+      color-mix(in oklch, var(--accent-green) 14%, transparent) 0%,
+      transparent 62%),
+    color-mix(in oklch, var(--foreground) 4%, var(--card));
+  border: 1px solid color-mix(in oklch, var(--foreground) 8%, transparent);
+  overflow: hidden;
+  transition: border-color 220ms ease;
+}
+
+.post-card:hover .post-visual,
+.post-card:focus-within .post-visual {
+  border-color: color-mix(in oklch, var(--accent-green) 38%, transparent);
+}
+
+/* Green replaces the plain foreground pill — this is the editorial accent and
+   the cue is the most editorial thing on the card. */
+.post-card-cue {
+  color: #04150f;
+  background: var(--accent-green);
+}
+
+.post-card-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent-green);
+}
+
+.post-card-kicker::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+/* ── The page under it ─────────────────────────────────────────────────────
+   Two soft washes anchored to the top corners so the header has something
+   behind it instead of sitting on flat black. Deliberately subtle and behind
+   the dot grid's own layer, not a second competing texture.                 */
+.blog-canvas {
+  position: relative;
+  isolation: isolate;
+}
+
+.blog-canvas::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 620px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 90% at 8% 0%,
+      color-mix(in oklch, var(--accent-green) 11%, transparent) 0%, transparent 64%),
+    radial-gradient(60% 80% at 92% 6%,
+      color-mix(in oklch, var(--accent-line) 13%, transparent) 0%, transparent 62%);
+}
+
+/* ── Article rail ──────────────────────────────────────────────────────────
+   The reading column stays at its measure — that is not negotiable for
+   prose — but the space beside it stops being empty. On wide screens the
+   contents list moves out of the flow and into a sticky rail, so it is
+   permanently available instead of scrolled past once at the top.          */
+.article-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
+}
+
+@media (min-width: 1180px) {
+  .article-shell {
+    grid-template-columns: 15rem minmax(0, 42rem) minmax(0, 1fr);
+    gap: 4rem;
+    justify-content: center;
+  }
+}
+
+.article-rail {
+  display: none;
+}
+
+@media (min-width: 1180px) {
+  .article-rail {
+    display: block;
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+    max-height: calc(100vh - 10rem);
+    overflow-y: auto;
+    /* Scroll inside the rail without a scrollbar interrupting the column. */
+    scrollbar-width: thin;
+  }
+}
+
+.article-rail-title {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 0.875rem;
+}
+
+.article-rail a {
+  display: block;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  padding: 0.3rem 0 0.3rem 0.75rem;
+  border-left: 1px solid var(--border);
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.article-rail a:hover,
+.article-rail a:focus-visible {
+  color: var(--foreground);
+  border-left-color: var(--accent-green);
+}
+
+/* Green carries the measured things inside an article too, so the accent
+   means one consistent thing across the whole blog. */
+.article-fix b { color: var(--accent-green); }
+.article-progress {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--accent-green) 45%, transparent),
+    var(--accent-green)
+  );
 }
