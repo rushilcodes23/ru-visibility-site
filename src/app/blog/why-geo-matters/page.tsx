@@ -89,45 +89,60 @@ export default function WhyGeoMattersPost() {
           <p>
             Traditional SEO is largely about ranking in a list of blue links.
             <Mark>GEO is about being the answer itself</Mark> — the one thing
-            an AI tool says out loud, with no other options shown alongside
-            it. That&apos;s a much higher bar, and a much bigger prize. It also means the old
-            playbook — keyword stuffing, backlink schemes, thin content —
-            doesn&apos;t work the same way.{" "}
-            <Mark>
-              AI models are reading for substance, clarity, and whether your
-              site actually answers the question a real person is asking.
-            </Mark>
+            an AI tool names, often with nothing else shown beside it. There
+            is no second place on that list. It also means the old playbook
+            works differently: keyword stuffing in particular measures{" "}
+            <em>worse</em> than making no change at all in the published
+            research on this, which is not something you can say about most
+            SEO advice.
           </p>
 
           <h2 className="text-2xl text-foreground tracking-tight mt-4">
-            The part nobody likes to hear
+            What I can&apos;t promise you
           </h2>
           <p>
             I won&apos;t tell you GEO is guaranteed to work a certain way by a
             certain date — nobody can honestly say that. AI models retrain on
-            their own schedule, and what gets a business recommended today
-            can shift. What doesn&apos;t change is the cost of doing nothing:
-            if a competitor is visible and you&apos;re not, they get the
-            customer. That loss never shows up as an error message. It just
-            looks like a customer who went somewhere else.
+            their own schedule, and what gets a business named today can
+            shift. Anyone quoting you a guaranteed citation is guessing.
+          </p>
+          <p>
+            What doesn&apos;t change is the cost of doing nothing. If a
+            competitor is visible and you&apos;re not, they get the customer.
+            That loss never shows up as an error message. It just looks like a
+            customer who went somewhere else.
           </p>
 
           <h2 className="text-2xl text-foreground tracking-tight mt-4">
             What I&apos;d actually tell you to do
           </h2>
           <p>
-            Start by finding out where you actually stand — ask the AI tools
-            yourself, the same way a real customer would. That&apos;s the
-            entire idea behind the audit we run: not guessing, not selling
-            fear, just checking the real, current state and going from
-            there.
+            Start by finding out where you actually stand. Open ChatGPT or
+            Perplexity and ask for a business like yours, the way a customer
+            would — then note which names come back and whether yours is among
+            them. That takes ten minutes and costs nothing, and it is the
+            same first step our audit takes.
           </p>
 
           <p>
-            This is why I built Ru Visibility around ongoing work instead of
-            a one-time report. GEO isn&apos;t something you fix once and
-            forget — it&apos;s something you keep paying attention to,
-            because the landscape keeps moving.
+            Then check the plumbing. A surprising number of sites are shut out
+            by something nobody chose: a firewall rule refusing the crawlers
+            that answer questions, or a robots.txt line inherited from a
+            template. We measured that across{" "}
+            <a
+              href="/research"
+              className="underline underline-offset-4 text-foreground"
+            >
+              every site we have audited
+            </a>{" "}
+            — it is more common than you would expect, and it is usually a
+            five-minute fix once you know.
+          </p>
+
+          <p>
+            After that it stops being a one-time job. GEO isn&apos;t something
+            you fix once and forget, which is why we built Ru Visibility
+            around ongoing work rather than a single report.
           </p>
         </div>
 

@@ -68,6 +68,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/why-us", 0.8, "src/app/why-us/page.tsx"),
     entry("/blog", 0.6, "src/app/blog/page.tsx", "src/lib/posts.ts"),
     entry("/blog/why-geo-matters", 0.6, "src/app/blog/why-geo-matters/page.tsx", "src/lib/posts.ts"),
+    entry(
+      "/blog/seo-mistakes-from-1500-audits",
+      0.6,
+      "src/app/blog/seo-mistakes-from-1500-audits/page.tsx",
+      "src/lib/posts.ts",
+      // The post reads every figure from this file, so a re-aggregation is a
+      // real content change to the page and should move its lastmod.
+      "src/lib/research-findings.json",
+    ),
     entry("/research", 0.8, "src/app/research/page.tsx", "src/lib/research-findings.json"),
     entry("/contact", 0.8, "src/app/contact/page.tsx", "src/components/contact-form.tsx"),
     entry("/accessibility", 0.5, "src/app/accessibility/page.tsx"),

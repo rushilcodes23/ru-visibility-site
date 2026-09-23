@@ -15,7 +15,16 @@ export type Post = {
   updated?: string;
 };
 
+// Newest first — the blog index features POSTS[0].
 export const POSTS: Post[] = [
+  {
+    slug: "seo-mistakes-from-1500-audits",
+    title: "I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often",
+    excerpt:
+      "Every number here comes from crawling 1,504 real business websites. The 21 problems that kept repeating, what each one actually costs, and the order I would fix them in.",
+    author: "Rushil A. Bajpai",
+    published: "2026-09-23",
+  },
   {
     slug: "why-geo-matters",
     title: "Why GEO Matters",
