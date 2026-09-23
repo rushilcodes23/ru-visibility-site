@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-17T08:25:33.087Z",
+  "generatedAt": "2026-09-23T06:50:16.654Z",
   "corpus": {
-    "uniqueDomains": 1503,
-    "jsonFilesScanned": 2230,
+    "uniqueDomains": 1504,
+    "jsonFilesScanned": 2231,
     "nonAuditFilesSkipped": 725,
     "firstAudit": "2026-08-13",
-    "lastAudit": "2026-09-07"
+    "lastAudit": "2026-09-20"
   },
   "scores": {
     "geo": {
@@ -14,11 +14,11 @@
       "grades": {
         "D": 265,
         "C": 675,
-        "B": 546,
+        "B": 547,
         "F": 16,
         "A": 1
       },
-      "denominator": 1503
+      "denominator": 1504
     },
     "seo": {
       "mean": 83.4,
@@ -26,78 +26,133 @@
       "grades": {
         "B": 937,
         "C": 171,
-        "A": 364,
+        "A": 365,
         "D": 31
       },
-      "denominator": 1503
+      "denominator": 1504
     }
   },
   "crawlerBlocks": [
     {
       "crawler": "GPTBot",
-      "blockedCount": 243,
-      "blockedPct": 16.2,
-      "denominator": 1503
+      "robotsDisallowCount": 52,
+      "robotsDisallowPct": 3.5,
+      "httpBlockedCount": 164,
+      "httpBlockedPct": 10.9,
+      "combinedCount": 216,
+      "combinedPct": 14.4,
+      "inconclusiveCount": 27,
+      "denominator": 1504
     },
     {
       "crawler": "CCBot",
-      "blockedCount": 232,
-      "blockedPct": 15.4,
-      "denominator": 1503
+      "robotsDisallowCount": 53,
+      "robotsDisallowPct": 3.5,
+      "httpBlockedCount": 164,
+      "httpBlockedPct": 10.9,
+      "combinedCount": 217,
+      "combinedPct": 14.4,
+      "inconclusiveCount": 15,
+      "denominator": 1504
     },
     {
       "crawler": "ClaudeBot",
-      "blockedCount": 225,
-      "blockedPct": 15,
-      "denominator": 1503
+      "robotsDisallowCount": 52,
+      "robotsDisallowPct": 3.5,
+      "httpBlockedCount": 146,
+      "httpBlockedPct": 9.7,
+      "combinedCount": 198,
+      "combinedPct": 13.2,
+      "inconclusiveCount": 27,
+      "denominator": 1504
     },
     {
       "crawler": "Bingbot",
-      "blockedCount": 153,
-      "blockedPct": 10.2,
-      "denominator": 1503
+      "robotsDisallowCount": 1,
+      "robotsDisallowPct": 0.1,
+      "httpBlockedCount": 146,
+      "httpBlockedPct": 9.7,
+      "combinedCount": 147,
+      "combinedPct": 9.8,
+      "inconclusiveCount": 6,
+      "denominator": 1504
     },
     {
       "crawler": "Googlebot",
-      "blockedCount": 147,
-      "blockedPct": 9.8,
-      "denominator": 1503
+      "robotsDisallowCount": 1,
+      "robotsDisallowPct": 0.1,
+      "httpBlockedCount": 136,
+      "httpBlockedPct": 9,
+      "combinedCount": 137,
+      "combinedPct": 9.1,
+      "inconclusiveCount": 10,
+      "denominator": 1504
     },
     {
       "crawler": "PerplexityBot",
-      "blockedCount": 122,
-      "blockedPct": 8.1,
-      "denominator": 1503
+      "robotsDisallowCount": 34,
+      "robotsDisallowPct": 2.3,
+      "httpBlockedCount": 74,
+      "httpBlockedPct": 4.9,
+      "combinedCount": 108,
+      "combinedPct": 7.2,
+      "inconclusiveCount": 14,
+      "denominator": 1504
     },
     {
       "crawler": "Claude-User",
-      "blockedCount": 107,
-      "blockedPct": 7.1,
-      "denominator": 1503
-    },
-    {
-      "crawler": "ChatGPT-User",
-      "blockedCount": 90,
-      "blockedPct": 6,
-      "denominator": 1503
+      "robotsDisallowCount": 35,
+      "robotsDisallowPct": 2.3,
+      "httpBlockedCount": 57,
+      "httpBlockedPct": 3.8,
+      "combinedCount": 92,
+      "combinedPct": 6.1,
+      "inconclusiveCount": 15,
+      "denominator": 1504
     },
     {
       "crawler": "OAI-SearchBot",
-      "blockedCount": 88,
-      "blockedPct": 5.9,
-      "denominator": 1503
+      "robotsDisallowCount": 2,
+      "robotsDisallowPct": 0.1,
+      "httpBlockedCount": 75,
+      "httpBlockedPct": 5,
+      "combinedCount": 77,
+      "combinedPct": 5.1,
+      "inconclusiveCount": 11,
+      "denominator": 1504
+    },
+    {
+      "crawler": "ChatGPT-User",
+      "robotsDisallowCount": 4,
+      "robotsDisallowPct": 0.3,
+      "httpBlockedCount": 71,
+      "httpBlockedPct": 4.7,
+      "combinedCount": 75,
+      "combinedPct": 5,
+      "inconclusiveCount": 15,
+      "denominator": 1504
     },
     {
       "crawler": "Claude-SearchBot",
-      "blockedCount": 88,
-      "blockedPct": 5.9,
-      "denominator": 1503
+      "robotsDisallowCount": 2,
+      "robotsDisallowPct": 0.1,
+      "httpBlockedCount": 70,
+      "httpBlockedPct": 4.7,
+      "combinedCount": 72,
+      "combinedPct": 4.8,
+      "inconclusiveCount": 16,
+      "denominator": 1504
     },
     {
       "crawler": "Perplexity-User",
-      "blockedCount": 76,
-      "blockedPct": 5.1,
-      "denominator": 1503
+      "robotsDisallowCount": 2,
+      "robotsDisallowPct": 0.1,
+      "httpBlockedCount": 59,
+      "httpBlockedPct": 3.9,
+      "combinedCount": 61,
+      "combinedPct": 4.1,
+      "inconclusiveCount": 15,
+      "denominator": 1504
     }
   ],
   "segments": [
@@ -110,7 +165,7 @@
       "seoMean": 84.4,
       "noSameAsPct": 40.6,
       "noPressPct": 96.2,
-      "aiBlockedPct": 9.9,
+      "aiBlockedPct": 8.9,
       "missingMetaPct": 38.4,
       "noFaqPct": 61.3
     },
@@ -123,7 +178,7 @@
       "seoMean": 80.6,
       "noSameAsPct": 79.1,
       "noPressPct": 99.6,
-      "aiBlockedPct": 5.8,
+      "aiBlockedPct": 4,
       "missingMetaPct": 68.4,
       "noFaqPct": 81.3
     },
@@ -136,7 +191,7 @@
       "seoMean": 80.9,
       "noSameAsPct": 42.3,
       "noPressPct": 96.2,
-      "aiBlockedPct": 14.1,
+      "aiBlockedPct": 9,
       "missingMetaPct": 44.9,
       "noFaqPct": 55.1
     },
@@ -149,7 +204,7 @@
       "seoMean": 76.2,
       "noSameAsPct": 70.7,
       "noPressPct": 100,
-      "aiBlockedPct": 19.5,
+      "aiBlockedPct": 17.1,
       "missingMetaPct": 70.7,
       "noFaqPct": 68.3
     },
@@ -176,7 +231,7 @@
       "seoMean": 83.3,
       "noSameAsPct": 44.7,
       "noFaqPct": 64,
-      "aiBlockedPct": 8.8
+      "aiBlockedPct": 7.9
     },
     {
       "slug": "charlotte",
@@ -196,7 +251,7 @@
       "seoMean": 82.7,
       "noSameAsPct": 38.5,
       "noFaqPct": 49.5,
-      "aiBlockedPct": 7.7
+      "aiBlockedPct": 6.6
     },
     {
       "slug": "atlanta",
@@ -216,7 +271,7 @@
       "seoMean": 86.1,
       "noSameAsPct": 44.2,
       "noFaqPct": 59.6,
-      "aiBlockedPct": 11.5
+      "aiBlockedPct": 9.6
     },
     {
       "slug": "phoenix",
@@ -230,7 +285,7 @@
     }
   ],
   "platforms": {
-    "Next.js": 23,
+    "Next.js": 24,
     "Webflow": 49,
     "unknown / custom": 452,
     "WordPress": 839,
@@ -246,102 +301,107 @@
   "universal": {
     "httpsEnforced": {
       "sitesPct": 100,
-      "count": 1503,
-      "denominator": 1503
+      "count": 1504,
+      "denominator": 1504
     },
     "sitemapFound": {
       "sitesPct": 83,
-      "count": 1248,
-      "denominator": 1503
+      "count": 1249,
+      "denominator": 1504
     },
     "sitemapInRobots": {
       "sitesPct": 81.1,
-      "count": 1219,
-      "denominator": 1503
+      "count": 1220,
+      "denominator": 1504
+    },
+    "sitemapFoundNotDeclared": {
+      "sitesPct": 9.2,
+      "count": 139,
+      "denominator": 1504
     },
     "anyNoindex": {
       "sitesPct": 9.2,
       "count": 138,
-      "denominator": 1503
+      "denominator": 1504
     },
     "missingCanonicalSomewhere": {
       "sitesPct": 18.5,
       "count": 278,
-      "denominator": 1503
+      "denominator": 1504
     },
     "missingTitleSomewhere": {
       "sitesPct": 2.4,
       "count": 36,
-      "denominator": 1503
+      "denominator": 1504
     },
     "missingMetaSomewhere": {
-      "sitesPct": 44.4,
+      "sitesPct": 44.3,
       "count": 667,
-      "denominator": 1503
+      "denominator": 1504
     },
     "missingH1Somewhere": {
       "sitesPct": 39.6,
       "count": 595,
-      "denominator": 1503
+      "denominator": 1504
     },
     "multipleH1Somewhere": {
       "sitesPct": 30.5,
       "count": 458,
-      "denominator": 1503
+      "denominator": 1504
     },
     "anySchema": {
       "sitesPct": 82.6,
-      "count": 1241,
-      "denominator": 1503
+      "count": 1242,
+      "denominator": 1504
     },
     "anyFaqBlock": {
       "sitesPct": 35.7,
-      "count": 536,
-      "denominator": 1503
+      "count": 537,
+      "denominator": 1504
     },
     "anyTable": {
-      "sitesPct": 17,
-      "count": 256,
-      "denominator": 1503
+      "sitesPct": 17.1,
+      "count": 257,
+      "denominator": 1504
     },
     "brokenInternalLinks": {
       "sitesPct": 9.8,
       "count": 148,
-      "denominator": 1503
+      "denominator": 1504
     },
     "redirectChains": {
       "sitesPct": 4.4,
       "count": 66,
-      "denominator": 1503
+      "denominator": 1504
     },
     "jsDependent": {
       "sitesPct": 0.4,
       "count": 6,
-      "denominator": 1503
+      "denominator": 1504
     },
     "noSameAs": {
-      "sitesPct": 47.6,
+      "sitesPct": 47.5,
       "count": 715,
-      "denominator": 1503
+      "denominator": 1504
     },
     "noPressSection": {
       "sitesPct": 96.7,
-      "count": 1454,
-      "denominator": 1503
+      "count": 1455,
+      "denominator": 1504
     }
   },
   "subsetOnly": {
     "altTextGap": {
-      "sitesPct": 37,
-      "count": 552,
-      "denominator": 1491,
-      "coveragePct": 99.2
+      "sitesPct": 18.1,
+      "count": 266,
+      "denominator": 1470,
+      "coveragePct": 97.7
     },
     "businessValueScored": {
       "sitesPct": 100,
       "count": 300,
       "denominator": 300,
-      "coveragePct": 20
+      "coveragePct": 19.9
     }
   }
 }

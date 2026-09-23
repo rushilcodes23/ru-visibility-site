@@ -12,7 +12,8 @@ const { corpus } = findings;
  * demand figure is a cited third-party survey.
  *
  * No rounding up. The audited figure is deduplicated by domain, which is why
- * it is 1,503 rather than the larger raw file count.
+ * it is lower than the raw report-file count, and it is read from the data
+ * file rather than written here so it cannot drift as the corpus grows.
  */
 const STATS = [
   {

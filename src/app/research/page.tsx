@@ -5,20 +5,23 @@ import ScrollReveal from "@/components/scroll-reveal";
 import { pageMetadata } from "@/lib/seo";
 import findings from "@/lib/research-findings.json";
 
-export const metadata = pageMetadata({
-  path: "/research",
-  title: "What We Found Auditing 1,503 Websites | Ru Visibility",
-  description:
-    "Aggregate results from every site audit we have run: AI crawler blocking, schema gaps, and why GEO scores trail SEO scores on almost every site.",
-  type: "article",
-});
-
 // Deliberately does not destructure component weights or recommendation ids —
 // those describe how the audit tool scores, which stays private. See the
 // header of scripts/aggregate-findings.mjs.
 const { corpus, scores, crawlerBlocks, universal, subsetOnly } = findings;
 
 const N = corpus.uniqueDomains.toLocaleString("en-US");
+
+// Title reads the count rather than hardcoding it. It said 1,503 while the
+// corpus had already moved on — the same drift the freshness rules in
+// CONTENT_RULES.md exist to prevent, just in a <title> instead of a date.
+export const metadata = pageMetadata({
+  path: "/research",
+  title: `What We Found Auditing ${N} Websites | Ru Visibility`,
+  description:
+    "Aggregate results from every site audit we have run: AI crawler blocking, schema gaps, and why GEO scores trail SEO scores on almost every site.",
+  type: "article",
+});
 
 /**
  * Plain-English names for the checks that only cover part of the corpus.
@@ -45,28 +48,52 @@ function fmtDate(iso: string | null) {
    Eleven individual bots is more precision than the finding needs. What
    actually matters is the split: bots that feed live AI answers, bots that
    only collect training data, and classic search. Grouping makes the real
-   pattern visible in one glance; the per-bot table is still below.         */
+   pattern visible in one glance; the per-bot table is still below.
+
+   `metric` is the correction that matters here. An earlier version of this
+   page headlined one number per bot — every non-OK response lumped together
+   — which made it look as though ~10% of sites were shutting Google out.
+   They are not. Google and Bing verify their crawlers by IP address, not by
+   the name in the request, so a security rule refusing a stranger who merely
+   claims to be Googlebot is behaving correctly and proves nothing about the
+   real one. Exactly one site in the corpus disallows Googlebot in robots.txt.
+   So those two are headlined on robotsDisallowPct — the only figure that can
+   be trusted for them — while the AI crawlers, which have no such IP
+   verification, are headlined on combinedPct, because for them a refusal at
+   either layer genuinely keeps them out.                                    */
 const GROUPS = [
   {
     name: "The ones that answer people today",
     match: /SearchBot|ChatGPT-User|Claude-User|PerplexityBot|Perplexity-User/,
-    meaning: "Shut these out and ChatGPT, Claude or Perplexity simply cannot mention you when someone asks.",
+    metric: "combinedPct" as const,
+    meaning: "Shut these out and ChatGPT, Claude or Perplexity simply cannot mention you when someone asks. Most of this is security software, not a decision anyone made.",
   },
   {
     name: "The ones that only collect text",
     match: /^(GPTBot|ClaudeBot|CCBot)$/,
+    metric: "combinedPct" as const,
     meaning: "These gather text to build future AI. Saying no is a fair choice, and it costs you nothing today.",
   },
   {
     name: "Google and Bing",
     match: /Googlebot|Bingbot/,
-    meaning: "Shut these out and you disappear from normal search too. This one is nearly always a mistake.",
+    metric: "robotsDisallowPct" as const,
+    meaning: "Almost nobody shuts these out on purpose, and it would be a bad idea. Counted strictly: only sites whose own robots.txt says no.",
   },
 ];
 
+/** Worst robots.txt refusal count among the two IP-verified crawlers. Read
+ *  from the data rather than written out, so the footnote under the table
+ *  cannot quietly become untrue the next time the corpus is re-aggregated. */
+const ipVerifiedRobotsMax = Math.max(
+  ...crawlerBlocks
+    .filter((b) => /Googlebot|Bingbot/.test(b.crawler))
+    .map((b) => b.robotsDisallowCount)
+);
+
 const grouped = GROUPS.map((g) => {
   const rows = crawlerBlocks.filter((b) => g.match.test(b.crawler));
-  const pcts = rows.map((r) => r.blockedPct);
+  const pcts = rows.map((r) => r[g.metric]);
   return {
     ...g,
     low: Math.min(...pcts),
@@ -96,6 +123,7 @@ const MORE: Row[] = [
   { key: "missingCanonicalSomewhere", label: "A page that does not say it is the original", note: "Google may treat it as a copy" },
   { key: "anySchema", label: "Nothing written for machines to read", note: "Computers have to guess the basics", invert: true },
   { key: "sitemapFound", label: "No list of their own pages", note: "Search engines have to find them by luck", invert: true },
+  { key: "sitemapFoundNotDeclared", label: "A page list they never told anyone about", note: "It exists and works — nothing points to it" },
   { key: "brokenInternalLinks", label: "Links on the site that lead nowhere", note: "Dead ends for people and for AI" },
   { key: "anyNoindex", label: "A page told to hide from Google", note: "Sometimes on purpose, often by accident" },
   { key: "redirectChains", label: "Pages that bounce twice before loading", note: "Slower, and easy to get wrong" },
@@ -230,7 +258,7 @@ export default function ResearchPage() {
                   <span className="inline-block transition-transform group-open:rotate-90">
                     ›
                   </span>
-                  Seven more checks, and the three things nearly everyone gets right
+                  {more.length} more checks, and the three things nearly everyone gets right
                 </summary>
 
                 <div className="card-surface rounded-md divide-y mt-3">
@@ -280,12 +308,14 @@ export default function ResearchPage() {
                 >
                   <table className="w-full text-sm">
                     <caption className="sr-only">
-                      Share of audited sites blocking each individual crawler
+                      Share of audited sites turning each crawler away, split by
+                      whether robots.txt says so or the server refuses the request
                     </caption>
                     <thead>
                       <tr className="border-b">
                         <th scope="col" className="text-left font-medium p-4">Crawler</th>
-                        <th scope="col" className="text-right font-medium p-4">Blocked on</th>
+                        <th scope="col" className="text-right font-medium p-4">Told no in robots.txt</th>
+                        <th scope="col" className="text-right font-medium p-4">Refused by the server</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -293,15 +323,36 @@ export default function ResearchPage() {
                         <tr key={b.crawler} className="border-b last:border-0">
                           <th scope="row" className="text-left font-normal p-4 whitespace-nowrap">
                             {b.crawler}
+                            {/* The two IP-verified crawlers. Without this the
+                                right-hand number reads as "Google is blocked",
+                                which is exactly the wrong conclusion. */}
+                            {/Googlebot|Bingbot/.test(b.crawler) && (
+                              <span className="text-muted-foreground"> *</span>
+                            )}
                           </th>
                           <td className="p-4 text-right tabular-nums whitespace-nowrap">
-                            {b.blockedPct}%
+                            {b.robotsDisallowPct}%
+                          </td>
+                          <td className="p-4 text-right tabular-nums whitespace-nowrap">
+                            {b.httpBlockedPct}%
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
+
+                <p className="text-muted-foreground text-xs leading-relaxed mt-3 max-w-4xl">
+                  <span aria-hidden="true">* </span>Google and Bing check their
+                  own crawlers by address, not by name. So a site refusing
+                  something that merely <em>says</em> it is Google is behaving
+                  sensibly, and that right-hand number tells you nothing about
+                  whether the real Googlebot gets in. For those two, only the
+                  robots.txt column counts — and across all {N} sites, at most{" "}
+                  {ipVerifiedRobotsMax} of them say no there. We report the
+                  other number because we measured it, not because it means
+                  anything for those two rows.
+                </p>
               </details>
             </div>
           </ScrollReveal>
@@ -324,6 +375,12 @@ export default function ResearchPage() {
                     Before any of that, we visited each site as a normal person
                     would. If it did not load, we threw the result away. A site
                     that was simply down never gets counted as blocking anyone.
+                  </li>
+                  <li>
+                    Where a single request timed out or errored, we count it as
+                    neither let in nor turned away. It tells us nothing either
+                    way, so it is left out of both columns rather than quietly
+                    counted as a block.
                   </li>
                   <li>
                     Each website counts once, using its most recent check.

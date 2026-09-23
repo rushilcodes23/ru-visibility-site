@@ -165,8 +165,11 @@ async function main() {
   const seoScores = [];
   const geoGrades = {};
   const seoGrades = {};
-  const botBlocked = {};
-  const botEligible = {};
+  // Per bot: eligible = every report that attempted this bot at all (always
+  // N, bot requests are not a newer feature). robotsDisallow and httpBlocked
+  // are kept separate because they are different findings with different
+  // reliability — see the note where botArr is built, below.
+  const botStats = {};
   const compLoss = {};
   const recFreq = {};
   const pitchTypes = {};
@@ -178,6 +181,14 @@ async function main() {
     httpsEnforced: signal(),
     sitemapFound: signal(),
     sitemapInRobots: signal(),
+    // Distinct from both of the above: a sitemap that resolves (sitemapFound)
+    // but that robots.txt never points to (NOT sitemapInRobots). These two
+    // existing fields don't compose by simple subtraction — sitemapFound can
+    // be true via the /sitemap.xml fallback guess even when nothing was
+    // declared, and declaredInRobots can be true even if that declared URL
+    // doesn't actually resolve — so this is measured directly rather than
+    // inferred from the other two.
+    sitemapFoundNotDeclared: signal(),
     anyNoindex: signal(),
     missingCanonicalSomewhere: signal(),
     missingTitleSomewhere: signal(),
@@ -237,10 +248,15 @@ async function main() {
         if (!pgs.some((p) => (p.faqBlocks || 0) > 0)) s.noFaq++;
       }
       // Blocked to at least one crawler that feeds live AI answers.
+      // status === "blocked" only — "inconclusive" (a timeout, a network
+      // error, an unrelated 5xx) is not evidence the crawler was shut out,
+      // just that this one request didn't resolve either way. The previous
+      // `!== "ok"` test folded inconclusive results in as if they were real
+      // blocks, which overstated every one of these counts.
       const answerBots = Object.entries(raw.bots || {}).filter(([n]) =>
         /SearchBot|ChatGPT-User|Claude-User|PerplexityBot|Perplexity-User/.test(n)
       );
-      if (answerBots.some(([, i]) => i && i.status && i.status !== "ok")) s.aiBlocked++;
+      if (answerBots.some(([, i]) => i && i.status === "blocked")) s.aiBlocked++;
     }
 
     // Per-city rollup for the location pages.
@@ -260,7 +276,8 @@ async function main() {
       const ab = Object.entries(raw.bots || {}).filter(([n]) =>
         /SearchBot|ChatGPT-User|Claude-User|PerplexityBot|Perplexity-User/.test(n)
       );
-      if (ab.some(([, i]) => i && i.status && i.status !== "ok")) c.aiBlocked++;
+      // Same inconclusive-vs-blocked fix as the segment rollup above.
+      if (ab.some(([, i]) => i && i.status === "blocked")) c.aiBlocked++;
     }
 
     if (typeof scored.geo?.total === "number") geoScores.push(scored.geo.total);
@@ -271,10 +288,21 @@ async function main() {
     if (raw.platform?.name) platforms[raw.platform.name] = (platforms[raw.platform.name] || 0) + 1;
 
     for (const [bot, info] of Object.entries(raw.bots || {})) {
-      botEligible[bot] = (botEligible[bot] || 0) + 1;
-      // "ok" means it got through; anything else is a block or an error.
-      if (info && info.status && info.status !== "ok") {
-        botBlocked[bot] = (botBlocked[bot] || 0) + 1;
+      const b = (botStats[bot] ||= { eligible: 0, robotsDisallow: 0, httpBlocked: 0, inconclusive: 0 });
+      b.eligible++;
+      if (!info || !info.status) continue;
+      // Three outcomes, not two. "blocked" splits into a robots.txt decision
+      // (blockType === "robots-disallow", set in audit.mjs when robots.txt
+      // disallows the bot even though the HTTP request itself succeeded) and
+      // an HTTP-level refusal (a 403, a challenge page, a WAF rule) to that
+      // bot's literal user-agent string. "inconclusive" — a timeout, a
+      // network error, an unrelated 5xx — means the request didn't resolve
+      // either way and is counted as neither.
+      if (info.status === "blocked") {
+        if (info.blockType === "robots-disallow") b.robotsDisallow++;
+        else b.httpBlocked++;
+      } else if (info.status === "inconclusive") {
+        b.inconclusive++;
       }
     }
 
@@ -312,6 +340,7 @@ async function main() {
     record(sig.httpsEnforced, raw.httpsEnforced === true);
     record(sig.sitemapFound, (raw.sitemap?.count || 0) > 0);
     record(sig.sitemapInRobots, raw.sitemap?.declaredInRobots === true);
+    record(sig.sitemapFoundNotDeclared, (raw.sitemap?.count || 0) > 0 && raw.sitemap?.declaredInRobots !== true);
     record(sig.brokenInternalLinks, (raw.linkCheck?.broken?.length || 0) > 0);
     record(sig.redirectChains, (raw.linkCheck?.redirectChains?.length || 0) > 0);
 
@@ -328,9 +357,15 @@ async function main() {
       record(sig.jsDependent, ok.some((p) => p.emptyRoot === true));
       record(sig.noPressSection, !ok.some((p) => p.pressSection));
 
+      // Decorative images (correctly alt="") are excluded from the
+      // denominator. Counting them as failures roughly doubled this figure —
+      // the same "penalising correct markup" bug the per-site scoring engine
+      // was already fixed for; this aggregation just never got the same fix.
       const imgs = ok.reduce((a, p) => a + (p.images || 0), 0);
+      const decorative = ok.reduce((a, p) => a + (p.imagesDecorative || 0), 0);
       const desc = ok.reduce((a, p) => a + (p.imagesDescriptiveAlt || 0), 0);
-      if (imgs > 0) record(sig.altTextGap, desc / imgs < 0.5);
+      const informative = imgs - decorative;
+      if (informative > 0) record(sig.altTextGap, desc / informative < 0.5);
 
       record(sig.noSameAs, !ok.some((p) => (p.schema?.sameAs?.length || 0) > 0));
     }
@@ -364,14 +399,31 @@ async function main() {
     .map((r) => ({ ...r, sharePct: pct(r.count, N) }))
     .sort((a, b) => b.count - a.count);
 
-  const botArr = Object.keys(botEligible)
-    .map((bot) => ({
+  // robotsDisallowPct is the reliable figure for every bot: the site's own
+  // robots.txt says so. httpBlockedPct is an HTTP-level refusal to that
+  // bot's user-agent and is real evidence for the search/training bots — but
+  // for Googlebot and Bingbot specifically it is close to meaningless,
+  // because both are IP-verified rather than UA-verified. A WAF refusing a
+  // request that merely CLAIMS to be Googlebot is working correctly, not
+  // blocking Google — audit.mjs's own per-site report already labels exactly
+  // this case "not a finding — IP verification, expected". combinedPct is
+  // provided for convenience (it is what the old, buggy `blockedPct` meant)
+  // but consumers must not headline it for Googlebot/Bingbot rows — see
+  // src/app/research/page.tsx, which headlines robotsDisallowPct for those
+  // two and combinedPct for every other bot.
+  const botArr = Object.entries(botStats)
+    .map(([bot, b]) => ({
       crawler: bot,
-      blockedCount: botBlocked[bot] || 0,
-      blockedPct: pct(botBlocked[bot] || 0, botEligible[bot]),
-      denominator: botEligible[bot],
+      robotsDisallowCount: b.robotsDisallow,
+      robotsDisallowPct: pct(b.robotsDisallow, b.eligible),
+      httpBlockedCount: b.httpBlocked,
+      httpBlockedPct: pct(b.httpBlocked, b.eligible),
+      combinedCount: b.robotsDisallow + b.httpBlocked,
+      combinedPct: pct(b.robotsDisallow + b.httpBlocked, b.eligible),
+      inconclusiveCount: b.inconclusive,
+      denominator: b.eligible,
     }))
-    .sort((a, b) => b.blockedPct - a.blockedPct);
+    .sort((a, b) => b.combinedPct - a.combinedPct);
 
   const universal = {};
   const subsetOnly = {};
@@ -458,7 +510,10 @@ async function main() {
   rows.push(["geo_score_median", out.scores.geo.median, "score", "", geoScores.length]);
   rows.push(["seo_score_mean", out.scores.seo.mean, "score", "", seoScores.length]);
   rows.push(["seo_score_median", out.scores.seo.median, "score", "", seoScores.length]);
-  for (const b of botArr) rows.push([`crawler_blocked_${b.crawler}`, b.blockedPct, "percent", b.blockedCount, b.denominator]);
+  for (const b of botArr) {
+    rows.push([`crawler_robots_disallow_${b.crawler}`, b.robotsDisallowPct, "percent", b.robotsDisallowCount, b.denominator]);
+    rows.push([`crawler_http_blocked_${b.crawler}`, b.httpBlockedPct, "percent", b.httpBlockedCount, b.denominator]);
+  }
   // Component and recommendation rows are deliberately absent — same reason
   // they're absent from the public JSON. They live in --full only.
   for (const [k, v] of Object.entries(universal)) rows.push([`universal_${k}`, v.sitesPct, "percent", v.count, v.denominator]);
