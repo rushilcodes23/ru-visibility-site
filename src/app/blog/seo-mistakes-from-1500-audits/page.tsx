@@ -78,7 +78,7 @@ const postJsonLd = {
     "The 21 problems that kept repeating across 1,504 audited business websites, with the measured numbers behind each one.",
   author: {
     "@type": "Person",
-    name: "Rushil A. Bajpai",
+    name: "Rushil",
     url: "https://ruvisibility.com/about",
   },
   publisher: {

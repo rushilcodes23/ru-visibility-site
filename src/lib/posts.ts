@@ -22,7 +22,7 @@ export const POSTS: Post[] = [
     title: "I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often",
     excerpt:
       "Every number here comes from crawling 1,504 real business websites. The 21 problems that kept repeating, what each one actually costs, and the order I would fix them in.",
-    author: "Rushil A. Bajpai",
+    author: "Rushil",
     published: "2026-09-23",
   },
   {
