@@ -111,11 +111,40 @@ export default function AccessibilityPage() {
               runaround. This isn't a legal disclaimer page; it's an open
               invitation to actually flag what's broken.
             </p>
-            <Button
-              size="lg"
-              className="w-fit"
-              render={<a href="mailto:rushil@ruvisibility.com?subject=Accessibility%20issue">Report an Issue</a>}
-            />
+            {/* This used to be a single mailto: button labelled "Report an
+                Issue". The markup was fine — correct href, nothing covering
+                it, the click not prevented — but a mailto: does nothing at
+                all on a device with no mail app configured, and because the
+                button showed a label and never the address, anyone who
+                clicked it got silence and no other way to reach us. On a page
+                promising "no ticket system, no runaround", that was the worst
+                control on the site to have broken.
+
+                The contact form is the primary route now: it works for
+                everyone and it is tested. The address is written out below so
+                it can be read and copied even when the mailto does nothing,
+                which is what every other email link on this site already
+                does — they all show the address as their label. */}
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-wrap gap-3">
+                <Button size="lg" render={<a href="/contact">Report an Issue</a>} />
+                <Button
+                  size="lg"
+                  variant="outline"
+                  render={<a href="tel:+917222999365">Call +91 72229 99365</a>}
+                />
+              </div>
+              <p className="text-muted-foreground text-sm">
+                Prefer email? Write to{" "}
+                <a
+                  href="mailto:rushil@ruvisibility.com?subject=Accessibility%20issue"
+                  className="underline underline-offset-4 text-foreground"
+                >
+                  rushil@ruvisibility.com
+                </a>
+                .
+              </p>
+            </div>
           </div>
         </ScrollReveal>
       </div>
