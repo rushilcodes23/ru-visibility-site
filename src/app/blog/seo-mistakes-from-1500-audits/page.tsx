@@ -29,7 +29,11 @@ const post = POSTS.find((p) => p.slug === "seo-mistakes-from-1500-audits")!;
    never typed in by hand. The research page's own <title> sat at "1,503"
    for days after the corpus moved on, which is exactly the drift this
    avoids: re-aggregate, and this article updates with it.                 */
-const { corpus, scores, universal, subsetOnly, crawlerBlocks, platforms } = findings;
+const { corpus, scores, universal, subsetOnly, crawlerBlocks, platforms, headingsByPlatform } =
+  findings;
+
+/** Heading stats for one detected platform, by name. */
+const plat = (name: string) => headingsByPlatform.find((p) => p.platform === name)!;
 
 const N = corpus.uniqueDomains.toLocaleString("en-US");
 /** A signal stored as a positive, reported as the problem it implies. */
@@ -235,12 +239,59 @@ const MISTAKES: Mistake[] = [
           page carrying more than one H1.
         </p>
         <p>
-          The interesting part is where it clusters. Hand-built sites in the
-          corpus rarely have it. Drag-and-drop page builders have it constantly
-          — which is what you would expect when the tool decides your heading
-          levels instead of you. I have the per-platform breakdown but have not
-          published it yet, so treat that as a pattern I have seen rather than
-          a figure you can check.
+          The interesting part is where it clusters. Broken out by the platform
+          each site runs on:
+        </p>
+        <div
+          tabIndex={0}
+          role="region"
+          aria-label="Share of sites with more than one H1, by platform"
+          className="overflow-x-auto rounded-md border focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+        >
+          <table className="w-full text-sm">
+            <caption className="sr-only">
+              Share of audited sites with a page carrying more than one H1,
+              grouped by the platform detected on the site
+            </caption>
+            <thead>
+              <tr className="border-b">
+                <th scope="col" className="p-3 text-left font-medium">Platform</th>
+                <th scope="col" className="p-3 text-right font-medium">Sites</th>
+                <th scope="col" className="p-3 text-right font-medium">Two or more H1s</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...headingsByPlatform]
+                .sort((a, b) => b.multipleH1Pct - a.multipleH1Pct)
+                .map((r) => (
+                  <tr key={r.platform} className="border-b last:border-0">
+                    <th scope="row" className="p-3 text-left font-normal whitespace-nowrap">
+                      {r.platform}
+                    </th>
+                    <td className="p-3 text-right tabular-nums">{r.sites}</td>
+                    <td className="p-3 text-right tabular-nums">{r.multipleH1Pct}%</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <Mark>
+            The hand-built sites are dramatically cleaner
+          </Mark>
+          . Next.js sites sit at {plat("Next.js").multipleH1Pct}%. The
+          drag-and-drop builders are the worst: {plat("Wix").multipleH1Pct}% of
+          the Wix sites and {plat("Squarespace").multipleH1Pct}% of the
+          Squarespace ones. That is what you would expect when the tool decides
+          your heading levels instead of you.
+        </p>
+        <p>
+          Read the small rows carefully, though. Wix is {plat("Wix").sites}{" "}
+          sites and Squarespace is {plat("Squarespace").sites}, so a handful of
+          sites moves those figures several points. The direction is solid; the
+          exact ordering between the small builders is not. Anything under ten
+          sites is left out of the table entirely rather than published as a
+          percentage one site could swing.
         </p>
         <p className="text-sm">
           <strong className="font-medium text-foreground">Fix:</strong> one H1.
@@ -448,18 +499,37 @@ const MISTAKES: Mistake[] = [
     body: (
       <>
         <p>
-          Also without a corpus-wide figure, and also constant: two pages
-          covering the same ground — a &ldquo;services&rdquo; page and a
-          &ldquo;what we offer&rdquo; page, say. Instead of one strong page you
-          get two mediocre ones splitting the same signals.
+          <Mark>
+            {subsetOnly.titleClash.sitesPct}% of sites have at least one pair
+            of pages whose titles are chasing the same search.
+          </Mark>{" "}
+          That is {subsetOnly.titleClash.count} of the{" "}
+          {subsetOnly.titleClash.denominator.toLocaleString("en-US")} sites
+          where the question is answerable at all — a site with only one
+          crawled page cannot have the problem, so it is excluded rather than
+          counted as a pass.
         </p>
         <p>
-          This is one where I will not claim proof from a crawl.{" "}
+          The usual shape is a &ldquo;services&rdquo; page and a &ldquo;what we
+          offer&rdquo; page covering identical ground. Instead of one strong
+          page you get two mediocre ones splitting the same signals.
+        </p>
+        <p>
+          How that is counted matters, because the naive version of this check
+          flags everything. Every title on a site repeats the brand and the
+          category, so the comparison drops any word appearing in more than
+          half of that site&apos;s own titles before looking for an overlap.
+          Without that filter a homepage &ldquo;matches&rdquo; every service
+          page and the number is meaningless.
+        </p>
+        <p>
+          One honest limit: this measures that two titles target the same
+          thing.{" "}
           <Mark>
-            A crawl can show two pages look similar. Only Search Console can
-            show they are actually competing
+            Only Search Console can prove the two pages are actually competing
           </Mark>{" "}
-          — one query, two of your URLs, trading positions.
+          — one query, two of your URLs, trading positions. Treat the figure as
+          risk, not proof.
         </p>
         <p className="text-sm">
           <strong className="font-medium text-foreground">Fix:</strong> confirm
@@ -502,9 +572,15 @@ const MISTAKES: Mistake[] = [
     body: (
       <>
         <p>
-          No corpus-wide number here — author attribution was not part of the
-          run that produced these figures, and I would rather say that than
-          reach for something approximate.
+          No number here, and the reason is worth stating precisely rather
+          than hand-waving.{" "}
+          <Mark>
+            Our audit does check for a byline — it just started checking after
+            this corpus was crawled.
+          </Mark>{" "}
+          Exactly one report on disk carries the field. Producing a real
+          percentage would mean re-crawling all {N} sites, not re-reading what
+          we already have, so there is nothing honest to publish yet.
         </p>
         <p>
           It is one of the most consistent gaps I see, though, and it matters

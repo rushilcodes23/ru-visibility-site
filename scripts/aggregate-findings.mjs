@@ -107,6 +107,51 @@ function segmentOf(filePath) {
   return null;
 }
 
+/* ── Cannibalisation, recomputed here from stored page titles ─────────────
+   The per-site content score detects this, but it landed late: only one
+   report on disk carries a `content` block, so there is nothing to roll up.
+   Titles, however, are stored on effectively every report, so the same
+   measurement can be made directly from them.
+
+   Mirrors the per-site rule exactly so a corpus figure and a client report
+   cannot disagree: distinctive title terms only (any term appearing in more
+   than half of a site's own titles is dropped, which removes the brand and
+   the category without hard-coding either), both sides need at least two
+   distinctive terms, and a pair counts when the shared terms are at least
+   60% of the smaller set. Keep in step with audit.mjs if that rule moves. */
+const TITLE_STOPWORDS = new Set(
+  ("the and for you your our that this with from have has had are was were will would can could should "
+    + "what when where which while who whom whose how why not but all any our their they them there then than these those "
+    + "about into over under more most some such only other same each just like also been being does did doing done here "
+    + "its it's his her hers ours yours theirs out off down up very too own via per across between among within without").split(/\s+/)
+);
+
+function titleWords(t = "") {
+  return t.toLowerCase().split(/[\s|—–\-·:,]+/)
+    .map((w) => w.replace(/[^a-z0-9]/g, ""))
+    .filter((w) => w.length > 2 && !TITLE_STOPWORDS.has(w));
+}
+
+/** True when at least one pair of this site's pages targets the same query. */
+function hasTitleClash(pages) {
+  const titled = pages.filter((p) => p.title);
+  if (titled.length < 2) return null; // not answerable for this site
+  const terms = titled.map((p) => titleWords(p.title));
+  const df = new Map();
+  for (const t of terms) for (const w of new Set(t)) df.set(w, (df.get(w) || 0) + 1);
+  const tooCommon = new Set([...df.entries()].filter(([, c]) => c > titled.length / 2).map(([w]) => w));
+  const distinct = terms.map((t) => new Set(t.filter((w) => !tooCommon.has(w))));
+  for (let i = 0; i < distinct.length; i++) {
+    for (let j = i + 1; j < distinct.length; j++) {
+      const A = distinct[i], B = distinct[j];
+      if (A.size < 2 || B.size < 2) continue;
+      const inter = [...A].filter((w) => B.has(w)).length;
+      if (inter / Math.min(A.size, B.size) >= 0.6) return true;
+    }
+  }
+  return false;
+}
+
 const pct = (n, d) => (d ? Math.round((n / d) * 1000) / 10 : 0);
 const mean = (xs) => (xs.length ? Math.round((xs.reduce((a, b) => a + b, 0) / xs.length) * 10) / 10 : 0);
 function median(xs) {
@@ -204,7 +249,16 @@ async function main() {
     altTextGap: signal(),
     noSameAs: signal(),
     noPressSection: signal(),
+    // Not answerable for a site with fewer than two titled pages, so this
+    // carries its own denominator rather than being counted against N.
+    titleClash: signal(),
   };
+
+  // Heading structure by platform. The per-page H1 count and the detected
+  // platform are both on every report, so this needs no re-crawl. Reported
+  // separately from the headline numbers because the small builders have
+  // small samples — the point is the shape, not the precise ordering.
+  const byPlatform = {};
 
   // Fields that only exist on reports produced after a mid-campaign change.
   const subset = {
@@ -368,6 +422,15 @@ async function main() {
       if (informative > 0) record(sig.altTextGap, desc / informative < 0.5);
 
       record(sig.noSameAs, !ok.some((p) => (p.schema?.sameAs?.length || 0) > 0));
+      record(sig.titleClash, hasTitleClash(ok));
+
+      const plat = raw.platform?.name;
+      if (plat) {
+        const b = (byPlatform[plat] ||= { sites: 0, multipleH1: 0, missingH1: 0 });
+        b.sites++;
+        if (ok.some((p) => (p.h1Count || 0) > 1)) b.multipleH1++;
+        if (ok.some((p) => (p.h1Count || 0) === 0)) b.missingH1++;
+      }
     }
 
     // Subset-only modules — absent entirely on reports predating them, which
@@ -491,6 +554,20 @@ async function main() {
       }))
       .sort((a, b) => b.sites - a.sites),
     platforms,
+    // Heading structure per platform. Sorted biggest sample first, and every
+    // row carries its own `sites` count so a reader can see that the builder
+    // samples are small — 17 Squarespace sites is a shape, not a league table.
+    // Anything under 10 sites is dropped rather than published as a
+    // percentage that one site could swing by 10 points.
+    headingsByPlatform: Object.entries(byPlatform)
+      .filter(([, b]) => b.sites >= 10)
+      .map(([name, b]) => ({
+        platform: name,
+        sites: b.sites,
+        multipleH1Pct: pct(b.multipleH1, b.sites),
+        missingH1Pct: pct(b.missingH1, b.sites),
+      }))
+      .sort((a, b) => b.sites - a.sites),
     universal,
     subsetOnly,
   };
