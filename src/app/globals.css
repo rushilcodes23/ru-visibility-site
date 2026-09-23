@@ -326,9 +326,11 @@
 
 .article-body p {
   margin-block: 0;
-  /* Body text sits slightly back from pure foreground; the emphasised
-     passages below come forward against it rather than shouting. */
-  color: color-mix(in oklch, var(--foreground) 86%, var(--background));
+  /* Stepped further back than it was. At 86% the body was within a hair of
+     the heading colour, so with both at weight 400 the only thing separating
+     a heading from a paragraph was size — which is what "it is all the same
+     colour" was describing. */
+  color: color-mix(in oklch, var(--foreground) 74%, var(--background));
 }
 
 /* More space above a heading than below it — the gap belongs to the section
@@ -336,6 +338,9 @@
 .article-body h2 {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.875rem);
+  /* 500, not 400. A heading that shares its weight AND its colour with the
+     paragraph under it is not a heading, it is a bigger sentence. */
+  font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.025em;
   color: var(--foreground);
@@ -362,9 +367,11 @@
 .article-step-n {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--muted-foreground);
+  /* Green, so each of the 21 announces itself as you scroll past rather than
+     blending into the grey the rest of the furniture uses. */
+  color: var(--accent-green);
   font-variant-numeric: tabular-nums;
 }
 
@@ -523,6 +530,20 @@
   .post-card-cue { opacity: 1; transform: none; }
 }
 
+/* ...but not on top of the chart. With no hover the cue is permanently
+   visible, and at the card's top-right corner that put it straight over the
+   first bar and its value. Moved to the foot of the card, where it sits at
+   the end of the byline row and covers nothing. */
+@media (hover: none), (max-width: 767px) {
+  .post-card-cue {
+    top: auto;
+    bottom: 1.125rem;
+    right: 1.125rem;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* A scrim under the reading column only.
    The site-wide dot grid and its travelling highlight are part of the brand
    and stay exactly as they are everywhere else — but on a 3,500-word article
@@ -546,6 +567,19 @@
   opacity: 0.72;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* On a phone the column is the whole screen, so there is no margin for the
+   fade to happen in and the dots were showing through the type. Full width,
+   heavier, no mask — the background layer still shows at the very top and
+   bottom of the article, just not underneath a paragraph. */
+@media (max-width: 860px) {
+  .article-scrim::before {
+    inset: -1.5rem -1.5rem;
+    opacity: 0.88;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 /* ── Post cards, wide ──────────────────────────────────────────────────────
@@ -697,4 +731,81 @@
     color-mix(in oklch, var(--accent-green) 45%, transparent),
     var(--accent-green)
   );
+}
+
+/* ── Mobile reading ────────────────────────────────────────────────────────
+   19px serif in a 412px window left about 39 characters a line, which is
+   half the comfortable measure and turns every paragraph into a stack of
+   stubs. Smaller type and tighter leading buy back characters; the extra
+   gutter stops the text touching both edges of the phone.                  */
+@media (max-width: 640px) {
+  .article-body {
+    font-size: 1.0625rem;
+    line-height: 1.68;
+  }
+
+  .article-body h2 {
+    font-size: 1.375rem;
+    margin-block: 2.75rem 0;
+  }
+
+  /* The number sits inline above its heading here, so it needs the same
+     rhythm as a label rather than the margin position it has on desktop. */
+  .article-step-n {
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .article-fix {
+    font-size: 0.875rem;
+  }
+}
+
+/* Breathing room at the phone's edges. The container's own px-4 put body
+   text within 16px of the bezel on both sides. */
+@media (max-width: 480px) {
+  .article-shell {
+    padding-inline: 0.375rem;
+  }
+}
+
+/* ── The emphasis wash, across a line break ────────────────────────────────
+   box-decoration-break: clone gives every line fragment its own padded,
+   rounded box. On a narrow column a four-line highlight became four separate
+   ragged blocks with gaps between them. Dropping the radius and the vertical
+   padding on small screens makes the wash continuous instead.              */
+@media (max-width: 640px) {
+  .article-body mark {
+    border-radius: 0 !important;
+    padding: 0.02em 0.14em !important;
+  }
+}
+
+/* ── The contents rail, over a moving background ───────────────────────────
+   The rail sat directly on the animated dot layer, so the list was competing
+   with drifting dots and a travelling highlight the whole time it was on
+   screen. It gets its own surface now: opaque enough to stop the motion
+   showing through the type, with a blur so it reads as a panel over the page
+   rather than a hole punched in it.                                        */
+@media (min-width: 1180px) {
+  .article-rail {
+    background: color-mix(in oklch, var(--card) 88%, var(--background));
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.125rem 1rem;
+  }
+
+  .article-rail a {
+    /* Lifted from muted-foreground: this is a navigation list someone reads
+       while scrolling, not a caption. */
+    color: color-mix(in oklch, var(--foreground) 72%, var(--background));
+  }
+
+  .article-rail a:hover,
+  .article-rail a:focus-visible {
+    color: var(--foreground);
+    border-left-color: var(--accent-green);
+  }
 }
