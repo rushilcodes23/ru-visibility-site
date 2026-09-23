@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Source_Serif_4 } from "next/font/google";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -158,6 +158,27 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
 });
+
+// Reading face for long-form articles only — see .article-body in
+// globals.css, which is the only thing that references it.
+//
+// Scoped deliberately rather than set site-wide. An article asks someone to
+// stay for several thousand words, which is a different job from a service
+// page they scan in twenty seconds, and it earns a face chosen for that. The
+// rest of the site is untouched by this.
+//
+// Note the separate, pre-existing problem this does NOT fix: --font-sans in
+// globals.css is defined as var(--font-sans), which is self-referential and
+// resolves to nothing, so every non-blog page is rendering in the browser's
+// default serif rather than anything anyone chose. That is a site-wide call
+// to make deliberately, not a side effect of a blog redesign.
+const sourceSerif = Source_Serif_4({
+  variable: "--font-reading",
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
 // Space Grotesk only ships up to weight 700 — the hero's font-weight:900
 // text always relied on the browser synthesizing bold from 700, both
 // before this fix and after. No regression, just noting it's inherent to
@@ -246,7 +267,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {/* next-themes injects a blocking inline script that sets the theme

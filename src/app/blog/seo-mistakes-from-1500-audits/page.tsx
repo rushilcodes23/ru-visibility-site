@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { POSTS, formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
 import findings from "@/lib/research-findings.json";
+import ReadingProgress from "@/components/reading-progress";
 
 export const metadata = pageMetadata({
   path: "/blog/seo-mistakes-from-1500-audits",
@@ -16,7 +16,22 @@ export const metadata = pageMetadata({
 /** Inline emphasis for the lines worth remembering. */
 function Mark({ children }: { children: React.ReactNode }) {
   return (
-    <mark className="rounded bg-primary/10 px-1 py-0.5 font-medium text-foreground">
+    <mark
+      className="font-medium text-foreground"
+      style={{
+        // A soft wash rather than a rule. An underline at this size sits
+        // straight through the descenders of p, g and y and reads as a
+        // strikethrough; a tint sits behind the whole phrase and cannot be
+        // mistaken for one. clone keeps the wash continuous across a line
+        // break instead of restarting it on each fragment.
+        boxDecorationBreak: "clone",
+        WebkitBoxDecorationBreak: "clone",
+        background: "color-mix(in oklch, var(--primary) 16%, transparent)",
+        borderRadius: "3px",
+        padding: "0.08em 0.24em",
+        margin: "0 -0.06em",
+      }}
+    >
       {children}
     </mark>
   );
@@ -74,6 +89,14 @@ const postJsonLd = {
   mainEntityOfPage: "https://ruvisibility.com/blog/seo-mistakes-from-1500-audits",
 };
 
+/**
+ * Rounded from the rendered word count at 220wpm, which is a reasonable pace
+ * for prose carrying this many numbers. Stated so someone can decide whether
+ * they have time for it now or should come back — on a piece this long that
+ * is a real question, and leaving it unanswered costs readers at the top.
+ */
+const READ_MINUTES = 16;
+
 type Mistake = { n: number; title: string; body: React.ReactNode };
 
 const MISTAKES: Mistake[] = [
@@ -124,8 +147,8 @@ const MISTAKES: Mistake[] = [
           Googlebot. Any audit that reports the first number without explaining
           the second is selling you a problem you do not have.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> check
+        <p className="article-fix">
+          <b>Fix</b> check
           robots.txt first, because it is free. Then check what your CDN or
           security layer is doing, which is where the real blocks live and
           where nobody thinks to look.
@@ -150,8 +173,8 @@ const MISTAKES: Mistake[] = [
           the difference between eventually and reliably, particularly for
           anything more than a couple of clicks from the homepage.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> confirm
+        <p className="article-fix">
+          <b>Fix</b> confirm
           your sitemap loads, then confirm robots.txt carries a{" "}
           <code className="text-xs">Sitemap:</code> line pointing at it. Most
           platforms generate one automatically — the gap is usually that
@@ -180,8 +203,8 @@ const MISTAKES: Mistake[] = [
           . It loads, it reads fine, nothing is visibly wrong. It simply never
           appears in search.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> search
+        <p className="article-fix">
+          <b>Fix</b> search
           your page source for &ldquo;noindex&rdquo; on anything you want
           found, especially after a migration or a redesign.
         </p>
@@ -201,8 +224,8 @@ const MISTAKES: Mistake[] = [
           with and without <code className="text-xs">www</code> — can be
           treated as separate competing pages rather than one.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> every
+        <p className="article-fix">
+          <b>Fix</b> every
           indexable page should carry a self-referencing canonical by default.
           This is a platform-level setting, not a page-by-page chore.
         </p>
@@ -220,8 +243,8 @@ const MISTAKES: Mistake[] = [
           clearest signal you can give about what a page is for.{" "}
           <Mark>A page with no H1 is a page asking Google to guess.</Mark>
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> one
+        <p className="article-fix">
+          <b>Fix</b> one
           clear H1 per page, stating the subject in the words a customer would
           use. Not the business name. Not a slogan.
         </p>
@@ -293,8 +316,8 @@ const MISTAKES: Mistake[] = [
           sites is left out of the table entirely rather than published as a
           percentage one site could swing.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> one H1.
+        <p className="article-fix">
+          <b>Fix</b> one H1.
           Everything else that looks like a headline is an H2 or lower.
         </p>
       </>
@@ -344,8 +367,8 @@ const MISTAKES: Mistake[] = [
             it.
           </Mark>
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> start
+        <p className="article-fix">
+          <b>Fix</b> start
           with Organization or LocalBusiness — whichever is actually true —
           before anything more elaborate. Never mark up reviews that do not
           exist; that is a manual-action trigger, not a grey area.
@@ -369,8 +392,8 @@ const MISTAKES: Mistake[] = [
           sentence resolves. A person scanning for the thing they need, or a
           system assembling an answer, has nothing to grab.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> take
+        <p className="article-fix">
+          <b>Fix</b> take
           the five questions customers actually ask before booking. Make each
           one a heading, and answer it directly in the paragraph underneath —
           two or three sentences that still make sense quoted on their own.
@@ -396,8 +419,8 @@ const MISTAKES: Mistake[] = [
             just gets copied.
           </Mark>
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong>{" "}
+        <p className="article-fix">
+          <b>Fix</b>{" "}
           wherever you are already comparing options or listing steps, put it
           in that literal shape instead of dissolving it into prose.
         </p>
@@ -415,8 +438,8 @@ const MISTAKES: Mistake[] = [
           visitor and a wasted path for whatever ranking value that link was
           meant to pass along.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> the
+        <p className="article-fix">
+          <b>Fix</b> the
           easiest item on this list, because it needs no judgment — a link
           either resolves or it does not. Any crawl finds every instance in
           minutes.
@@ -436,8 +459,8 @@ const MISTAKES: Mistake[] = [
           a page gets renamed, nobody updates the links pointing at the old
           one, a new redirect goes on top of the old redirect.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> point
+        <p className="article-fix">
+          <b>Fix</b> point
           every redirect straight at its final destination. This is a one-time
           cleanup, not an ongoing discipline.
         </p>
@@ -485,8 +508,8 @@ const MISTAKES: Mistake[] = [
           four clicks deep, reachable only through a dropdown or a footer link
           nobody clicks.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> your
+        <p className="article-fix">
+          <b>Fix</b> your
           commercially important pages should be one or two clicks from the
           homepage, through a link a person would actually notice.
         </p>
@@ -531,8 +554,8 @@ const MISTAKES: Mistake[] = [
           — one query, two of your URLs, trading positions. Treat the figure as
           risk, not proof.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> confirm
+        <p className="article-fix">
+          <b>Fix</b> confirm
           it in Search Console, then keep the stronger page, fold the other
           into it, and redirect.
         </p>
@@ -557,8 +580,8 @@ const MISTAKES: Mistake[] = [
           human reader to spot, and the policy judges the page, not whether a
           person or a model wrote it.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> if the
+        <p className="article-fix">
+          <b>Fix</b> if the
           argument on a page would read identically with the location swapped,
           it is a template, not a page. Give it something specific to that
           place, or merge it.
@@ -589,8 +612,8 @@ const MISTAKES: Mistake[] = [
           A page with no byline and no named author gives a reader — and a
           system weighing what to repeat — nothing to evaluate.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> put a
+        <p className="article-fix">
+          <b>Fix</b> put a
           real name on anything carrying a judgment. A person, not &ldquo;our
           team.&rdquo; If they hold a relevant qualification, say so in text,
           not inside an image.
@@ -616,8 +639,8 @@ const MISTAKES: Mistake[] = [
           each one sits in isolation, and nothing lets a system trying to
           verify who you are draw a confident line between them.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> this
+        <p className="article-fix">
+          <b>Fix</b> this
           only requires listing profiles you already have. Minutes of schema
           work, not new content.
         </p>
@@ -645,8 +668,8 @@ const MISTAKES: Mistake[] = [
           decide whether to trust and repeat a claim, and you cannot generate
           them by editing your own pages.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> a
+        <p className="article-fix">
+          <b>Fix</b> a
           programme, not a task. Local press, industry roundups, original data
           worth citing. Slow — and the one thing a competitor cannot copy
           overnight the way they can copy a meta description.
@@ -670,8 +693,8 @@ const MISTAKES: Mistake[] = [
           loses the visitor before they see whether the content was any good,
           and no amount of good SEO elsewhere recovers that.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> run
+        <p className="article-fix">
+          <b>Fix</b> run
           your own homepage through PageSpeed Insights rather than trusting a
           general claim. Note that INP replaced First Input Delay as the
           responsiveness metric in 2024, so older advice is measuring the wrong
@@ -696,8 +719,8 @@ const MISTAKES: Mistake[] = [
           This is established practice rather than something I can prove from
           this dataset, and I would rather label it that way than dress it up.
         </p>
-        <p className="text-sm">
-          <strong className="font-medium text-foreground">Fix:</strong> pick
+        <p className="article-fix">
+          <b>Fix</b> pick
           the canonical version of your details and make every listing match it
           precisely, not approximately.
         </p>
@@ -708,29 +731,43 @@ const MISTAKES: Mistake[] = [
 
 export default function SeoMistakesPost() {
   return (
-    <article className="w-full py-20 lg:py-32">
+    <article className="w-full pb-20 pt-24 lg:pb-32 lg:pt-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd) }}
       />
-      <div className="container mx-auto px-4 max-w-2xl">
-        <Badge className="mb-4">Blog</Badge>
-        <h1 className="text-3xl md:text-5xl tracking-tighter font-regular mb-3">
-          I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often
-        </h1>
-        <p className="text-sm text-muted-foreground mb-10">
-          By {post.author}, Founder ·{" "}
-          <time dateTime={post.published}>{formatPostDate(post.published)}</time>
-          {post.updated && (
-            <>
-              {" "}
-              · Updated{" "}
-              <time dateTime={post.updated}>{formatPostDate(post.updated)}</time>
-            </>
-          )}
-        </p>
+      <ReadingProgress />
 
-        <div className="flex flex-col gap-6 text-muted-foreground leading-relaxed">
+      <div className="article-scrim container mx-auto max-w-[42rem] px-4">
+        {/* No eyebrow above the headline. The title says what this is. */}
+        <header className="mb-12">
+          <h1
+            className="text-[2.1rem] font-regular leading-[1.1] tracking-tighter md:text-[3.25rem]"
+            style={{ textWrap: "balance" }}
+          >
+            I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often
+          </h1>
+          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 border-t pt-5 text-sm text-muted-foreground">
+            <span className="text-foreground">{post.author}</span>
+            <span aria-hidden="true">·</span>
+            <time dateTime={post.published}>{formatPostDate(post.published)}</time>
+            <span aria-hidden="true">·</span>
+            <span>{READ_MINUTES} min read</span>
+            {post.updated && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>
+                  Updated{" "}
+                  <time dateTime={post.updated}>
+                    {formatPostDate(post.updated)}
+                  </time>
+                </span>
+              </>
+            )}
+          </div>
+        </header>
+
+        <div className="article-body flex flex-col gap-6">
           <p>
             I have spent the last several weeks running the same audit, over
             and over, on {N} real business websites. Not a sample of ten picked
@@ -756,7 +793,7 @@ export default function SeoMistakesPost() {
             for something, I say so rather than reaching for one.
           </p>
 
-          <h2 className="text-2xl text-foreground tracking-tight mt-4">
+          <h2>
             What &ldquo;{N} audits&rdquo; actually means
           </h2>
           <p>
@@ -805,16 +842,52 @@ export default function SeoMistakesPost() {
             at all for AI search. Several of the items below explain why.
           </p>
 
+          {/* Contents. Twenty-one items is past the point where a reader can
+              hold the list in their head, and most arrive wanting one of them
+              rather than all of them. Two columns so it stays one screen. */}
+          <nav aria-labelledby="toc-heading" className="mt-6 rounded-[14px] border p-6 md:p-7">
+            <h2
+              id="toc-heading"
+              className="!mt-0 !text-base !tracking-normal"
+              style={{ fontFamily: "var(--font-space-grotesk), system-ui, sans-serif" }}
+            >
+              All 21, in order
+            </h2>
+            <ol className="mt-4 grid gap-x-8 gap-y-2 text-[0.9375rem] sm:grid-cols-2">
+              {MISTAKES.map((m) => (
+                <li key={m.n} className="flex gap-2.5 leading-snug">
+                  <span className="shrink-0 tabular-nums text-muted-foreground">
+                    {m.n}.
+                  </span>
+                  <a
+                    href={`#mistake-${m.n}`}
+                    className="article-plain text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                  >
+                    {m.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
           {MISTAKES.map((m) => (
-            <section key={m.n} className="flex flex-col gap-4">
-              <h2 className="text-2xl text-foreground tracking-tight mt-4">
-                {m.n}. {m.title}
+            <section
+              key={m.n}
+              id={`mistake-${m.n}`}
+              className="article-step flex flex-col gap-4"
+            >
+              <span className="article-step-n" aria-hidden="true">
+                {String(m.n).padStart(2, "0")}
+              </span>
+              <h2>
+                <span className="sr-only">Mistake {m.n}: </span>
+                {m.title}
               </h2>
               {m.body}
             </section>
           ))}
 
-          <h2 className="text-2xl text-foreground tracking-tight mt-4">
+          <h2>
             Where I would actually start
           </h2>
           <p>

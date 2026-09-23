@@ -294,3 +294,248 @@
   text-decoration-color: var(--accent-line);
   outline: none;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   LONG-FORM READING
+
+   Scoped to .article-body so nothing here touches a marketing page. The
+   article is the one surface on this site whose whole job is to keep someone
+   reading for several thousand words, and it gets typography chosen for that
+   rather than inherited from a page built for scanning.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.article-body {
+  font-family: var(--font-reading), Georgia, "Times New Roman", serif;
+  /* 1.1875rem / 1.75 lands the measure at ~68ch at max-width below, inside
+     the 65-75ch band where continuous prose stops costing the reader. */
+  font-size: 1.1875rem;
+  line-height: 1.75;
+  color: var(--foreground);
+  /* Numbers in this article carry the argument, so they get real lining
+     figures rather than whatever the face defaults to mid-sentence. */
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.article-body p {
+  margin-block: 0;
+  /* Body text sits slightly back from pure foreground; the emphasised
+     passages below come forward against it rather than shouting. */
+  color: color-mix(in oklch, var(--foreground) 86%, var(--background));
+}
+
+/* More space above a heading than below it — the gap belongs to the section
+   it opens, not the paragraph it just left. */
+.article-body h2 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.875rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+  margin-block: 3.5rem 0;
+  text-wrap: balance;
+}
+
+.article-body h2 + * { margin-top: 1.25rem; }
+
+/* ── A numbered mistake ────────────────────────────────────────────────────
+   The number is load-bearing here: this is an ordered list of 21 problems and
+   a reader who leaves and comes back needs to know where they were. It is set
+   as a quiet marker in the margin on wide screens rather than a decorative
+   counter glued to the heading.                                            */
+.article-step {
+  position: relative;
+  scroll-margin-top: 6rem;
+}
+
+.article-step > h2 {
+  margin-top: 0;
+}
+
+.article-step-n {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 1100px) {
+  /* Pulled into the margin so the prose column keeps one clean left edge
+     all the way down the article. */
+  .article-step-n {
+    position: absolute;
+    top: 0.45rem;
+    left: -4.5rem;
+    width: 3.5rem;
+    text-align: right;
+  }
+}
+
+/* ── The line worth remembering ────────────────────────────────────────────
+   Replaces a <mark> whose tinted background collided with the underline of
+   any link inside it and read as a strikethrough artifact. This is a block
+   treatment: the sentence steps out of the column rather than being
+   highlighted inside it.                                                   */
+.article-key {
+  display: block;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+  color: var(--foreground);
+  background: color-mix(in oklch, var(--primary) 7%, var(--background));
+  border: 1px solid color-mix(in oklch, var(--primary) 18%, transparent);
+  border-radius: 14px;
+  padding: 1.125rem 1.375rem;
+  margin-block: 0.5rem;
+}
+
+/* ── What to actually do ───────────────────────────────────────────────────
+   Every mistake ends with one. Consistent, findable, and visually distinct
+   from the explanation above it without becoming a second card style.      */
+.article-fix {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: color-mix(in oklch, var(--foreground) 82%, var(--background));
+  border-top: 1px solid var(--border);
+  padding-top: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.article-fix b {
+  color: var(--foreground);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+}
+
+.article-body a:not(.article-plain) {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklch, var(--foreground) 35%, transparent);
+  transition: text-decoration-color 150ms ease;
+}
+.article-body a:not(.article-plain):hover {
+  text-decoration-color: var(--foreground);
+}
+
+.article-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  background: var(--muted);
+  border-radius: 5px;
+  padding: 0.1em 0.38em;
+}
+
+/* ── Reading progress ──────────────────────────────────────────────────────
+   The one authored motion moment on this page. A 2px rule under the navbar
+   that tracks position through the article — on a 3,500-word piece the
+   reader's real question is "how much of this is left", and answering it
+   costs nothing and no layout space.                                       */
+.article-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: 0 50%;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--primary) 55%, transparent),
+    var(--primary)
+  );
+  z-index: 60;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-progress { transition: none; }
+}
+
+/* ── Index cards ───────────────────────────────────────────────────────────
+   The hover affordance the brief asked for. It sits in the corner, is
+   revealed rather than moved, and is hidden from assistive tech because the
+   whole card is already one link with its own accessible name.             */
+.post-card {
+  position: relative;
+  isolation: isolate;
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+
+.post-card:hover,
+.post-card:focus-within {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklch, var(--foreground) 28%, transparent);
+}
+
+.post-card-cue {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--background);
+  background: var(--foreground);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.post-card:hover .post-card-cue,
+.post-card:focus-within .post-card-cue {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card,
+  .post-card-cue { transition: none; }
+  .post-card:hover { transform: none; }
+}
+
+/* A touch device has no hover, so the cue would never appear. Show it
+   permanently there rather than hiding an affordance behind a gesture that
+   does not exist. */
+@media (hover: none) {
+  .post-card-cue { opacity: 1; transform: none; }
+}
+
+/* A scrim under the reading column only.
+   The site-wide dot grid and its travelling highlight are part of the brand
+   and stay exactly as they are everywhere else — but on a 3,500-word article
+   a bright band sweeping under body text competes with the sentence someone
+   is in the middle of. This settles the area behind the text without hiding
+   the layer: it fades out at both edges, so it reads as the page getting
+   quieter around the prose rather than as a panel sitting on top of it. */
+.article-scrim {
+  position: relative;
+}
+
+.article-scrim::before {
+  content: "";
+  position: absolute;
+  /* Wider than the text column so the fade happens in the margin, never
+     across a line of type. */
+  inset: -2rem -12vw;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--background);
+  opacity: 0.72;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+}

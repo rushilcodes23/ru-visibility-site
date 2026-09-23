@@ -1,5 +1,4 @@
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { POSTS, formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
@@ -10,35 +9,84 @@ export const metadata = pageMetadata({
   description: "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
 });
 
-const TOPICS = [
-  "How AI tools decide which businesses to name",
-  "Why a technically perfect site can still be invisible",
-  "What local search actually rewards now",
-  "Which standard SEO advice has quietly stopped being true",
-];
-
 const START_HERE = [
-  { href: "/why-it-matters", label: "Why SEO & GEO Matter" },
-  { href: "/how-we-work", label: "How We Work" },
-  { href: "/why-us", label: "Why Us" },
+  { href: "/research", label: "The research behind these posts" },
+  { href: "/why-it-matters", label: "Why SEO & GEO matter" },
+  { href: "/how-we-work", label: "How we work" },
 ];
 
+/**
+ * One post, as a card. Same treatment for every post regardless of position —
+ * the previous version gave the newest post an inverted light card and every
+ * other post a dark one, so two entries in the same list read as two
+ * different kinds of object.
+ *
+ * The whole card is the link. The "Read now" cue in the corner is decorative
+ * reinforcement of that, hidden from assistive tech, because the link already
+ * announces itself by its heading.
+ */
+function PostCard({
+  post,
+  featured = false,
+}: {
+  post: (typeof POSTS)[number];
+  featured?: boolean;
+}) {
+  return (
+    <a
+      href={`/blog/${post.slug}`}
+      className={`post-card card-surface group block rounded-[14px] ${
+        featured ? "p-7 md:p-10" : "p-6 md:p-8"
+      }`}
+    >
+      <span aria-hidden="true" className="post-card-cue">
+        Read now
+        <ArrowUpRight className="h-3.5 w-3.5" />
+      </span>
+
+      <div className="mb-3 flex items-center gap-3 text-xs text-muted-foreground">
+        <time dateTime={post.published}>{formatPostDate(post.published)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{post.author}</span>
+      </div>
+
+      <h2
+        className={`tracking-tight text-foreground ${
+          featured ? "text-2xl md:text-[2rem] md:leading-[1.15]" : "text-xl md:text-2xl"
+        }`}
+        style={{ textWrap: "balance" }}
+      >
+        {post.title}
+      </h2>
+
+      <p
+        className={`mt-3 leading-relaxed text-muted-foreground ${
+          featured ? "max-w-2xl text-base md:text-lg" : "max-w-2xl text-sm md:text-base"
+        }`}
+      >
+        {post.excerpt}
+      </p>
+    </a>
+  );
+}
 
 export default function BlogPage() {
   const [featured, ...rest] = POSTS;
 
   return (
     <>
-    <div className="page-surface w-full py-20 lg:py-32">
-      <div className="container mx-auto px-4">
-        <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
-          <div className="lg:col-span-2">
-            <div className="page-head flex flex-col gap-4 items-start max-w-2xl mb-10">
-              <Badge>Blog</Badge>
-              <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
+      <div className="page-surface w-full py-20 lg:py-28">
+        <div className="container mx-auto px-4">
+          {/* Single column, capped for reading. The previous two-column
+              layout put a short sticky rail beside a short list, so on
+              desktop the page ended with roughly 700px of empty space
+              between the content and the footer. */}
+          <div className="mx-auto max-w-3xl">
+            <header className="page-head mb-14">
+              <h1 className="text-left text-4xl font-regular tracking-tighter md:text-6xl">
                 Real findings, not recycled SEO advice.
               </h1>
-              <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
+              <p className="mt-5 max-w-2xl text-left text-lg leading-relaxed tracking-tight text-muted-foreground">
                 Most SEO writing online is the same handful of tips reworded
                 endlessly, usually by someone who hasn&apos;t run the audit
                 they&apos;re describing. We&apos;d rather write less often and
@@ -46,141 +94,65 @@ export default function BlogPage() {
                 genuinely do with a website, what moves visibility, and what
                 turns out not to matter at all.
               </p>
+            </header>
+
+            <div className="flex flex-col gap-5">
+              {featured && <PostCard post={featured} featured />}
+              {rest.map((post) => (
+                <PostCard key={post.slug} post={post} />
+              ))}
             </div>
 
-            <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">Latest writing</h2>
-
-        <div className="flex flex-col gap-6">
-          {featured && (
-            <a
-              href={`/blog/${featured.slug}`}
-              className="group block bg-primary text-primary-foreground rounded-md p-8 transition-transform duration-200 hover:scale-[1.02] hover:shadow-xl"
-            >
-              <span className="inline-block text-xs font-medium tracking-wide uppercase bg-primary-foreground text-primary rounded-full px-3 py-1 mb-4">
-                Latest
-              </span>
-              <h2 className="text-2xl md:text-3xl tracking-tight mb-3">{featured.title}</h2>
-              <p className="opacity-80 text-sm md:text-base leading-relaxed mb-5">
-                {featured.excerpt}
-              </p>
-              <div className="flex items-center justify-between gap-4 text-sm">
-                <span className="opacity-70">
-                  By {featured.author} ·{" "}
-                  <time dateTime={featured.published}>
-                    {formatPostDate(featured.published)}
-                  </time>
-                </span>
-                <span className="inline-flex items-center gap-1 font-medium shrink-0">
-                  Read post
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
+            {/* Prose, not a card. This is the editor's note about the blog
+                itself and it reads better as writing on the page than as
+                another box in a column of boxes. */}
+            <section className="mt-20 border-t pt-12">
+              <h2 className="text-2xl tracking-tight md:text-3xl">
+                What gets written here
+              </h2>
+              <div className="mt-5 flex max-w-2xl flex-col gap-4 leading-relaxed text-muted-foreground">
+                <p>
+                  Things we have actually tested. If we try a change on a site
+                  and it moves something, that is worth writing up. If we try
+                  it and nothing happens, that is worth writing up too, and it
+                  is the half almost nobody publishes.
+                </p>
+                <p>
+                  The subjects that keep coming up: how AI tools decide which
+                  businesses to name, why a site can be technically perfect and
+                  still invisible, what local search actually rewards now, and
+                  which bits of standard SEO advice have quietly stopped being
+                  true.
+                </p>
+                <p>
+                  There is no schedule. A post goes up when there is something
+                  real to say, which is why there are not many of them. Writing
+                  to fill a calendar is how you end up with the recycled advice
+                  this page exists to avoid.
+                </p>
               </div>
-            </a>
-          )}
 
-          {rest.map((post) => (
-            <a
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="card-surface block rounded-md p-6 transition-transform duration-200 hover:scale-[1.02]"
-            >
-              <h2 className="text-xl tracking-tight mb-2">{post.title}</h2>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-                {post.excerpt}
-              </p>
-              <span className="text-xs text-muted-foreground">
-                By {post.author} ·{" "}
-                <time dateTime={post.published}>{formatPostDate(post.published)}</time>
-              </span>
-            </a>
-          ))}
-        </div>
-
-        <div className="card-surface rounded-md p-6 md:p-8 mt-20">
-          <h2 className="text-2xl tracking-tight mb-4 md:text-3xl">
-            What gets written here
-          </h2>
-          <p className="text-muted-foreground leading-relaxed mb-4">
-            Things we have actually tested. If we try a change on a site and
-            it moves something, that is worth writing up. If we try it and
-            nothing happens, that is worth writing up too, and it is the
-            half almost nobody publishes.
-          </p>
-          <p className="text-muted-foreground leading-relaxed mb-4">
-            The subjects that keep coming up: how AI tools decide which
-            businesses to name, why a site can be technically perfect and
-            still invisible, what local search actually rewards now, and
-            which bits of standard SEO advice have quietly stopped being
-            true.
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
-            There is no schedule. A post goes up when there is something
-            real to say, which is why there are not many of them. Writing to
-            fill a calendar is how you end up with the recycled advice this
-            page exists to avoid.
-          </p>
-        </div>
-
-          </div>
-
-          {/* Sticky rail — one post does not fill a page, and the reading
-              column is capped for line length, so the right third was
-              sitting empty on desktop. */}
-          <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-            <div className="bg-primary text-primary-foreground rounded-md p-6">
-              <h2 className="text-xl tracking-tight mb-2">
-                Skip the reading
-              </h2>
-              <p className="opacity-80 text-sm leading-relaxed mb-5">
-                Send us your website address and we will tell you what we
-                actually see, rather than what tends to be true in general.
-              </p>
-              <a
-                href="#audit"
-                className="inline-flex items-center gap-1 rounded-full bg-primary-foreground text-primary text-sm font-medium px-4 py-2 transition-transform duration-200 hover:scale-105"
-              >
-                Get the free check
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-
-            <div className="card-surface rounded-md p-6">
-              <h2 className="text-lg tracking-tight mb-3">
-                What we write about
-              </h2>
-              <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-                {TOPICS.map((t) => (
-                  <li key={t} className="flex gap-2">
-                    <span className="text-foreground">&middot;</span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="card-surface rounded-md p-6">
-              <h2 className="text-lg tracking-tight mb-3">Start here</h2>
-              <ul className="flex flex-col gap-3 text-sm">
+              <ul className="mt-10 flex flex-col divide-y border-y">
                 {START_HERE.map((r) => (
                   <li key={r.href}>
                     <a
                       href={r.href}
-                      className="group flex items-center justify-between gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                      className="group flex items-center justify-between gap-4 py-4 text-foreground transition-colors hover:text-muted-foreground"
                     >
-                      <span className="font-medium text-foreground">
-                        {r.label}
-                      </span>
-                      <ArrowRight className="w-4 h-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                      <span className="text-base font-medium">{r.label}</span>
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
+                      />
                     </a>
                   </li>
                 ))}
               </ul>
-            </div>
-          </aside>
+            </section>
+          </div>
         </div>
       </div>
-    </div>
-    <AuditCta />
+      <AuditCta />
     </>
   );
 }
