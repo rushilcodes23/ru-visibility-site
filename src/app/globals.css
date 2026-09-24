@@ -337,7 +337,7 @@
    it opens, not the paragraph it just left. */
 .article-body h2 {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.875rem);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.25rem);
   /* 500, not 400. A heading that shares its weight AND its colour with the
      paragraph under it is not a heading, it is a bigger sentence. */
   font-weight: 500;
@@ -364,28 +364,42 @@
   margin-top: 0;
 }
 
+/* A chip, matching the tinted rounded square this site already uses for an
+   icon everywhere else. It was a 13px grey caption floating in the margin,
+   which made 21 sections hard to tell apart at a glance. Now it sits on the
+   heading's own line at the heading's own size. */
 .article-step-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
+  background: color-mix(in oklch, var(--accent-green) 14%, transparent);
+  border: 1px solid color-mix(in oklch, var(--accent-green) 24%, transparent);
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  font-size: 0.8125rem;
+  font-size: 1.0625rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  /* Green, so each of the 21 announces itself as you scroll past rather than
-     blending into the grey the rest of the furniture uses. */
+  letter-spacing: 0;
   color: var(--accent-green);
   font-variant-numeric: tabular-nums;
 }
 
-@media (min-width: 1100px) {
-  /* Pulled into the margin so the prose column keeps one clean left edge
-     all the way down the article. */
-  .article-step-n {
-    position: absolute;
-    top: 0.45rem;
-    left: -4.5rem;
-    width: 3.5rem;
-    text-align: right;
-  }
+/* Chip and heading share a row, so the number reads as belonging to that
+   heading rather than hovering near it. */
+.article-step-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3.5rem;
 }
+
+.article-step-head > h2 {
+  margin-top: 0;
+}
+
+
 
 /* ── The line worth remembering ────────────────────────────────────────────
    Replaces a <mark> whose tinted background collided with the underline of
@@ -410,23 +424,33 @@
 /* ── What to actually do ───────────────────────────────────────────────────
    Every mistake ends with one. Consistent, findable, and visually distinct
    from the explanation above it without becoming a second card style.      */
+/* The thing to actually do. It was a thin rule and some slightly-grey text,
+   which read as a footnote rather than the answer — so it is a panel now:
+   its own darker surface, set back from the page, with the label in green so
+   it is findable while scrolling. Lighter weight than the body on purpose;
+   this is instruction, not argument, and it should feel calmer than the
+   prose above it rather than louder. */
 .article-fix {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-size: 0.9375rem;
-  line-height: 1.65;
-  color: color-mix(in oklch, var(--foreground) 82%, var(--background));
-  border-top: 1px solid var(--border);
-  padding-top: 0.875rem;
-  margin-top: 0.25rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: color-mix(in oklch, var(--foreground) 88%, var(--background));
+  background: color-mix(in oklch, var(--background) 72%, #000);
+  border: 1px solid color-mix(in oklch, var(--accent-green) 16%, var(--border));
+  border-radius: 12px;
+  padding: 1rem 1.125rem;
+  margin-top: 0.75rem;
 }
 
 .article-fix b {
-  color: var(--foreground);
+  display: block;
+  color: var(--accent-green);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  margin-right: 0.5rem;
+  font-size: 0.6875rem;
+  margin: 0 0 0.35rem 0;
 }
 
 .article-body a:not(.article-plain) {
@@ -671,11 +695,18 @@
 }
 
 @media (min-width: 1180px) {
+  /* Two columns, not three. The old layout put the rail left and left a
+     dead third column on the right; this puts the rail on the right and
+     gives the width back to the prose, so nothing is empty. The aside stays
+     first in the DOM — a keyboard user reaches the contents before the
+     article — and is placed right visually. */
   .article-shell {
-    grid-template-columns: 15rem minmax(0, 42rem) minmax(0, 1fr);
-    gap: 4rem;
+    grid-template-columns: minmax(0, 44rem) 16rem;
+    gap: 3.5rem;
     justify-content: center;
   }
+  .article-rail { grid-column: 2; grid-row: 1; }
+  .article-shell > .article-scrim { grid-column: 1; grid-row: 1; }
 }
 
 .article-rail {
@@ -741,23 +772,38 @@
 @media (max-width: 640px) {
   .article-body {
     font-size: 1.0625rem;
-    line-height: 1.68;
+    line-height: 1.7;
   }
 
+  /* Still clearly bigger than the body, but not so big that a two-line
+     heading eats a third of the screen. */
   .article-body h2 {
-    font-size: 1.375rem;
-    margin-block: 2.75rem 0;
+    font-size: 1.5rem;
+    line-height: 1.25;
   }
 
-  /* The number sits inline above its heading here, so it needs the same
-     rhythm as a label rather than the margin position it has on desktop. */
+  .article-step-head {
+    gap: 0.75rem;
+    margin-top: 2.75rem;
+  }
+
   .article-step-n {
-    display: block;
-    margin-bottom: 0.4rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 10px;
+    font-size: 0.9375rem;
   }
 
   .article-fix {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
+    padding: 0.875rem 1rem;
+  }
+
+  /* Softer separation between paragraphs than the desktop rhythm. On a
+     narrow column a big gap makes the page feel like disconnected fragments
+     rather than one piece of writing. */
+  .article-body {
+    gap: 1.25rem !important;
   }
 }
 

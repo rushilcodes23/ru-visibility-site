@@ -787,7 +787,7 @@ export default function SeoMistakesPost() {
 
         <div className="article-body flex flex-col gap-6">
           <p>
-            I have spent the last several weeks running the same audit, over
+            I have spent the last several months running the same audit, over
             and over, on {N} real business websites. Not a sample of ten picked
             because they made a good story — {N} of them, crawled and scored
             the same way every time.
@@ -894,13 +894,15 @@ export default function SeoMistakesPost() {
               id={`mistake-${m.n}`}
               className="article-step flex flex-col gap-4"
             >
-              <span className="article-step-n" aria-hidden="true">
-                {String(m.n).padStart(2, "0")}
-              </span>
-              <h2>
-                <span className="sr-only">Mistake {m.n}: </span>
-                {m.title}
-              </h2>
+              <div className="article-step-head">
+                <span className="article-step-n" aria-hidden="true">
+                  {String(m.n).padStart(2, "0")}
+                </span>
+                <h2>
+                  <span className="sr-only">Mistake {m.n}: </span>
+                  {m.title}
+                </h2>
+              </div>
               {m.body}
             </section>
           ))}
