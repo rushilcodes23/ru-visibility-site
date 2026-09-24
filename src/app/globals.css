@@ -337,12 +337,12 @@
    it opens, not the paragraph it just left. */
 .article-body h2 {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.25rem);
+  font-size: clamp(1.875rem, 1.35rem + 1.9vw, 2.625rem);
   /* 500, not 400. A heading that shares its weight AND its colour with the
      paragraph under it is not a heading, it is a bigger sentence. */
   font-weight: 500;
   line-height: 1.2;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: var(--foreground);
   margin-block: 3.5rem 0;
   text-wrap: balance;
@@ -373,13 +373,13 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 12px;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 14px;
   background: color-mix(in oklch, var(--accent-green) 14%, transparent);
   border: 1px solid color-mix(in oklch, var(--accent-green) 24%, transparent);
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  font-size: 1.0625rem;
+  font-size: 1.1875rem;
   font-weight: 600;
   letter-spacing: 0;
   color: var(--accent-green);
@@ -482,7 +482,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
+  height: 4px;
   width: 100%;
   transform-origin: 0 50%;
   background: linear-gradient(
@@ -701,9 +701,13 @@
      first in the DOM — a keyboard user reaches the contents before the
      article — and is placed right visually. */
   .article-shell {
-    grid-template-columns: minmax(0, 44rem) 16rem;
-    gap: 3.5rem;
-    justify-content: center;
+    grid-template-columns: minmax(0, 46rem) 20rem;
+    gap: 3rem;
+    /* Was center, which left an equal empty margin outside both columns.
+       space-between pushes the prose hard left and the rail hard right and
+       puts the leftover width between them, where it reads as separation
+       rather than as dead space. */
+    justify-content: space-between;
   }
   .article-rail { grid-column: 2; grid-row: 1; }
   .article-shell > .article-scrim { grid-column: 1; grid-row: 1; }
@@ -728,7 +732,7 @@
 
 .article-rail-title {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  font-size: 0.6875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -739,11 +743,11 @@
 .article-rail a {
   display: block;
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.4;
+  font-size: 0.9375rem;
+  line-height: 1.45;
   color: var(--muted-foreground);
-  padding: 0.3rem 0 0.3rem 0.75rem;
-  border-left: 1px solid var(--border);
+  padding: 0.45rem 0 0.45rem 0.875rem;
+  border-left: 2px solid var(--border);
   transition: color 160ms ease, border-color 160ms ease;
 }
 
@@ -778,8 +782,8 @@
   /* Still clearly bigger than the body, but not so big that a two-line
      heading eats a third of the screen. */
   .article-body h2 {
-    font-size: 1.5rem;
-    line-height: 1.25;
+    font-size: 1.625rem;
+    line-height: 1.22;
   }
 
   .article-step-head {
@@ -788,10 +792,10 @@
   }
 
   .article-step-n {
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 10px;
-    font-size: 0.9375rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 11px;
+    font-size: 1rem;
   }
 
   .article-fix {
@@ -840,7 +844,7 @@
     backdrop-filter: blur(10px);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 1.125rem 1rem;
+    padding: 1.375rem 1.25rem;
   }
 
   .article-rail a {

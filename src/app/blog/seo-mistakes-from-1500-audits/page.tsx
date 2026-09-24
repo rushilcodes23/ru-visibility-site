@@ -760,7 +760,7 @@ export default function SeoMistakesPost() {
         {/* No eyebrow above the headline. The title says what this is. */}
         <header className="mb-12">
           <h1
-            className="text-[2.1rem] font-regular leading-[1.1] tracking-tighter md:text-[3.25rem]"
+            className="text-[2.35rem] font-regular leading-[1.06] tracking-tighter md:text-[4rem]"
             style={{ textWrap: "balance" }}
           >
             I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often
