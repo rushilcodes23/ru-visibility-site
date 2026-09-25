@@ -22,6 +22,15 @@ const webSiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Ru Visibility",
+  // Google reads name and alternateName from this node to decide the site
+  // name it shows in results (documented in Search Central under "site
+  // names"). These are the two other spellings people genuinely use: the
+  // navbar sets the brand in capitals, and the domain runs it together as one
+  // word. Without this, a search for either has nothing connecting it to the
+  // brand. Deliberately NOT padded with invented variants like "Ru Visibility
+  // SEO" — an alternate name has to be something the business is actually
+  // called.
+  alternateName: ["RU Visibility", "RuVisibility"],
   url: "https://ruvisibility.com",
   publisher: { "@id": "https://ruvisibility.com/#organization" },
 };

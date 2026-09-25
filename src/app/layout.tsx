@@ -26,6 +26,9 @@ const organizationJsonLd = {
   // instead of duplicating the organisation details in a second place.
   "@id": "https://ruvisibility.com/#organization",
   name: "Ru Visibility",
+  // Same two spellings as the WebSite node on the homepage, so the
+  // organisation and the site agree on what the brand is called.
+  alternateName: ["RU Visibility", "RuVisibility"],
   url: "https://ruvisibility.com",
   email: "rushil@ruvisibility.com",
   telephone: "+91-7222999365",
