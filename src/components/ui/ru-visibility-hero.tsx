@@ -132,22 +132,14 @@ function getStyles() {
     95%        { opacity: 0; }
   }
 
-  /* Hero content entrance */
-  @keyframes qhero-fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  /* Delays are deliberately small. The "both" fill mode holds the element at
-     opacity 0 for the whole delay, and Chrome will not count an element with
-     zero opacity as the Largest Contentful Paint — the subtitle below IS the
-     LCP element on this page, so every millisecond of delay was added
-     straight onto the metric. The stagger is still visible at these values;
-     the previous 150ms/300ms bought ~300ms of LCP for choreography nobody
-     could consciously perceive. Duration is untouched: LCP fires when opacity
-     first exceeds 0, not when the fade completes. */
-  .qhero-fade-up { animation: qhero-fade-up 800ms ease-out both; }
-  .qhero-fade-up-delay-1 { animation: qhero-fade-up 800ms 60ms ease-out both; }
-  .qhero-fade-up-delay-2 { animation: qhero-fade-up 800ms 110ms ease-out both; }
+  /* No entrance animation on the hero. A fade-up started every block at
+     opacity 0, and Chrome only counts an element as the Largest Contentful
+     Paint once it is visible — which, with the page's scripts still starting
+     up on a phone, was well after the text itself had arrived. Measured on
+     the live site (4x CPU, slow network, 5 runs each): LCP 2.2–4.5s with the
+     fade, equal to first paint (1.7–2.1s) without it. One run in five, the
+     glitching "VISIBILITY" was counted at 4.5s; Lighthouse kept reporting
+     that one (5.7s LCP, performance 49 on mobile). */
 
   /* Tagline pulse */
   @keyframes qhero-pulse {
@@ -249,7 +241,7 @@ export default function RuVisibilityHero() {
           margin: "0 auto",
         }}
       >
-        <div className="qhero-fade-up" style={{ marginBottom: "1.5rem" }}>
+        <div style={{ marginBottom: "1.5rem" }}>
           <Image
             src={logoMark}
             alt="Ru Visibility"
@@ -265,7 +257,7 @@ export default function RuVisibilityHero() {
           />
         </div>
 
-        <div className="qhero-fade-up-delay-1" style={{ marginBottom: "1.5rem" }}>
+        <div style={{ marginBottom: "1.5rem" }}>
           <h1
             style={{
               display: "flex",
@@ -319,7 +311,6 @@ export default function RuVisibilityHero() {
 
         {/* Subtitle */}
         <p
-          className="qhero-fade-up-delay-2"
           style={{
             fontSize: "clamp(1.02rem, 2.4vw, 1.1rem)",
             fontWeight: 400,
@@ -338,7 +329,7 @@ export default function RuVisibilityHero() {
         </p>
 
         {/* CTAs */}
-        <div className="qhero-fade-up-delay-2 qhero-cta-row">
+        <div className="qhero-cta-row">
           <a href="#audit" className="qhero-btn">
             <span>Get Your Visibility Audit</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

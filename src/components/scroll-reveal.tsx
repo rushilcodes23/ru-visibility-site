@@ -1,18 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-
-function subscribeReducedMotion(onChange: () => void) {
-  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}
-const getReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const getReducedMotionServer = () => false;
+import { useEffect, useRef } from "react";
 
 // Fades content in once when it scrolls into view. Plain IntersectionObserver
 // + CSS transition — no animation library, same approach used everywhere
 // else on this site.
+//
+// Visible by default; hidden only once we know it is below the fold. It used
+// to be server-rendered at opacity 0 and shown by JavaScript, so text at the
+// top of /services, the city pages and others stayed invisible until the
+// scripts had loaded and run — 1.3–1.9s of Largest Contentful Paint delay on
+// a phone in Lighthouse. Now a section already on screen at load is simply
+// shown; one below the fold is hidden after hydration (off screen, so nobody
+// sees it disappear) and fades in on scroll as before. With no JavaScript,
+// or with reduce-motion set, everything is just visible.
+//
+// Styles are set on the element directly rather than through state: one
+// fewer render per section, and nothing to re-render on scroll.
 export default function ScrollReveal({
   children,
   className,
@@ -23,51 +27,36 @@ export default function ScrollReveal({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  // The hero canvas already honours reduce-motion; this did not, so every
-  // section on the site still slid and faded for someone who had asked the OS
-  // for less movement. useSyncExternalStore reads it directly rather than via
-  // an effect + setState, so there's no extra render between hydration and
-  // the real value, and the server snapshot (false) matches the first paint.
-  const reduced = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotion,
-    getReducedMotionServer
-  );
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.getBoundingClientRect().top < window.innerHeight) return;
+
+    el.style.opacity = "0";
+    el.style.transform = "translateY(24px)";
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
+        if (!entry.isIntersecting) return;
+        el.style.transition = `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`;
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+        observer.disconnect();
       },
       { threshold: 0.15 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // Content still has to be readable if the observer never fires — a stuck
-  // opacity: 0 would hide the section outright, which is worse than no
-  // animation at all.
-  const shown = visible || reduced;
+    // Never leave a section stuck invisible.
+    return () => {
+      observer.disconnect();
+      el.style.opacity = "";
+      el.style.transform = "";
+      el.style.transition = "";
+    };
+  }, [delay]);
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: shown ? 1 : 0,
-        transform: shown ? "translateY(0)" : "translateY(24px)",
-        transition: reduced
-          ? "none"
-          : `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`,
-      }}
-    >
+    <div ref={ref} className={className}>
       {children}
     </div>
   );
