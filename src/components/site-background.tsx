@@ -46,6 +46,8 @@ export default function SiteBackground() {
     // lowest lit row) is the brightest; SCAN_TAIL px of trail behind it fade
     // out gradually. SCAN_SECONDS is one pass from top to bottom.
     const SCAN_TAIL = 240;
+    // How far ahead of the front a row starts fading in (see the draw loop).
+    const SCAN_LEAD = 45;
     const SCAN_SECONDS = 4;
     let scanY = 0;
 
@@ -63,9 +65,10 @@ export default function SiteBackground() {
           : (Math.random() - 0.5) * 0.5;
         this.size = Math.random() * 2;
       }
-      update(w: number, h: number) {
-        this.x += this.vx;
-        this.y += this.vy;
+      /** k = elapsed time in 30fps frames, so speed is the same at any frame rate. */
+      update(w: number, h: number, k: number) {
+        this.x += this.vx * k;
+        this.y += this.vy * k;
         if (isMobile) {
           if (this.y > h + 10) this.reset(w, h);
           if (this.x < 0 || this.x > w) this.vx *= -1;
@@ -152,21 +155,27 @@ export default function SiteBackground() {
       if (!running) return;
       raf = requestAnimationFrame(draw);
 
-      // Half rate on EVERY device, not just phones.
+      // Frame budget. Desktop stays at half rate: drifting dots and a cursor
+      // glow read the same at 30fps, and every frame makes the frosted navbar
+      // re-blur its backdrop. Phones run at the display rate, because their
+      // one moving thing is the wave, and a wave sweeping down the screen at
+      // 30fps visibly stepped.
       //
-      // The cost here is the full-viewport clear and blit, which is paid every
-      // frame whether or not anything moved — measured at ~24% of the main
-      // thread while sitting completely idle with the cursor off-screen, and
-      // it forces the frosted navbar to re-blur its backdrop just as often.
-      // Drifting dots and a cursor glow read the same at 30fps, so the second
-      // half of those frames was buying nothing.
-      if (now - last < 1000 / 30) return;
-      last = now;
+      // The remainder is carried instead of resetting `last = now`: resetting
+      // made a 60Hz display alternate 16ms and 50ms frames, which is judder.
+      const interval = isMobile ? 0 : 1000 / 30;
+      const since = now - last;
+      if (since < interval - 2) return;
+      last = interval ? now - (since % interval) : now;
+      // Real elapsed time, so the wave keeps a steady speed when a frame is
+      // late — capped so resuming after a scroll pause never jumps ahead.
+      const dt = Math.min(since, 50);
 
       // Clear only. The grid underneath is the element's CSS background, so it
       // survives the clear for free instead of being redrawn 30 times a second.
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => { p.update(canvas.width, canvas.height); p.draw(ctx); });
+      const k = dt / (1000 / 30);
+      particles.forEach((p) => { p.update(canvas.width, canvas.height, k); p.draw(ctx); });
 
       // No shadowBlur here any more — it lives in glowSprite. See above.
       const sprite = glowSprite;
@@ -185,17 +194,22 @@ export default function SiteBackground() {
         // driven by time rather than a pointer.
         // scanY is the front edge. It runs until the whole tail has left the
         // bottom of the screen, then starts again at the top.
-        scanY += canvas.height / (SCAN_SECONDS * 30);
-        if (scanY - SCAN_TAIL > canvas.height) scanY = 0;
+        scanY += (dt * canvas.height) / (SCAN_SECONDS * 1000);
+        if (scanY - SCAN_TAIL > canvas.height) scanY = -SCAN_LEAD;
 
-        // Only rows at or behind (above) the front are lit: brightest at the
-        // front, fading to nothing SCAN_TAIL px behind it. Squaring the
-        // brightness keeps the front crisp and lets the tail thin out slowly,
-        // which is what reads as a wave rather than a band.
+        // Brightest at the front, fading to nothing SCAN_TAIL px behind it.
+        // Squaring the brightness keeps the front crisp and lets the tail thin
+        // out slowly, which is what reads as a wave rather than a band.
+        //
+        // The row just ahead of the front fades IN over SCAN_LEAD px, so
+        // brightness is continuous as the front passes each row. Without it a
+        // row switched from dark to full brightness in a single frame — the
+        // popping that made the wave look buggy.
         const minY = Math.max(0, Math.ceil((scanY - SCAN_TAIL) / SPACING) * SPACING);
-        const maxY = Math.min(canvas.height, scanY);
+        const maxY = Math.min(canvas.height, scanY + SCAN_LEAD);
         for (let y = minY; y <= maxY; y += SPACING) {
-          const t = 1 - (scanY - y) / SCAN_TAIL; // 1 at the front, 0 at the tail's end
+          const d = y - scanY; // > 0: ahead of the front; < 0: in the trail
+          const t = d > 0 ? 1 - d / SCAN_LEAD : 1 + d / SCAN_TAIL;
           if (t <= 0) continue;
           ctx.globalAlpha = Math.min(1, 0.08 + 0.92 * t * t);
           for (let x = 0; x < canvas.width; x += SPACING) {
