@@ -29,7 +29,7 @@ export const metadata = pageMetadata({
 
 export default function ContactPage() {
   return (
-    <main className="page-surface relative flex flex-col items-center w-full pt-28 pb-20 px-4 overflow-hidden">
+    <div className="page-surface relative flex flex-col items-center w-full pt-28 pb-20 px-4 overflow-hidden">
       {/* Same soft-glow motif as the hero and feature section, so this
           page doesn't feel like a flat, empty form */}
       <div
@@ -136,6 +136,6 @@ export default function ContactPage() {
         </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

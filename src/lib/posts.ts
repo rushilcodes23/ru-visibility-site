@@ -1,6 +1,8 @@
 export type Post = {
   slug: string;
   title: string;
+  /** Short link label for tight spaces like the footer, where the full title would wrap four lines. */
+  short: string;
   excerpt: string;
   author: string;
   /**
@@ -20,6 +22,7 @@ export const POSTS: Post[] = [
   {
     slug: "seo-mistakes-from-1500-audits",
     title: "I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often",
+    short: "21 SEO mistakes from 1,500+ audits",
     excerpt:
       "Every number here comes from crawling 1,504 real business websites. The 21 problems that kept repeating, what each one actually costs, and the order I would fix them in.",
     author: "Rushil",
@@ -28,6 +31,7 @@ export const POSTS: Post[] = [
   {
     slug: "why-geo-matters",
     title: "Why GEO Matters",
+    short: "Why GEO matters",
     excerpt:
       "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Why that's different from regular SEO, and what to actually do about it.",
     author: "Rushil",

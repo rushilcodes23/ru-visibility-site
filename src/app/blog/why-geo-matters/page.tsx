@@ -53,8 +53,11 @@ const postJsonLd = {
   headline: "Why GEO Matters",
   description:
     "GEO isn't a buzzword — it's whether AI tools recommend your business at all.",
-  author: { "@type": "Person", name: post.author },
+  author: { "@type": "Person", name: post.author, url: "https://ruvisibility.com/about" },
   publisher: { "@type": "Organization", name: "Ru Visibility", logo: "https://ruvisibility.com/logo-mark.png" },
+  // Google recommends an image for article results; this is the same image
+  // the page already uses for its link preview.
+  image: "https://ruvisibility.com/opengraph-image.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/why-geo-matters",

@@ -7,9 +7,11 @@ import ReadingProgress from "@/components/reading-progress";
 
 export const metadata = pageMetadata({
   path: "/blog/seo-mistakes-from-1500-audits",
-  title: "I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often",
+  // Title tag differs from the H1 on purpose: the H1 (63 chars) truncates in
+  // search results, and a second phrasing gives the page another angle.
+  title: "21 SEO Mistakes From 1,500+ Website Audits | Ru Visibility",
   description:
-    "Every number here comes from crawling 1,504 real business websites. The 21 problems that kept repeating, what each one actually costs, and the order I would fix them in.",
+    "The 21 SEO mistakes that kept repeating across 1,504 real business websites, what each one costs, and the order I would fix them in.",
   type: "article",
 });
 
@@ -86,6 +88,9 @@ const postJsonLd = {
     name: "Ru Visibility",
     logo: "https://ruvisibility.com/logo-mark.png",
   },
+  // Google recommends an image for article results; this is the same image
+  // the page already uses for its link preview.
+  image: "https://ruvisibility.com/opengraph-image.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/seo-mistakes-from-1500-audits",

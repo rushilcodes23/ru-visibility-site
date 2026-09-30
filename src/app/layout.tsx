@@ -300,8 +300,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* Fixed layer at z-index 0; everything else sits above it. */}
           <SiteBackground />
           <div className="relative z-10 flex min-h-full flex-1 flex-col">
+            {/* Keyboard users jump past the menu; invisible until focused. */}
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:ring-2 focus:ring-ring font-[family-name:var(--font-space-grotesk)]"
+            >
+              Skip to content
+            </a>
             <SiteNavbar />
-            <div className="flex-1">{children}</div>
+            {/* The one <main> landmark for every page. Pages must not render
+                their own — the hero and contact page used to, which left 41
+                of 43 pages with none and the homepage's wrapping only the hero
+                (found by an axe sweep of every sitemap URL, 2026-09-30). */}
+            <main id="main" className="flex-1">{children}</main>
             <SiteFooter />
           </div>
           <ThemeToggle />

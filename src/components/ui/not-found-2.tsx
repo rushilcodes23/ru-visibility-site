@@ -14,7 +14,8 @@ export function NotFound() {
 			<Empty>
 				<EmptyHeader>
 					<EmptyTitle className="mask-b-from-20% mask-b-to-80% font-extrabold text-9xl">
-						404
+						{/* A real H1 (every page needs one); the words are for screen readers, the look is unchanged. */}
+						<h1>404<span className="sr-only"> — page not found</span></h1>
 					</EmptyTitle>
 					<EmptyDescription className="-mt-8 text-foreground/80">
 						The page you&apos;re looking for might have been <br />

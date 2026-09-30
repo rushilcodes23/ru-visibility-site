@@ -1,5 +1,7 @@
 "use server";
 
+import { formAllowed } from "@/lib/rate-limit";
+
 export type AuditRequestState = {
   status: "idle" | "success" | "error";
   message: string;
@@ -63,6 +65,15 @@ async function deliverAuditRequest(
   // telling a bot which field gave it away.
   if (formData.get("company")) {
     return { status: "success", message: SENT_MESSAGE };
+  }
+
+  // Counted before validation, same as the contact form (src/lib/rate-limit.ts).
+  if (!(await formAllowed("audit"))) {
+    return {
+      status: "error",
+      message: "That's several requests in a minute, so we've paused this form for a moment. Wait a minute and try again, or send it as an email instead.",
+      mailto: `mailto:${TO_EMAIL}`,
+    };
   }
 
   // Capped before use: these go straight into an email body, and nothing here

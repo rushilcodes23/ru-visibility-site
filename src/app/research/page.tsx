@@ -170,6 +170,16 @@ export default function ResearchPage() {
                   {fmtDate(corpus.lastAudit)}
                 </time>
               </p>
+              <p className="text-sm text-muted-foreground">
+                The practical version, one problem at a time:{" "}
+                <a
+                  href="/blog/seo-mistakes-from-1500-audits"
+                  className="underline underline-offset-4 text-foreground"
+                >
+                  the 21 SEO mistakes I see most often, and the order to fix them in
+                </a>
+                .
+              </p>
             </div>
           </ScrollReveal>
 

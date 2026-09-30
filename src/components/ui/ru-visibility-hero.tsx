@@ -231,8 +231,9 @@ export default function RuVisibilityHero() {
           site-wide now and lives in the root layout. */}
       <div aria-hidden="true" className="qhero-heading-glow" />
 
-      {/* Layer 1: Hero content (navbar is site-wide, see layout.tsx) */}
-      <main
+      {/* Layer 1: Hero content (navbar is site-wide, see layout.tsx). A
+          <section>, not <main>: the single <main> lives in layout.tsx. */}
+      <section
         style={{
           position: "relative",
           zIndex: 20,
@@ -348,7 +349,7 @@ export default function RuVisibilityHero() {
             <span>Why SEO &amp; GEO Matter</span>
           </a>
         </div>
-      </main>
+      </section>
     </div>
   );
 }
