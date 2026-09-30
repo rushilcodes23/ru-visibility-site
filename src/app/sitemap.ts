@@ -77,6 +77,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // real content change to the page and should move its lastmod.
       "src/lib/research-findings.json",
     ),
+    entry(
+      "/blog/geo-vs-seo",
+      0.6,
+      "src/app/blog/geo-vs-seo/page.tsx",
+      "src/lib/posts.ts",
+      // Same as above: its figures are read from the research data.
+      "src/lib/research-findings.json",
+    ),
     entry("/research", 0.8, "src/app/research/page.tsx", "src/lib/research-findings.json"),
     entry("/contact", 0.8, "src/app/contact/page.tsx", "src/components/contact-form.tsx"),
     entry("/accessibility", 0.5, "src/app/accessibility/page.tsx"),

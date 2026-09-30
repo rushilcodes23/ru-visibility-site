@@ -31,6 +31,7 @@ const FILES = [
   "src/app/why-us/page.tsx",
   "src/app/blog/page.tsx",
   "src/app/blog/why-geo-matters/page.tsx",
+  "src/app/blog/geo-vs-seo/page.tsx",
   "src/app/blog/seo-mistakes-from-1500-audits/page.tsx",
   "src/lib/posts.ts",
   "src/app/research/page.tsx",

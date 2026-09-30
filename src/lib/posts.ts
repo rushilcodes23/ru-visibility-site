@@ -20,6 +20,15 @@ export type Post = {
 // Newest first — the blog index features POSTS[0].
 export const POSTS: Post[] = [
   {
+    slug: "geo-vs-seo",
+    title: "GEO vs SEO vs AEO: What's Actually Different",
+    short: "GEO vs SEO vs AEO",
+    excerpt:
+      "Three acronyms, one question: does your business come up? What each one means, what 1,504 audits show about the gap between them, and how to check where you stand.",
+    author: "Rushil",
+    published: "2026-10-01",
+  },
+  {
     slug: "seo-mistakes-from-1500-audits",
     title: "I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often",
     short: "21 SEO mistakes from 1,500+ audits",
