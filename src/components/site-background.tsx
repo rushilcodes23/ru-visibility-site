@@ -42,10 +42,12 @@ export default function SiteBackground() {
     const SPACING = 30;
     const BASE_R = 1.6;
     const HOVER_R = 150;
-    // Mobile sweep: how tall the lit band is, and how long one pass takes.
-    const SCAN_R = 130;
+    // Mobile sweep: a wave travelling down the screen. The front edge (the
+    // lowest lit row) is the brightest; SCAN_TAIL px of trail behind it fade
+    // out gradually. SCAN_SECONDS is one pass from top to bottom.
+    const SCAN_TAIL = 240;
     const SCAN_SECONDS = 4;
-    let scanY = -SCAN_R;
+    let scanY = 0;
 
     class Particle {
       x = 0; y = 0; vx = 0; vy = 0; size = 0;
@@ -181,17 +183,23 @@ export default function SiteBackground() {
         // There is no cursor to follow on a phone, so the highlight is a band
         // that travels down the screen instead — the same lit-dot effect,
         // driven by time rather than a pointer.
+        // scanY is the front edge. It runs until the whole tail has left the
+        // bottom of the screen, then starts again at the top.
         scanY += canvas.height / (SCAN_SECONDS * 30);
-        if (scanY > canvas.height + SCAN_R) scanY = -SCAN_R;
+        if (scanY - SCAN_TAIL > canvas.height) scanY = 0;
 
-        const minY = Math.max(0, Math.floor((scanY - SCAN_R) / SPACING) * SPACING);
-        const maxY = Math.min(canvas.height, scanY + SCAN_R);
-        for (let y = minY; y < maxY; y += SPACING) {
-          const scale = 1 - Math.abs(y - scanY) / SCAN_R;
-          if (scale <= 0) continue;
-          ctx.globalAlpha = Math.min(1, 0.2 + scale * 0.9);
+        // Only rows at or behind (above) the front are lit: brightest at the
+        // front, fading to nothing SCAN_TAIL px behind it. Squaring the
+        // brightness keeps the front crisp and lets the tail thin out slowly,
+        // which is what reads as a wave rather than a band.
+        const minY = Math.max(0, Math.ceil((scanY - SCAN_TAIL) / SPACING) * SPACING);
+        const maxY = Math.min(canvas.height, scanY);
+        for (let y = minY; y <= maxY; y += SPACING) {
+          const t = 1 - (scanY - y) / SCAN_TAIL; // 1 at the front, 0 at the tail's end
+          if (t <= 0) continue;
+          ctx.globalAlpha = Math.min(1, 0.08 + 0.92 * t * t);
           for (let x = 0; x < canvas.width; x += SPACING) {
-            litDot(x, y, BASE_R + scale * 3.5);
+            litDot(x, y, BASE_R + t * 3.5);
           }
         }
       } else {
