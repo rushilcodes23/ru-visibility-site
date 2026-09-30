@@ -249,9 +249,23 @@ export default function SiteBackground() {
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     resize();
-    start();
+
+    // The drifting dots wait until the page has loaded and the browser is
+    // idle. The grid itself is CSS and already on screen, so nothing visible
+    // is late — but running the loop during load cost 0.5–1s of phone main
+    // thread in Lighthouse (measured with the loop off vs on), competing with
+    // hydration for nothing anyone can see yet.
+    const hasIdle = "requestIdleCallback" in window;
+    let idle = 0;
+    const whenIdle = () => {
+      idle = hasIdle ? window.requestIdleCallback(start, { timeout: 3000 }) : window.setTimeout(start, 1500);
+    };
+    if (document.readyState === "complete") whenIdle();
+    else window.addEventListener("load", whenIdle, { once: true });
 
     return () => {
+      window.removeEventListener("load", whenIdle);
+      if (hasIdle) window.cancelIdleCallback(idle); else clearTimeout(idle);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);

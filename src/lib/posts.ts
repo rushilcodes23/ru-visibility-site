@@ -27,6 +27,8 @@ export const POSTS: Post[] = [
       "Every number here comes from crawling 1,504 real business websites. The 21 problems that kept repeating, what each one actually costs, and the order I would fix them in.",
     author: "Rushil",
     published: "2026-09-23",
+    // Broken-link figure corrected 9.8% → 5.8% (refused checks were counted as broken).
+    updated: "2026-10-01",
   },
   {
     slug: "why-geo-matters",

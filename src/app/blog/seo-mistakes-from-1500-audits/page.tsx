@@ -445,6 +445,12 @@ const MISTAKES: Mistake[] = [
           visitor and a wasted path for whatever ranking value that link was
           meant to pass along.
         </p>
+        <p className="text-muted-foreground text-sm">
+          Corrected 1 October 2026. This said 9.8% until we found the audit
+          was also counting links a site&apos;s firewall refused to our
+          checker, which still work for visitors. Only links that return
+          &ldquo;not found&rdquo; are counted now.
+        </p>
         <p className="article-fix">
           <b>Fix</b> the
           easiest item on this list, because it needs no judgment — a link

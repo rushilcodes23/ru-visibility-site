@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T10:50:04.016Z",
+  "generatedAt": "2026-09-30T19:28:41.929Z",
   "corpus": {
     "uniqueDomains": 1504,
     "jsonFilesScanned": 2231,
@@ -427,8 +427,8 @@
       "denominator": 1504
     },
     "brokenInternalLinks": {
-      "sitesPct": 9.8,
-      "count": 148,
+      "sitesPct": 5.8,
+      "count": 87,
       "denominator": 1504
     },
     "redirectChains": {
