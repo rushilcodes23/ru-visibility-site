@@ -78,9 +78,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       "src/lib/research-findings.json",
     ),
     entry(
-      "/blog/geo-vs-seo",
+      "/blog/seo-vs-geo",
       0.6,
-      "src/app/blog/geo-vs-seo/page.tsx",
+      "src/app/blog/seo-vs-geo/page.tsx",
       "src/lib/posts.ts",
       // Same as above: its figures are read from the research data.
       "src/lib/research-findings.json",

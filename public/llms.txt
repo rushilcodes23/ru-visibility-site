@@ -15,7 +15,7 @@
 ## Research and writing
 
 - [What We Found Auditing 1,504 Websites](https://ruvisibility.com/research): Aggregate results from crawling and scoring 1,504 real business websites between 13 August and 20 September 2026. They average 83.4/100 on conventional SEO but 68.6/100 on AI visibility (GEO), and exactly one scored an A for AI visibility. Covers which AI crawlers sites block, schema gaps, and what the data does not show. No site is named.
-- [GEO vs SEO vs AEO: What's Actually Different](https://ruvisibility.com/blog/geo-vs-seo): SEO, GEO and AEO defined in plain English, the gap between them across 1,504 audited sites, what Google and the original GEO research paper say, and a five-step way to check your own AI visibility.
+- [SEO vs GEO: How Search Is Changing for Businesses](https://ruvisibility.com/blog/seo-vs-geo): For business owners: what SEO and GEO each mean, how they differ and overlap, an example of one business in Google search versus an AI answer, the gap between them across 1,504 audited sites, and five practical steps.
 - [I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often](https://ruvisibility.com/blog/seo-mistakes-from-1500-audits): The 21 problems that kept repeating across those audits, what each one costs, and the order to fix them in.
 - [Why GEO Matters](https://ruvisibility.com/blog/why-geo-matters): Why being recommended by AI tools is a different problem from ranking on Google, and what to do about it.
 

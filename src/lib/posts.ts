@@ -20,11 +20,11 @@ export type Post = {
 // Newest first — the blog index features POSTS[0].
 export const POSTS: Post[] = [
   {
-    slug: "geo-vs-seo",
-    title: "GEO vs SEO vs AEO: What's Actually Different",
-    short: "GEO vs SEO vs AEO",
+    slug: "seo-vs-geo",
+    title: "SEO vs GEO: How Search Is Changing for Businesses",
+    short: "SEO vs GEO",
     excerpt:
-      "Three acronyms, one question: does your business come up? What each one means, what 1,504 audits show about the gap between them, and how to check where you stand.",
+      "People now find businesses two ways: by searching Google and by asking AI tools. What SEO and GEO each mean, how they work together, and what is worth doing now.",
     author: "Rushil",
     published: "2026-10-01",
   },
