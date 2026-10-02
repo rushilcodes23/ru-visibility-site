@@ -1,12 +1,34 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
+import { SelectPlaceholder } from "@/components/ui/select-placeholder";
 import { Check } from "lucide-react";
 import { sendAuditRequest, type AuditRequestState } from "@/lib/send-audit-request";
+
+// Base UI's Select, with the floating-ui positioning it brings, was 115 KB of
+// the JavaScript on every page that carries this form — the biggest single
+// item in Lighthouse's "unused JavaScript", because nobody opens a dropdown in
+// the first seconds of a visit. It now loads only once the field is within a
+// screen or so of view, or the visitor starts on the form — most visitors
+// never scroll that far and never pay for it. Until it arrives,
+// SelectPlaceholder renders the identical closed field, so nothing on screen
+// changes when it swaps in.
+//
+// ssr: false rather than React.lazy on its own: a lazy component that is
+// server-rendered gets thrown away the moment any context above it changes
+// before its code has loaded (the theme provider does, on mount), which
+// blanked the field until the chunk arrived.
+const Select = dynamic(
+  () => import("@/components/ui/select").then((m) => m.Select),
+  {
+    ssr: false,
+    loading: () => <SelectPlaceholder id="audit-business-type" name="businessType" />,
+  }
+);
 
 const initialState: AuditRequestState = { status: "idle", message: "" };
 
@@ -29,6 +51,20 @@ const BUSINESS_TYPES = [
 export default function AuditRequestForm() {
   const [state, formAction, pending] = useActionState(sendAuditRequest, initialState);
   const [businessType, setBusinessType] = useState("");
+  const [wantSelect, setWantSelect] = useState(false);
+  const selectField = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = selectField.current;
+    if (!el || wantSelect) return;
+    const io = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setWantSelect(true),
+      { rootMargin: "1200px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [wantSelect]);
+  const startSelect = () => setWantSelect(true);
 
   if (state.status === "success") {
     return (
@@ -54,7 +90,12 @@ export default function AuditRequestForm() {
   }
 
   return (
-    <form action={formAction} className="w-full space-y-4 text-left">
+    <form
+      action={formAction}
+      onFocusCapture={startSelect}
+      onPointerDownCapture={startSelect}
+      className="w-full space-y-4 text-left"
+    >
       <input
         type="text"
         name="company"
@@ -88,14 +129,18 @@ export default function AuditRequestForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div ref={selectField} className="flex flex-col gap-2">
         <Label htmlFor="audit-business-type">Business type</Label>
-        <Select
-          id="audit-business-type"
-          name="businessType"
-          items={BUSINESS_TYPES}
-          onValueChange={setBusinessType}
-        />
+        {wantSelect ? (
+          <Select
+            id="audit-business-type"
+            name="businessType"
+            items={BUSINESS_TYPES}
+            onValueChange={setBusinessType}
+          />
+        ) : (
+          <SelectPlaceholder id="audit-business-type" name="businessType" />
+        )}
       </div>
 
       {businessType === OTHER && (

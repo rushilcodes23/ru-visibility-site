@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoMark from "@/../public/logo-mark-220.png";
+import logoMark from "@/../public/logo-mark-220.webp";
 import { LOCATIONS } from "@/lib/locations";
 import { POSTS } from "@/lib/posts";
 

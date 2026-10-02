@@ -4,7 +4,7 @@
 // bundle and made it part of hydration for no benefit. Lighthouse attributed
 // ~2.3s of script evaluation to the homepage bundle before this was removed.
 import Image from "next/image";
-import logoMark from "@/../public/logo-mark-220.png";
+import logoMark from "@/../public/logo-mark-220.webp";
 
 /* ─────────────────────────────────────────────
    Self-contained styles, theme-aware. Monochrome

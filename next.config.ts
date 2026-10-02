@@ -36,6 +36,19 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
+  // The stylesheet goes inside each page instead of a separate request.
+  // Measured A/B on a throttled phone profile, three interleaved runs each:
+  // first paint 3.1s -> 2.7s, and PageSpeed-method LCP 5.9s -> 3.9s (score
+  // 46 -> 70). With the CSS as its own file, the phone downloaded it in
+  // parallel with the JavaScript and ran all of that before painting anything;
+  // inline, the page paints as soon as the HTML arrives.
+  // The cost: about 4 KB more on a first visit (brotli removes most of Next's
+  // second copy in the RSC payload) and ~18 KB on each further page, which no
+  // longer reuses a cached stylesheet. Most visits here are one landing page,
+  // so that trade favours first visits. Next documents it as experimental.
+  experimental: {
+    inlineCss: true,
+  },
   async redirects() {
     return [{ source: "/pricing", destination: "/services", permanent: true }];
   },
