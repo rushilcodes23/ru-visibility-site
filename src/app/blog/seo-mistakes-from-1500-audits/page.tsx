@@ -156,8 +156,11 @@ const MISTAKES: Mistake[] = [
         </p>
         <p className="article-fix">
           <b>Fix</b> check
-          robots.txt first, because it is free. Then check what your CDN or
-          security layer is doing, which is where the real blocks live and
+          robots.txt first, because it is free. Then{" "}
+          <a href="/answers/does-cloudflare-block-ai-crawlers">
+            check what your CDN or security layer is doing
+          </a>
+          , which is where the real blocks live and
           where nobody thinks to look.
         </p>
       </>

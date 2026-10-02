@@ -12,14 +12,15 @@ function get(slug: string): Answer {
   return a;
 }
 
-/** Metadata for an answer page. The brand suffix is dropped when the question
- *  alone would already be cut off in a search result. */
+/** Metadata for an answer page. Titles stay within 60 characters, where
+ *  Google stops showing them: the brand is added only when it fits, and a
+ *  long question gets its own seoTitle in answers.ts. */
 export function answerMetadata(slug: string) {
   const a = get(slug);
   return pageMetadata({
     path: `/answers/${slug}`,
-    title: a.question.length > 52 ? a.question : `${a.question} | Ru Visibility`,
-    description: a.description,
+    title: a.seoTitle ?? (a.question.length > 44 ? a.question : `${a.question} | Ru Visibility`),
+    description: a.metaDescription ?? a.description,
     type: "article",
   });
 }

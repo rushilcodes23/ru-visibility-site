@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { compactCount } from "@/lib/format";
 
 function subscribeReducedMotion(onChange: () => void) {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -28,9 +29,13 @@ export default function CountUp({
   suffix = "",
   durationMs = 2600,
   className,
+  compact = false,
 }: {
   value: number;
   decimals?: number;
+  /** Ends on a short form like "1.5k+". On the way it counts whole numbers
+   *  to 999, then 1.00k, 1.01k… so the climb past a thousand stays visible. */
+  compact?: boolean;
   prefix?: string;
   suffix?: string;
   durationMs?: number;
@@ -80,10 +85,17 @@ export default function CountUp({
 
   // Derived rather than assigned in the effect: with reduce-motion on, the
   // animation never runs, so the final value is simply what gets rendered.
-  const shown = (reduced ? value : display).toLocaleString("en-US", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
+  const current = reduced ? value : display;
+  const shown = compact
+    ? current === value
+      ? compactCount(value)
+      : current < 1000
+        ? Math.floor(current).toLocaleString("en-US")
+        : `${(Math.floor(current / 10) / 100).toFixed(2)}k`
+    : current.toLocaleString("en-US", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      });
 
   return (
     <span ref={ref} className={className}>
