@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/scroll-reveal";
 import { pageMetadata } from "@/lib/seo";
+import { ServiceArt, type ArtName } from "@/components/ui/service-art";
 import {
   Bot,
   Globe,
@@ -37,9 +37,8 @@ type Item = {
 type Package = {
   name: string;
   tagline: string;
-  icon: LucideIcon;
-  /** Drop a file in /public and set the path here to swap the graphic. */
-  image?: string;
+  /** The illustration in the card's picture panel (see service-art.tsx). */
+  art: ArtName;
   featured?: boolean;
   includes: Item[];
 };
@@ -66,7 +65,7 @@ const PACKAGES: Package[] = [
   {
     name: "Essentials",
     tagline: "The core work, done every month.",
-    icon: Bot,
+    art: "essentials",
     includes: [
       {
         icon: Bot,
@@ -83,7 +82,7 @@ const PACKAGES: Package[] = [
   {
     name: "Complete",
     tagline: "Everything, handled for you.",
-    icon: Sparkles,
+    art: "complete",
     featured: true,
     includes: [
       {
@@ -116,7 +115,7 @@ const PACKAGES: Package[] = [
   {
     name: "Custom",
     tagline: "Pick only what you need.",
-    icon: Wrench,
+    art: "custom",
     includes: [
       {
         icon: Check,
@@ -152,7 +151,7 @@ const PROJECTS: Package[] = [
   {
     name: "Website Build",
     tagline: "A new site, or a rebuild of the one you have.",
-    icon: Code,
+    art: "build",
     includes: [
       {
         icon: Code,
@@ -174,7 +173,7 @@ const PROJECTS: Package[] = [
   {
     name: "Local and Maps",
     tagline: "For a business people search for nearby.",
-    icon: MapPin,
+    art: "local",
     includes: [
       {
         icon: MapPin,
@@ -196,7 +195,7 @@ const PROJECTS: Package[] = [
   {
     name: "Store and Revenue",
     tagline: "For selling online, and measuring it.",
-    icon: ShoppingCart,
+    art: "store",
     includes: [
       {
         icon: ShoppingCart,
@@ -322,30 +321,12 @@ const ALL_SERVICES: Item[] = [
   },
 ];
 
-/** Shows a real image once one exists, and a styled panel until then. */
-function PicSlot({
-  icon: Icon,
-  image,
-  alt,
-}: {
-  icon: LucideIcon;
-  image?: string;
-  alt: string;
-}) {
-  if (image) {
-    return (
-      <Image
-        src={image}
-        alt={alt}
-        width={640}
-        height={220}
-        className="mb-6 h-36 w-full rounded-md object-cover"
-      />
-    );
-  }
+/** The card's picture panel: the same tinted frame as before, now holding the
+ *  package's illustration where the placeholder icon used to sit. */
+function PicSlot({ art }: { art: ArtName }) {
   return (
-    <div className="mb-6 flex h-36 items-center justify-center rounded-md border border-border/50 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent">
-      <Icon className="h-10 w-10 stroke-1 text-primary/70" />
+    <div className="mb-6 flex h-36 items-center justify-center rounded-md border border-border/50 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-3">
+      <ServiceArt name={art} className="h-full w-auto max-w-full" />
     </div>
   );
 }
@@ -367,7 +348,7 @@ function PackageCard({ pkg, delay }: { pkg: Package; delay: number }) {
           "flex h-full flex-col rounded-md border bg-card p-8 shadow-sm transition-transform duration-200 hover:scale-[1.01] hover:shadow-lg"
         }
       >
-        <PicSlot icon={pkg.icon} image={pkg.image} alt={pkg.name} />
+        <PicSlot art={pkg.art} />
 
         <div className="mb-1 flex flex-wrap items-center gap-3">
           <h3 className="text-2xl tracking-tight">{pkg.name}</h3>
