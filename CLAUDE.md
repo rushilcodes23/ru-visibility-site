@@ -18,7 +18,7 @@ table in the same change as any new form, endpoint, secret, or stored data.
 
 | Resource | Anonymous | Owner | Service | Enforced by |
 |---|---|---|---|---|
-| Pages, blog, `llms.txt`, sitemap | R | CRUD (git + deploy) | R | Prerendered static output; no write endpoint exists |
+| Pages, blog, answers (`/answers`), `llms.txt`, sitemap | R | CRUD (git + deploy) | R | Prerendered static output; no write endpoint exists |
 | Contact / audit-request submission | C (one email per submit, ~5 per minute per IP per form) | R (inbox) | C (sends via Resend) | `src/lib/send-contact-email.ts`, `src/lib/send-audit-request.ts`: honeypot, then `formAllowed()` (`src/lib/rate-limit.ts`, Workers rate-limit binding `FORM_LIMITER` in `wrangler.jsonc`, fails open), then field length caps, required fields, email/host regex. Nothing is stored |
 | `RESEND_API_KEY` | — | Create / Revoke (`wrangler secret put`, Resend dashboard) | R | Cloudflare secret, read only inside `"use server"` files; not `NEXT_PUBLIC_` |
 | `NEXT_PUBLIC_CF_BEACON_TOKEN` | R (public by design) | CRUD (`.env.local`) | — | Inlined into client JS at build time; not a secret |
