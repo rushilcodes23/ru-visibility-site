@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { cn } from "cn";
 import accessibilityLight from "@/assets/illustrations/accessibility-light.svg";
 import accessibilityDark from "@/assets/illustrations/accessibility-dark.svg";
@@ -62,13 +62,22 @@ export type ArtName = keyof typeof ART;
  * <img>s, and a lazy image hidden with display:none is never fetched, so each
  * visitor downloads only the one their theme shows (about 1.5 KB). Decorative:
  * the card heading beside it already says what it is, so alt is empty.
+ *
+ * getImageProps rather than <Image>: same server-rendered tag (lazy, async
+ * decoding, width and height, hashed immutable URL), but <Image> is a client
+ * component, so twenty of them on the homepage were twenty more things React
+ * had to hydrate before the page settled. These are plain markup.
  */
 export function ServiceArt({ name, className }: { name: ArtName; className?: string }) {
   const [light, dark] = ART[name];
+  const { props: l } = getImageProps({ src: light, alt: "" });
+  const { props: d } = getImageProps({ src: dark, alt: "" });
   return (
     <>
-      <Image src={light} alt="" className={cn(className, "dark:hidden")} />
-      <Image src={dark} alt="" className={cn(className, "hidden dark:block")} />
+      {/* eslint-disable-next-line @next/next/no-img-element -- props come from getImageProps */}
+      <img {...l} alt="" className={cn(className, "dark:hidden")} />
+      {/* eslint-disable-next-line @next/next/no-img-element -- props come from getImageProps */}
+      <img {...d} alt="" className={cn(className, "hidden dark:block")} />
     </>
   );
 }
