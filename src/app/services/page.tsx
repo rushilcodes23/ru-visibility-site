@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/scroll-reveal";
 import { pageMetadata } from "@/lib/seo";
-import { ServiceArt, type ArtName } from "@/components/ui/service-art";
+import { ArtPanel, type ArtName } from "@/components/ui/service-art";
 import {
   Bot,
   Globe,
@@ -324,11 +324,7 @@ const ALL_SERVICES: Item[] = [
 /** The card's picture panel: the same tinted frame as before, now holding the
  *  package's illustration where the placeholder icon used to sit. */
 function PicSlot({ art }: { art: ArtName }) {
-  return (
-    <div className="mb-6 flex h-36 items-center justify-center rounded-md border border-border/50 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-3">
-      <ServiceArt name={art} className="h-full w-auto max-w-full" />
-    </div>
-  );
+  return <ArtPanel name={art} className="mb-6" />;
 }
 
 /**
