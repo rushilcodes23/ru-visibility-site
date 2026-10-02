@@ -1,15 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import { compactCount } from "@/lib/format";
-
-function subscribeReducedMotion(onChange: () => void) {
-  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}
-const getReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const getReducedMotionServer = () => false;
 
 /** Fast at first, easing to a stop — a linear count reads like a loading bar. */
 const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
@@ -21,6 +13,10 @@ const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
  * real number is in the HTML for crawlers, AI systems and anyone with JS off —
  * the animation only ever replaces a number that was already there. That also
  * means no hydration mismatch: both sides render the same string.
+ *
+ * It runs even with the "reduce motion" setting on (Windows switches that on
+ * whenever its animation effects are off). Nothing moves on screen — only
+ * the digits change — so it is not the kind of motion that setting is for.
  */
 export default function CountUp({
   value,
@@ -43,14 +39,8 @@ export default function CountUp({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [display, setDisplay] = useState(value);
-  const reduced = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotion,
-    getReducedMotionServer
-  );
 
   useEffect(() => {
-    if (reduced) return;
     const el = ref.current;
     if (!el) return;
 
@@ -65,7 +55,9 @@ export default function CountUp({
         const start = performance.now();
         const tick = (now: number) => {
           if (cancelled) return;
-          const t = Math.min((now - start) / durationMs, 1);
+          // The first frame can be stamped slightly before `start`; clamp so it
+          // never shows a negative number.
+          const t = Math.min(Math.max((now - start) / durationMs, 0), 1);
           setDisplay(value * easeOutQuart(t));
           if (t < 1) frame = requestAnimationFrame(tick);
         };
@@ -81,18 +73,15 @@ export default function CountUp({
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [value, durationMs, reduced]);
+  }, [value, durationMs]);
 
-  // Derived rather than assigned in the effect: with reduce-motion on, the
-  // animation never runs, so the final value is simply what gets rendered.
-  const current = reduced ? value : display;
   const shown = compact
-    ? current === value
+    ? display === value
       ? compactCount(value)
-      : current < 1000
-        ? Math.floor(current).toLocaleString("en-US")
-        : `${(Math.floor(current / 10) / 100).toFixed(2)}k`
-    : current.toLocaleString("en-US", {
+      : display < 1000
+        ? Math.floor(display).toLocaleString("en-US")
+        : `${(Math.floor(display / 10) / 100).toFixed(2)}k`
+    : display.toLocaleString("en-US", {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals,
       });

@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { pageMetadata } from "@/lib/seo";
 import { formatPostDate } from "@/lib/posts";
@@ -28,7 +29,7 @@ export function answerMetadata(slug: string) {
 // Figures quoted on these pages come straight from the same file as /research,
 // so an answer can never disagree with the research page it links to.
 const { corpus, crawlerBlocks, universal, scores } = findings;
-export const AUDITED = corpus.uniqueDomains.toLocaleString("en-US");
+export const AUDITED = compactCount(corpus.uniqueDomains);
 export const blockedPct = (crawler: string) =>
   crawlerBlocks.find((c) => c.crawler === crawler)?.combinedPct;
 export const robotsPct = (crawler: string) =>

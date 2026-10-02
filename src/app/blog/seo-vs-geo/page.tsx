@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -41,7 +42,7 @@ function Mark({ children }: { children: React.ReactNode }) {
 
 const post = POSTS.find((p) => p.slug === "seo-vs-geo")!;
 const { corpus, scores, crawlerBlocks } = findings;
-const N = corpus.uniqueDomains.toLocaleString("en-US");
+const N = compactCount(corpus.uniqueDomains);
 const blockedPct = (name: string) => crawlerBlocks.find((c) => c.crawler === name)?.combinedPct;
 
 const SECTIONS = [

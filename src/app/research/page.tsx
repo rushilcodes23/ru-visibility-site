@@ -1,3 +1,4 @@
+import CountUp from "@/components/count-up";
 import { compactCount } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { AuditCta } from "@/components/ui/audit-cta";
@@ -11,9 +12,8 @@ import findings from "@/lib/research-findings.json";
 // header of scripts/aggregate-findings.mjs.
 const { corpus, scores, crawlerBlocks, universal, subsetOnly } = findings;
 
-const N = corpus.uniqueDomains.toLocaleString("en-US");
-// The headline uses the short form; the sentences below keep the exact count.
-const N_SHORT = compactCount(corpus.uniqueDomains);
+// Shown as "1.5k+" everywhere (rounded down, never more than the real count).
+const N = compactCount(corpus.uniqueDomains);
 
 // Title reads the count rather than hardcoding it. It said 1,503 while the
 // corpus had already moved on — the same drift the freshness rules in
@@ -155,7 +155,8 @@ export default function ResearchPage() {
             <div className="page-head flex flex-col gap-4 items-start max-w-3xl mb-12">
               <Badge>Research</Badge>
               <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
-                What we found auditing {N_SHORT} websites.
+                What we found auditing{" "}
+                <CountUp value={corpus.uniqueDomains} compact /> websites.
               </h1>
               <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
                 We crawled and scored {N} real business websites with our own

@@ -33,7 +33,7 @@ export const POSTS: Post[] = [
     title: "I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often",
     short: "21 SEO mistakes from 1,500+ audits",
     excerpt:
-      "Every number here comes from crawling 1,504 real business websites. The 21 problems that kept repeating, what each one actually costs, and the order I would fix them in.",
+      "Every number here comes from crawling 1.5k+ real business websites. The 21 problems that kept repeating, what each one actually costs, and the order I would fix them in.",
     author: "Rushil",
     published: "2026-09-23",
     // Broken-link figure corrected 9.8% → 5.8% (refused checks were counted as broken).
