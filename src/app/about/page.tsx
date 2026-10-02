@@ -26,14 +26,14 @@ function XIcon({ className }: { className?: string }) {
 const AUDITED = findings.corpus.uniqueDomains.toLocaleString("en-US");
 
 // Moves only when this page's substance does — see CONTENT_RULES.md.
-const REVIEWED = "2026-09-17";
+const REVIEWED = "2026-10-02";
 
 export const metadata = pageMetadata({
   path: "/about",
   title: "About — Rushil A. Bajpai, Founder | Ru Visibility",
   // Kept under 155 characters — longer descriptions truncate in search
   // results, which an earlier Screaming Frog crawl flagged across the site.
-  description: `Ru Visibility is Rushil A. Bajpai — a GEO and SEO consultant based in India, working across India and the US, on research from ${AUDITED} site audits.`,
+  description: `Rushil A. Bajpai checks whether Google and AI tools can find a business, then fixes what is in the way. Based in India, working across India and the US.`,
 });
 
 const PROFILES = [
@@ -72,13 +72,15 @@ export default function AboutPage() {
             <div className="page-head flex flex-col gap-4 items-start max-w-3xl mb-14">
               <Badge>About</Badge>
               <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
-                Ru Visibility is Rushil A. Bajpai.
+                I'm Rushil A. Bajpai.
               </h1>
               <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
-                Founder, and the person who does the work. AI visibility (GEO)
-                and SEO consultant, based in India, working with businesses
-                across India and the US. When you send a message here, it
-                reaches me — there is no account manager in between, and no
+                I find out whether Google and AI tools can find your business,
+                then fix what&apos;s in the way. I run Ru Visibility and do the
+                work myself. I&apos;m an SEO and AI
+                visibility (GEO) consultant based in India, working with
+                businesses in India and the US. When you send a message here,
+                it reaches me. There&apos;s no account manager in between and no
                 team to hand you off to.
               </p>
               <p className="text-sm text-muted-foreground">

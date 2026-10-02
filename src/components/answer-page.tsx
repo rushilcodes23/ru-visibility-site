@@ -179,7 +179,7 @@ export function AnswerPage({
       "@type": "Article",
       headline: a.question,
       description: a.description,
-      author: { "@type": "Person", name: "Rushil A. Bajpai", url: `${SITE}/about` },
+      author: { "@type": "Person", name: "Rushil", url: `${SITE}/about` },
       publisher: { "@id": `${SITE}/#organization` },
       image: `${SITE}/opengraph-image.png`,
       datePublished: a.published,
@@ -242,7 +242,7 @@ export function AnswerPage({
               </h1>
               <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 border-t pt-5 text-sm text-muted-foreground">
                 <a href="/about" className="text-foreground underline-offset-4 hover:underline">
-                  Rushil A. Bajpai
+                  Rushil
                 </a>
                 <span aria-hidden="true">·</span>
                 <span>Founder, Ru Visibility</span>
