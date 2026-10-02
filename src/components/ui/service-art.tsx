@@ -68,6 +68,25 @@ export type ArtName = keyof typeof ART;
  * component, so twenty of them on the homepage were twenty more things React
  * had to hydrate before the page settled. These are plain markup.
  */
+/**
+ * The tinted picture panel the illustrations sit in, on the homepage cards and
+ * the services cards alike. It takes the drawings' own 2:1 shape, so the
+ * picture fills it edge to edge at every width instead of floating in a box
+ * of the wrong proportions; max-h stops it towering on a one-column tablet.
+ */
+export function ArtPanel({ name, className }: { name: ArtName; className?: string }) {
+  return (
+    <div
+      className={cn(
+        "flex aspect-[2/1] max-h-52 w-full items-center justify-center overflow-hidden rounded-md border border-border/50 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent",
+        className
+      )}
+    >
+      <ServiceArt name={name} className="h-full w-full object-contain" />
+    </div>
+  );
+}
+
 export function ServiceArt({ name, className }: { name: ArtName; className?: string }) {
   const [light, dark] = ART[name];
   const { props: l } = getImageProps({ src: light, alt: "" });

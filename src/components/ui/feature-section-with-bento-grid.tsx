@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal from "@/components/scroll-reveal";
-import { ServiceArt, type ArtName } from "@/components/ui/service-art";
+import { ArtPanel, type ArtName } from "@/components/ui/service-art";
 
 const SERVICES: { icon: typeof Bot; art: ArtName; title: string; body: string }[] = [
   {
@@ -111,18 +111,13 @@ function Feature() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {SERVICES.map((s, i) => (
               <ScrollReveal key={s.title} delay={(i % 4) * 80}>
-                <div className="card-surface rounded-md p-6 sm:aspect-square flex justify-between flex-col gap-4 transition-transform duration-200 hover:scale-[1.03]">
-                  {/* The illustration shares the icon's row rather than taking
-                      a row of its own. In its own row it pushed the cards with
-                      the longest text past square, so a row of four came out
-                      uneven; beside the icon every card keeps its size. */}
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                      <s.icon className="w-6 h-6 stroke-1 text-primary" />
-                    </div>
-                    <div className="h-14 min-w-0 sm:h-16 lg:h-14 xl:h-16">
-                      <ServiceArt name={s.art} className="h-full w-auto max-w-full object-contain object-right" />
-                    </div>
+                {/* h-full rather than square: with the picture panel the
+                    content is taller than wide, and h-full keeps every card in
+                    a row the same height instead of each finding its own. */}
+                <div className="card-surface rounded-md p-6 h-full flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.03]">
+                  <ArtPanel name={s.art} />
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                    <s.icon className="w-6 h-6 stroke-1 text-primary" />
                   </div>
                   <div className="flex flex-col gap-1">
                     <h3 className="text-lg tracking-tight">{s.title}</h3>
