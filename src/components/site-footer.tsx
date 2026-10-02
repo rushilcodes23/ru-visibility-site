@@ -1,6 +1,7 @@
 import Image from "next/image";
-import logoMark from "@/../public/logo-mark-220.png";
+import logoMark from "@/../public/logo-mark-220.webp";
 import { LOCATIONS } from "@/lib/locations";
+import { POSTS } from "@/lib/posts";
 
 const COMPANY_LINKS = [
   { label: "About", href: "/about" },
@@ -14,6 +15,7 @@ const COMPANY_LINKS = [
 const RESOURCE_LINKS = [
   { label: "Research", href: "/research" },
   { label: "Blog", href: "/blog" },
+  { label: "Answers", href: "/answers" },
   { label: "FAQ", href: "/faq" },
   { label: "Locations", href: "/locations" },
   { label: "Accessibility", href: "/accessibility" },
@@ -25,20 +27,20 @@ const LEGAL_LINKS = [
   { label: "Terms of Service", href: "/terms" },
 ];
 
-// The city pages are the deepest part of the site and were reachable only
-// through the locations index. Surfacing a few here gives them a link from
-// every page, which is how they get crawled, and it lets someone who landed
-// on the blog find out we work in their city at all. Read from the real list
-// rather than retyped, so the labels cannot drift out of sync.
-const FEATURED_CITY_SLUGS = ["dallas", "new-york", "los-angeles", "mumbai", "bangalore"];
-const FEATURED_CITIES = FEATURED_CITY_SLUGS.map((slug) =>
-  LOCATIONS.find((l) => l.slug === slug)
-).filter((l): l is (typeof LOCATIONS)[number] => Boolean(l));
+// A link from every page is the strongest internal signal a page gets, so it
+// goes to the cities with real material behind them (a campaign's audit data,
+// or the home market), not to the ones that are only a template. Read from the
+// `basis` field rather than a hand-kept list, so it follows the data.
+const FEATURED_CITIES = LOCATIONS.filter((l) => l.basis);
+
+// The posts are the most original pages on the site and were linked only from
+// the blog index. Newest first, same order as the index.
+const LATEST_POSTS = POSTS.slice(0, 3);
 
 export default function SiteFooter() {
   return (
     <footer className="page-surface border-t">
-      <div className="container mx-auto px-4 py-12 md:py-16 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-5">
+      <div className="container mx-auto px-4 py-12 md:py-16 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-6">
         <div className="flex flex-col gap-3 col-span-2">
           <a href="/" className="flex min-h-11 items-center gap-2">
             <Image src={logoMark} alt="" width={28} height={28} className="dark:invert" unoptimized />
@@ -97,6 +99,15 @@ export default function SiteFooter() {
           {RESOURCE_LINKS.map((l) => (
             <a key={l.label} href={l.href} className="footer-link text-sm">
               {l.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="col-span-2 flex flex-col gap-2 lg:col-span-1">
+          <span className="text-sm font-medium mb-1">Latest Writing</span>
+          {LATEST_POSTS.map((p) => (
+            <a key={p.slug} href={`/blog/${p.slug}`} className="footer-link text-sm">
+              {p.short}
             </a>
           ))}
         </div>

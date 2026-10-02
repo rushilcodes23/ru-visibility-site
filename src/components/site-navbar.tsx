@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import logoMark from "@/../public/logo-mark-220.png";
+import logoMark from "@/../public/logo-mark-220.webp";
 
 /* Self-contained, inline styles — same approach as the hero. Uses the
    site's CSS variables directly (var(--foreground) etc.) so it follows

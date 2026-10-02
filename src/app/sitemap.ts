@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
 import { TESTIMONIALS } from "@/lib/testimonials";
+import { ANSWERS } from "@/lib/answers";
 import pageDates from "@/lib/page-dates.json";
 
 const BASE = "https://ruvisibility.com";
@@ -77,7 +78,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // real content change to the page and should move its lastmod.
       "src/lib/research-findings.json",
     ),
+    entry(
+      "/blog/seo-vs-geo",
+      0.6,
+      "src/app/blog/seo-vs-geo/page.tsx",
+      "src/lib/posts.ts",
+      // Same as above: its figures are read from the research data.
+      "src/lib/research-findings.json",
+    ),
     entry("/research", 0.8, "src/app/research/page.tsx", "src/lib/research-findings.json"),
+    entry("/answers", 0.6, "src/app/answers/page.tsx", "src/lib/answers.ts"),
+    // One file per answer, so a page's lastmod moves only when that answer
+    // (or the shared template, or the figures it quotes) actually changes.
+    ...ANSWERS.map((a) =>
+      entry(
+        `/answers/${a.slug}`,
+        0.5,
+        `src/app/answers/${a.slug}/page.tsx`,
+        "src/components/answer-page.tsx",
+        "src/lib/research-findings.json",
+      )
+    ),
     entry("/contact", 0.8, "src/app/contact/page.tsx", "src/components/contact-form.tsx"),
     entry("/accessibility", 0.5, "src/app/accessibility/page.tsx"),
     entry("/privacy", 0.3, "src/app/privacy/page.tsx"),

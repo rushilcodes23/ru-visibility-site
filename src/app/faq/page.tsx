@@ -48,6 +48,7 @@ const RELATED = [
   { href: "/how-we-work", label: "How We Work", note: "The six steps, in order." },
   { href: "/services", label: "What We Do", note: "Our packages, and everything we handle." },
   { href: "/why-us", label: "Why Us", note: "What makes us different, and who we are not for." },
+  { href: "/answers", label: "Answers", note: "The questions people search about Google and AI, answered plainly." },
 ];
 
 const faqJsonLd = {

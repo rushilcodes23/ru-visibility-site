@@ -26,5 +26,11 @@
 		// Enable image optimization
 		// see https://opennext.js.org/cloudflare/howtos/image
 		"binding": "IMAGES"
-	}
+	},
+	// Per-visitor limit on the contact and audit forms (src/lib/rate-limit.ts).
+	// Without it a script could submit endlessly and burn the Resend quota or
+	// flood the inbox. A real visitor sends once.
+	"ratelimits": [
+		{ "name": "FORM_LIMITER", "namespace_id": "1001", "simple": { "limit": 5, "period": 60 } }
+	]
 }

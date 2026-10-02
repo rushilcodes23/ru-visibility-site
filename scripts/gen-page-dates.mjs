@@ -11,7 +11,7 @@
 // Runs from both `npm run build` and `npm run deploy` (see package.json).
 
 import { execFileSync } from "node:child_process";
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -31,6 +31,8 @@ const FILES = [
   "src/app/why-us/page.tsx",
   "src/app/blog/page.tsx",
   "src/app/blog/why-geo-matters/page.tsx",
+  "src/app/blog/seo-vs-geo/page.tsx",
+  "src/app/blog/seo-mistakes-from-1500-audits/page.tsx",
   "src/lib/posts.ts",
   "src/app/research/page.tsx",
   "src/lib/research-findings.json",
@@ -44,6 +46,14 @@ const FILES = [
   "src/app/locations/page.tsx",
   "src/app/locations/[slug]/page.tsx",
   "src/lib/locations.ts",
+  "src/app/answers/page.tsx",
+  "src/lib/answers.ts",
+  "src/components/answer-page.tsx",
+  // Every answer is its own page file; picked up from the folder so a new
+  // answer can never be left out of the sitemap dates by accident.
+  ...readdirSync(join(root, "src/app/answers"), { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => `src/app/answers/${d.name}/page.tsx`),
 ];
 
 const dates = {};

@@ -395,7 +395,13 @@ async function main() {
     record(sig.sitemapFound, (raw.sitemap?.count || 0) > 0);
     record(sig.sitemapInRobots, raw.sitemap?.declaredInRobots === true);
     record(sig.sitemapFoundNotDeclared, (raw.sitemap?.count || 0) > 0 && raw.sitemap?.declaredInRobots !== true);
-    record(sig.brokenInternalLinks, (raw.linkCheck?.broken?.length || 0) > 0);
+    // Only a 404/410 proves a link is dead — the same rule as the audit
+    // engine since 2026-10-01. The stored list also holds 403/429/5xx (a
+    // firewall or rate limiter refusing a burst of checks) and Cloudflare's
+    // /cdn-cgi/l/email-protection, which works in a browser. Counting those
+    // published 9.8% where the provable figure is lower.
+    record(sig.brokenInternalLinks, (raw.linkCheck?.broken || []).some(b =>
+      (b.status === 404 || b.status === 410) && !/\/cdn-cgi\//.test(String(b.url))));
     record(sig.redirectChains, (raw.linkCheck?.redirectChains?.length || 0) > 0);
 
     if (ok.length) {

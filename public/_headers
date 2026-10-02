@@ -28,7 +28,7 @@
 #
 # logo-mark.png is the canonical logo URL in the Organization JSON-LD, so it
 # has to keep this stable, unhashed path. logo-mark-220.png is no longer
-# referenced by the site (components import it, so it is served hashed and
+# referenced by the site (components import a lossless .webp copy, served hashed and
 # immutable from /_next/static/media) but is kept reachable in case an old
 # link points at it.
 /logo-mark.png

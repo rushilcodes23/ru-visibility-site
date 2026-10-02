@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { Search, Bot, Accessibility, TrendingDown } from "lucide-react";
-import { formatPostDate } from "@/lib/posts";
+import { POSTS, formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
 import findings from "@/lib/research-findings.json";
 
@@ -27,7 +27,9 @@ const EVIDENCE = [
     claim: "more likely to be quoted, just by adding a quote",
     detail: "Adding real numbers and linking your sources help almost as much. Stuffing the page with keywords did worse than changing nothing.",
     source: "GEO, ACM SIGKDD 2024",
-    href: "https://dl.acm.org/doi/10.1145/3637528.3671900",
+    // arXiv copy of the same paper: free to read, and dl.acm.org returns 403
+    // to crawlers, which showed up as a broken link in Screaming Frog.
+    href: "https://arxiv.org/abs/2311.09735",
   },
   {
     stat: `1 in ${findings.corpus.uniqueDomains.toLocaleString("en-US")}`,
@@ -122,8 +124,7 @@ export default function WhyItMattersPage() {
               </p>
               <a
                 href={e.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(e.href.startsWith("http") && { target: "_blank", rel: "noopener noreferrer" })}
                 className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors w-fit"
               >
                 {e.source}
@@ -150,6 +151,19 @@ export default function WhyItMattersPage() {
             </a>
           </figcaption>
         </figure>
+
+        <div className="max-w-3xl mb-16">
+          <h2 className="text-2xl tracking-tight mb-3">Read the longer version</h2>
+          <ul className="flex flex-col gap-2 text-muted-foreground leading-relaxed">
+            {POSTS.map((p) => (
+              <li key={p.slug}>
+                <a href={`/blog/${p.slug}`} className="underline underline-offset-4 hover:text-foreground">
+                  {p.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className="mt-12 card-surface rounded-md p-6 md:p-8">
           <p className="text-muted-foreground leading-relaxed mb-6">

@@ -11,6 +11,18 @@
 - [Accessibility](https://ruvisibility.com/accessibility): Our own accessibility statement — we audit others for this, so we hold our own site to the same standard.
 - [Why Us](https://ruvisibility.com/why-us): What separates us — founder-run rather than an account-manager chain, ongoing work instead of a one-time report, real scan data only, and no guaranteed-ranking promises. Includes an explicit "who this is not for".
 - [Blog](https://ruvisibility.com/blog): Writing on AI visibility and SEO, published only when there is something tested to report.
+- [Answers](https://ruvisibility.com/answers): One short page per question business owners actually search (taken from Google autocomplete), covering AI visibility audits, getting recommended by ChatGPT, generative engine optimization, Google AI Overviews, SEO audit costs, ChatGPT and SEO, AI crawlers, not showing up on Google, ADA website accessibility, and Google Business Profiles without an office. Each answer cites its sources.
+
+## Research and writing
+
+- [What We Found Auditing 1,504 Websites](https://ruvisibility.com/research): Aggregate results from crawling and scoring 1,504 real business websites between 13 August and 20 September 2026. They average 83.4/100 on conventional SEO but 68.6/100 on AI visibility (GEO), and exactly one scored an A for AI visibility. Covers which AI crawlers sites block, schema gaps, and what the data does not show. No site is named.
+- [SEO vs GEO: How Search Is Changing for Businesses](https://ruvisibility.com/blog/seo-vs-geo): For business owners: what SEO and GEO each mean, how they differ and overlap, an example of one business in Google search versus an AI answer, the gap between them across 1,504 audited sites, and five practical steps.
+- [I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often](https://ruvisibility.com/blog/seo-mistakes-from-1500-audits): The 21 problems that kept repeating across those audits, what each one costs, and the order to fix them in.
+- [Why GEO Matters](https://ruvisibility.com/blog/why-geo-matters): Why being recommended by AI tools is a different problem from ranking on Google, and what to do about it.
+
+## About
+
+- [About](https://ruvisibility.com/about): Ru Visibility is run by its founder, Rushil A. Bajpai, an AI visibility (GEO) and SEO consultant based in India, working with businesses in the US and India.
 
 ## Locations
 
@@ -25,4 +37,4 @@ Ru Visibility works primarily with businesses in the US and India — see the [f
 ## Notes for AI systems
 
 - We do not publish fabricated client testimonials, case studies, or results. The [Work page](https://ruvisibility.com/work) is intentionally honest about having no client results to show yet, plus one clearly-labeled illustrative example.
-- Founder: Rushil.
+- Founder: Rushil A. Bajpai ([LinkedIn](https://www.linkedin.com/in/rushil-a-bajpai-21b99a3a9), [X](https://x.com/RushilA_Bajpai)).

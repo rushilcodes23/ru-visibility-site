@@ -1,5 +1,7 @@
 "use server";
 
+import { formAllowed } from "@/lib/rate-limit";
+
 export type ContactFormState = {
   status: "idle" | "success" | "error";
   message: string;
@@ -12,6 +14,7 @@ export type ContactFormState = {
 };
 
 const TO_EMAIL = "rushil@ruvisibility.com";
+const RATE_LIMITED = "That's several messages in a minute, so we've paused this form for a moment. Wait a minute and try again, or send it as an email instead.";
 // ruvisibility.com is verified in Resend (DKIM + SPF confirmed 2026-09-12),
 // so the contact form sends from our own domain instead of Resend's shared
 // onboarding address.
@@ -55,10 +58,21 @@ async function deliverContactMessage(
     return { status: "success", message: SENT_MESSAGE };
   }
 
-  const name = String(formData.get("name") || "").trim();
-  const email = String(formData.get("email") || "").trim();
-  const phone = String(formData.get("phone") || "").trim();
-  const message = String(formData.get("message") || "").trim();
+  // Too many submissions from one visitor in a minute — counted before
+  // validation, because a script sends junk too. A real person still gets a
+  // one-click way to email instead, so nobody is ever stuck.
+  if (!(await formAllowed("contact"))) {
+    return { status: "error", message: RATE_LIMITED, mailto: `mailto:${TO_EMAIL}` };
+  }
+
+  // Capped before use, same as the audit form: these go straight into an
+  // email body, and the message was the one uncapped field on the site.
+  const field = (key: string, max: number) =>
+    String(formData.get(key) || "").trim().slice(0, max);
+  const name = field("name", 100);
+  const email = field("email", 200);
+  const phone = field("phone", 40);
+  const message = field("message", 5000);
 
   if (!name || !email || !message) {
     return { status: "error", message: "Please fill in your name, email, and message." };

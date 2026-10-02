@@ -3,6 +3,11 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "cn";
+import {
+  SELECT_ICON_CLASS,
+  SELECT_TRIGGER_CLASS,
+  SELECT_VALUE_CLASS,
+} from "@/components/ui/select-placeholder";
 
 /**
  * A styled select built on Base UI rather than a native <select>.
@@ -38,18 +43,13 @@ function Select({
     >
       <SelectPrimitive.Trigger
         id={id}
-        className={cn(
-          "flex h-11 md:h-10 w-full items-center justify-between gap-2 rounded-lg border border-input bg-transparent px-3 py-1 text-base md:text-sm text-left transition-colors outline-none",
-          "hover:border-ring/60 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
-          "data-[popup-open]:border-ring dark:bg-input/30",
-          className
-        )}
+        className={cn(SELECT_TRIGGER_CLASS, className)}
       >
         <SelectPrimitive.Value
-          className="truncate data-[placeholder]:text-muted-foreground"
+          className={SELECT_VALUE_CLASS}
           placeholder={placeholder}
         />
-        <SelectPrimitive.Icon className="shrink-0 text-muted-foreground transition-transform duration-200 data-[popup-open]:rotate-180">
+        <SelectPrimitive.Icon className={SELECT_ICON_CLASS}>
           <ChevronDown className="size-4" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>

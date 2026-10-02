@@ -36,6 +36,21 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
+  // The stylesheet goes inside each page instead of a separate request.
+  // Measured with real throttling (Lighthouse devtools mode, phone profile,
+  // interleaved runs): first paint 3.1-3.5s -> 2.6-2.7s, better in every
+  // pair. With the CSS as its own file, the phone fetched it alongside the
+  // JavaScript and ran all of that before painting anything; inline, the page
+  // paints as soon as the HTML arrives. Lighthouse's simulated mode against
+  // localhost showed no reliable difference: with no network latency, the
+  // scripts arrive instantly there whichever way the CSS is shipped.
+  // The cost: about 4 KB more on a first visit (brotli removes most of Next's
+  // second copy in the RSC payload) and ~18 KB on each further page, which no
+  // longer reuses a cached stylesheet. Most visits here are one landing page,
+  // so that trade favours first visits. Next documents it as experimental.
+  experimental: {
+    inlineCss: true,
+  },
   async redirects() {
     return [{ source: "/pricing", destination: "/services", permanent: true }];
   },
