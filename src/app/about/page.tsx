@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ScrollReveal from "@/components/scroll-reveal";
@@ -23,7 +24,7 @@ function XIcon({ className }: { className?: string }) {
   );
 }
 
-const AUDITED = findings.corpus.uniqueDomains.toLocaleString("en-US");
+const AUDITED = compactCount(findings.corpus.uniqueDomains);
 
 // Moves only when this page's substance does — see CONTENT_RULES.md.
 const REVIEWED = "2026-10-02";

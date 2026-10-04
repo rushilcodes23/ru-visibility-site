@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -41,7 +42,7 @@ function Mark({ children }: { children: React.ReactNode }) {
 
 const post = POSTS.find((p) => p.slug === "seo-vs-geo")!;
 const { corpus, scores, crawlerBlocks } = findings;
-const N = corpus.uniqueDomains.toLocaleString("en-US");
+const N = compactCount(corpus.uniqueDomains);
 const blockedPct = (name: string) => crawlerBlocks.find((c) => c.crawler === name)?.combinedPct;
 
 const SECTIONS = [
@@ -410,8 +411,11 @@ export default function SeoVsGeoPost() {
 
               <h3 className="text-lg font-medium">2. Make sure AI tools can reach your site</h3>
               <p>
-                Ask whoever looks after your website to check that it is not
-                turning AI tools away. In our audits, {blockedPct("PerplexityBot")}%
+                Ask whoever looks after your website to check that it is{" "}
+                <a href="/answers/check-if-ai-crawlers-can-access-your-website">
+                  not turning AI tools away
+                </a>
+                . In our audits, {blockedPct("PerplexityBot")}%
                 of sites blocked Perplexity and {blockedPct("OAI-SearchBot")}%
                 blocked the crawler ChatGPT uses for search, often without the
                 owner knowing. It is normally a quick fix.

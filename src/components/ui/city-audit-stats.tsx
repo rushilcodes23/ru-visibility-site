@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import CountUp from "@/components/count-up";
 import findings from "@/lib/research-findings.json";
 
@@ -61,7 +62,7 @@ export function CityAuditStats({ slug, city }: { slug: string; city: string }) {
         <a href="/research" className="underline underline-offset-4 text-foreground">
           research page
         </a>
-        , across {findings.corpus.uniqueDomains.toLocaleString("en-US")} sites.
+        , across {compactCount(findings.corpus.uniqueDomains)} sites.
       </p>
     </div>
   );

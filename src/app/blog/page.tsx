@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { PostVisual } from "@/components/ui/post-visual";
@@ -11,7 +12,7 @@ export const metadata = pageMetadata({
   description: "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
 });
 
-const N = findings.corpus.uniqueDomains.toLocaleString("en-US");
+const N = compactCount(findings.corpus.uniqueDomains);
 
 const START_HERE = [
   { href: "/research", label: "The research behind these posts" },
