@@ -1,6 +1,7 @@
 "use server";
 
 import { formAllowed } from "@/lib/rate-limit";
+import { normalizeWebsite } from "@/lib/website-input";
 
 export type AuditRequestState = {
   status: "idle" | "success" | "error";
@@ -26,17 +27,6 @@ function mailtoFallback(fields: Record<string, string>) {
 
 const TO_EMAIL = "rushil@ruvisibility.com";
 const FROM_EMAIL = "Ru Visibility <contact@ruvisibility.com>";
-
-/** Accepts bare domains too — most people type "example.com", not a full URL. */
-function normalizeWebsite(raw: string): string | null {
-  const trimmed = raw.trim().replace(/^https?:\/\//i, "").replace(/\/+$/, "");
-  if (!trimmed) return null;
-  const host = trimmed.split("/")[0];
-  if (!/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i.test(host)) {
-    return null;
-  }
-  return trimmed;
-}
 
 /**
  * Shared by the real success path and the honeypot path, so a bot cannot tell
@@ -77,9 +67,13 @@ async function deliverAuditRequest(
   }
 
   // Capped before use: these go straight into an email body, and nothing here
-  // needs to be long.
+  // needs to be long. All single-line, so control characters (CR/LF in a name
+  // that lands in the subject line) become spaces.
   const field = (key: string, max: number) =>
-    String(formData.get(key) || "").trim().slice(0, max);
+    String(formData.get(key) || "")
+      .replace(/[\u0000-\u001f\u007f]/g, " ")
+      .trim()
+      .slice(0, max);
 
   const name = field("name", 100);
   const email = field("email", 200);
@@ -133,7 +127,7 @@ async function deliverAuditRequest(
         to: [TO_EMAIL],
         reply_to: email,
         subject: `Audit request: ${site} (${name})`,
-        text: `AUDIT REQUEST\n\nName: ${name}\nEmail: ${email}\nWebsite: ${site}\nBusiness type: ${businessType || "(not provided)"}\n\nRun: node audit.mjs https://${site}`,
+        text: `AUDIT REQUEST\n\nName: ${name}\nEmail: ${email}\nWebsite: ${site}\nBusiness type: ${businessType || "(not provided)"}\n\nRun: node audit.mjs "https://${site}"`,
       }),
     });
 
