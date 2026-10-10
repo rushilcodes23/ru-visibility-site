@@ -86,6 +86,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // Same as above: its figures are read from the research data.
       "src/lib/research-findings.json",
     ),
+    entry(
+      "/blog/robots-txt-says-yes-server-says-no",
+      0.6,
+      "src/app/blog/robots-txt-says-yes-server-says-no/page.tsx",
+      "src/lib/posts.ts",
+      // Its figures are read from the research data too.
+      "src/lib/research-findings.json",
+    ),
     entry("/research", 0.8, "src/app/research/page.tsx", "src/lib/research-findings.json"),
     entry("/answers", 0.6, "src/app/answers/page.tsx", "src/lib/answers.ts"),
     // One file per answer, so a page's lastmod moves only when that answer

@@ -215,6 +215,11 @@ async function main() {
   // are kept separate because they are different findings with different
   // reliability — see the note where botArr is built, below.
   const botStats = {};
+  // Site-level: blocked by NAME at the server (an AI crawler refused while the
+  // same request labelled Googlebot was served) vs disallowed in robots.txt.
+  // Only sites where the Googlebot-labelled request was served can answer the
+  // first question, so it carries its own denominator.
+  const aiAccess = { blockedByNameAtServer: signal(), disallowedInRobots: signal() };
   const compLoss = {};
   const recFreq = {};
   const pitchTypes = {};
@@ -341,8 +346,18 @@ async function main() {
     if (scored.pitchType) pitchTypes[scored.pitchType] = (pitchTypes[scored.pitchType] || 0) + 1;
     if (raw.platform?.name) platforms[raw.platform.name] = (platforms[raw.platform.name] || 0) + 1;
 
+    // AI crawlers = every tested bot except the two IP-verified search engines.
+    const googleServed = raw.bots?.Googlebot?.status === "ok";
+    const aiBots = Object.entries(raw.bots || {}).filter(([n]) => !/^(Googlebot|Bingbot)$/.test(n));
+    record(aiAccess.blockedByNameAtServer, googleServed
+      ? aiBots.some(([, i]) => i?.status === "blocked" && i.blockType !== "robots-disallow")
+      : null);
+    record(aiAccess.disallowedInRobots, aiBots.length
+      ? aiBots.some(([, i]) => i?.status === "blocked" && i.blockType === "robots-disallow")
+      : null);
+
     for (const [bot, info] of Object.entries(raw.bots || {})) {
-      const b = (botStats[bot] ||= { eligible: 0, robotsDisallow: 0, httpBlocked: 0, inconclusive: 0 });
+      const b = (botStats[bot] ||= { eligible: 0, robotsDisallow: 0, httpBlocked: 0, httpBlockedGoogleServed: 0, inconclusive: 0 });
       b.eligible++;
       if (!info || !info.status) continue;
       // Three outcomes, not two. "blocked" splits into a robots.txt decision
@@ -354,7 +369,13 @@ async function main() {
       // either way and is counted as neither.
       if (info.status === "blocked") {
         if (info.blockType === "robots-disallow") b.robotsDisallow++;
-        else b.httpBlocked++;
+        else {
+          b.httpBlocked++;
+          // The server refused this name, yet served the same request when it
+          // said Googlebot. So it was not checking addresses: it refused on
+          // the name alone, and the real crawler carries that same name.
+          if (googleServed) b.httpBlockedGoogleServed++;
+        }
       } else if (info.status === "inconclusive") {
         b.inconclusive++;
       }
@@ -487,6 +508,8 @@ async function main() {
       robotsDisallowPct: pct(b.robotsDisallow, b.eligible),
       httpBlockedCount: b.httpBlocked,
       httpBlockedPct: pct(b.httpBlocked, b.eligible),
+      httpBlockedNameOnlyCount: b.httpBlockedGoogleServed,
+      httpBlockedNameOnlyPct: pct(b.httpBlockedGoogleServed, b.eligible),
       combinedCount: b.robotsDisallow + b.httpBlocked,
       combinedPct: pct(b.robotsDisallow + b.httpBlocked, b.eligible),
       inconclusiveCount: b.inconclusive,
@@ -529,6 +552,9 @@ async function main() {
       seo: { mean: mean(seoScores), median: median(seoScores), grades: seoGrades, denominator: seoScores.length },
     },
     crawlerBlocks: botArr,
+    aiCrawlerAccess: Object.fromEntries(Object.entries(aiAccess).map(([k, v]) => [k, {
+      sitesPct: pct(v.yes, v.eligible), count: v.yes, denominator: v.eligible,
+    }])),
     segments: [...segAcc.values()]
       .map((s) => ({
         key: s.key,

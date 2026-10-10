@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
@@ -32,7 +33,7 @@ const EVIDENCE = [
     href: "https://arxiv.org/abs/2311.09735",
   },
   {
-    stat: `1 in ${findings.corpus.uniqueDomains.toLocaleString("en-US")}`,
+    stat: `1 in ${compactCount(findings.corpus.uniqueDomains)}`,
     claim: "of the businesses we checked were ready for it",
     detail: `Those same sites score ${findings.scores.seo.mean} out of 100 on normal Google search. These are not bad websites.`,
     source: "Our own checks — see how we did it",

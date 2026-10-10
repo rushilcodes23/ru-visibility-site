@@ -69,9 +69,13 @@ async function deliverContactMessage(
   // email body, and the message was the one uncapped field on the site.
   const field = (key: string, max: number) =>
     String(formData.get(key) || "").trim().slice(0, max);
-  const name = field("name", 100);
-  const email = field("email", 200);
-  const phone = field("phone", 40);
+  // Single-line fields: control characters (CR/LF in a name that lands in the
+  // subject line) become spaces. The message keeps its line breaks.
+  const line = (key: string, max: number) =>
+    field(key, max).replace(/[\u0000-\u001f\u007f]/g, " ").trim();
+  const name = line("name", 100);
+  const email = line("email", 200);
+  const phone = line("phone", 40);
   const message = field("message", 5000);
 
   if (!name || !email || !message) {

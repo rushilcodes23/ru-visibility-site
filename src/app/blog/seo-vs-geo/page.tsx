@@ -1,3 +1,5 @@
+import { compactCount } from "@/lib/format";
+import { PostVisual } from "@/components/ui/post-visual";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -18,6 +20,7 @@ export const metadata = pageMetadata({
   description:
     "What SEO and GEO mean for a business, how AI answers are changing the way customers find companies, and what is worth doing about it, in plain English.",
   type: "article",
+  image: "/covers/seo-vs-geo.png",
 });
 
 /** Same inline emphasis as the other posts. */
@@ -41,7 +44,7 @@ function Mark({ children }: { children: React.ReactNode }) {
 
 const post = POSTS.find((p) => p.slug === "seo-vs-geo")!;
 const { corpus, scores, crawlerBlocks } = findings;
-const N = corpus.uniqueDomains.toLocaleString("en-US");
+const N = compactCount(corpus.uniqueDomains);
 const blockedPct = (name: string) => crawlerBlocks.find((c) => c.crawler === name)?.combinedPct;
 
 const SECTIONS = [
@@ -64,7 +67,7 @@ const postJsonLd = {
   description: metadata.description,
   author: { "@type": "Person", name: post.author, url: "https://ruvisibility.com/about" },
   publisher: { "@type": "Organization", name: "Ru Visibility", logo: "https://ruvisibility.com/logo-mark.png" },
-  image: "https://ruvisibility.com/opengraph-image.png",
+  image: "https://ruvisibility.com/covers/seo-vs-geo.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/seo-vs-geo",
@@ -118,6 +121,10 @@ export default function SeoVsGeoPost() {
                 <span>{READ_MINUTES} min read</span>
               </div>
             </header>
+
+            <figure className="mb-12">
+              <PostVisual slug="seo-vs-geo" />
+            </figure>
 
             <div className="article-body flex flex-col gap-6">
               <p>
@@ -410,8 +417,11 @@ export default function SeoVsGeoPost() {
 
               <h3 className="text-lg font-medium">2. Make sure AI tools can reach your site</h3>
               <p>
-                Ask whoever looks after your website to check that it is not
-                turning AI tools away. In our audits, {blockedPct("PerplexityBot")}%
+                Ask whoever looks after your website to check that it is{" "}
+                <a href="/answers/check-if-ai-crawlers-can-access-your-website">
+                  not turning AI tools away
+                </a>
+                . In our audits, {blockedPct("PerplexityBot")}%
                 of sites blocked Perplexity and {blockedPct("OAI-SearchBot")}%
                 blocked the crawler ChatGPT uses for search, often without the
                 owner knowing. It is normally a quick fix.

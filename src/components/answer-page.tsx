@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { pageMetadata } from "@/lib/seo";
 import { formatPostDate } from "@/lib/posts";
@@ -12,14 +13,15 @@ function get(slug: string): Answer {
   return a;
 }
 
-/** Metadata for an answer page. The brand suffix is dropped when the question
- *  alone would already be cut off in a search result. */
+/** Metadata for an answer page. Titles stay within 60 characters, where
+ *  Google stops showing them: the brand is added only when it fits, and a
+ *  long question gets its own seoTitle in answers.ts. */
 export function answerMetadata(slug: string) {
   const a = get(slug);
   return pageMetadata({
     path: `/answers/${slug}`,
-    title: a.question.length > 52 ? a.question : `${a.question} | Ru Visibility`,
-    description: a.description,
+    title: a.seoTitle ?? (a.question.length > 44 ? a.question : `${a.question} | Ru Visibility`),
+    description: a.metaDescription ?? a.description,
     type: "article",
   });
 }
@@ -27,7 +29,7 @@ export function answerMetadata(slug: string) {
 // Figures quoted on these pages come straight from the same file as /research,
 // so an answer can never disagree with the research page it links to.
 const { corpus, crawlerBlocks, universal, scores } = findings;
-export const AUDITED = corpus.uniqueDomains.toLocaleString("en-US");
+export const AUDITED = compactCount(corpus.uniqueDomains);
 export const blockedPct = (crawler: string) =>
   crawlerBlocks.find((c) => c.crawler === crawler)?.combinedPct;
 export const robotsPct = (crawler: string) =>
