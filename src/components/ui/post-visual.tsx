@@ -91,13 +91,13 @@ function SearchVsAnswer() {
 /** A field of sites, and a lens over a few of them. */
 function AuditLens() {
   const cols = 24;
-  const rows = 9;
-  const lens = { x: 196, y: 64, r: 34 };
+  const rows = 8;
+  const lens = { x: 196, y: 68, r: 34 };
   const dots = [];
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const x = 22 + c * 11.6;
-      const y = 20 + r * 11.6;
+      const y = 28 + r * 11.6;
       if (Math.hypot(x - lens.x, y - lens.y) < lens.r + 4) continue;
       dots.push(<circle key={`${r}-${c}`} cx={x} cy={y} r="1.7" fill="currentColor" fillOpacity="0.24" />);
     }
@@ -109,7 +109,13 @@ function AuditLens() {
   ];
   return (
     <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
-      aria-label="A grid of websites with a magnifying glass showing problems on some of them">
+      aria-label="1.5k+ websites audited, with a magnifying glass finding the 21 most common mistakes">
+      <text x="22" y="16" fontSize="8.5" style={{ fontFamily: FONT }}>
+        <tspan fill="currentColor" fillOpacity="0.85" fontWeight="600">1.5k+</tspan>
+        <tspan fill="currentColor" fillOpacity="0.5"> websites audited</tspan>
+      </text>
+      <rect x="244" y="4" width="68" height="16" rx="8" fill={WARN} />
+      <text x="278" y="15" textAnchor="middle" fontSize="8.5" fontWeight="600" fill="var(--card)" style={{ fontFamily: FONT }}>21 mistakes</text>
       {dots}
       <circle cx={lens.x} cy={lens.y} r={lens.r} fill="var(--card)" stroke="currentColor" strokeOpacity="0.55" strokeWidth="2" />
       {close.map((d, i) =>
