@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { PostVisual } from "@/components/ui/post-visual";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -117,6 +118,10 @@ export default function WhyGeoMattersPost() {
                 )}
               </div>
             </header>
+
+            <figure className="mb-12">
+              <PostVisual slug="why-geo-matters" />
+            </figure>
 
             <div className="article-body flex flex-col gap-6">
               <p>
