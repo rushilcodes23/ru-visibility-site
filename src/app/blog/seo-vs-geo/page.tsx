@@ -1,4 +1,5 @@
 import { compactCount } from "@/lib/format";
+import { PostVisual } from "@/components/ui/post-visual";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -120,6 +121,10 @@ export default function SeoVsGeoPost() {
                 <span>{READ_MINUTES} min read</span>
               </div>
             </header>
+
+            <figure className="mb-12">
+              <PostVisual slug="seo-vs-geo" />
+            </figure>
 
             <div className="article-body flex flex-col gap-6">
               <p>
