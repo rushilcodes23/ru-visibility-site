@@ -1,4 +1,5 @@
 import { compactCount } from "@/lib/format";
+import { PostVisual } from "@/components/ui/post-visual";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -800,6 +801,10 @@ export default function SeoMistakesPost() {
             )}
           </div>
         </header>
+
+        <figure className="mb-12">
+          <PostVisual slug="seo-mistakes-from-1500-audits" />
+        </figure>
 
         <div className="article-body flex flex-col gap-6">
           <p>
