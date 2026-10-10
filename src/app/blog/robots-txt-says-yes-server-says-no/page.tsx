@@ -1,4 +1,5 @@
 import { compactCount } from "@/lib/format";
+import { PostVisual } from "@/components/ui/post-visual";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -142,6 +143,10 @@ export default function RobotsTxtVsServerPost() {
                 <span>{READ_MINUTES} min read</span>
               </div>
             </header>
+
+            <figure className="mb-12">
+              <PostVisual slug="robots-txt-says-yes-server-says-no" />
+            </figure>
 
             <div className="article-body flex flex-col gap-6">
               <p>
