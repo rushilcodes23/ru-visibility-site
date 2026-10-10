@@ -14,6 +14,7 @@ export const metadata = pageMetadata({
   description:
     "The 21 SEO mistakes that kept repeating across 1.5k+ real business websites, what each one costs, and the order I would fix them in.",
   type: "article",
+  image: "/covers/seo-mistakes-from-1500-audits.png",
 });
 
 /** Inline emphasis for the lines worth remembering. */
@@ -91,7 +92,7 @@ const postJsonLd = {
   },
   // Google recommends an image for article results; this is the same image
   // the page already uses for its link preview.
-  image: "https://ruvisibility.com/opengraph-image.png",
+  image: "https://ruvisibility.com/covers/seo-mistakes-from-1500-audits.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/seo-mistakes-from-1500-audits",

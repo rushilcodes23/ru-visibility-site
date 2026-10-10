@@ -9,6 +9,7 @@ export const metadata = pageMetadata({
   title: "Why GEO Matters — Ru Visibility",
   description: "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Rushil, founder of Ru Visibility, on why this matters now.",
   type: "article",
+  image: "/covers/why-geo-matters.png",
 });
 
 /** Inline emphasis for the lines worth remembering. Same treatment as the
@@ -57,7 +58,7 @@ const postJsonLd = {
   publisher: { "@type": "Organization", name: "Ru Visibility", logo: "https://ruvisibility.com/logo-mark.png" },
   // Google recommends an image for article results; this is the same image
   // the page already uses for its link preview.
-  image: "https://ruvisibility.com/opengraph-image.png",
+  image: "https://ruvisibility.com/covers/why-geo-matters.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/why-geo-matters",

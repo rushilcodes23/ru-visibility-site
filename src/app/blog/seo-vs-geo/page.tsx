@@ -19,6 +19,7 @@ export const metadata = pageMetadata({
   description:
     "What SEO and GEO mean for a business, how AI answers are changing the way customers find companies, and what is worth doing about it, in plain English.",
   type: "article",
+  image: "/covers/seo-vs-geo.png",
 });
 
 /** Same inline emphasis as the other posts. */
@@ -65,7 +66,7 @@ const postJsonLd = {
   description: metadata.description,
   author: { "@type": "Person", name: post.author, url: "https://ruvisibility.com/about" },
   publisher: { "@type": "Organization", name: "Ru Visibility", logo: "https://ruvisibility.com/logo-mark.png" },
-  image: "https://ruvisibility.com/opengraph-image.png",
+  image: "https://ruvisibility.com/covers/seo-vs-geo.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/seo-vs-geo",
