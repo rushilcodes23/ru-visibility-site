@@ -31,7 +31,12 @@ const PALETTES = {
 const FONT = "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-/** Drawing helpers, bound to one palette. */
+/**
+ * Drawing helpers, bound to one palette. Text sizes are set for the real card
+ * size: on a 1440px screen the homepage panel is about 244px wide, so the 320
+ * unit drawing shows at roughly three quarters size and a 12 unit label lands
+ * near 9px on screen.
+ */
 function kit(c) {
   return {
     surf: (x, y, w, h, r = 8) =>
@@ -39,18 +44,18 @@ function kit(c) {
     fill: (x, y, w, h, r = 6, o = 0.1) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${c.fg}" fill-opacity="${o}"/>`,
     bar: (x, y, w, o = 0.18, h = 3) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${c.fg}" fill-opacity="${o}"/>`,
     blueBar: (x, y, w, h = 3.5) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${c.blue}"/>`,
-    text: (x, y, t, { size = 9.5, color = c.muted, weight = 500, anchor = "start" } = {}) =>
+    text: (x, y, t, { size = 11, color = c.muted, weight = 500, anchor = "start" } = {}) =>
       `<text x="${x}" y="${y}" font-family="${FONT}" font-size="${size}" font-weight="${weight}" fill="${color}" text-anchor="${anchor}">${esc(t)}</text>`,
     check: (cx, cy, r = 7) =>
       `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${c.blue}"/><path d="M${cx - r * 0.42} ${cy + 0.2}l${r * 0.3} ${r * 0.3} ${r * 0.58} -${r * 0.62}" stroke="${c.card}" stroke-width="${Math.max(1.4, r * 0.24)}"/>`,
     warn: (cx, cy, r = 7) =>
       `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${c.warn}"/><path d="M${cx} ${cy - r * 0.45}v${r * 0.5}" stroke="${c.card}" stroke-width="${r * 0.26}"/><circle cx="${cx}" cy="${cy + r * 0.45}" r="${r * 0.13}" fill="${c.card}"/>`,
-    chip: (x, y, w, t, color = c.blue, h = 16) =>
+    chip: (x, y, w, t, color = c.blue, h = 18) =>
       `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${color}"/>` +
-      `<text x="${x + w / 2}" y="${y + h / 2 + 3.2}" font-family="${FONT}" font-size="8.8" font-weight="600" fill="${c.card}" text-anchor="middle">${esc(t)}</text>`,
-    outlineChip: (x, y, w, t, h = 16) =>
+      `<text x="${x + w / 2}" y="${y + h / 2 + 3.7}" font-family="${FONT}" font-size="10.5" font-weight="600" fill="${c.card}" text-anchor="middle">${esc(t)}</text>`,
+    outlineChip: (x, y, w, t, h = 18) =>
       `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" stroke="${c.fg}" stroke-opacity=".35"/>` +
-      `<text x="${x + w / 2}" y="${y + h / 2 + 3.2}" font-family="${FONT}" font-size="8.8" font-weight="500" fill="${c.muted}" text-anchor="middle">${esc(t)}</text>`,
+      `<text x="${x + w / 2}" y="${y + h / 2 + 3.7}" font-family="${FONT}" font-size="10.5" font-weight="500" fill="${c.muted}" text-anchor="middle">${esc(t)}</text>`,
     dots: (x, y) => [0, 1, 2].map((i) => `<circle cx="${x + i * 7}" cy="${y}" r="1.8" fill="${c.fg}" fill-opacity=".3"/>`).join(""),
     head: (x, y, dir = "right", color = c.fg, o = 0.5) => {
       const d = { right: `M${x - 5} ${y - 4}l5 4-5 4`, down: `M${x - 4} ${y - 5}l4 5 4-5`, left: `M${x + 5} ${y - 4}l-5 4 5 4` }[dir];
@@ -67,29 +72,29 @@ function kit(c) {
 const SCENES = {
   // AI Visibility (GEO): your business, named across the AI tools.
   geo(c, k) {
-    const engines = [["ChatGPT", 34], ["Gemini", 80], ["Perplexity", 126]];
+    const engines = [["ChatGPT", 32], ["Gemini", 80], ["Perplexity", 128]];
     return [
-      k.surf(18, 46, 118, 68),
-      `<rect x="30" y="60" width="14" height="14" rx="4" fill="${c.blue}"/>`,
-      k.text(52, 71, "Your business", { color: c.fg, weight: 600, size: 10 }),
-      k.bar(30, 86, 92), k.bar(30, 96, 70),
-      ...engines.map(([, y]) => k.line(`M138 80 C 160 80, 160 ${y}, 180 ${y}`, { o: 0.35, dash: true })),
-      ...engines.map(([name, y]) => k.surf(182, y - 13, 120, 26, 13) + k.text(196, y + 3.5, name, { color: c.fg, size: 9.8 }) + k.check(288, y, 6.5)),
+      k.surf(10, 44, 134, 72),
+      `<rect x="22" y="58" width="15" height="15" rx="4" fill="${c.blue}"/>`,
+      k.text(44, 70, "Your business", { color: c.fg, weight: 600, size: 12.5 }),
+      k.bar(22, 88, 104), k.bar(22, 99, 78),
+      ...engines.map(([, y]) => k.line(`M146 80 C 166 80, 166 ${y}, 184 ${y}`, { o: 0.35, dash: true })),
+      ...engines.map(([name, y]) => k.surf(186, y - 15, 124, 30, 15) + k.text(200, y + 4.3, name, { color: c.fg, size: 12 }) + k.check(294, y, 7)),
     ].join("");
   },
 
   // Technical SEO: the site's structure, crawled, with one broken page found.
   technical(c, k) {
-    const node = (x, y, w, t, ok = true) => k.surf(x, y, w, 22, 6) + k.text(x + w / 2, y + 14.5, t, { color: c.fg, size: 9.5, anchor: "middle" }) + (ok ? k.check(x + w, y, 5.5) : "");
+    const node = (x, y, w, t, ok = true) => k.surf(x, y, w, 26, 7) + k.text(x + w / 2, y + 17.2, t, { color: c.fg, size: 11.5, anchor: "middle" }) + (ok ? k.check(x + w, y, 6) : "");
     return [
-      node(130, 12, 60, "Home"),
-      k.line("M160 34 V 48 M64 48 H 256 M64 48 V 62 M160 48 V 62 M256 48 V 62", { o: 0.3 }),
-      node(24, 62, 80, "Services"), node(120, 62, 80, "About"), node(216, 62, 80, "Blog"),
-      k.line("M256 84 V 112", { o: 0.3, dash: true }),
-      `<rect x="216" y="112" width="80" height="22" rx="6" stroke="${c.warn}" stroke-dasharray="3 3"/>`,
-      k.text(256, 126.5, "Old page", { color: c.warn, size: 9.5, anchor: "middle", weight: 600 }),
-      k.warn(296, 112, 5.5),
-      k.text(206, 127, "Broken link", { color: c.warn, size: 9.5, anchor: "end", weight: 600 }),
+      node(126, 10, 68, "Home"),
+      k.line("M160 36 V 50 M62 50 H 258 M62 50 V 62 M160 50 V 62 M258 50 V 62", { o: 0.3 }),
+      node(18, 62, 88, "Services"), node(116, 62, 88, "About"), node(214, 62, 88, "Blog"),
+      k.line("M258 88 V 116", { o: 0.3, dash: true }),
+      `<rect x="214" y="116" width="88" height="26" rx="7" stroke="${c.warn}" stroke-dasharray="3 3"/>`,
+      k.text(258, 133.2, "Old page", { color: c.warn, size: 11.5, anchor: "middle", weight: 600 }),
+      k.warn(302, 116, 6),
+      k.text(204, 133.5, "Broken link", { color: c.warn, size: 11.5, anchor: "end", weight: 600 }),
     ].join("");
   },
 
@@ -97,93 +102,93 @@ const SCENES = {
   accessibility(c, k) {
     const items = [["Alt text", true], ["Contrast", true], ["Keyboard", true], ["Captions", false]];
     return [
-      k.surf(18, 18, 150, 124),
-      k.dots(30, 30),
-      k.fill(30, 42, 126, 44, 6, 0.08),
-      `<path d="M42 78 l14 -14 10 10 8 -8 14 12" stroke="${c.fg}" stroke-opacity=".35" stroke-width="1.3"/>`,
-      k.chip(118, 48, 30, "alt", c.blue, 14),
-      k.bar(30, 98, 110), k.bar(30, 108, 90),
-      `<rect x="30" y="120" width="56" height="12" rx="6" fill="${c.blue}" fill-opacity=".85"/>`,
-      k.text(186, 30, "Checks", { color: c.muted }),
-      ...items.map(([t, ok], i) => (ok ? k.check(194, 52 + i * 26, 6.5) : k.warn(194, 52 + i * 26, 6.5)) + k.text(208, 55.5 + i * 26, t, { color: ok ? c.fg : c.warn, size: 10, weight: ok ? 500 : 600 })),
+      k.surf(12, 16, 150, 128),
+      k.dots(24, 28),
+      k.fill(24, 40, 126, 46, 6, 0.08),
+      `<path d="M36 78 l14 -14 10 10 8 -8 14 12" stroke="${c.fg}" stroke-opacity=".35" stroke-width="1.3"/>`,
+      k.chip(108, 46, 36, "alt", c.blue, 17),
+      k.bar(24, 98, 110), k.bar(24, 108, 90),
+      `<rect x="24" y="122" width="58" height="13" rx="6.5" fill="${c.blue}" fill-opacity=".85"/>`,
+      k.text(182, 28, "Checks", { color: c.muted, size: 11 }),
+      ...items.map(([t, ok], i) => (ok ? k.check(190, 52 + i * 28, 7) : k.warn(190, 52 + i * 28, 7)) + k.text(205, 56.2 + i * 28, t, { color: ok ? c.fg : c.warn, size: 12, weight: ok ? 500 : 600 })),
     ].join("");
   },
 
   // Blog and content: a post that answers a real question, every month.
   content(c, k) {
-    const q = (y) => `<circle cx="58" cy="${y}" r="6" fill="${c.blue}"/>` + k.text(58, y + 3.2, "?", { color: c.card, size: 9, weight: 700, anchor: "middle" });
+    const q = (y) => `<circle cx="52" cy="${y}" r="7" fill="${c.blue}"/>` + k.text(52, y + 3.8, "?", { color: c.card, size: 10.5, weight: 700, anchor: "middle" });
     return [
-      k.surf(38, 12, 168, 136),
-      k.text(52, 30, "Blog post", { color: c.muted }),
-      k.bar(52, 40, 118, 0.7, 6),
-      q(62), k.blueBar(70, 60.5, 104, 4),
-      k.bar(52, 76, 136), k.bar(52, 86, 124), k.bar(52, 96, 130),
-      q(116), k.blueBar(70, 114.5, 90, 4),
-      k.bar(52, 130, 120),
-      k.outlineChip(220, 22, 80, "Every month"),
-      `<path d="M276 58 l12 12 -42 42 -15 4 4 -15z" fill="${c.fg}" fill-opacity=".12" stroke="${c.fg}" stroke-opacity=".45" stroke-width="1.2"/>`,
-      `<path d="M235 101 l11 11" stroke="${c.fg}" stroke-opacity=".45" stroke-width="1.2"/>`,
+      k.surf(30, 10, 176, 140),
+      k.text(44, 30, "Blog post", { color: c.muted, size: 11 }),
+      k.bar(44, 40, 126, 0.7, 6),
+      q(62), k.blueBar(66, 60.25, 112, 4.5),
+      k.bar(44, 78, 144), k.bar(44, 88, 130), k.bar(44, 98, 138),
+      q(118), k.blueBar(66, 116.25, 96, 4.5),
+      k.bar(44, 134, 128),
+      k.outlineChip(216, 18, 94, "Every month"),
+      `<path d="M280 58 l12 12 -42 42 -15 4 4 -15z" fill="${c.fg}" fill-opacity=".12" stroke="${c.fg}" stroke-opacity=".45" stroke-width="1.2"/>`,
+      `<path d="M239 101 l11 11" stroke="${c.fg}" stroke-opacity=".45" stroke-width="1.2"/>`,
     ].join("");
   },
 
   // Website design and build: the same site on desktop and phone.
   design(c, k) {
     return [
-      k.text(18, 14, "Desktop", { color: c.muted }),
-      k.surf(18, 20, 196, 122),
-      k.dots(30, 31),
-      k.fill(30, 42, 172, 40, 6, 0.08),
-      k.blueBar(42, 54, 80, 5), k.bar(42, 66, 110),
-      k.fill(30, 90, 54, 26, 5, 0.07), k.fill(89, 90, 54, 26, 5, 0.07), k.fill(148, 90, 54, 26, 5, 0.07),
-      k.chip(30, 122, 64, "SEO ready", c.blue, 14),
-      k.text(230, 30, "Phone", { color: c.muted }),
-      `<rect x="230" y="36" width="72" height="112" rx="12" fill="${c.fg}" fill-opacity=".05" stroke="${c.fg}" stroke-opacity=".28"/>`,
-      k.bar(254, 44, 24, 0.25),
-      k.fill(240, 56, 52, 30, 5, 0.08), k.blueBar(246, 66, 32, 4),
-      k.bar(240, 94, 52), k.bar(240, 104, 40), k.fill(240, 116, 52, 22, 5, 0.07),
+      k.text(14, 14, "Desktop", { color: c.muted, size: 11 }),
+      k.surf(14, 20, 200, 124),
+      k.dots(26, 31),
+      k.fill(26, 42, 176, 40, 6, 0.08),
+      k.blueBar(38, 54, 84, 5), k.bar(38, 66, 112),
+      k.fill(26, 90, 56, 24, 5, 0.07), k.fill(86, 90, 56, 24, 5, 0.07), k.fill(146, 90, 56, 24, 5, 0.07),
+      k.chip(26, 120, 78, "SEO ready", c.blue, 17),
+      k.text(230, 30, "Phone", { color: c.muted, size: 11 }),
+      `<rect x="230" y="36" width="76" height="112" rx="12" fill="${c.fg}" fill-opacity=".05" stroke="${c.fg}" stroke-opacity=".28"/>`,
+      k.bar(256, 44, 24, 0.25),
+      k.fill(240, 56, 56, 30, 5, 0.08), k.blueBar(246, 66, 34, 4),
+      k.bar(240, 94, 56), k.bar(240, 104, 42), k.fill(240, 116, 56, 22, 5, 0.07),
     ].join("");
   },
 
   // Website monetization: the step where visitors give up, found and fixed.
   monetization(c, k) {
-    const steps = [["Visit", 14], ["Product", 92], ["Cart", 170], ["Buy", 248]];
+    const steps = [["Visit", 8], ["Product", 88], ["Cart", 168], ["Buy", 248]];
     return [
       ...steps.map(([t, x]) =>
         (t === "Cart"
-          ? `<rect x="${x}" y="54" width="60" height="30" rx="7" fill="${c.blue}" fill-opacity=".12" stroke="${c.blue}" stroke-width="1.4"/>`
-          : k.surf(x, 54, 60, 30, 7)) + k.text(x + 30, 72.5, t, { color: t === "Cart" ? c.blue : c.fg, size: 10, weight: t === "Cart" ? 600 : 500, anchor: "middle" })),
-      ...[74, 152, 230].map((x) => k.line(`M${x + 2} 69 H ${x + 15}`, { o: 0.4 }) + k.head(x + 16, 69)),
-      k.chip(176, 26, 48, "Fix this", c.blue, 16),
-      k.line("M200 84 C 200 100, 210 108, 220 120", { color: c.warn, o: 1, dash: true, w: 1.5 }),
-      `<path d="M213 119 l7.5 1.5 -1.5 -7.5" stroke="${c.warn}" stroke-width="1.5"/>`,
-      k.text(222, 140, "Where visitors leave", { color: c.warn, size: 9.5, weight: 600, anchor: "middle" }),
+          ? `<rect x="${x}" y="52" width="64" height="34" rx="8" fill="${c.blue}" fill-opacity=".12" stroke="${c.blue}" stroke-width="1.4"/>`
+          : k.surf(x, 52, 64, 34, 8)) + k.text(x + 32, 73.3, t, { color: t === "Cart" ? c.blue : c.fg, size: 12, weight: t === "Cart" ? 600 : 500, anchor: "middle" })),
+      ...[72, 152, 232].map((x) => k.line(`M${x + 2} 69 H ${x + 13}`, { o: 0.4 }) + k.head(x + 14, 69)),
+      k.chip(168, 24, 64, "Fix this", c.blue, 18),
+      k.line("M200 86 C 200 102, 208 110, 216 120", { color: c.warn, o: 1, dash: true, w: 1.5 }),
+      `<path d="M209 119.5 l7.5 1.5 -1.5 -7.5" stroke="${c.warn}" stroke-width="1.5"/>`,
+      k.text(214, 142, "Where visitors leave", { color: c.warn, size: 11.5, weight: 600, anchor: "middle" }),
     ].join("");
   },
 
   // Digital marketing: ads, social and email, all bringing people to the site.
   marketing(c, k) {
-    const src = [["Ads", 34], ["Social", 80], ["Email", 126]];
+    const src = [["Ads", 32], ["Social", 80], ["Email", 128]];
     return [
-      ...src.map(([t, y]) => k.surf(18, y - 14, 92, 28, 14) + k.text(64, y + 3.5, t, { color: c.fg, size: 10, anchor: "middle" })),
+      ...src.map(([t, y]) => k.surf(12, y - 15, 98, 30, 15) + k.text(61, y + 4.3, t, { color: c.fg, size: 12, anchor: "middle" })),
       ...src.map(([, y]) => k.line(`M112 ${y} C 150 ${y}, 160 80, 192 80`, { o: 0.35, dash: true })),
       k.head(196, 80),
-      k.surf(200, 34, 104, 92),
-      k.dots(212, 46),
-      k.text(212, 70, "Your site", { color: c.blue, weight: 600, size: 10.5 }),
-      k.bar(212, 82, 78), k.bar(212, 92, 64), k.fill(212, 102, 46, 14, 7, 0.12),
+      k.surf(200, 32, 108, 96),
+      k.dots(212, 44),
+      k.text(212, 70, "Your site", { color: c.blue, weight: 600, size: 13 }),
+      k.bar(212, 84, 80), k.bar(212, 94, 66), k.fill(212, 106, 48, 14, 7, 0.12),
     ].join("");
   },
 
   // AI integration: one assistant behind a chatbot, reports and routine jobs.
   "ai-integration"(c, k) {
-    const sat = (x, y, w, t, sub) => k.surf(x, y, w, 40, 8) + k.text(x + 12, y + 17, t, { color: c.fg, size: 10, weight: 600 }) + k.text(x + 12, y + 30, sub, { color: c.muted, size: 8.6 });
+    const sat = (x, y, w, t, sub) => k.surf(x, y, w, 44, 9) + k.text(x + 12, y + 19, t, { color: c.fg, size: 12, weight: 600 }) + k.text(x + 12, y + 34, sub, { color: c.muted, size: 10 });
     return [
-      k.line("M136 80 H 112 M184 72 L 214 42 M184 88 L 214 118", { o: 0.35 }),
-      `<circle cx="160" cy="80" r="26" fill="${c.blue}" fill-opacity=".14" stroke="${c.blue}" stroke-width="1.4"/>`,
+      k.line("M134 80 H 120 M182 70 L 208 44 M182 90 L 208 116", { o: 0.35 }),
+      `<circle cx="160" cy="80" r="25" fill="${c.blue}" fill-opacity=".14" stroke="${c.blue}" stroke-width="1.4"/>`,
       k.spark(160, 80, 10),
-      sat(14, 60, 98, "Chatbot", "answers customers"),
-      sat(214, 22, 92, "Reports", "write themselves"),
-      sat(214, 98, 92, "Tasks", "run on their own"),
+      sat(6, 58, 114, "Chatbot", "answers customers"),
+      sat(208, 18, 106, "Reports", "write themselves"),
+      sat(208, 98, 106, "Tasks", "run on their own"),
     ].join("");
   },
 
@@ -191,103 +196,103 @@ const SCENES = {
   maintenance(c, k) {
     const jobs = ["Updates", "Backups", "Links", "Speed"];
     return [
-      k.surf(18, 18, 176, 124),
-      k.text(30, 36, "Site health", { color: c.muted }),
-      k.line("M30 92 H 82 L 92 70 L 104 112 L 114 80 L 122 92 H 182", { color: c.blue, o: 1, w: 1.8 }),
-      k.bar(30, 124, 152, 0.1, 6),
-      `<rect x="30" y="124" width="112" height="6" rx="3" fill="${c.blue}" fill-opacity=".6"/>`,
-      k.outlineChip(118, 26, 64, "Watching"),
-      ...jobs.map((t, i) => k.check(220, 40 + i * 27, 6.5) + k.text(234, 43.5 + i * 27, t, { color: c.fg, size: 10 })),
+      k.surf(12, 16, 184, 128),
+      k.text(24, 36, "Site health", { color: c.muted, size: 11 }),
+      k.line("M24 92 H 78 L 88 70 L 100 112 L 110 80 L 118 92 H 184", { color: c.blue, o: 1, w: 1.8 }),
+      k.bar(24, 126, 160, 0.1, 6),
+      `<rect x="24" y="126" width="118" height="6" rx="3" fill="${c.blue}" fill-opacity=".6"/>`,
+      k.outlineChip(110, 24, 76, "Watching"),
+      ...jobs.map((t, i) => k.check(218, 38 + i * 28, 7) + k.text(233, 42.2 + i * 28, t, { color: c.fg, size: 12 })),
     ].join("");
   },
 
   // Monthly reporting: what we did, what changed, what is next. In words.
   reporting(c, k) {
-    const arrow = (cx, cy, d) => `<circle cx="${cx}" cy="${cy}" r="7" fill="${c.fg}" fill-opacity=".14"/>` +
+    const arrow = (cx, cy, d) => `<circle cx="${cx}" cy="${cy}" r="7.5" fill="${c.fg}" fill-opacity=".14"/>` +
       (d === "up" ? `<path d="M${cx} ${cy + 3.5}v-7m-3 3l3-3 3 3" stroke="${c.fg}" stroke-opacity=".8" stroke-width="1.4"/>`
         : `<path d="M${cx - 3.5} ${cy}h7m-3-3l3 3-3 3" stroke="${c.fg}" stroke-opacity=".8" stroke-width="1.4"/>`);
     const rows = [["What we did", "check"], ["What changed", "up"], ["What is next", "next"]];
     return [
-      k.surf(40, 10, 240, 140),
-      k.text(56, 32, "Monthly report", { color: c.fg, size: 11, weight: 600 }),
-      k.bar(204, 27, 60, 0.12),
+      k.surf(26, 8, 268, 144),
+      k.text(42, 32, "Monthly report", { color: c.fg, size: 13, weight: 600 }),
+      k.bar(214, 27, 64, 0.12),
       ...rows.map(([t, kind], i) => {
-        const y = 58 + i * 32;
-        return (kind === "check" ? k.check(62, y, 7) : arrow(62, y, kind)) +
-          k.text(76, y + 3.5, t, { color: c.fg, size: 10 }) + k.bar(160, y - 4, 104) + k.bar(160, y + 4, 76);
+        const y = 60 + i * 32;
+        return (kind === "check" ? k.check(50, y, 7.5) : arrow(50, y, kind)) +
+          k.text(66, y + 4.2, t, { color: c.fg, size: 12 }) + k.bar(170, y - 4, 108) + k.bar(170, y + 4, 80);
       }),
     ].join("");
   },
 
   // Essentials: SEO and GEO worked on every month, side by side.
   essentials(c, k) {
-    const head = (x, a, b) => `<text x="${x}" y="22" font-family="${FONT}" font-size="9.5"><tspan fill="${c.blue}" font-weight="700">${a}</tspan><tspan fill="${c.muted}" font-weight="500"> · ${b}</tspan></text>`;
+    const head = (x, a, b) => `<text x="${x}" y="20" font-family="${FONT}" font-size="11"><tspan fill="${c.blue}" font-weight="700">${a}</tspan><tspan fill="${c.muted}" font-weight="500"> · ${b}</tspan></text>`;
     return [
-      head(18, "SEO", "Google"), head(166, "GEO", "AI answers"),
-      k.surf(18, 30, 136, 96),
-      k.fill(30, 40, 112, 12, 6, 0.08),
-      ...[62, 82, 102].map((y, i) => (i === 0 ? k.blueBar(30, y, 70, 4) : k.bar(30, y, 70, 0.3, 4)) + k.bar(30, y + 8, 104)),
-      k.surf(166, 30, 136, 96),
-      k.bar(178, 44, 96, 0.25),
-      `<rect x="178" y="60" width="10" height="10" rx="3" fill="${c.blue}"/>`,
-      k.text(194, 68.5, "Your business", { color: c.blue, weight: 600, size: 9.6 }),
-      k.check(290, 65, 6),
-      k.bar(178, 84, 104), k.bar(178, 96, 88), k.bar(178, 108, 96),
-      k.outlineChip(122, 136, 76, "Every month"),
+      head(12, "SEO", "Google"), head(164, "GEO", "AI answers"),
+      k.surf(12, 28, 144, 98),
+      k.fill(24, 38, 120, 12, 6, 0.08),
+      ...[60, 80, 100].map((y, i) => (i === 0 ? k.blueBar(24, y, 74, 4) : k.bar(24, y, 74, 0.3, 4)) + k.bar(24, y + 8, 110)),
+      k.surf(164, 28, 144, 98),
+      k.bar(176, 42, 100, 0.25),
+      `<rect x="176" y="57" width="12" height="12" rx="3.5" fill="${c.blue}"/>`,
+      k.text(194, 67.2, "Your business", { color: c.blue, weight: 600, size: 11.5 }),
+      k.check(294, 63, 6.5),
+      k.bar(176, 84, 110), k.bar(176, 96, 92), k.bar(176, 108, 100),
+      k.outlineChip(114, 136, 92, "Every month"),
     ].join("");
   },
 
   // Complete: every part of the work, handled.
   complete(c, k) {
-    const tiles = [["SEO & GEO", 36, 18], ["Accessibility", 164, 18], ["Maintenance", 36, 86], ["Content", 164, 86]];
+    const tiles = [["SEO & GEO", 26, 16], ["Accessibility", 164, 16], ["Maintenance", 26, 86], ["Content", 164, 86]];
     return tiles.map(([t, x, y]) =>
-      k.surf(x, y, 120, 56, 8) + k.text(x + 14, y + 24, t, { color: c.fg, size: 10.5, weight: 600 }) + k.bar(x + 14, y + 36, 78) + k.check(x + 120 - 14, y + 14, 6.5)
+      k.surf(x, y, 130, 58, 9) + k.text(x + 14, y + 25, t, { color: c.fg, size: 12.5, weight: 600 }) + k.bar(x + 14, y + 39, 80) + k.check(x + 130 - 14, y + 15, 7)
     ).join("");
   },
 
   // Custom: pick only the parts you need.
   custom(c, k) {
-    const tiles = [["Website", 24, 34, true], ["Local", 120, 34, true], ["Content", 216, 34, false], ["Speed", 24, 92, false], ["Store", 120, 92, false], ["Reports", 216, 92, true]];
+    const tiles = [["Website", 16, 32, true], ["Local", 116, 32, true], ["Content", 216, 32, false], ["Speed", 16, 92, false], ["Store", 116, 92, false], ["Reports", 216, 92, true]];
     return [
-      k.text(24, 22, "Pick only what you need", { color: c.muted }),
+      k.text(16, 20, "Pick only what you need", { color: c.muted, size: 11 }),
       ...tiles.map(([t, x, y, on]) =>
-        (on ? `<rect x="${x}" y="${y}" width="80" height="46" rx="8" fill="${c.blue}" fill-opacity=".12" stroke="${c.blue}" stroke-width="1.4"/>`
-          : `<rect x="${x}" y="${y}" width="80" height="46" rx="8" stroke="${c.fg}" stroke-opacity=".3" stroke-dasharray="4 4"/>`) +
-        k.text(x + 40, y + 27, t, { color: on ? c.blue : c.muted, size: 10, weight: on ? 600 : 500, anchor: "middle" }) +
-        (on ? k.check(x + 80, y, 6) : "")),
-      `<path d="M188 70 l0 20 5 -5 4 9 4 -2 -4 -9 7 0z" fill="${c.fg}" fill-opacity=".85" stroke="${c.card}" stroke-width="1"/>`,
+        (on ? `<rect x="${x}" y="${y}" width="88" height="48" rx="9" fill="${c.blue}" fill-opacity=".12" stroke="${c.blue}" stroke-width="1.4"/>`
+          : `<rect x="${x}" y="${y}" width="88" height="48" rx="9" stroke="${c.fg}" stroke-opacity=".3" stroke-dasharray="4 4"/>`) +
+        k.text(x + 44, y + 28.2, t, { color: on ? c.blue : c.muted, size: 12, weight: on ? 600 : 500, anchor: "middle" }) +
+        (on ? k.check(x + 88, y, 6.5) : "")),
+      `<path d="M190 70 l0 20 5 -5 4 9 4 -2 -4 -9 7 0z" fill="${c.fg}" fill-opacity=".85" stroke="${c.card}" stroke-width="1"/>`,
     ].join("");
   },
 
   // Website build: designed and coded, and fast on a phone from day one.
   build(c, k) {
     return [
-      k.surf(18, 22, 170, 116),
-      k.dots(30, 33),
-      k.text(32, 76, "</>", { color: c.blue, size: 22, weight: 700 }),
-      k.bar(84, 58, 88, 0.3, 4), k.bar(84, 70, 70, 0.18, 4), k.bar(84, 82, 80, 0.18, 4),
-      k.bar(32, 100, 140), k.bar(32, 112, 112), k.bar(32, 124, 126),
-      k.surf(200, 38, 102, 98),
-      `<path d="M220 108 A 31 31 0 0 1 282 108" stroke="${c.fg}" stroke-opacity=".18" stroke-width="7"/>`,
-      `<path d="M220 108 A 31 31 0 0 1 274 88" stroke="${c.blue}" stroke-width="7"/>`,
-      `<path d="M251 108 L 270 92" stroke="${c.fg}" stroke-opacity=".8" stroke-width="2.2"/><circle cx="251" cy="108" r="3.5" fill="${c.fg}" fill-opacity=".8"/>`,
-      k.text(251, 128, "Fast on phones", { color: c.fg, size: 9.6, anchor: "middle", weight: 600 }),
+      k.surf(12, 20, 176, 120),
+      k.dots(24, 31),
+      k.text(26, 76, "</>", { color: c.blue, size: 24, weight: 700 }),
+      k.bar(84, 56, 90, 0.3, 4), k.bar(84, 68, 72, 0.18, 4), k.bar(84, 80, 82, 0.18, 4),
+      k.bar(26, 100, 146), k.bar(26, 112, 116), k.bar(26, 124, 130),
+      k.surf(198, 34, 110, 106),
+      `<path d="M222 106 A 31 31 0 0 1 284 106" stroke="${c.fg}" stroke-opacity=".18" stroke-width="7"/>`,
+      `<path d="M222 106 A 31 31 0 0 1 276 86" stroke="${c.blue}" stroke-width="7"/>`,
+      `<path d="M253 106 L 272 90" stroke="${c.fg}" stroke-opacity=".8" stroke-width="2.2"/><circle cx="253" cy="106" r="3.5" fill="${c.fg}" fill-opacity=".8"/>`,
+      k.text(253, 129, "Fast on phones", { color: c.fg, size: 11.5, anchor: "middle", weight: 600 }),
     ].join("");
   },
 
   // Local and Maps: your listing on the map, with the buttons people use.
   local(c, k) {
     return [
-      k.surf(14, 12, 292, 136, 10),
-      k.line("M14 52 C 90 60, 150 30, 306 46 M14 118 C 110 108, 200 132, 306 112 M96 12 C 104 60, 88 104, 100 148 M226 12 C 218 52, 236 96, 222 148", { o: 0.16, w: 5 }),
-      k.text(26, 30, "Map results", { color: c.muted }),
-      `<path d="M110 40 c-11 0 -19 8 -19 18 c0 13 19 30 19 30 s19 -17 19 -30 c0 -10 -8 -18 -19 -18z" fill="${c.blue}"/><circle cx="110" cy="58" r="6.5" fill="${c.card}"/>`,
-      `<rect x="146" y="64" width="146" height="70" rx="9" fill="${c.card}" stroke="${c.fg}" stroke-opacity=".28"/>`,
-      `<rect x="158" y="76" width="12" height="12" rx="3.5" fill="${c.blue}"/>`,
-      k.text(176, 86, "Your business", { color: c.fg, size: 10, weight: 600 }),
-      k.bar(158, 98, 100),
-      k.outlineChip(158, 110, 62, "Directions"),
-      k.outlineChip(226, 110, 44, "Call"),
+      k.surf(10, 10, 300, 140, 10),
+      k.line("M10 52 C 90 60, 150 30, 310 46 M10 120 C 110 110, 200 134, 310 114 M92 10 C 100 60, 84 104, 96 150 M226 10 C 218 52, 236 96, 222 150", { o: 0.16, w: 5 }),
+      k.text(22, 30, "Map results", { color: c.muted, size: 11 }),
+      `<path d="M104 40 c-11 0 -19 8 -19 18 c0 13 19 30 19 30 s19 -17 19 -30 c0 -10 -8 -18 -19 -18z" fill="${c.blue}"/><circle cx="104" cy="58" r="6.5" fill="${c.card}"/>`,
+      `<rect x="136" y="60" width="164" height="78" rx="10" fill="${c.card}" stroke="${c.fg}" stroke-opacity=".28"/>`,
+      `<rect x="148" y="72" width="14" height="14" rx="4" fill="${c.blue}"/>`,
+      k.text(169, 83.5, "Your business", { color: c.fg, size: 12, weight: 600 }),
+      k.bar(148, 96, 110),
+      k.outlineChip(148, 108, 76, "Directions"),
+      k.outlineChip(230, 108, 52, "Call"),
     ].join("");
   },
 
@@ -295,15 +300,15 @@ const SCENES = {
   store(c, k) {
     const ev = ["View", "Add to cart", "Sale"];
     return [
-      k.surf(18, 14, 124, 132),
-      k.fill(30, 26, 100, 56, 6, 0.08),
-      `<path d="M44 74 l16 -16 12 12 10 -10 16 14" stroke="${c.fg}" stroke-opacity=".35" stroke-width="1.3"/>`,
-      k.bar(30, 92, 88, 0.6, 5), k.bar(30, 104, 60),
-      `<rect x="30" y="118" width="100" height="18" rx="9" fill="${c.blue}"/>`,
-      k.text(80, 130.5, "Add to cart", { color: c.card, size: 9, weight: 600, anchor: "middle" }),
-      k.surf(158, 30, 146, 100),
-      k.text(172, 50, "Tracking", { color: c.muted }),
-      ...ev.map((t, i) => k.check(180, 72 + i * 22, 6) + k.text(194, 75.5 + i * 22, t, { color: c.fg, size: 10 })),
+      k.surf(12, 12, 130, 136),
+      k.fill(24, 24, 106, 56, 6, 0.08),
+      `<path d="M38 72 l16 -16 12 12 10 -10 16 14" stroke="${c.fg}" stroke-opacity=".35" stroke-width="1.3"/>`,
+      k.bar(24, 92, 92, 0.6, 5), k.bar(24, 104, 62),
+      `<rect x="24" y="118" width="106" height="20" rx="10" fill="${c.blue}"/>`,
+      k.text(77, 132, "Add to cart", { color: c.card, size: 10.5, weight: 600, anchor: "middle" }),
+      k.surf(156, 26, 152, 108),
+      k.text(170, 47, "Tracking", { color: c.muted, size: 11 }),
+      ...ev.map((t, i) => k.check(178, 70 + i * 24, 7) + k.text(193, 74.2 + i * 24, t, { color: c.fg, size: 12 })),
     ].join("");
   },
 };
