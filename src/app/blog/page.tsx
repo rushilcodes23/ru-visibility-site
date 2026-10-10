@@ -23,8 +23,8 @@ const START_HERE = [
 /**
  * One post.
  *
- * The graphic is not decoration: PostVisual draws from that post's own
- * measured numbers. It is also what lets this index use the full width
+ * The graphic is one small drawing of that post's argument (PostVisual),
+ * not stock art. It is also what lets this index use the full width
  * honestly — a text-only card stretched across 1300px is just a long line,
  * which is why the previous version had to cap itself and left the sides
  * empty.
@@ -102,7 +102,8 @@ export default function BlogPage() {
               >
                 {N} audited sites
               </a>
-              . The charts on these cards are that data, not stock art.
+              . The pictures on these cards are drawn for each post, not
+              stock art.
             </p>
           </header>
 

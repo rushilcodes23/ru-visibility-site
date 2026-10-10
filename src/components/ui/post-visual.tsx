@@ -1,157 +1,165 @@
-import findings from "@/lib/research-findings.json";
-
 /**
- * The graphic on a post card.
+ * The picture on a post card, and the art in each post's social preview
+ * (public/covers/*.png is rendered from these, so the two always match).
  *
- * Every other blog in this category fills this slot with a stock photo or an
- * abstract gradient. Ours is drawn from the post's own numbers — the bars in
- * the audit card are the real measured shares from research-findings.json, so
- * the picture on the card is the finding, not decoration wrapped around it.
- * Re-aggregate and these redraw themselves.
- *
- * Pure SVG geometry, no images to load and nothing to go stale.
+ * One small drawing per post that states its argument in a single shape:
+ * no stock photo, no gradient blob, no people. Flat SVG in the page's own
+ * colours: `currentColor` for the neutral lines (so it follows light and dark
+ * mode), `--accent-line` for the thing that matters and `--cover-warn` for a
+ * refusal. Pure geometry, nothing to load.
  */
 
-const { universal, subsetOnly, crawlerBlocks } = findings;
+const FONT = "var(--font-space-grotesk), system-ui, sans-serif";
+const MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+const BLUE = "var(--accent-line)";
+const WARN = "var(--cover-warn)";
 
-/** The five most common problems, worst first. Real shares, real labels. */
-const BARS: { label: string; pct: number }[] = [
-  { label: "No independent mentions", pct: universal.noPressSection.sitesPct },
-  { label: "Nothing quotable", pct: Math.round((100 - universal.anyTable.sitesPct) * 10) / 10 },
-  { label: "Answers no questions", pct: Math.round((100 - universal.anyFaqBlock.sitesPct) * 10) / 10 },
-  { label: "Profiles not declared", pct: universal.noSameAs.sitesPct },
-  { label: "Pages competing", pct: subsetOnly.titleClash.sitesPct },
-];
-
-function AuditBars() {
-  const rowH = 26;
-  const gap = 8;
-  const labelW = 0;
-  // Bars scale into the space LEFT of the value column. Without this the
-  // 96.7% bar ran under its own number and the two overlapped.
-  const valueGutter = 52;
-  const trackW = 320 - labelW - valueGutter;
-  const h = BARS.length * rowH + (BARS.length - 1) * gap;
+/** robots.txt waves the crawler in; the server sends it back. */
+function RobotsVsServer() {
   return (
-    <svg
-      viewBox={`0 0 320 ${h}`}
-      className="h-full w-full"
-      preserveAspectRatio="xMidYMid meet"
-      role="img"
-      aria-label={`The five most common problems found, from ${BARS[0].pct}% down to ${BARS[BARS.length - 1].pct}% of sites`}
-    >
-      {BARS.map((b, i) => {
-        const y = i * (rowH + gap);
-        const w = (b.pct / 100) * trackW;
-        return (
-          <g key={b.label}>
-            {/* Track, so a short bar still reads against a measured width. */}
-            <rect
-              x={labelW} y={y} width={trackW} height={rowH} rx={4}
-              fill="currentColor" opacity={0.06}
-            />
-            <rect
-              x={labelW} y={y} width={w} height={rowH} rx={4}
-              fill="var(--accent-green)" opacity={0.85 - i * 0.11}
-            />
-            <text
-              x={labelW + 10} y={y + rowH / 2 + 4}
-              fontSize="11" fill="currentColor" opacity={0.85}
-              style={{ fontFamily: "var(--font-space-grotesk), system-ui, sans-serif" }}
-            >
-              {b.label}
-            </text>
-            <text
-              x={314} y={y + rowH / 2 + 4} textAnchor="end"
-              fontSize="11" fill="currentColor" opacity={0.6}
-              style={{
-                fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
-                fontVariantNumeric: "tabular-nums",
-              }}
-            >
-              {b.pct}%
-            </text>
-          </g>
-        );
-      })}
+    <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
+      aria-label="A robots.txt file that allows crawlers, and a server that refuses them with a 403">
+      {/* robots.txt */}
+      <rect x="14" y="22" width="104" height="96" rx="8" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
+      <text x="26" y="42" fontSize="9.5" fill="currentColor" fillOpacity="0.55" style={{ fontFamily: FONT }}>robots.txt</text>
+      <text x="26" y="66" fontSize="8.5" fill="currentColor" fillOpacity="0.8" style={{ fontFamily: MONO }}>User-agent: *</text>
+      <text x="26" y="82" fontSize="8.5" fill={BLUE} style={{ fontFamily: MONO }}>Allow: /</text>
+      <rect x="26" y="96" width="58" height="3" rx="1.5" fill="currentColor" fillOpacity="0.14" />
+      <circle cx="116" cy="24" r="10" fill={BLUE} />
+      <path d="M111.5 24.2l3 3 6-6.4" fill="none" stroke="var(--card)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+
+      {/* the crawler's trip: in on the dashed line, back on the warm one */}
+      <path d="M128 62 H 200" fill="none" stroke="currentColor" strokeOpacity="0.45" strokeDasharray="3 4" />
+      <path d="M196 58 l6 4 -6 4" fill="none" stroke="currentColor" strokeOpacity="0.55" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="160" cy="62" r="4.5" fill="currentColor" fillOpacity="0.8" />
+      <path d="M204 84 C 186 104, 160 104, 140 90" fill="none" stroke={WARN} strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M146 88.5 l-6.4 1.6 2.6 -6" fill="none" stroke={WARN} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+
+      {/* server */}
+      {[30, 58, 86].map((y) => (
+        <g key={y}>
+          <rect x="214" y={y} width="92" height="22" rx="5" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeOpacity="0.28" />
+          <circle cx="226" cy={y + 11} r="2.4" fill="currentColor" fillOpacity="0.35" />
+          <rect x="236" y={y + 9.5} width="40" height="3" rx="1.5" fill="currentColor" fillOpacity="0.16" />
+        </g>
+      ))}
+      <rect x="264" y="113" width="42" height="17" rx="8.5" fill={WARN} />
+      <text x="285" y="125" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--card)" style={{ fontFamily: FONT }}>403</text>
     </svg>
   );
 }
 
-/**
- * One question fanning out to the handful of businesses an AI names, with the
- * rest of the field left dark. That is the argument of the GEO post in one
- * shape: being listed is not the same as being named.
- */
-function AnswerFan() {
-  const origin = { x: 24, y: 70 };
-  // Deterministic, not random — a server/client mismatch here would hydrate
-  // into a different picture than the one that was rendered.
-  const targets = [
-    { y: 14, named: false }, { y: 34, named: false }, { y: 54, named: true },
-    { y: 74, named: true }, { y: 94, named: false }, { y: 114, named: false },
-    { y: 128, named: false },
+/** A list of links on one side, an answer that names someone on the other. */
+function SearchVsAnswer() {
+  return (
+    <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
+      aria-label="A search results list beside an AI answer that names one business">
+      <text x="16" y="16" fontSize="8.5" fill="currentColor" fillOpacity="0.5" style={{ fontFamily: FONT }}>Search</text>
+      <rect x="16" y="24" width="128" height="16" rx="8" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
+      <circle cx="28" cy="32" r="3.2" fill="none" stroke="currentColor" strokeOpacity="0.5" />
+      <path d="M30.4 34.4l2.4 2.4" stroke="currentColor" strokeOpacity="0.5" strokeLinecap="round" />
+      {[52, 74, 96, 118].map((y, i) => (
+        <g key={y}>
+          <rect x="16" y={y} width={[78, 64, 84, 58][i]} height="4.5" rx="2.25" fill={BLUE} fillOpacity="0.75" />
+          <rect x="16" y={y + 9} width={[118, 104, 112, 96][i]} height="3" rx="1.5" fill="currentColor" fillOpacity="0.16" />
+        </g>
+      ))}
+
+      <path d="M160 18 V 126" stroke="currentColor" strokeOpacity="0.1" />
+
+      <text x="176" y="16" fontSize="8.5" fill="currentColor" fillOpacity="0.5" style={{ fontFamily: FONT }}>AI answer</text>
+      <rect x="216" y="24" width="88" height="16" rx="8" fill="currentColor" fillOpacity="0.1" />
+      <rect x="226" y="30.5" width="60" height="3" rx="1.5" fill="currentColor" fillOpacity="0.35" />
+      <rect x="176" y="48" width="128" height="78" rx="10" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
+      <rect x="188" y="62" width="100" height="3" rx="1.5" fill="currentColor" fillOpacity="0.2" />
+      <rect x="188" y="76" width="34" height="9" rx="4.5" fill={BLUE} />
+      <rect x="228" y="79" width="62" height="3" rx="1.5" fill="currentColor" fillOpacity="0.2" />
+      <rect x="188" y="94" width="92" height="3" rx="1.5" fill="currentColor" fillOpacity="0.2" />
+      <rect x="188" y="106" width="70" height="3" rx="1.5" fill="currentColor" fillOpacity="0.2" />
+    </svg>
+  );
+}
+
+/** A field of sites, and a lens over a few of them. */
+function AuditLens() {
+  const cols = 24;
+  const rows = 9;
+  const lens = { x: 196, y: 64, r: 34 };
+  const dots = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = 22 + c * 11.6;
+      const y = 20 + r * 11.6;
+      if (Math.hypot(x - lens.x, y - lens.y) < lens.r + 4) continue;
+      dots.push(<circle key={`${r}-${c}`} cx={x} cy={y} r="1.7" fill="currentColor" fillOpacity="0.24" />);
+    }
+  }
+  // Inside the lens, the same sites up close: most fine, a few with a problem.
+  const close = [
+    { x: -14, y: -13, bad: false }, { x: 6, y: -15, bad: true }, { x: 20, y: 3, bad: false },
+    { x: -18, y: 7, bad: true }, { x: 1, y: 6, bad: false }, { x: -4, y: 22, bad: false }, { x: 16, y: 21, bad: true },
   ];
   return (
-    <svg
-      viewBox="0 0 320 140"
-      className="h-full w-full"
-      preserveAspectRatio="xMidYMid meet"
-      role="img"
-      aria-label="One question fanning out to seven businesses, of which two are named"
-    >
-      {targets.map((t, i) => (
-        <path
-          key={i}
-          d={`M ${origin.x} ${origin.y} C 140 ${origin.y}, 170 ${t.y}, 286 ${t.y}`}
-          fill="none"
-          stroke={t.named ? "var(--accent-green)" : "currentColor"}
-          strokeOpacity={t.named ? 0.9 : 0.16}
-          strokeWidth={t.named ? 1.6 : 1}
-        />
-      ))}
-      {targets.map((t, i) => (
-        <circle
-          key={`d${i}`} cx={292} cy={t.y} r={t.named ? 4 : 2.5}
-          fill={t.named ? "var(--accent-green)" : "currentColor"}
-          fillOpacity={t.named ? 1 : 0.22}
-        />
-      ))}
-      <circle cx={origin.x} cy={origin.y} r={5} fill="currentColor" fillOpacity={0.75} />
+    <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
+      aria-label="A grid of websites with a magnifying glass showing problems on some of them">
+      {dots}
+      <circle cx={lens.x} cy={lens.y} r={lens.r} fill="var(--card)" stroke="currentColor" strokeOpacity="0.55" strokeWidth="2" />
+      {close.map((d, i) =>
+        d.bad ? (
+          <g key={i}>
+            <circle cx={lens.x + d.x} cy={lens.y + d.y} r="6" fill={WARN} />
+            <path d={`M${lens.x + d.x - 2.2} ${lens.y + d.y - 2.2}l4.4 4.4m0 -4.4l-4.4 4.4`} stroke="var(--card)" strokeWidth="1.5" strokeLinecap="round" />
+          </g>
+        ) : (
+          <circle key={i} cx={lens.x + d.x} cy={lens.y + d.y} r="5" fill="currentColor" fillOpacity="0.28" />
+        )
+      )}
+      <path d={`M${lens.x + 25} ${lens.y + 25} L ${lens.x + 46} ${lens.y + 46}`} stroke="currentColor" strokeOpacity="0.55" strokeWidth="6" strokeLinecap="round" />
     </svg>
   );
 }
 
-/** Crawler access, as a grid: the share of sites each one cannot get into. */
-function CrawlerGrid() {
-  const rows = crawlerBlocks.slice(0, 8);
+/** One question, one answer, and the business it names. */
+function AnswerNamed() {
+  const rowsY = [52, 72, 92, 112];
+  const named = 1;
   return (
-    <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      {rows.map((b, i) => {
-        const cols = 20;
-        const lit = Math.round((b.combinedPct / 100) * cols);
-        return [...Array(cols)].map((_, c) => (
-          <rect
-            key={`${i}-${c}`}
-            x={c * 16} y={i * 17} width={11} height={11} rx={2}
-            fill={c < lit ? "var(--accent-green)" : "currentColor"}
-            fillOpacity={c < lit ? 0.8 : 0.08}
-          />
-        ));
-      })}
+    <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
+      aria-label="A customer's question and an AI answer that names one business out of four">
+      <rect x="16" y="44" width="96" height="40" rx="10" fill="currentColor" fillOpacity="0.1" />
+      <path d="M34 84 l-6 10 14 -10" fill="currentColor" fillOpacity="0.1" />
+      <rect x="28" y="56" width="70" height="3" rx="1.5" fill="currentColor" fillOpacity="0.4" />
+      <rect x="28" y="67" width="48" height="3" rx="1.5" fill="currentColor" fillOpacity="0.4" />
+
+      <path d="M120 64 H 142" stroke="currentColor" strokeOpacity="0.35" strokeDasharray="3 4" />
+      <path d="M139 60 l5 4 -5 4" fill="none" stroke="currentColor" strokeOpacity="0.45" strokeLinecap="round" strokeLinejoin="round" />
+
+      <rect x="150" y="18" width="154" height="110" rx="10" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
+      <rect x="164" y="32" width="96" height="3.5" rx="1.75" fill="currentColor" fillOpacity="0.3" />
+      {rowsY.map((y, i) => (
+        <g key={y}>
+          <rect x="164" y={y - 5} width="10" height="10" rx="3" fill={i === named ? BLUE : "currentColor"} fillOpacity={i === named ? 1 : 0.18} />
+          <rect x="182" y={y - 1.5} width={i === named ? 76 : [64, 0, 70, 56][i]} height="3" rx="1.5"
+            fill={i === named ? BLUE : "currentColor"} fillOpacity={i === named ? 0.9 : 0.18} />
+        </g>
+      ))}
+      <circle cx="282" cy={rowsY[named]} r="8" fill={BLUE} />
+      <path d={`M278.2 ${rowsY[named] + 0.2}l2.6 2.6 5-5.2`} fill="none" stroke="var(--card)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 const VARIANTS = {
-  "seo-mistakes-from-1500-audits": AuditBars,
-  "why-geo-matters": AnswerFan,
+  "robots-txt-says-yes-server-says-no": RobotsVsServer,
+  "seo-vs-geo": SearchVsAnswer,
+  "seo-mistakes-from-1500-audits": AuditLens,
+  "why-geo-matters": AnswerNamed,
 } as const;
 
 export function PostVisual({ slug }: { slug: string }) {
-  const Art = VARIANTS[slug as keyof typeof VARIANTS] ?? CrawlerGrid;
+  const Art = VARIANTS[slug as keyof typeof VARIANTS] ?? AuditLens;
   return (
-    <div className="post-visual">
+    <div className="post-visual" data-cover={slug}>
       <Art />
     </div>
   );
