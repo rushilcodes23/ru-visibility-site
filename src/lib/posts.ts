@@ -20,6 +20,15 @@ export type Post = {
 // Newest first — the blog index features POSTS[0].
 export const POSTS: Post[] = [
   {
+    slug: "robots-txt-says-yes-server-says-no",
+    title: "Your robots.txt Says Yes, but Your Server Says No: Why AI Crawlers Get Blocked",
+    short: "robots.txt says yes, the server says no",
+    excerpt:
+      "A robots.txt file can welcome AI crawlers while your server quietly turns them away. What 1.5k+ audits show about these hidden blocks, and how to check your own site in five minutes.",
+    author: "Rushil",
+    published: "2026-10-10",
+  },
+  {
     slug: "seo-vs-geo",
     title: "SEO vs GEO: How Search Is Changing for Businesses",
     short: "SEO vs GEO",
