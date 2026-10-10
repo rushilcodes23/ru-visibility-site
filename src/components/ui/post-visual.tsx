@@ -55,8 +55,11 @@ function RobotsVsServer() {
 function SearchVsAnswer() {
   return (
     <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
-      aria-label="A search results list beside an AI answer that names one business">
-      <text x="16" y="16" fontSize="8.5" fill="currentColor" fillOpacity="0.5" style={{ fontFamily: FONT }}>Search</text>
+      aria-label="SEO: a list of Google results. GEO: an AI answer that names one business">
+      <text x="16" y="16" fontSize="8.5" style={{ fontFamily: FONT }}>
+        <tspan fill={BLUE} fontWeight="600">SEO</tspan>
+        <tspan fill="currentColor" fillOpacity="0.5"> · Google results</tspan>
+      </text>
       <rect x="16" y="24" width="128" height="16" rx="8" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
       <circle cx="28" cy="32" r="3.2" fill="none" stroke="currentColor" strokeOpacity="0.5" />
       <path d="M30.4 34.4l2.4 2.4" stroke="currentColor" strokeOpacity="0.5" strokeLinecap="round" />
@@ -69,7 +72,10 @@ function SearchVsAnswer() {
 
       <path d="M160 18 V 126" stroke="currentColor" strokeOpacity="0.1" />
 
-      <text x="176" y="16" fontSize="8.5" fill="currentColor" fillOpacity="0.5" style={{ fontFamily: FONT }}>AI answer</text>
+      <text x="176" y="16" fontSize="8.5" style={{ fontFamily: FONT }}>
+        <tspan fill={BLUE} fontWeight="600">GEO</tspan>
+        <tspan fill="currentColor" fillOpacity="0.5"> · AI answer</tspan>
+      </text>
       <rect x="216" y="24" width="88" height="16" rx="8" fill="currentColor" fillOpacity="0.1" />
       <rect x="226" y="30.5" width="60" height="3" rx="1.5" fill="currentColor" fillOpacity="0.35" />
       <rect x="176" y="48" width="128" height="78" rx="10" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
