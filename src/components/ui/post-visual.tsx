@@ -139,7 +139,8 @@ function AnswerNamed() {
   const named = 1;
   return (
     <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
-      aria-label="A customer's question and an AI answer that names one business out of four">
+      aria-label="A customer asks an AI tool, and the answer names your business out of four">
+      <text x="16" y="36" fontSize="8.5" fill="currentColor" fillOpacity="0.5" style={{ fontFamily: FONT }}>A customer asks AI</text>
       <rect x="16" y="44" width="96" height="40" rx="10" fill="currentColor" fillOpacity="0.1" />
       <path d="M34 84 l-6 10 14 -10" fill="currentColor" fillOpacity="0.1" />
       <rect x="28" y="56" width="70" height="3" rx="1.5" fill="currentColor" fillOpacity="0.4" />
@@ -148,13 +149,17 @@ function AnswerNamed() {
       <path d="M120 64 H 142" stroke="currentColor" strokeOpacity="0.35" strokeDasharray="3 4" />
       <path d="M139 60 l5 4 -5 4" fill="none" stroke="currentColor" strokeOpacity="0.45" strokeLinecap="round" strokeLinejoin="round" />
 
+      <text x="150" y="12" fontSize="8.5" fill="currentColor" fillOpacity="0.5" style={{ fontFamily: FONT }}>AI answer</text>
       <rect x="150" y="18" width="154" height="110" rx="10" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
       <rect x="164" y="32" width="96" height="3.5" rx="1.75" fill="currentColor" fillOpacity="0.3" />
       {rowsY.map((y, i) => (
         <g key={y}>
           <rect x="164" y={y - 5} width="10" height="10" rx="3" fill={i === named ? BLUE : "currentColor"} fillOpacity={i === named ? 1 : 0.18} />
-          <rect x="182" y={y - 1.5} width={i === named ? 76 : [64, 0, 70, 56][i]} height="3" rx="1.5"
-            fill={i === named ? BLUE : "currentColor"} fillOpacity={i === named ? 0.9 : 0.18} />
+          {i === named ? (
+            <text x="182" y={y + 3} fontSize="8.5" fontWeight="600" fill={BLUE} style={{ fontFamily: FONT }}>Your business</text>
+          ) : (
+            <rect x="182" y={y - 1.5} width={[64, 0, 70, 56][i]} height="3" rx="1.5" fill="currentColor" fillOpacity={0.18} />
+          )}
         </g>
       ))}
       <circle cx="282" cy={rowsY[named]} r="8" fill={BLUE} />
