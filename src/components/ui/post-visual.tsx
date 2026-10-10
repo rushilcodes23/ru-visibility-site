@@ -18,7 +18,7 @@ const WARN = "var(--cover-warn)";
 function RobotsVsServer() {
   return (
     <svg viewBox="0 0 320 140" className="h-full w-full" preserveAspectRatio="xMidYMid meet" role="img"
-      aria-label="A robots.txt file that allows crawlers, and a server that refuses them with a 403">
+      aria-label="GPTBot is allowed by robots.txt, then refused by the server with a 403">
       {/* robots.txt */}
       <rect x="14" y="22" width="104" height="96" rx="8" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeOpacity="0.28" />
       <text x="26" y="42" fontSize="9.5" fill="currentColor" fillOpacity="0.55" style={{ fontFamily: FONT }}>robots.txt</text>
@@ -32,10 +32,12 @@ function RobotsVsServer() {
       <path d="M128 62 H 200" fill="none" stroke="currentColor" strokeOpacity="0.45" strokeDasharray="3 4" />
       <path d="M196 58 l6 4 -6 4" fill="none" stroke="currentColor" strokeOpacity="0.55" strokeLinecap="round" strokeLinejoin="round" />
       <circle cx="160" cy="62" r="4.5" fill="currentColor" fillOpacity="0.8" />
+      <text x="160" y="50" textAnchor="middle" fontSize="8.5" fill="currentColor" fillOpacity="0.6" style={{ fontFamily: FONT }}>GPTBot</text>
       <path d="M204 84 C 186 104, 160 104, 140 90" fill="none" stroke={WARN} strokeWidth="1.6" strokeLinecap="round" />
       <path d="M146 88.5 l-6.4 1.6 2.6 -6" fill="none" stroke={WARN} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
 
       {/* server */}
+      <text x="214" y="22" fontSize="9.5" fill="currentColor" fillOpacity="0.55" style={{ fontFamily: FONT }}>server</text>
       {[30, 58, 86].map((y) => (
         <g key={y}>
           <rect x="214" y={y} width="92" height="22" rx="5" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeOpacity="0.28" />
