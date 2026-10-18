@@ -209,6 +209,35 @@ const GROUPS: { title: string; terms: Term[] }[] = [
       },
     ],
   },
+  {
+    title: "Content and trust",
+    terms: [
+      {
+        id: "e-e-a-t",
+        term: "E-E-A-T",
+        definition: "Experience, expertise, authoritativeness and trust: the qualities Google asks its quality raters to look for in a page and in the people and business behind it.",
+      },
+      {
+        id: "scaled-content-abuse",
+        term: "Scaled content abuse",
+        definition: "Google's spam policy against producing many pages mainly to rank, with little value for readers, whether people or AI tools wrote them. It is judged page by page, not by the tool used.",
+        link: { href: "/answers/is-chatgpt-content-bad-for-seo", label: "Is ChatGPT content bad for SEO?" },
+      },
+      {
+        id: "entity",
+        term: "Entity",
+        definition: "A business, person or place that a search engine or AI tool recognises as one specific thing, because its name and details match across its website, profiles and listings.",
+        link: { href: "/answers/how-chatgpt-chooses-businesses-to-recommend", label: "How does ChatGPT decide which businesses to recommend?" },
+      },
+      {
+        id: "brand-mention",
+        term: "Brand mention",
+        definition: "Another site naming a business, with or without a link. Search engines and AI tools can read it as evidence that the business exists and that people talk about it.",
+        measured: `${u.noPressSection.sitesPct}% of the sites we checked showed no press or "as seen in" mentions on the pages we read.`,
+        link: { href: "/answers/how-chatgpt-chooses-businesses-to-recommend", label: "How does ChatGPT decide which businesses to recommend?" },
+      },
+    ],
+  },
 ];
 
 const ALL = GROUPS.flatMap((g) => g.terms);
