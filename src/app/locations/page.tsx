@@ -6,7 +6,9 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   path: "/locations",
   title: "Where We Work — US & India SEO/GEO | Ru Visibility",
-  description: "SEO and GEO visibility management for businesses in Dallas, Atlanta, Houston, Miami, Phoenix, Raipur, Jaipur, and beyond.",
+  // Names what the page is ("where we work", US and India) and the one thing
+  // it has that no other agency's city list does: local audit figures.
+  description: "Where we work: SEO and GEO for businesses in the US and India, with local audit figures for Dallas, Miami, Charlotte, Atlanta, Houston and Phoenix.",
 });
 
 export default function LocationsIndexPage() {
