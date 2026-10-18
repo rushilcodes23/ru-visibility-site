@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
+import { LOCATIONS, OTHER_AREAS, isIndexedCity } from "@/lib/locations";
 import { MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 
@@ -10,6 +10,11 @@ export const metadata = pageMetadata({
   // it has that no other agency's city list does: local audit figures.
   description: "Where we work: SEO and GEO for businesses in the US and India, with local audit figures for Dallas, Miami, Charlotte, Atlanta, Houston and Phoenix.",
 });
+
+// Cities with real work behind them first (stable sort keeps the data file's
+// order within each group), so the pages with local figures get the
+// prominent links.
+const CITIES = [...LOCATIONS].sort((a, b) => Number(isIndexedCity(b)) - Number(isIndexedCity(a)));
 
 export default function LocationsIndexPage() {
   return (
@@ -30,7 +35,7 @@ export default function LocationsIndexPage() {
         <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">Cities we work in</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {LOCATIONS.map((l) => (
+          {CITIES.map((l) => (
             <a
               key={l.slug}
               href={`/locations/${l.slug}`}
@@ -41,6 +46,9 @@ export default function LocationsIndexPage() {
               <span className="text-sm text-muted-foreground">
                 {l.region}, {l.country}
               </span>
+              {l.basis === "campaign" && (
+                <span className="text-xs font-medium text-primary">Local audit figures</span>
+              )}
             </a>
           ))}
         </div>
