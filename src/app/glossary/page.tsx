@@ -129,6 +129,86 @@ const GROUPS: { title: string; terms: Term[] }[] = [
       },
     ],
   },
+  {
+    title: "Technical SEO",
+    terms: [
+      {
+        id: "robots-txt",
+        term: "robots.txt",
+        definition: "A plain text file at yourdomain.com/robots.txt that tells crawlers which parts of a site they may visit. Well-behaved crawlers follow it; it is a request, not a lock.",
+        measured: `${u.sitemapInRobots.sitesPct}% of the sites we checked used it to point crawlers to their sitemap.`,
+        link: { href: "/answers/check-if-ai-crawlers-can-access-your-website", label: "How to check if AI crawlers can access your website" },
+      },
+      {
+        id: "xml-sitemap",
+        term: "XML sitemap",
+        definition: "A file listing the pages a site wants search engines to find, with the dates they last changed. It helps them find pages; it does not make Google index them.",
+        measured: `${u.sitemapFound.sitesPct}% of the sites we checked had one we could find, and ${u.sitemapFoundNotDeclared.sitesPct}% had one their robots.txt never mentioned.`,
+        link: { href: "/answers/how-to-check-if-your-website-is-indexed", label: "How to check if your website is indexed" },
+      },
+      {
+        id: "noindex",
+        term: "noindex",
+        definition: "A rule in a page's code or headers telling search engines to leave the page out of their results. A noindexed page can't appear in Google, or in Google's AI Overviews.",
+        measured: `${u.anyNoindex.sitesPct}% of the sites we checked had at least one noindexed page, sometimes on purpose, often not.`,
+        link: { href: "/answers/why-is-my-website-not-showing-up-on-google", label: "Why is my website not showing up on Google?" },
+      },
+      {
+        id: "canonical-tag",
+        term: "Canonical tag",
+        definition: "A tag naming the preferred address of a page when the same content can load at several addresses, so search engines know which one to show.",
+        measured: `${u.missingCanonicalSomewhere.sitesPct}% of the sites we checked had a page with no canonical tag.`,
+        link: { href: "/blog/seo-mistakes-from-1500-audits", label: "SEO mistakes from 1.5k+ audits" },
+      },
+      {
+        id: "meta-description",
+        term: "Meta description",
+        definition: "The short summary written for a page, often shown under its link in search results. Google writes its own when the summary doesn't match what was searched.",
+        measured: `${u.missingMetaSomewhere.sitesPct}% of the sites we checked had a page with none.`,
+        link: { href: "/blog/seo-mistakes-from-1500-audits", label: "SEO mistakes from 1.5k+ audits" },
+      },
+      {
+        id: "h1",
+        term: "H1 (main heading)",
+        definition: "The main heading of a page. Google is fine with more than one; what matters is that the main heading says what the page is about.",
+        measured: `${u.missingH1Somewhere.sitesPct}% of the sites we checked had a page with no H1 at all.`,
+        link: { href: "/blog/seo-mistakes-from-1500-audits", label: "SEO mistakes from 1.5k+ audits" },
+      },
+      {
+        id: "nosnippet",
+        term: "nosnippet and max-snippet",
+        definition: "Rules that stop or limit how much of a page Google may quote. Google's documentation says they also limit using the page as input for AI Overviews and AI Mode.",
+        link: { href: "/answers/how-to-appear-in-google-ai-overviews", label: "How do I appear in Google AI Overviews?" },
+      },
+      {
+        id: "javascript-rendering",
+        term: "JavaScript rendering",
+        definition: "Building a page's content in the browser with JavaScript instead of sending it ready-made from the server. Many AI crawlers read only the HTML they are sent.",
+        measured: `${u.jsDependent.sitesPct}% of the sites we checked depended on it for their main content.`,
+        link: { href: "/answers/do-ai-crawlers-render-javascript", label: "Do AI crawlers render JavaScript?" },
+      },
+      {
+        id: "structured-data",
+        term: "Structured data (schema markup)",
+        definition: "Code, usually JSON-LD, that states facts about a page in the shared schema.org vocabulary: who the business is, what a page offers, who wrote it.",
+        measured: `${u.anySchema.sitesPct}% of the sites we checked had some.`,
+        link: { href: "/answers/how-to-increase-ai-visibility", label: "How to increase your website's AI visibility" },
+      },
+      {
+        id: "sameas",
+        term: "sameAs",
+        definition: "A structured-data field listing a business's other official profiles, so a machine can confirm the website and those profiles describe the same business.",
+        measured: `${u.noSameAs.sitesPct}% of the sites we checked had none.`,
+        link: { href: "/answers/how-to-increase-ai-visibility", label: "How to increase your website's AI visibility" },
+      },
+      {
+        id: "llms-txt",
+        term: "llms.txt",
+        definition: "A proposed text file listing a site's key pages for AI tools. Google says its AI features need no new machine-readable or AI text files, so we don't count a missing one as a problem.",
+        link: { href: "/answers/is-geo-replacing-seo", label: "Is GEO replacing SEO?" },
+      },
+    ],
+  },
 ];
 
 const ALL = GROUPS.flatMap((g) => g.terms);
