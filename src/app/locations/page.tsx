@@ -66,14 +66,16 @@ export default function LocationsIndexPage() {
             What a city page covers
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
-            Each city page is written for that city. It is not the same page
-            with the name swapped out. That would be lazy, and search engines
-            spot it fast.
+            The pages marked &ldquo;Local audit figures&rdquo; show what we
+            measured on that city&apos;s business websites with our own tool:
+            how many we checked, how they scored on Google and on AI, and the
+            gaps that came up most. No other page has those numbers, because
+            nobody else ran that audit.
           </p>
           <p className="text-muted-foreground leading-relaxed mb-4">
-            On each one you will find what we actually do for businesses
-            there, why local search has shifted, and how to start. The tone
-            is plain. No jargon, no filler.
+            The other cities are markets we are starting in. Their pages are
+            short and say what that local economy runs on. They get figures of
+            their own once we have measured something there.
           </p>
           <p className="text-muted-foreground leading-relaxed">
             The work behind them does not change by city. We audit the site,
