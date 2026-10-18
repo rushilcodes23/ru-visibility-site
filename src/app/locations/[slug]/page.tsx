@@ -7,7 +7,6 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import ScrollReveal from "@/components/scroll-reveal";
-import { Bot, Globe, Accessibility, FileText } from "lucide-react";
 
 export function generateStaticParams() {
   return [...LOCATIONS.map((l) => ({ slug: l.slug })), { slug: OTHER_AREAS.slug }];
@@ -42,29 +41,6 @@ export async function generateMetadata({
   // is kept out of the index (see isIndexedCity).
   return isIndexedCity(loc) ? meta : { ...meta, robots: { index: false, follow: true } };
 }
-
-const WHAT_WE_DO = [
-  {
-    icon: Bot,
-    title: "AI visibility (GEO)",
-    body: "We ask ChatGPT, Gemini and Perplexity for a business like yours and see who they name. Then we work on why it is not you.",
-  },
-  {
-    icon: Globe,
-    title: "Technical SEO",
-    body: "The hidden faults that stop Google ranking you: missing headlines, pages that look like copies, no list of your pages, doors accidentally shut.",
-  },
-  {
-    icon: Accessibility,
-    title: "Accessibility scans",
-    body: "We test whether people with a disability can use your site. Real tests. We only mention legal risk if we have actually measured it.",
-  },
-  {
-    icon: FileText,
-    title: "Content and reporting",
-    body: "New pages written for your site each month, and a short update in plain words on what changed.",
-  },
-];
 
 export default async function LocationPage({
   params,
@@ -114,27 +90,22 @@ export default async function LocationPage({
                 {loc.sectors}
               </p>
             )}
-            <p className="text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-              The work is the same wherever you are. What changes is who you
-              are up against for the same searches. Everyone gets the same four
-              things, every month — not one report and then silence.
+            {/* One short paragraph, not the four service cards this used to
+                repeat on every city page: the same ~110 words on all 24 pages
+                was a large part of why they read as copies of each other, and
+                /services already shows the cards. */}
+            <p className="text-muted-foreground leading-relaxed max-w-2xl">
+              The work is the same wherever you are; what changes is who you
+              are up against for the same searches. Every month: we ask
+              ChatGPT, Gemini and Perplexity for a business like yours, fix
+              what stops Google and AI tools reading your site, scan it for
+              accessibility, and add pages written for it, with a short update
+              in plain words. The packages are on{" "}
+              <a href="/services" className="underline underline-offset-4 hover:text-foreground">
+                what we do
+              </a>
+              .
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {WHAT_WE_DO.map((item) => (
-                <div
-                  key={item.title}
-                  className="card-surface rounded-md p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02]"
-                >
-                  <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
-                    <item.icon className="w-6 h-6 stroke-1 text-primary" />
-                  </div>
-                  <h3 className="text-lg tracking-tight">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {item.body}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
         </ScrollReveal>
 
