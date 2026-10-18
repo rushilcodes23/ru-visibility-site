@@ -1,6 +1,7 @@
 "use server";
 
 import { formAllowed } from "@/lib/rate-limit";
+import { heardFrom } from "@/lib/heard-from";
 
 export type ContactFormState = {
   status: "idle" | "success" | "error";
@@ -77,6 +78,7 @@ async function deliverContactMessage(
   const email = line("email", 200);
   const phone = line("phone", 40);
   const message = field("message", 5000);
+  const heard = heardFrom(formData.get("heardFrom"));
 
   if (!name || !email || !message) {
     return { status: "error", message: "Please fill in your name, email, and message." };
@@ -95,6 +97,7 @@ async function deliverContactMessage(
       `Name: ${name}
 Email: ${email}
 Phone: ${phone || "(not provided)"}
+Heard about us from: ${heard || "(not provided)"}
 
 ${message}`
     )}`,
@@ -120,7 +123,7 @@ ${message}`
         to: [TO_EMAIL],
         reply_to: email,
         subject: `New message from ${name} via ruvisibility.com`,
-        text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone || "(not provided)"}\n\nMessage:\n${message}`,
+        text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone || "(not provided)"}\nHeard about us from: ${heard || "(not provided)"}\n\nMessage:\n${message}`,
       }),
     });
 

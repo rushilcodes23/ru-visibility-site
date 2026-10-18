@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { HeardFromField } from "@/components/ui/heard-from-field";
 import { Check } from "lucide-react";
 import { sendContactMessage, type ContactFormState } from "@/lib/send-contact-email";
 
@@ -64,6 +65,7 @@ export default function ContactForm() {
         <Label htmlFor="message">Message</Label>
         <Textarea id="message" name="message" required />
       </div>
+      <HeardFromField id="contact-heard-from" />
 
       {state.status === "error" && (
         <div role="alert" className="flex flex-col gap-2 rounded-lg border border-destructive/40 bg-destructive/5 p-3">
