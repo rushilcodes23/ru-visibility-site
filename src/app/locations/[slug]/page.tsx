@@ -24,8 +24,10 @@ export async function generateMetadata({
     return pageMetadata({
       path: `/locations/${OTHER_AREAS.slug}`,
       title: "Other Areas We Serve | Ru Visibility",
+      // Says "areas we serve" like the title: the audit found the title's
+      // subject in neither the description nor any heading.
       description:
-        "Not in one of our named cities? We work with businesses anywhere — same SEO and GEO visibility management, same process.",
+        "Other areas we serve: SEO and GEO for businesses outside our named cities, anywhere in the US, India and beyond. Same work, same process.",
     });
   }
 
@@ -83,7 +85,9 @@ export default async function LocationPage({
         <ScrollReveal delay={100}>
           <div className="mb-16">
             <h2 className="text-2xl tracking-tight mb-3 md:text-3xl">
-              What we actually do for {place} businesses
+              {loc
+                ? `What we actually do for ${place} businesses`
+                : "What we do in the other areas we serve"}
             </h2>
             {loc?.sectors && (
               <p className="text-foreground leading-relaxed mb-4 max-w-2xl font-medium">
