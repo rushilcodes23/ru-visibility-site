@@ -2,6 +2,7 @@
 
 import { formAllowed } from "@/lib/rate-limit";
 import { normalizeWebsite } from "@/lib/website-input";
+import { heardFrom } from "@/lib/heard-from";
 
 export type AuditRequestState = {
   status: "idle" | "success" | "error";
@@ -84,6 +85,7 @@ async function deliverAuditRequest(
     businessTypeRaw === "Something else" && businessTypeOther
       ? `Something else — ${businessTypeOther}`
       : businessTypeRaw;
+  const heard = heardFrom(formData.get("heardFrom"));
 
   if (!name || !email || !website) {
     return { status: "error", message: "Please fill in your name, email, and website." };
@@ -101,6 +103,7 @@ async function deliverAuditRequest(
     Email: email,
     Website: site,
     "Business type": businessType,
+    "Heard about us from": heard,
   });
   const undelivered = {
     status: "error" as const,
@@ -127,7 +130,7 @@ async function deliverAuditRequest(
         to: [TO_EMAIL],
         reply_to: email,
         subject: `Audit request: ${site} (${name})`,
-        text: `AUDIT REQUEST\n\nName: ${name}\nEmail: ${email}\nWebsite: ${site}\nBusiness type: ${businessType || "(not provided)"}\n\nRun: node audit.mjs "https://${site}"`,
+        text: `AUDIT REQUEST\n\nName: ${name}\nEmail: ${email}\nWebsite: ${site}\nBusiness type: ${businessType || "(not provided)"}\nHeard about us from: ${heard || "(not provided)"}\n\nRun: node audit.mjs "https://${site}"`,
       }),
     });
 

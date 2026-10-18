@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { SelectPlaceholder } from "@/components/ui/select-placeholder";
+import { HeardFromField } from "@/components/ui/heard-from-field";
 import { Check } from "lucide-react";
 import { sendAuditRequest, type AuditRequestState } from "@/lib/send-audit-request";
 
@@ -160,6 +161,8 @@ export default function AuditRequestForm() {
           </p>
         </div>
       )}
+
+      <HeardFromField id="audit-heard-from" />
 
       {state.status === "error" && (
         <div role="alert" className="flex flex-col gap-2 rounded-lg border border-destructive/40 bg-destructive/5 p-3">
