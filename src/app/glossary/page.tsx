@@ -18,7 +18,9 @@ export const metadata = pageMetadata({
 // to; when one of those changes, check the matching term here.
 const SITE = "https://ruvisibility.com";
 const AUDITED = compactCount(findings.corpus.uniqueDomains);
-const { scores, universal: u } = findings;
+const { scores, universal: u, aiCrawlerAccess: access } = findings;
+const blocked = (crawler: string) =>
+  findings.crawlerBlocks.find((c) => c.crawler === crawler)?.combinedPct;
 
 type Term = {
   id: string;
@@ -71,6 +73,59 @@ const GROUPS: { title: string; terms: Term[] }[] = [
         term: "AI visibility audit",
         definition: "A check of whether ChatGPT, Gemini, Perplexity and Google's AI answers can reach a website, understand it, and have reason to mention the business.",
         link: { href: "/answers/what-is-an-ai-visibility-audit", label: "What is an AI visibility audit?" },
+      },
+    ],
+  },
+  {
+    title: "AI crawlers",
+    terms: [
+      {
+        id: "ai-crawler",
+        term: "AI crawler",
+        definition: "A program that fetches web pages for an AI company: to train its models, to build a search index, or to read a page a user asked about. Each one announces itself by name.",
+        measured: `${access.disallowedInRobots.sitesPct}% of the sites we checked shut out an AI crawler in robots.txt.`,
+        link: { href: "/answers/check-if-ai-crawlers-can-access-your-website", label: "How to check if AI crawlers can access your website" },
+      },
+      {
+        id: "gptbot",
+        term: "GPTBot",
+        definition: "OpenAI's crawler for collecting training data. It is separate from OAI-SearchBot, the crawler that decides whether a site can appear in ChatGPT search.",
+        measured: `${blocked("GPTBot")}% of the sites we checked refused GPTBot.`,
+        link: { href: "/answers/what-is-gptbot", label: "What is GPTBot?" },
+      },
+      {
+        id: "oai-searchbot",
+        term: "OAI-SearchBot",
+        definition: "OpenAI's crawler that finds pages to show in ChatGPT search. Blocking it keeps a site out of those answers; blocking GPTBot does not.",
+        measured: `${blocked("OAI-SearchBot")}% of the sites we checked refused OAI-SearchBot.`,
+        link: { href: "/answers/what-is-gptbot", label: "What is GPTBot?" },
+      },
+      {
+        id: "claudebot",
+        term: "ClaudeBot, Claude-SearchBot and Claude-User",
+        definition: "Anthropic's three crawlers. ClaudeBot collects content that may be used for training, Claude-SearchBot indexes pages for Claude's search results, and Claude-User fetches a page when a user asks Claude a question.",
+        measured: `${blocked("ClaudeBot")}% of the sites we checked refused ClaudeBot, and ${blocked("Claude-SearchBot")}% refused Claude-SearchBot.`,
+        link: { href: "/answers/should-you-block-ai-crawlers", label: "Should you block AI crawlers?" },
+      },
+      {
+        id: "perplexitybot",
+        term: "PerplexityBot",
+        definition: "Perplexity's crawler that finds and links pages in Perplexity search; Perplexity says it is not used for training. Perplexity-User visits a page to answer a user's question.",
+        measured: `${blocked("PerplexityBot")}% of the sites we checked refused PerplexityBot.`,
+        link: { href: "/answers/check-if-ai-crawlers-can-access-your-website", label: "How to check if AI crawlers can access your website" },
+      },
+      {
+        id: "google-extended",
+        term: "Google-Extended",
+        definition: "A robots.txt setting, not a separate crawler. It controls whether Google may use a site for training and grounding Gemini, and Google says it does not affect a site's inclusion in Google Search.",
+        link: { href: "/answers/should-you-block-ai-crawlers", label: "Should you block AI crawlers?" },
+      },
+      {
+        id: "blocked-by-name",
+        term: "Blocked by name",
+        definition: "A server or firewall refusing a request because of the crawler name it carries, while serving the same request under another name. robots.txt can say yes while the server says no.",
+        measured: `${access.blockedByNameAtServer.sitesPct}% of the ${access.blockedByNameAtServer.denominator} sites we could test refused an AI crawler this way, against ${access.disallowedInRobots.sitesPct}% that shut one out in robots.txt.`,
+        link: { href: "/blog/robots-txt-says-yes-server-says-no", label: "Your robots.txt says yes, but your server says no" },
       },
     ],
   },
