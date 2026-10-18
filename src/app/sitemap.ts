@@ -98,6 +98,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ),
     entry("/research", 0.8, "src/app/research/page.tsx", "src/lib/research-findings.json"),
     entry("/answers", 0.6, "src/app/answers/page.tsx", "src/lib/answers.ts"),
+    // Its figures are read from the research data, like the answers'.
+    entry("/glossary", 0.6, "src/app/glossary/page.tsx", "src/lib/research-findings.json"),
     // One file per answer, so a page's lastmod moves only when that answer
     // (or the shared template, or the figures it quotes) actually changes.
     ...ANSWERS.map((a) =>

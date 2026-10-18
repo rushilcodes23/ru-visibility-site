@@ -48,6 +48,7 @@ const FILES = [
   "src/app/locations/[slug]/page.tsx",
   "src/lib/locations.ts",
   "src/app/answers/page.tsx",
+  "src/app/glossary/page.tsx",
   "src/lib/answers.ts",
   "src/components/answer-page.tsx",
   // Every answer is its own page file; picked up from the folder so a new
