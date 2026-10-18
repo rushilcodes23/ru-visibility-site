@@ -238,6 +238,29 @@ const GROUPS: { title: string; terms: Term[] }[] = [
       },
     ],
   },
+  {
+    title: "Accessibility and local",
+    terms: [
+      {
+        id: "wcag",
+        term: "WCAG",
+        definition: "The Web Content Accessibility Guidelines, the W3C standard an accessibility audit measures a website against.",
+        link: { href: "/answers/what-is-a-website-accessibility-audit", label: "What is a website accessibility audit?" },
+      },
+      {
+        id: "ada",
+        term: "ADA (for websites)",
+        definition: "The Americans with Disabilities Act. The US Justice Department says it covers the websites of businesses open to the public, without setting a detailed technical rule for them. General information, not legal advice.",
+        link: { href: "/answers/do-small-business-websites-need-to-be-ada-compliant", label: "Do small business websites need to be ADA compliant?" },
+      },
+      {
+        id: "service-area-business",
+        term: "Service-area business",
+        definition: "A business that serves customers where they are rather than at a shop or office. On Google Business Profile it can hide its address and list the areas it serves instead.",
+        link: { href: "/answers/what-is-a-service-area-business", label: "What is a service-area business?" },
+      },
+    ],
+  },
 ];
 
 const ALL = GROUPS.flatMap((g) => g.terms);
