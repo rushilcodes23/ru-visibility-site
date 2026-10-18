@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
+import { LOCATIONS, OTHER_AREAS, isIndexedCity } from "@/lib/locations";
 import { TESTIMONIALS } from "@/lib/testimonials";
 import { ANSWERS } from "@/lib/answers";
 import pageDates from "@/lib/page-dates.json";
@@ -54,7 +54,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "src/app/locations/[slug]/page.tsx",
     "src/lib/locations.ts",
   ];
-  const locationUrls = [...LOCATIONS.map((l) => l.slug), OTHER_AREAS.slug].map(
+  // Noindexed cities are left out: a sitemap URL that resolves to a noindex
+  // page is a contradictory signal (same reasoning as /testimonials below).
+  const locationUrls = [...LOCATIONS.filter(isIndexedCity).map((l) => l.slug), OTHER_AREAS.slug].map(
     (slug) => entry(`/locations/${slug}`, 0.6, ...locationSources)
   );
 
