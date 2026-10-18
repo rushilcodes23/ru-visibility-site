@@ -8,7 +8,7 @@ import findings from "@/lib/research-findings.json";
 
 export const metadata = pageMetadata({
   path: "/blog",
-  title: "Blog — SEO & GEO Insights | Ru Visibility",
+  title: "Blog — SEO & GEO Findings | Ru Visibility",
   description: "Real findings on AI visibility, SEO, and growing your business online — written by Ru Visibility, not recycled advice.",
 });
 
