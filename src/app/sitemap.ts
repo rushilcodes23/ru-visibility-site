@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
+import { LOCATIONS, OTHER_AREAS, isIndexedCity } from "@/lib/locations";
 import { TESTIMONIALS } from "@/lib/testimonials";
 import { ANSWERS } from "@/lib/answers";
 import pageDates from "@/lib/page-dates.json";
@@ -54,7 +54,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "src/app/locations/[slug]/page.tsx",
     "src/lib/locations.ts",
   ];
-  const locationUrls = [...LOCATIONS.map((l) => l.slug), OTHER_AREAS.slug].map(
+  // Noindexed cities are left out: a sitemap URL that resolves to a noindex
+  // page is a contradictory signal (same reasoning as /testimonials below).
+  const locationUrls = [...LOCATIONS.filter(isIndexedCity).map((l) => l.slug), OTHER_AREAS.slug].map(
     (slug) => entry(`/locations/${slug}`, 0.6, ...locationSources)
   );
 
@@ -86,8 +88,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // Same as above: its figures are read from the research data.
       "src/lib/research-findings.json",
     ),
+    entry(
+      "/blog/robots-txt-says-yes-server-says-no",
+      0.6,
+      "src/app/blog/robots-txt-says-yes-server-says-no/page.tsx",
+      "src/lib/posts.ts",
+      // Its figures are read from the research data too.
+      "src/lib/research-findings.json",
+    ),
     entry("/research", 0.8, "src/app/research/page.tsx", "src/lib/research-findings.json"),
     entry("/answers", 0.6, "src/app/answers/page.tsx", "src/lib/answers.ts"),
+    // Its figures are read from the research data, like the answers'.
+    entry("/glossary", 0.6, "src/app/glossary/page.tsx", "src/lib/research-findings.json"),
     // One file per answer, so a page's lastmod moves only when that answer
     // (or the shared template, or the figures it quotes) actually changes.
     ...ANSWERS.map((a) =>

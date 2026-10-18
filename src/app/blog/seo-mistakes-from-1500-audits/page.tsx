@@ -1,3 +1,5 @@
+import { compactCount } from "@/lib/format";
+import { PostVisual } from "@/components/ui/post-visual";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -11,8 +13,9 @@ export const metadata = pageMetadata({
   // search results, and a second phrasing gives the page another angle.
   title: "21 SEO Mistakes From 1,500+ Website Audits | Ru Visibility",
   description:
-    "The 21 SEO mistakes that kept repeating across 1,504 real business websites, what each one costs, and the order I would fix them in.",
+    "The 21 SEO mistakes that kept repeating across 1.5k+ real business websites, what each one costs, and the order I would fix them in.",
   type: "article",
+  image: "/covers/seo-mistakes-from-1500-audits.png",
 });
 
 /** Inline emphasis for the lines worth remembering. */
@@ -54,7 +57,7 @@ const { corpus, scores, universal, subsetOnly, crawlerBlocks, platforms, heading
 /** Heading stats for one detected platform, by name. */
 const plat = (name: string) => headingsByPlatform.find((p) => p.platform === name)!;
 
-const N = corpus.uniqueDomains.toLocaleString("en-US");
+const N = compactCount(corpus.uniqueDomains);
 /** A signal stored as a positive, reported as the problem it implies. */
 const inv = (k: keyof typeof universal) =>
   Math.round((100 - universal[k].sitesPct) * 10) / 10;
@@ -77,7 +80,7 @@ const postJsonLd = {
   "@type": "BlogPosting",
   headline: "I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often",
   description:
-    "The 21 problems that kept repeating across 1,504 audited business websites, with the measured numbers behind each one.",
+    "The 21 problems that kept repeating across 1.5k+ audited business websites, with the measured numbers behind each one.",
   author: {
     "@type": "Person",
     name: "Rushil",
@@ -90,7 +93,7 @@ const postJsonLd = {
   },
   // Google recommends an image for article results; this is the same image
   // the page already uses for its link preview.
-  image: "https://ruvisibility.com/opengraph-image.png",
+  image: "https://ruvisibility.com/covers/seo-mistakes-from-1500-audits.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/seo-mistakes-from-1500-audits",
@@ -156,8 +159,11 @@ const MISTAKES: Mistake[] = [
         </p>
         <p className="article-fix">
           <b>Fix</b> check
-          robots.txt first, because it is free. Then check what your CDN or
-          security layer is doing, which is where the real blocks live and
+          robots.txt first, because it is free. Then{" "}
+          <a href="/answers/does-cloudflare-block-ai-crawlers">
+            check what your CDN or security layer is doing
+          </a>
+          , which is where the real blocks live and
           where nobody thinks to look.
         </p>
       </>
@@ -795,6 +801,10 @@ export default function SeoMistakesPost() {
             )}
           </div>
         </header>
+
+        <figure className="mb-12">
+          <PostVisual slug="seo-mistakes-from-1500-audits" />
+        </figure>
 
         <div className="article-body flex flex-col gap-6">
           <p>

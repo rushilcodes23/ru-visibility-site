@@ -33,6 +33,7 @@ const FILES = [
   "src/app/blog/why-geo-matters/page.tsx",
   "src/app/blog/seo-vs-geo/page.tsx",
   "src/app/blog/seo-mistakes-from-1500-audits/page.tsx",
+  "src/app/blog/robots-txt-says-yes-server-says-no/page.tsx",
   "src/lib/posts.ts",
   "src/app/research/page.tsx",
   "src/lib/research-findings.json",
@@ -47,6 +48,7 @@ const FILES = [
   "src/app/locations/[slug]/page.tsx",
   "src/lib/locations.ts",
   "src/app/answers/page.tsx",
+  "src/app/glossary/page.tsx",
   "src/lib/answers.ts",
   "src/components/answer-page.tsx",
   // Every answer is its own page file; picked up from the folder so a new

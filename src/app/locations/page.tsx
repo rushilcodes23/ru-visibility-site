@@ -1,13 +1,20 @@
 import { Badge } from "@/components/ui/badge";
-import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
+import { LOCATIONS, OTHER_AREAS, isIndexedCity } from "@/lib/locations";
 import { MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   path: "/locations",
   title: "Where We Work — US & India SEO/GEO | Ru Visibility",
-  description: "SEO and GEO visibility management for businesses in Dallas, Atlanta, Houston, Miami, Phoenix, Raipur, Jaipur, and beyond.",
+  // Names what the page is ("where we work", US and India) and the one thing
+  // it has that no other agency's city list does: local audit figures.
+  description: "Where we work: SEO and GEO for businesses in the US and India, with local audit figures for Dallas, Miami, Charlotte, Atlanta, Houston and Phoenix.",
 });
+
+// Cities with real work behind them first (stable sort keeps the data file's
+// order within each group), so the pages with local figures get the
+// prominent links.
+const CITIES = [...LOCATIONS].sort((a, b) => Number(isIndexedCity(b)) - Number(isIndexedCity(a)));
 
 export default function LocationsIndexPage() {
   return (
@@ -28,7 +35,7 @@ export default function LocationsIndexPage() {
         <h2 className="text-3xl tracking-tight mb-6 md:text-4xl">Cities we work in</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {LOCATIONS.map((l) => (
+          {CITIES.map((l) => (
             <a
               key={l.slug}
               href={`/locations/${l.slug}`}
@@ -39,6 +46,9 @@ export default function LocationsIndexPage() {
               <span className="text-sm text-muted-foreground">
                 {l.region}, {l.country}
               </span>
+              {l.basis === "campaign" && (
+                <span className="text-xs font-medium text-primary">Local audit figures</span>
+              )}
             </a>
           ))}
         </div>
@@ -56,14 +66,16 @@ export default function LocationsIndexPage() {
             What a city page covers
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
-            Each city page is written for that city. It is not the same page
-            with the name swapped out. That would be lazy, and search engines
-            spot it fast.
+            The pages marked &ldquo;Local audit figures&rdquo; show what we
+            measured on that city&apos;s business websites with our own tool:
+            how many we checked, how they scored on Google and on AI, and the
+            gaps that came up most. No other page has those numbers, because
+            nobody else ran that audit.
           </p>
           <p className="text-muted-foreground leading-relaxed mb-4">
-            On each one you will find what we actually do for businesses
-            there, why local search has shifted, and how to start. The tone
-            is plain. No jargon, no filler.
+            The other cities are markets we are starting in. Their pages are
+            short and say what that local economy runs on. They get figures of
+            their own once we have measured something there.
           </p>
           <p className="text-muted-foreground leading-relaxed">
             The work behind them does not change by city. We audit the site,

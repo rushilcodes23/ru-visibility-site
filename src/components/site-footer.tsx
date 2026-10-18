@@ -16,6 +16,7 @@ const RESOURCE_LINKS = [
   { label: "Research", href: "/research" },
   { label: "Blog", href: "/blog" },
   { label: "Answers", href: "/answers" },
+  { label: "Glossary", href: "/glossary" },
   { label: "FAQ", href: "/faq" },
   { label: "Locations", href: "/locations" },
   { label: "Accessibility", href: "/accessibility" },

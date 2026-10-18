@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
@@ -32,7 +33,7 @@ const EVIDENCE = [
     href: "https://arxiv.org/abs/2311.09735",
   },
   {
-    stat: `1 in ${findings.corpus.uniqueDomains.toLocaleString("en-US")}`,
+    stat: `1 in ${compactCount(findings.corpus.uniqueDomains)}`,
     claim: "of the businesses we checked were ready for it",
     detail: `Those same sites score ${findings.scores.seo.mean} out of 100 on normal Google search. These are not bad websites.`,
     source: "Our own checks — see how we did it",
@@ -43,7 +44,9 @@ const EVIDENCE = [
 export const metadata = pageMetadata({
   path: "/why-it-matters",
   title: "Why SEO & GEO Matter for Your Business | Ru Visibility",
-  description: "Why AI visibility and search rankings matter now — and what it actually costs a business to stay invisible to both.",
+  // Leads with the page's strongest sourced figure (BrightLocal, cited in
+  // EVIDENCE above). Search Console: position 4.4, 1 click from 16.
+  description: "45% of shoppers used AI to find a local business last year. Why being found on Google and by AI tools matters now, and what being missed costs.",
 });
 
 const REASONS = [

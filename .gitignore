@@ -55,3 +55,8 @@ next-env.d.ts
 # carries the scoring internals and must never be committed.
 research-findings.csv
 research-findings.full.json
+
+# Local working notes, not published
+CLAUDE.md
+AGENTS.md
+.claude/

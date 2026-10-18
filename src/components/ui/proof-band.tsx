@@ -13,11 +13,13 @@ const { corpus } = findings;
  *
  * No rounding up. The audited figure is deduplicated by domain, which is why
  * it is lower than the raw report-file count, and it is read from the data
- * file rather than written here so it cannot drift as the corpus grows.
+ * file rather than written here so it cannot drift as the corpus grows. It is
+ * shown short ("1.5k+", always rounded down); the exact count is on /research.
  */
 const STATS = [
   {
     value: corpus.uniqueDomains,
+    compact: true,
     label: "websites audited",
     detail: "Real businesses, checked and scored with our own tool.",
     href: "/research",
@@ -58,7 +60,7 @@ export function ProofBand() {
                 className="group flex flex-col gap-2 rounded-md -m-2 p-2 transition-colors hover:bg-primary/5 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
               >
                 <span className="text-3xl md:text-5xl tracking-tighter font-medium tabular-nums transition-transform duration-300 group-hover:-translate-y-0.5">
-                  <CountUp value={s.value} suffix={s.suffix ?? ""} />
+                  <CountUp value={s.value} suffix={s.suffix ?? ""} compact={s.compact} />
                 </span>
                 <span className="text-sm font-medium leading-snug">{s.label}</span>
                 {/* Hidden on phones on purpose — four stat tiles plus four

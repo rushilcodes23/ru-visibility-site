@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import CountUp from "@/components/count-up";
 import findings from "@/lib/research-findings.json";
 
@@ -31,7 +32,7 @@ export function CityAuditStats({ slug, city }: { slug: string; city: string }) {
       <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
         We audited{" "}
         <strong className="text-foreground font-medium">
-          <CountUp value={data.sites} /> local dental practices
+          <CountUp value={data.sites} /> local business websites
         </strong>{" "}
         in {city} with our own tool. Not clients — just research, and none of
         them named here. They scored {data.seoMean} out of 100 on normal Google
@@ -61,7 +62,7 @@ export function CityAuditStats({ slug, city }: { slug: string; city: string }) {
         <a href="/research" className="underline underline-offset-4 text-foreground">
           research page
         </a>
-        , across {findings.corpus.uniqueDomains.toLocaleString("en-US")} sites.
+        , across {compactCount(findings.corpus.uniqueDomains)} sites.
       </p>
     </div>
   );

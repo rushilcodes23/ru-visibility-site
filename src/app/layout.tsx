@@ -74,6 +74,7 @@ const organizationJsonLd = {
     sameAs: [
       "https://www.linkedin.com/in/rushil-a-bajpai-21b99a3a9",
       "https://x.com/RushilA_Bajpai",
+      "https://github.com/rushilcodes23",
     ],
   },
   knowsAbout: [

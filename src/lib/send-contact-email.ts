@@ -1,6 +1,7 @@
 "use server";
 
 import { formAllowed } from "@/lib/rate-limit";
+import { heardFrom } from "@/lib/heard-from";
 
 export type ContactFormState = {
   status: "idle" | "success" | "error";
@@ -69,10 +70,15 @@ async function deliverContactMessage(
   // email body, and the message was the one uncapped field on the site.
   const field = (key: string, max: number) =>
     String(formData.get(key) || "").trim().slice(0, max);
-  const name = field("name", 100);
-  const email = field("email", 200);
-  const phone = field("phone", 40);
+  // Single-line fields: control characters (CR/LF in a name that lands in the
+  // subject line) become spaces. The message keeps its line breaks.
+  const line = (key: string, max: number) =>
+    field(key, max).replace(/[\u0000-\u001f\u007f]/g, " ").trim();
+  const name = line("name", 100);
+  const email = line("email", 200);
+  const phone = line("phone", 40);
   const message = field("message", 5000);
+  const heard = heardFrom(formData.get("heardFrom"));
 
   if (!name || !email || !message) {
     return { status: "error", message: "Please fill in your name, email, and message." };
@@ -91,6 +97,7 @@ async function deliverContactMessage(
       `Name: ${name}
 Email: ${email}
 Phone: ${phone || "(not provided)"}
+Heard about us from: ${heard || "(not provided)"}
 
 ${message}`
     )}`,
@@ -116,7 +123,7 @@ ${message}`
         to: [TO_EMAIL],
         reply_to: email,
         subject: `New message from ${name} via ruvisibility.com`,
-        text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone || "(not provided)"}\n\nMessage:\n${message}`,
+        text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone || "(not provided)"}\nHeard about us from: ${heard || "(not provided)"}\n\nMessage:\n${message}`,
       }),
     });
 

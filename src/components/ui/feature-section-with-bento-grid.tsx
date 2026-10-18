@@ -99,7 +99,7 @@ function Feature() {
             </div>
             <div className="flex gap-2 flex-col">
               <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-left">
-                Not just an audit. Ongoing work, every month.
+                Not just an audit. Agency work on your site, every month.
               </h2>
               <p className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-muted-foreground text-left">
                 We do not hand you a report and vanish. Every month we keep

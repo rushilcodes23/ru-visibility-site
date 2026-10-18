@@ -17,11 +17,14 @@ export function pageMetadata({
   title,
   description,
   type = "website",
+  image = "/opengraph-image.png",
 }: {
   path: string;
   title: string;
   description: string;
   type?: "website" | "article";
+  /** Social preview image. Posts pass their own cover; everything else keeps the site card. */
+  image?: string;
 }): Metadata {
   return {
     alternates: { canonical: path },
@@ -32,7 +35,7 @@ export function pageMetadata({
       description,
       url: `${SITE}${path}`,
       siteName: "Ru Visibility",
-      images: ["/opengraph-image.png"],
+      images: [image],
       locale: "en_US",
       type,
     },
@@ -40,7 +43,7 @@ export function pageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/opengraph-image.png"],
+      images: [image],
     },
   };
 }

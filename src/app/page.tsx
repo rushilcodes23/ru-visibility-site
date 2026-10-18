@@ -9,7 +9,11 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   path: "/",
   title: "Ru Visibility — SEO & GEO Agency for AI Visibility",
-  description: "Ongoing SEO and AI visibility (GEO) management for US and India businesses — so ChatGPT, Gemini, and Google can all find and recommend you.",
+  // Says "agency" in the same words as the title, so a searcher (and Google,
+  // deciding whether to keep this or write its own) can match the two.
+  // 129 characters: the 152-character first version still passed Google's
+  // ~985px snippet width in Screaming Frog's pixel check.
+  description: "Ru Visibility is an SEO and GEO agency for US and India businesses: ongoing work so Google, ChatGPT and Gemini can recommend you.",
 });
 
 // Homepage only, and deliberately minimal: name plus url, nothing invented.

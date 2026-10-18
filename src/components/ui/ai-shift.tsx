@@ -1,3 +1,4 @@
+import { compactCount } from "@/lib/format";
 import ScrollReveal from "@/components/scroll-reveal";
 import CountUp from "@/components/count-up";
 import findings from "@/lib/research-findings.json";
@@ -76,13 +77,13 @@ export function AiShift({ heading = "Why this matters now" }: { heading?: string
           <div className="card-surface rounded-md p-6 md:p-8 flex flex-col gap-3">
             <span className="text-4xl md:text-5xl tracking-tighter font-medium">
               <CountUp value={scores.geo.grades.A ?? 0} /> in{" "}
-              <CountUp value={corpus.uniqueDomains} />
+              <CountUp value={corpus.uniqueDomains} compact />
             </span>
             <p className="text-foreground font-medium">
               of the businesses we checked were actually ready
             </p>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              One site out of {corpus.uniqueDomains.toLocaleString("en-US")} scored
+              One site out of {compactCount(corpus.uniqueDomains)} scored
               an A for AI. Those same sites score {scores.seo.mean} out of 100
               on normal Google search. So these are not bad websites. They are
               good websites, built for a world that has moved on.

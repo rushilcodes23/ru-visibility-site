@@ -33,9 +33,11 @@ import storeDark from "@/assets/illustrations/store-dark.svg";
 import technicalLight from "@/assets/illustrations/technical-light.svg";
 import technicalDark from "@/assets/illustrations/technical-dark.svg";
 
-// One drawing per service, in a light and a dark palette (generated together,
-// so the two always match). Pictures of the kind of work only: no numbers,
-// names or scores anywhere in them, so none can read as a result we claim.
+// One drawing per service, in a light and a dark palette, both written by
+// scripts/gen-service-art.mjs so the two always match. Each carries a few words
+// of label saying what the service does (same style as the blog covers).
+// Pictures of the kind of work only: no numbers, business names or scores
+// anywhere in them, so none can read as a result we claim.
 const ART = {
   "accessibility": [accessibilityLight, accessibilityDark],
   "ai-integration": [aiIntegrationLight, aiIntegrationDark],
@@ -60,7 +62,7 @@ export type ArtName = keyof typeof ART;
 /**
  * A service illustration that follows the site theme. Both versions are lazy
  * <img>s, and a lazy image hidden with display:none is never fetched, so each
- * visitor downloads only the one their theme shows (about 1.5 KB). Decorative:
+ * visitor downloads only the one their theme shows (about 2.5 KB). Decorative:
  * the card heading beside it already says what it is, so alt is empty.
  *
  * getImageProps rather than <Image>: same server-rendered tag (lazy, async

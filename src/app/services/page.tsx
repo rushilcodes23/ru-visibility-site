@@ -251,6 +251,13 @@ const ACRONYMS: { term: string; means: string; where: string }[] = [
     where: "Covered by GEO and AEO. Not a separate job.",
   },
   {
+    // People search "what is seo geo aio" (Google autocomplete, 19 Oct 2026).
+    term: "AIO",
+    means:
+      "AI optimisation. One more umbrella name for getting found by AI tools, used the same way as AI SEO.",
+    where: "Covered by GEO and AEO. Not a separate job.",
+  },
+  {
     term: "E-E-A-T",
     means:
       "Experience, expertise, authoritativeness and trust. Google's own test of whether your site looks like it was written by someone who knows the subject.",

@@ -24,7 +24,7 @@ const STEPS = [
   {
     icon: ScanSearch,
     title: "2. Audit",
-    body: "We crawl your site the way Google and AI crawlers actually do. That covers technical SEO (headings, canonical tags, sitemaps, accidental crawl blocks), AI-specific visibility (llms.txt, crawler access, structured data), real accessibility scans using axe-core — not guesses — and basic trust signals like schema markup and contact completeness.",
+    body: "We crawl your site the way Google and AI crawlers actually do. That covers technical SEO (headings, canonical tags, sitemaps, accidental crawl blocks), AI-specific visibility (whether AI crawlers are let in by robots.txt and by the server itself, snippet rules that stop Google quoting a page, structured data), real accessibility scans using axe-core — not guesses — and basic trust signals like schema markup and contact completeness.",
   },
   {
     icon: ListChecks,

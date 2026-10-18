@@ -12,10 +12,12 @@
 - [Why Us](https://ruvisibility.com/why-us): What separates us — founder-run rather than an account-manager chain, ongoing work instead of a one-time report, real scan data only, and no guaranteed-ranking promises. Includes an explicit "who this is not for".
 - [Blog](https://ruvisibility.com/blog): Writing on AI visibility and SEO, published only when there is something tested to report.
 - [Answers](https://ruvisibility.com/answers): One short page per question business owners actually search (taken from Google autocomplete), covering AI visibility audits, getting recommended by ChatGPT, generative engine optimization, Google AI Overviews, SEO audit costs, ChatGPT and SEO, AI crawlers, not showing up on Google, ADA website accessibility, and Google Business Profiles without an office. Each answer cites its sources.
+- [Glossary](https://ruvisibility.com/glossary): Plain definitions of SEO, GEO and AEO terms (AI crawlers, robots.txt, canonical tags, structured data, E-E-A-T and more), each linked to the answer that explains it, with figures from our audit of 1.5k+ business websites.
 
 ## Research and writing
 
 - [What We Found Auditing 1,504 Websites](https://ruvisibility.com/research): Aggregate results from crawling and scoring 1,504 real business websites between 13 August and 20 September 2026. They average 83.4/100 on conventional SEO but 68.6/100 on AI visibility (GEO), and exactly one scored an A for AI visibility. Covers which AI crawlers sites block, schema gaps, and what the data does not show. No site is named.
+- [Your robots.txt Says Yes, but Your Server Says No: Why AI Crawlers Get Blocked](https://ruvisibility.com/blog/robots-txt-says-yes-server-says-no): Why a site can allow AI crawlers in robots.txt and still refuse them at the server, how often that happens across 1.5k+ audited sites (265 refuse at least one AI crawler by name at the server, against 59 in robots.txt), how to tell a name block from an address check, and a three-command test for your own site.
 - [SEO vs GEO: How Search Is Changing for Businesses](https://ruvisibility.com/blog/seo-vs-geo): For business owners: what SEO and GEO each mean, how they differ and overlap, an example of one business in Google search versus an AI answer, the gap between them across 1,504 audited sites, and five practical steps.
 - [I Audited 1,500+ Websites: The 21 SEO Mistakes I See Most Often](https://ruvisibility.com/blog/seo-mistakes-from-1500-audits): The 21 problems that kept repeating across those audits, what each one costs, and the order to fix them in.
 - [Why GEO Matters](https://ruvisibility.com/blog/why-geo-matters): Why being recommended by AI tools is a different problem from ranking on Google, and what to do about it.
@@ -26,7 +28,7 @@
 
 ## Locations
 
-Ru Visibility works primarily with businesses in the US and India — see the [full list of specific markets](https://ruvisibility.com/locations), including major US metros (Dallas, Atlanta, Houston, Miami, Phoenix, New York, Los Angeles, Chicago, Austin, San Francisco, Seattle, Denver, Washington D.C., Boston, Charlotte) and Indian cities (Raipur, Jaipur, Mumbai, Bangalore, Delhi, Chennai, Kolkata, Hyderabad, Pune). We also work with businesses outside these specific markets.
+Ru Visibility works with businesses in the US and India, and anywhere else — see [where we work](https://ruvisibility.com/locations). The city pages with real audit figures are [Dallas](https://ruvisibility.com/locations/dallas), [Miami](https://ruvisibility.com/locations/miami), [Charlotte](https://ruvisibility.com/locations/charlotte), [Atlanta](https://ruvisibility.com/locations/atlanta), [Houston](https://ruvisibility.com/locations/houston) and [Phoenix](https://ruvisibility.com/locations/phoenix), plus [Raipur](https://ruvisibility.com/locations/raipur) in India.
 
 ## Contact
 

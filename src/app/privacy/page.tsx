@@ -42,10 +42,14 @@ export default function PrivacyPage() {
               What we actually collect
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              One thing: whatever you type into the contact form. That is your
-              name, your email address, your message, and your phone number if
-              you choose to add one. The phone field is optional. The other
-              three are not, because we cannot reply without them.
+              One thing: whatever you type into one of our two forms. The
+              contact form takes your name, your email address, your message,
+              and your phone number if you choose to add one. The free
+              visibility check form takes your name, your email address, your
+              website and, if you pick one, your type of business. Both forms
+              also ask how you heard about us. That question and the phone
+              field are optional. The rest are not, because we cannot reply or
+              run the check without them.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
               The form also has one hidden field that you will never see. It

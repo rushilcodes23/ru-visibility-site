@@ -8,6 +8,7 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
 
@@ -35,6 +36,11 @@
   Cache-Control: public,max-age=604800,stale-while-revalidate=86400
 
 /logo-mark-220.png
+  Cache-Control: public,max-age=604800,stale-while-revalidate=86400
+
+# Post covers (social previews). Same rule as the logo: an unhashed name, so a
+# redrawn cover has to be able to reach people within a week.
+/covers/*
   Cache-Control: public,max-age=604800,stale-while-revalidate=86400
 
 /*.txt

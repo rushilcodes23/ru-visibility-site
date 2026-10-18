@@ -1,3 +1,5 @@
+import CountUp from "@/components/count-up";
+import { compactCount } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { AiShift } from "@/components/ui/ai-shift";
@@ -10,7 +12,8 @@ import findings from "@/lib/research-findings.json";
 // header of scripts/aggregate-findings.mjs.
 const { corpus, scores, crawlerBlocks, universal, subsetOnly } = findings;
 
-const N = corpus.uniqueDomains.toLocaleString("en-US");
+// Shown as "1.5k+" everywhere (rounded down, never more than the real count).
+const N = compactCount(corpus.uniqueDomains);
 
 // Title reads the count rather than hardcoding it. It said 1,503 while the
 // corpus had already moved on — the same drift the freshness rules in
@@ -152,7 +155,8 @@ export default function ResearchPage() {
             <div className="page-head flex flex-col gap-4 items-start max-w-3xl mb-12">
               <Badge>Research</Badge>
               <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
-                What we found auditing {N} websites.
+                What we found auditing{" "}
+                <CountUp value={corpus.uniqueDomains} compact /> websites.
               </h1>
               <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
                 We crawled and scored {N} real business websites with our own
@@ -215,8 +219,14 @@ export default function ResearchPage() {
                 Who they shut out
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
-                AI companies send small programs to read your website. You can
-                let them in or turn them away. Most sites turn away the ones
+                AI companies send small programs to read your website. You can{" "}
+                <a
+                  href="/answers/should-you-block-ai-crawlers"
+                  className="underline underline-offset-4 hover:text-foreground"
+                >
+                  let them in or turn them away
+                </a>
+                . Most sites turn away the ones
                 that only collect text, and let in the ones that actually
                 answer people — which is the sensible way round.
               </p>

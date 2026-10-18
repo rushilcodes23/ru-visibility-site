@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { PostVisual } from "@/components/ui/post-visual";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -9,6 +10,7 @@ export const metadata = pageMetadata({
   title: "Why GEO Matters — Ru Visibility",
   description: "GEO isn't a buzzword — it's whether AI tools recommend your business at all. Rushil, founder of Ru Visibility, on why this matters now.",
   type: "article",
+  image: "/covers/why-geo-matters.png",
 });
 
 /** Inline emphasis for the lines worth remembering. Same treatment as the
@@ -57,7 +59,7 @@ const postJsonLd = {
   publisher: { "@type": "Organization", name: "Ru Visibility", logo: "https://ruvisibility.com/logo-mark.png" },
   // Google recommends an image for article results; this is the same image
   // the page already uses for its link preview.
-  image: "https://ruvisibility.com/opengraph-image.png",
+  image: "https://ruvisibility.com/covers/why-geo-matters.png",
   datePublished: post.published,
   dateModified: post.updated ?? post.published,
   mainEntityOfPage: "https://ruvisibility.com/blog/why-geo-matters",
@@ -116,6 +118,10 @@ export default function WhyGeoMattersPost() {
                 )}
               </div>
             </header>
+
+            <figure className="mb-12">
+              <PostVisual slug="why-geo-matters" />
+            </figure>
 
             <div className="article-body flex flex-col gap-6">
               <p>
