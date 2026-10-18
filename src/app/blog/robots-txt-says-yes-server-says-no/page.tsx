@@ -169,7 +169,8 @@ export default function RobotsTxtVsServerPost() {
               <h2 id="two-doors">Two different doors</h2>
               <p>
                 Every crawler introduces itself by name. OpenAI&apos;s training
-                crawler calls itself GPTBot, Anthropic&apos;s calls itself
+                crawler calls itself{" "}
+                <a href="/answers/what-is-gptbot">GPTBot</a>, Anthropic&apos;s calls itself
                 ClaudeBot, Google&apos;s calls itself Googlebot. What happens
                 next depends on two separate things.
               </p>
