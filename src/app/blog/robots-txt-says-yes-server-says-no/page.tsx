@@ -16,11 +16,15 @@ import findings from "@/lib/research-findings.json";
 const SLUG = "robots-txt-says-yes-server-says-no";
 const TITLE = "Your robots.txt Says Yes, but Your Server Says No: Why AI Crawlers Get Blocked";
 
+// The headline stays as written on the page; search results cut anything past
+// ~60 characters, and Screaming Frog flagged the 78-character version.
+const SEARCH_TITLE = "Why AI Crawlers Get Blocked When robots.txt Says Yes";
+
 export const metadata = pageMetadata({
   path: `/blog/${SLUG}`,
-  title: TITLE,
+  title: SEARCH_TITLE,
   description:
-    "A robots.txt file can welcome AI crawlers while your server quietly turns them away. What 1.5k+ audits show about these hidden blocks, why they happen, and how to check your own site.",
+    "robots.txt can welcome AI crawlers while your server turns them away. What 1.5k+ audits show about these hidden blocks, and how to check your own site.",
   type: "article",
   image: `/covers/${SLUG}.png`,
 });
