@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { CityAuditStats } from "@/components/ui/city-audit-stats";
-import { LOCATIONS, OTHER_AREAS } from "@/lib/locations";
+import { LOCATIONS, OTHER_AREAS, isIndexedCity } from "@/lib/locations";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
@@ -33,11 +33,14 @@ export async function generateMetadata({
   // Kept deliberately short — a Screaming Frog crawl flagged descriptions
   // over 155 characters as truncating in search results, and the old
   // version pasted the full city intro in here.
-  return pageMetadata({
+  const meta = pageMetadata({
     path: `/locations/${loc.slug}`,
     title: `SEO & GEO in ${loc.city} | Ru Visibility`,
     description: `SEO and AI visibility (GEO) management for ${loc.city} businesses — so Google, ChatGPT, and Gemini can all find and recommend you.`,
   });
+  // follow stays on: the links on the page still count, only the page itself
+  // is kept out of the index (see isIndexedCity).
+  return isIndexedCity(loc) ? meta : { ...meta, robots: { index: false, follow: true } };
 }
 
 const WHAT_WE_DO = [
