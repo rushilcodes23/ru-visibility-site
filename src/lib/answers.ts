@@ -110,7 +110,7 @@ export const ANSWERS: Answer[] = [
   {
     slug: "how-to-get-chatgpt-to-recommend-your-business",
     seoTitle: "How to Get ChatGPT to Recommend Your Business",
-    metaDescription: "Nobody can make ChatGPT recommend you. You can make sure it can read your site, understands what you do and where, and finds others vouching for you.",
+    metaDescription: "Nobody can make ChatGPT recommend you. You can make sure it can read your site, knows what you do and where, and sees others vouch for you.",
     question: "How do I get ChatGPT to recommend my business?",
     description: "Nobody can make ChatGPT recommend you. You can make sure it can read your site, understands exactly what you do and where, and finds others vouching for you.",
     topic: "chatgpt",
