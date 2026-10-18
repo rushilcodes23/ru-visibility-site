@@ -89,11 +89,11 @@ export default function Page() {
         websites, measured both ways.
       </FromOurAudits>
 
-      <h2>Are LLMO and AI SEO something else?</h2>
+      <h2>Are LLMO, AIO and AI SEO something else?</h2>
       <p>
-        No. LLM optimization and AI SEO are other names for the same work as
-        GEO and AEO. A provider using a new name is not selling a different
-        thing.
+        No. LLM optimization, AI optimization (AIO) and AI SEO are other names
+        for the same work as GEO and AEO. A provider using a new name is not
+        selling a different thing.
       </p>
 
       <h2>Which one should a business work on first?</h2>
