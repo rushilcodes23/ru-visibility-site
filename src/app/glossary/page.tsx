@@ -52,8 +52,8 @@ const GROUPS: { title: string; terms: Term[] }[] = [
       },
       {
         id: "llmo",
-        term: "LLMO and AI SEO",
-        definition: "Other names for GEO and AEO. LLM optimization and AI SEO describe the same work under a newer label, not a separate service.",
+        term: "LLMO, AIO and AI SEO",
+        definition: "Other names for GEO and AEO. LLM optimization, AI optimization (AIO) and AI SEO describe the same work under newer labels, not a separate service.",
         link: { href: "/answers/seo-vs-geo-vs-aeo", label: "SEO vs GEO vs AEO" },
       },
       {
