@@ -344,6 +344,9 @@ export const ANSWERS: Answer[] = [
   {
     slug: "do-small-business-websites-need-to-be-ada-compliant",
     seoTitle: "Do Small Business Websites Need ADA Compliance?",
+    // Answer first. Search Console: position 2.6 and no clicks from five
+    // impressions with the old snippet, which never said yes or no.
+    metaDescription: "Usually, yes. The US Justice Department says the ADA covers websites of businesses open to the public, but sets no technical rule for them.",
     question: "Do small business websites have to be ADA compliant?",
     description: "The US Department of Justice says the ADA applies to the websites of businesses open to the public. It has no detailed technical rule for them.",
     topic: "accessibility",
