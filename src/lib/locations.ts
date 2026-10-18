@@ -28,6 +28,19 @@ export type Location = {
   basis?: "campaign" | "home";
 };
 
+/**
+ * Only a city with a basis is offered to search engines (see isIndexedCity).
+ * The others stay up for anyone who has the link, but are noindexed and left
+ * out of the sitemap: they are the same template with a different name, the
+ * exact shape Google's scaled-content policy targets, and they fail
+ * CONTENT_RULES.md's one hard rule (nothing on them that a prompt could not
+ * write). Search Console showed zero impressions for all of them (export of
+ * 9 Oct 2026). Six Indian cities now have real prospect lists (Hyderabad,
+ * Delhi, Bangalore, Chennai, Pune, Jaipur) — a page comes back into the index
+ * when it carries something real from that work, such as audit figures.
+ */
+export const isIndexedCity = (l: Location) => Boolean(l.basis);
+
 export const LOCATIONS: Location[] = [
   // --- US: original Tier 1 outreach markets (see ABOUT-RUSHIL.md) ---
   {
