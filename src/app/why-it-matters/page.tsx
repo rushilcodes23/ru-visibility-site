@@ -44,7 +44,9 @@ const EVIDENCE = [
 export const metadata = pageMetadata({
   path: "/why-it-matters",
   title: "Why SEO & GEO Matter for Your Business | Ru Visibility",
-  description: "Why AI visibility and search rankings matter now — and what it actually costs a business to stay invisible to both.",
+  // Leads with the page's strongest sourced figure (BrightLocal, cited in
+  // EVIDENCE above). Search Console: position 4.4, 1 click from 16.
+  description: "45% of shoppers used AI to find a local business last year. Why being found on Google and by AI tools matters now, and what being missed costs.",
 });
 
 const REASONS = [
