@@ -27,6 +27,11 @@ export default function AnswersPage() {
               one short page for each, built on what Google, OpenAI and others
               have published and on what we found auditing {AUDITED} business
               websites. No guarantees, because nobody can honestly give one.
+              New to the terms? The{" "}
+              <a href="/glossary" className="underline underline-offset-4 hover:text-foreground">
+                glossary
+              </a>{" "}
+              defines each one in a sentence or two.
             </p>
           </div>
 
