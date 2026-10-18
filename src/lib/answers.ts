@@ -170,6 +170,15 @@ export const ANSWERS: Answer[] = [
     related: ["is-generative-engine-optimization-real", "is-seo-worth-it-for-small-business", "how-to-appear-in-google-ai-overviews"],
     published: P,
   },
+  {
+    slug: "seo-vs-geo-vs-aeo",
+    seoTitle: "SEO vs GEO vs AEO: What's the Difference?",
+    question: "What is the difference between SEO, GEO and AEO?",
+    description: "SEO gets pages found and ranked. GEO gets a business named in AI answers. AEO shapes a page so an answer can be lifted from it.",
+    topic: "geo",
+    related: ["is-geo-replacing-seo", "what-is-generative-engine-optimization", "how-to-appear-in-google-ai-overviews"],
+    published: "2026-10-19",
+  },
 
   // Google AI Overviews
   {
