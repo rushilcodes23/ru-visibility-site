@@ -32,7 +32,7 @@ export function CityAuditStats({ slug, city }: { slug: string; city: string }) {
       <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
         We audited{" "}
         <strong className="text-foreground font-medium">
-          <CountUp value={data.sites} /> local dental practices
+          <CountUp value={data.sites} /> local business websites
         </strong>{" "}
         in {city} with our own tool. Not clients — just research, and none of
         them named here. They scored {data.seoMean} out of 100 on normal Google
