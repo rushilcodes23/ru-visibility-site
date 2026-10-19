@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Space_Grotesk, Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 import SiteNavbar from "@/components/site-navbar";
 import SiteFooter from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import ThemeToggle from "@/components/theme-toggle";
 import SiteBackground from "@/components/site-background";
 import { LOCATIONS } from "@/lib/locations";
-import "./globals.css";
+// globals.css is imported from template.tsx; see the note there.
 
 // Only confirmed facts — no address/founding date, those don't exist yet.
 // areaServed reflects Rushil's actual real target markets (see
@@ -157,10 +157,30 @@ const organizationJsonLd = {
 // links), 700 (47) and 900 (4, synthesized from 700 since the typeface stops
 // at 700). Zero at 600. Each declared weight adds @font-face rules to the
 // render-blocking stylesheet, so an unused one is pure cost.
-const spaceGrotesk = Space_Grotesk({
+//
+// Both faces are the Latin files Google Fonts serves (copyright and OFL
+// licence are in each file's metadata), loaded with next/font/local. Through
+// next/font/google every page also carried 26 @font-face rules for Cyrillic,
+// Greek, Vietnamese and extended Latin, ~8 KB that the inlined CSS repeats
+// three times per page. No page uses a character from those ranges (checked
+// across all built pages: the only character outside basic Latin is "→",
+// which none of the font files contained either). Same files, weights,
+// unicode-range and fallback metrics as before (fallbacks are in globals.css,
+// copied from what next/font/google generated). The family is named after the
+// variable here; nothing refers to it except through the CSS variable. next/font
+// only accepts literals, so the range is written out in both calls.
+const spaceGrotesk = localFont({
+  src: [
+    { path: "../assets/fonts/space-grotesk-latin.woff2", weight: "400", style: "normal" },
+    { path: "../assets/fonts/space-grotesk-latin.woff2", weight: "500", style: "normal" },
+    { path: "../assets/fonts/space-grotesk-latin.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-space-grotesk",
-  weight: ["400", "500", "700"],
-  subsets: ["latin"],
+  declarations: [
+    { prop: "unicode-range", value: "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD" },
+  ],
+  adjustFontFallback: false,
+  fallback: ["Space Grotesk Fallback"],
 });
 
 // Reading face for long-form articles only — see .article-body in
@@ -176,12 +196,19 @@ const spaceGrotesk = Space_Grotesk({
 // resolves to nothing, so every non-blog page is rendering in the browser's
 // default serif rather than anything anyone chose. That is a site-wide call
 // to make deliberately, not a side effect of a blog redesign.
-const sourceSerif = Source_Serif_4({
+const sourceSerif = localFont({
+  src: [
+    { path: "../assets/fonts/source-serif-4-latin-italic.woff2", weight: "400", style: "italic" },
+    { path: "../assets/fonts/source-serif-4-latin-italic.woff2", weight: "600", style: "italic" },
+    { path: "../assets/fonts/source-serif-4-latin.woff2", weight: "400", style: "normal" },
+    { path: "../assets/fonts/source-serif-4-latin.woff2", weight: "600", style: "normal" },
+  ],
   variable: "--font-reading",
-  weight: ["400", "600"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  display: "swap",
+  declarations: [
+    { prop: "unicode-range", value: "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD" },
+  ],
+  adjustFontFallback: false,
+  fallback: ["Source Serif Fallback"],
 });
 // Space Grotesk only ships up to weight 700 — the hero's font-weight:900
 // text always relied on the browser synthesizing bold from 700, both

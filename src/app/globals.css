@@ -4,6 +4,29 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Shown until the web fonts in layout.tsx arrive. The numbers are the ones
+   next/font/google generated for these two faces; next/font/local would
+   compute slightly different ones, and the text would sit differently for
+   that moment. No digit in the names: next/font writes them into the font
+   stack unquoted, and "Source Serif 4 Fallback" unquoted is invalid CSS that
+   drops the whole font-family declaration. */
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local(Arial);
+  ascent-override: 89.71%;
+  descent-override: 26.62%;
+  line-gap-override: 0%;
+  size-adjust: 109.69%;
+}
+@font-face {
+  font-family: "Source Serif Fallback";
+  src: local(Times New Roman);
+  ascent-override: 87.87%;
+  descent-override: 28.41%;
+  line-gap-override: 0%;
+  size-adjust: 117.91%;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
