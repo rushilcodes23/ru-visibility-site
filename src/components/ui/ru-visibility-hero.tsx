@@ -1,204 +1,14 @@
 // Deliberately NOT a client component. It has no state, no effects, no event
 // handlers — every animation here is CSS. Marking it "use client" shipped the
-// whole thing, including the large style string below, into the browser
+// whole thing, including what is now ru-visibility-hero.css, into the browser
 // bundle and made it part of hydration for no benefit. Lighthouse attributed
 // ~2.3s of script evaluation to the homepage bundle before this was removed.
 import Image from "next/image";
 import logoMark from "@/../public/logo-mark-220.webp";
-
-/* ─────────────────────────────────────────────
-   Self-contained styles, theme-aware. Monochrome
-   palette — matches the logo (pure black mark), no
-   orange. Navbar lives in ../site-navbar.tsx (site-wide
-   chrome, rendered from the root layout) — not
-   duplicated here.
-───────────────────────────────────────────── */
-
-function getStyles() {
-  return `
-
-
-  .qhero-heading-glow {
-    position: absolute;
-    top: 38%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(88vw, 54rem);
-    height: min(46vh, 22rem);
-    pointer-events: none;
-    /* Same reasoning as the corner glows: explicit alpha per stop, and a
-       final stop of / 0 rather than transparent, so the blue stays blue all
-       the way out instead of greying toward black. */
-    background: radial-gradient(
-      ellipse closest-side at center,
-      rgb(var(--qh-headingGlowRgb) / var(--qh-headingGlowA)) 0%,
-      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.80)) 24%,
-      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.50)) 45%,
-      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.24)) 63%,
-      rgb(var(--qh-headingGlowRgb) / calc(var(--qh-headingGlowA) * 0.07)) 79%,
-      rgb(var(--qh-headingGlowRgb) / 0) 93%
-    );
-  }
-  @media (max-width: 767px) {
-    .qhero-heading-glow {
-      width: 105vw;
-      height: min(34vh, 15rem);
-      opacity: 0.9;
-    }
-  }
-
-
-  .qhero-cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    width: 100%;
-  }
-  @media (max-width: 640px) {
-    /* Stacked and full width on phones. Side by side they wrapped mid-label
-       and each button was only as wide as its own text, which makes a small
-       target on a device you are using one-handed. */
-    .qhero-cta-row { flex-direction: column; align-items: stretch; }
-    .qhero-cta-row .qhero-btn { justify-content: center; width: 100%; }
-  }
-
-  .qhero-shell,
-  .qhero-shell *,
-  .qhero-shell *::before,
-  .qhero-shell *::after {
-    box-sizing: border-box;
-  }
-
-  /* The logo mark is black ink on transparent — inverted to white in dark
-     mode via CSS rather than a JS ternary, so it never flashes black. */
-  :root.dark .qhero-logo { filter: invert(1); }
-
-  .qhero-shell {
-    font-family: var(--font-space-grotesk), sans-serif;
-    /* Transparent: the animated grid is a site-wide layer behind this. */
-    color: var(--qh-shellText);
-  }
-
-  /* Glitch on "VISIBILITY" */
-  .qhero-glitch {
-    position: relative;
-    display: inline-block;
-    font-weight: 900;
-    color: var(--qh-glitchBase);
-    animation: qhero-color-toggle 7s infinite step-end;
-  }
-  .qhero-glitch::before,
-  .qhero-glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    opacity: 0;
-    background: var(--qh-shellBg);
-  }
-  .qhero-glitch::before { animation: qhero-glitch-1 7s infinite linear; z-index: 2; }
-  .qhero-glitch::after  { animation: qhero-glitch-2 7s infinite linear; z-index: 3; }
-
-  @keyframes qhero-color-toggle {
-    0%,  44%   { color: var(--qh-glitchBase); text-shadow: none; }
-    42.1%, 44.9% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
-    45%,  94%  { color: var(--qh-glitchMid); text-shadow: none; }
-    92.1%, 94.9% { text-shadow: -2px 0 #a3e635, 2px 0 #ef4444; }
-    95%, 100%  { color: var(--qh-glitchBase); text-shadow: none; }
-  }
-
-  @keyframes qhero-glitch-1 {
-    0%,   42%  { opacity: 0; transform: translate(0); }
-    42.1%      { opacity: 1; color: #00ffff; clip-path: polygon(0 0,100% 0,100% 45%,0 45%); transform: translate(-10px,-5px) skew(20deg); }
-    43%        { color: #ff00ff; transform: translate(10px,5px) skew(-20deg); clip-path: polygon(0 10%,100% 0,100% 30%,0 35%); }
-    44%        { color: var(--qh-glitchMid); transform: translate(-10px,5px); clip-path: polygon(0 40%,100% 50%,100% 80%,0 90%); }
-    44.9%      { opacity: 1; }
-    45%        { opacity: 0; }
-    45.1%, 92% { opacity: 0; transform: translate(0); }
-    92.1%      { opacity: 1; color: #00ffff; clip-path: polygon(0 60%,100% 55%,100% 100%,0 100%); transform: translate(10px,-5px) skew(10deg); }
-    93%        { color: #ff00ff; transform: translate(-5px,5px) skew(-10deg); clip-path: polygon(0 20%,100% 20%,100% 100%,0 80%); }
-    94.9%      { opacity: 1; }
-    95%        { opacity: 0; }
-  }
-  @keyframes qhero-glitch-2 {
-    0%,   42%  { opacity: 0; transform: translate(0); }
-    42.1%      { opacity: 1; color: #a3e635; clip-path: polygon(0 55%,100% 55%,100% 100%,0 100%); transform: translate(10px,5px); }
-    43%        { color: #ef4444; transform: translate(-10px,-5px) skew(10deg); clip-path: polygon(0 20%,100% 20%,100% 100%,0 80%); }
-    45%        { opacity: 0; }
-    45.1%, 92% { opacity: 0; transform: translate(0); }
-    92.1%      { opacity: 1; color: #a3e635; clip-path: polygon(0 0,100% 0,100% 45%,0 45%); transform: translate(-10px,-5px); }
-    93%        { color: #ef4444; transform: translate(10px,5px) skew(-20deg); clip-path: polygon(0 10%,100% 0,100% 30%,0 35%); }
-    95%        { opacity: 0; }
-  }
-
-  /* No entrance animation on the hero. A fade-up started every block at
-     opacity 0, and Chrome only counts an element as the Largest Contentful
-     Paint once it is visible — which, with the page's scripts still starting
-     up on a phone, was well after the text itself had arrived. Measured on
-     the live site (4x CPU, slow network, 5 runs each): LCP 2.2–4.5s with the
-     fade, equal to first paint (1.7–2.1s) without it. One run in five, the
-     glitching "VISIBILITY" was counted at 4.5s; Lighthouse kept reporting
-     that one (5.7s LCP, performance 49 on mobile). */
-
-  /* Tagline pulse */
-  @keyframes qhero-pulse {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.6; }
-  }
-  .qhero-tagline-pulse { animation: qhero-pulse 2s ease-in-out infinite; }
-
-  /* Hero CTA button */
-  .qhero-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 32px;
-    border-radius: 9999px;
-    background: linear-gradient(135deg, var(--qh-btnFrom), var(--qh-btnTo));
-    color: var(--qh-btnText);
-    font-weight: 700;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    font-family: var(--font-space-grotesk), sans-serif;
-    transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 10px 30px var(--qh-btnShadow);
-    position: relative;
-    z-index: 30;
-  }
-  .qhero-btn:hover,
-  .qhero-btn:focus-visible {
-    background: linear-gradient(135deg, var(--qh-btnHoverFrom), var(--qh-btnHoverTo));
-    transform: scale(1.05);
-    box-shadow: 0 14px 40px var(--qh-btnHoverShadow), 0 0 0 4px var(--qh-btnRing);
-    outline: none;
-  }
-  .qhero-btn:active { transform: scale(0.96); }
-  .qhero-btn svg { transition: transform 200ms; }
-  .qhero-btn:hover svg { transform: translateX(4px); }
-
-  /* Secondary hero CTA — outline, doesn't compete with the primary button */
-  .qhero-btn-outline {
-    /* Not transparent: the hero is the one section with no scrim over the
-       dot grid, so a see-through button put the dots behind its own label. */
-    background: color-mix(in srgb, var(--qh-shellBg) 78%, transparent);
-    color: var(--qh-outlineText);
-    border: 1.5px solid var(--qh-outlineBorder);
-    box-shadow: none;
-  }
-  .qhero-btn-outline:hover,
-  .qhero-btn-outline:focus-visible {
-    background: var(--qh-outlineHoverBg);
-    color: var(--qh-outlineText);
-    border-color: var(--qh-outlineHoverBorder);
-    transform: scale(1.05);
-    box-shadow: 0 0 0 4px var(--qh-btnRing);
-  }
-`;
-}
-
+// Theme-aware styles for the hero. A stylesheet rather than a <style> string
+// in the markup: the build minifies it, and the comments stay out of the page.
+// It was 7.2 KB, sent twice (once in the HTML, once in the page data).
+import "./ru-visibility-hero.css";
 
 /* ─────────────────────────────────────────────
    Root export
@@ -217,8 +27,6 @@ export default function RuVisibilityHero() {
         overflow: "hidden",
       }}
     >
-      <style>{getStyles()}</style>
-
       {/* A pool of light under the wordmark. The dot grid itself is
           site-wide now and lives in the root layout. */}
       <div aria-hidden="true" className="qhero-heading-glow" />
