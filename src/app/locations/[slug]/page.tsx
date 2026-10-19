@@ -57,7 +57,7 @@ export default async function LocationPage({
   const place = loc ? loc.city : "your area";
   const heading = loc
     ? `Visible in ${loc.city}, and everywhere your customers search.`
-    : "We work beyond our named cities too.";
+    : "We also serve areas beyond our named cities.";
   const badge = loc ? `Serving ${loc.city}, ${loc.region}` : "Other Areas We Serve";
   const intro = loc ? loc.intro : OTHER_AREAS.intro;
 

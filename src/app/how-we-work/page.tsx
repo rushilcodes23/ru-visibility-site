@@ -19,32 +19,32 @@ const STEPS = [
   {
     icon: Search,
     title: "1. AI Visibility Test",
-    body: "We run the same kind of question a real customer would type — into ChatGPT, Perplexity, Gemini, Claude, and Google's AI Overviews — and record whether your business shows up, gets recommended, or doesn't appear at all. This is the baseline: where you actually stand today, before we touch anything.",
+    body: "We run the same kind of question a real customer would type into ChatGPT, Perplexity, Gemini, Claude, and Google's AI Overviews, and record whether your business shows up, gets recommended, or doesn't appear at all. This is the baseline: where you actually stand today, before we touch anything.",
   },
   {
     icon: ScanSearch,
     title: "2. Audit",
-    body: "We crawl your site the way Google and AI crawlers actually do. That covers technical SEO (headings, canonical tags, sitemaps, accidental crawl blocks), AI-specific visibility (whether AI crawlers are let in by robots.txt and by the server itself, snippet rules that stop Google quoting a page, structured data), real accessibility scans using axe-core — not guesses — and basic trust signals like schema markup and contact completeness.",
+    body: "We crawl your site the way Google and AI crawlers actually do. That covers technical SEO (headings, canonical tags, sitemaps, accidental crawl blocks), AI-specific visibility (whether AI crawlers are let in by robots.txt and by the server itself, snippet rules that stop Google quoting a page, structured data), real accessibility scans using axe-core rather than guesses, and basic trust signals like schema markup and contact completeness.",
   },
   {
     icon: ListChecks,
     title: "3. Categorize",
-    body: "Every finding gets sorted by what's actually broken versus what's fine, and ranked by how much it matters. No wall of 200 minor warnings drowning out the five things that actually move the needle. No SEO or developer jargon — if a normal person or an AI model wouldn't recognize the term, we don't use it.",
+    body: "Every finding gets sorted by what's actually broken versus what's fine, and ranked by how much it matters. No wall of 200 minor warnings drowning out the five things that actually move the needle. No SEO or developer jargon: if a normal person or an AI model wouldn't recognize the term, we don't use it.",
   },
   {
     icon: FileText,
     title: "4. Report",
-    body: "You get a single, plain-English page you could hand to anyone on your team — no technical background required. It says what's wrong, why it matters, and what happens if it stays broken.",
+    body: "You get a single, plain-English page you could hand to anyone on your team, with no technical background required. It says what's wrong, why it matters, and what happens if it stays broken.",
   },
   {
     icon: Wrench,
     title: "5. Fix",
-    body: "Anything safe to automate — metadata, structured data, sitemap issues — we fix directly. Anything that needs a real judgment call — content rewrites, design decisions, business-specific choices — gets a clear, prioritized checklist instead, so nothing changes without your say-so.",
+    body: "Anything safe to automate (metadata, structured data, sitemap issues) we fix directly. Anything that needs a real judgment call (content rewrites, design decisions, business-specific choices) gets a clear, prioritized checklist instead, so nothing changes without your say-so.",
   },
   {
     icon: BarChart3,
     title: "6. Before / After",
-    body: "Once fixes are in, we re-run the exact same AI visibility test from step one and show you the actual difference — a side-by-side comparison using the same prompts, not a promise.",
+    body: "Once fixes are in, we re-run the exact same AI visibility test from step one and show you the actual difference: a side-by-side comparison using the same prompts, not a promise.",
   },
 ];
 
@@ -87,7 +87,7 @@ export default function HowWeWorkPage() {
             How long before you see results?
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-3 max-w-3xl">
-            Nobody can honestly guarantee AI or search rankings — AI models
+            Nobody can honestly guarantee AI or search rankings. AI models
             retrain regularly and Google's algorithm changes constantly, and
             that's true no matter who you hire. What we can tell you: AI
             visibility can shift faster than traditional SEO, because AI tools
@@ -97,7 +97,7 @@ export default function HowWeWorkPage() {
           </p>
           <p className="text-muted-foreground leading-relaxed max-w-3xl">
             We'll give you real numbers once we've run the before/after on
-            your own site — not a industry-wide average that may not apply to
+            your own site, not an industry-wide average that may not apply to
             you.
           </p>
         </div>

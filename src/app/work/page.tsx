@@ -21,10 +21,10 @@ export default function WorkPage() {
           <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left mb-8">
             We won't put a client's name, logo, or numbers on this page
             until we've actually done the work and they've agreed to be
-            shown. Once real results exist, they'll show up here — real
+            shown. Once real results exist, they'll show up here: real
             before-and-afters, not manufactured case studies. The example
             below shows the kind of change we're aiming for, clearly marked
-            as illustrative — not a real client.
+            as illustrative, not a real client.
           </p>
           <Button render={<a href="/contact">Be Our First</a>} />
         </div>
