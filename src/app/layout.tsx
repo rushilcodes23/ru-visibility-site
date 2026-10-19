@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import ThemeToggle from "@/components/theme-toggle";
 import SiteBackground from "@/components/site-background";
 import { LOCATIONS } from "@/lib/locations";
-import "./globals.css";
+// globals.css is imported from template.tsx; see the note there.
 
 // Only confirmed facts — no address/founding date, those don't exist yet.
 // areaServed reflects Rushil's actual real target markets (see
