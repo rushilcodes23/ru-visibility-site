@@ -298,6 +298,36 @@ export default function SiteBackground() {
     };
   }, [resolvedTheme]);
 
+  // Notes on the CSS below. They sit here, not inside the string, because
+  // everything in the string is sent in the HTML of every page.
+  //
+  // .qh-dots: the dot grid, as a CSS background rather than something the
+  // canvas redraws. It has to line up with the canvas exactly, because the
+  // moving particles and the lit hover/scan dots are still drawn on the canvas
+  // on top of it:
+  //   - canvas draws dots at x,y = 0, 30, 60 ... with radius BASE_R
+  //   - a radial-gradient's default centre is the middle of its tile, so
+  //     shifting the tile origin by half a step puts those centres back on the
+  //     same multiples of 30
+  // Keep SPACING and BASE_R in the effect above in step with these two
+  // numbers. The stops are feathered rather than a hard cut so the edge matches
+  // the antialiasing of a filled canvas arc.
+  //
+  // .qh-glow-a/b: alpha is set per stop from raw channels rather than by mixing
+  // toward transparent. Mixing a translucent colour with transparent in sRGB
+  // drags its channels toward black, so the blue greyed out as it faded — and
+  // because the base colour already carried alpha, each mix compounded it until
+  // nothing was left in light mode. The final stop is an explicit zero alpha
+  // for the same reason: transparent is rgba(0,0,0,0), and interpolating toward
+  // it tints the tail grey.
+  //
+  // The phone block: on a narrow, tall viewport the desktop proportions put
+  // both blobs in roughly the same place, and they merge into one muddy wash.
+  // Wider, shorter and pushed further off the edges keeps them reading as light
+  // rather than as shapes. They are also smaller and much weaker than desktop:
+  // at 110% wide and 0.9 opacity they filled most of a phone screen, and
+  // stacked with the heading glow and the dot grid the whole thing read as
+  // noise rather than as depth.
   return (
     <>
       <style>{`
@@ -306,17 +336,6 @@ export default function SiteBackground() {
 
         .qh-glow { position: absolute; pointer-events: none; }
 
-        /* The dot grid, as a CSS background rather than something the canvas
-           redraws. It has to line up with the canvas exactly, because the
-           moving particles and the lit hover/scan dots are still drawn on the
-           canvas on top of it:
-             - canvas draws dots at x,y = 0, 30, 60 ... with radius BASE_R
-             - a radial-gradient's default centre is the middle of its tile, so
-               shifting the tile origin by half a step puts those centres back
-               on the same multiples of 30
-           Keep SPACING and BASE_R in the effect above in step with these two
-           numbers. The stops are feathered rather than a hard cut so the edge
-           matches the antialiasing of a filled canvas arc. */
         .qh-dots {
           background-image: radial-gradient(
             circle,
@@ -327,14 +346,6 @@ export default function SiteBackground() {
           background-position: -15px -15px;
         }
 
-        /* Alpha is set per stop from raw channels rather than by mixing
-           toward transparent. Mixing a translucent colour with transparent
-           in sRGB drags its channels toward black, so the blue greyed out as
-           it faded — and because the base colour already carried alpha, each
-           mix compounded it until nothing was left in light mode. The final
-           stop is an explicit zero alpha for the same reason: transparent is
-           rgba(0,0,0,0),
-           and interpolating toward it tints the tail grey. */
         .qh-glow-a,
         .qh-glow-b {
           background: radial-gradient(
@@ -351,15 +362,7 @@ export default function SiteBackground() {
         .qh-glow-a { top: -25%; left: -15%; width: 70%; height: 70%; }
         .qh-glow-b { bottom: -25%; right: -15%; width: 60%; height: 60%; }
 
-        /* On a narrow, tall viewport those two proportions put both blobs in
-           roughly the same place, and they merge into one muddy wash. Wider,
-           shorter and pushed further off the edges keeps them reading as
-           light rather than as shapes. */
         @media (max-width: 767px) {
-          /* Smaller and much weaker than desktop. At 110% wide and 0.9
-             opacity these filled most of a phone screen, and stacked with
-             the heading glow and the dot grid the whole thing read as noise
-             rather than as depth. */
           .qh-glow-a {
             top: -10%; left: -25%;
             width: 80%; height: 26%;
