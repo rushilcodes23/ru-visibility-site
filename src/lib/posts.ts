@@ -20,6 +20,15 @@ export type Post = {
 // Newest first — the blog index features POSTS[0].
 export const POSTS: Post[] = [
   {
+    slug: "up-tourism-website-hacked-upstdc",
+    title: "UP Government Tourism Website (upstdc.co.in) Is Hacked: Thai Gambling Pages in Google",
+    short: "UP Tourism website hacked",
+    excerpt:
+      "Search Google for upstdc.co.in and you get Thai slot and betting pages. What the hack on the Uttar Pradesh State Tourism website looks like, how to see it yourself, and why visitors don't notice.",
+    author: "Rushil",
+    published: "2026-10-25",
+  },
+  {
     slug: "robots-txt-says-yes-server-says-no",
     title: "Your robots.txt Says Yes, but Your Server Says No: Why AI Crawlers Get Blocked",
     short: "robots.txt says yes, the server says no",

@@ -34,6 +34,7 @@ const FILES = [
   "src/app/blog/seo-vs-geo/page.tsx",
   "src/app/blog/seo-mistakes-from-1500-audits/page.tsx",
   "src/app/blog/robots-txt-says-yes-server-says-no/page.tsx",
+  "src/app/blog/up-tourism-website-hacked-upstdc/page.tsx",
   "src/lib/posts.ts",
   "src/app/research/page.tsx",
   "src/lib/research-findings.json",

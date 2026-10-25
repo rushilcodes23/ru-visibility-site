@@ -70,6 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/work", 0.6, "src/app/work/page.tsx"),
     entry("/why-us", 0.8, "src/app/why-us/page.tsx"),
     entry("/blog", 0.6, "src/app/blog/page.tsx", "src/lib/posts.ts"),
+    entry("/blog/up-tourism-website-hacked-upstdc", 0.6, "src/app/blog/up-tourism-website-hacked-upstdc/page.tsx", "src/lib/posts.ts"),
     entry("/blog/why-geo-matters", 0.6, "src/app/blog/why-geo-matters/page.tsx", "src/lib/posts.ts"),
     entry(
       "/blog/seo-mistakes-from-1500-audits",
