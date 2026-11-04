@@ -10,7 +10,7 @@ import { HEARD_FROM } from "@/lib/heard-from";
  * among 32px inputs on the contact form.
  */
 const FIELD_CLASS =
-  "h-11 md:h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 pl-2.5 pr-8 text-base md:text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 [&>option]:bg-background [&>option]:text-foreground";
+  "h-11 md:h-10 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 pl-2.5 pr-8 text-base md:text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 [&>option]:bg-background [&>option]:text-foreground";
 export function HeardFromField({ id }: { id: string }) {
   return (
     <div className="flex flex-col gap-2">
