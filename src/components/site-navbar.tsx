@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import ThemeToggle from "@/components/theme-toggle";
 import Image from "next/image";
 import logoMark from "@/../public/logo-mark-220.webp";
 
@@ -34,7 +36,6 @@ const STYLES = `
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all 300ms;
     box-sizing: border-box;
   }
   .ru-nav-pill * { box-sizing: border-box; }
@@ -67,26 +68,29 @@ const STYLES = `
   }
   .ru-nav-link {
     display: inline-block;
-    padding: 6px 12px;
+    padding: 10px 14px;
     border-radius: 9999px;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--muted-foreground);
     text-decoration: none;
-    transition: color 200ms, transform 200ms, background 200ms;
+    transition: color 200ms, background 200ms;
   }
   .ru-nav-link:hover,
-  .ru-nav-link:focus-visible {
+  .ru-nav-link:focus-visible,
+  .ru-nav-link[aria-current="page"] {
     color: var(--foreground);
-    transform: scale(1.08);
     background: color-mix(in srgb, var(--foreground) 8%, transparent);
-    outline: none;
+  }
+  .ru-nav-link:focus-visible {
+    outline: 2px solid var(--accent-line);
+    outline-offset: 2px;
   }
 
   .ru-nav-cta {
     display: inline-flex;
     align-items: center;
-    padding: 8px 20px;
+    padding: 11px 20px;
     font-size: 0.75rem;
     font-weight: 700;
     color: var(--primary-foreground);
@@ -108,7 +112,6 @@ const STYLES = `
   .ru-nav-cta:hover,
   .ru-nav-cta:focus-visible {
     background: color-mix(in srgb, var(--primary) 85%, var(--background));
-    transform: scale(1.06);
     box-shadow: 0 8px 22px rgba(0,0,0,0.22),
                 0 0 0 5px color-mix(in srgb, var(--primary) 26%, transparent);
     outline: none;
@@ -186,6 +189,13 @@ const STYLES = `
     outline: none;
   }
 
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .ru-nav-cta:hover { transform: scale(1.04); }
+  }
+  @media (min-width: 768px) {
+    .ru-mobile-overlay { display: none; }
+  }
+
   @media (max-width: 767px) {
     .ru-nav-links,
     .ru-nav-cta { display: none; }
@@ -219,16 +229,27 @@ function RuVisibilityLogo() {
 
 export default function SiteNavbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const burgerRef = useRef<HTMLButtonElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = "hidden";
+    // The menu is modal: focus goes in, the page behind it goes inert.
+    const behind = [document.getElementById("main"), document.querySelector("footer")];
+    behind.forEach((el) => el?.setAttribute("inert", ""));
+    firstLinkRef.current?.focus();
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        burgerRef.current?.focus();
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = "";
+      behind.forEach((el) => el?.removeAttribute("inert"));
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
@@ -245,7 +266,11 @@ export default function SiteNavbar() {
             <ul className="ru-nav-links">
               {NAV_LINKS.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href} className="ru-nav-link">
+                  <a
+                    href={l.href}
+                    className="ru-nav-link"
+                    aria-current={pathname === l.href ? "page" : undefined}
+                  >
                     {l.label}
                   </a>
                 </li>
@@ -258,14 +283,15 @@ export default function SiteNavbar() {
               Talk to Us
             </a>
             <button
+              ref={burgerRef}
               className="ru-hamburger"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
             >
-              <span style={{ transform: open ? "rotate(45deg) translateY(7px)" : "none" }} />
+              <span style={{ transform: open ? "translateY(7px) rotate(45deg)" : "none" }} />
               <span style={{ opacity: open ? 0 : 1 }} />
-              <span style={{ transform: open ? "rotate(-45deg) translateY(-7px)" : "none" }} />
+              <span style={{ transform: open ? "translateY(-7px) rotate(-45deg)" : "none" }} />
             </button>
           </div>
         </div>
@@ -274,13 +300,16 @@ export default function SiteNavbar() {
       <div
         className={`ru-mobile-overlay${open ? " open" : ""}`}
         role="dialog"
-        aria-modal="true"
+        aria-modal={open || undefined}
         aria-label="Mobile Navigation"
+        inert={!open}
       >
-        {NAV_LINKS.map((l) => (
+        {NAV_LINKS.map((l, i) => (
           <a
             key={l.label}
+            ref={i === 0 ? firstLinkRef : undefined}
             href={l.href}
+            aria-current={pathname === l.href ? "page" : undefined}
             className="ru-mobile-link"
             onClick={() => setOpen(false)}
           >
@@ -290,6 +319,7 @@ export default function SiteNavbar() {
         <a href={TALK_TO_US_HREF} className="ru-mobile-cta" onClick={() => setOpen(false)}>
           Talk to Us
         </a>
+        <ThemeToggle inline />
       </div>
     </>
   );
