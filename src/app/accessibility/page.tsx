@@ -57,7 +57,7 @@ export default function AccessibilityPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
           {COMMITMENTS.map((c, i) => (
             <ScrollReveal key={c.title} delay={i * 100}>
-              <div className="card-surface rounded-md p-6 flex flex-col gap-3 h-full transition-transform duration-200 hover:scale-[1.02]">
+              <div className="card-surface rounded-md p-6 flex flex-col gap-3 h-full">
                 <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                   <c.icon className="w-6 h-6 stroke-1 text-primary" />
                 </div>

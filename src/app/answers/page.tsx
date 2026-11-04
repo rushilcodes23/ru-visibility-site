@@ -67,7 +67,7 @@ export default function AnswersPage() {
                   <li key={a.slug}>
                     <a
                       href={`/answers/${a.slug}`}
-                      className="card-surface block rounded-md p-5 transition-transform duration-200 hover:scale-[1.01]"
+                      className="card-surface block rounded-md p-5 transition-transform duration-200 motion-safe:hover:-translate-y-0.5"
                     >
                       <span className="block text-base font-medium tracking-tight">
                         {a.question}

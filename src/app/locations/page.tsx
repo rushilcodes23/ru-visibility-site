@@ -39,7 +39,7 @@ export default function LocationsIndexPage() {
             <a
               key={l.slug}
               href={`/locations/${l.slug}`}
-              className="card-surface rounded-md p-6 flex flex-col gap-2 transition-transform hover:scale-[1.03]"
+              className="card-surface rounded-md p-6 flex flex-col gap-2 transition-transform duration-200 motion-safe:hover:-translate-y-0.5"
             >
               <MapPin className="w-6 h-6 stroke-1 text-primary" />
               <span className="font-medium">{l.city}</span>
