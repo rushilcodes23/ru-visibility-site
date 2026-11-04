@@ -71,7 +71,7 @@ export default function RuVisibilityHero() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              fontWeight: 900,
+              fontWeight: 700,
               letterSpacing: "-0.02em",
               textTransform: "uppercase",
               userSelect: "none",
@@ -83,7 +83,7 @@ export default function RuVisibilityHero() {
             <div
               style={{
                 fontSize: "clamp(2.75rem, 13vw, 10rem)",
-                fontWeight: 900,
+                fontWeight: 700,
                 lineHeight: 0.85,
                 display: "flex",
                 flexDirection: "column",
@@ -93,15 +93,14 @@ export default function RuVisibilityHero() {
                 overflowWrap: "break-word",
               }}
             >
-              <span style={{ color: "var(--qh-ruText)", opacity: 0.9 }}>RU</span>
+              <span style={{ color: "var(--qh-ruText)", opacity: 0.9 }}>RU</span>{" "}
               <span className="qhero-glitch" data-text="VISIBILITY">
                 VISIBILITY
               </span>
-            </div>
+            </div>{" "}
 
             {/* Tagline, below the wordmark */}
             <span
-              className="qhero-tagline-pulse"
               style={{
                 fontSize: "clamp(0.95rem, 2.6vw, 1.25rem)",
                 fontWeight: 700,

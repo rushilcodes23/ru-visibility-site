@@ -70,27 +70,27 @@
 .qhero-glitch {
   position: relative;
   display: inline-block;
-  font-weight: 900;
+  font-weight: 700;
   color: var(--qh-glitchBase);
-  animation: qhero-color-toggle 7s infinite step-end;
+  animation: qhero-color-toggle 7s 2 step-end;
 }
 .qhero-glitch::before,
 .qhero-glitch::after {
-  content: attr(data-text);
+  content: attr(data-text) / "";
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   opacity: 0;
   background: var(--qh-shellBg);
 }
-.qhero-glitch::before { animation: qhero-glitch-1 7s infinite linear; z-index: 2; }
-.qhero-glitch::after  { animation: qhero-glitch-2 7s infinite linear; z-index: 3; }
+.qhero-glitch::before { animation: qhero-glitch-1 7s 2 linear; z-index: 2; }
+.qhero-glitch::after  { animation: qhero-glitch-2 7s 2 linear; z-index: 3; }
 
 @keyframes qhero-color-toggle {
   0%,  44%   { color: var(--qh-glitchBase); text-shadow: none; }
   42.1%, 44.9% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
   45%,  94%  { color: var(--qh-glitchMid); text-shadow: none; }
-  92.1%, 94.9% { text-shadow: -2px 0 #a3e635, 2px 0 #ef4444; }
+  92.1%, 94.9% { text-shadow: -2px 0 #fbbf24, 2px 0 #ef4444; }
   95%, 100%  { color: var(--qh-glitchBase); text-shadow: none; }
 }
 
@@ -109,11 +109,11 @@
 }
 @keyframes qhero-glitch-2 {
   0%,   42%  { opacity: 0; transform: translate(0); }
-  42.1%      { opacity: 1; color: #a3e635; clip-path: polygon(0 55%,100% 55%,100% 100%,0 100%); transform: translate(10px,5px); }
+  42.1%      { opacity: 1; color: #fbbf24; clip-path: polygon(0 55%,100% 55%,100% 100%,0 100%); transform: translate(10px,5px); }
   43%        { color: #ef4444; transform: translate(-10px,-5px) skew(10deg); clip-path: polygon(0 20%,100% 20%,100% 100%,0 80%); }
   45%        { opacity: 0; }
   45.1%, 92% { opacity: 0; transform: translate(0); }
-  92.1%      { opacity: 1; color: #a3e635; clip-path: polygon(0 0,100% 0,100% 45%,0 45%); transform: translate(-10px,-5px); }
+  92.1%      { opacity: 1; color: #fbbf24; clip-path: polygon(0 0,100% 0,100% 45%,0 45%); transform: translate(-10px,-5px); }
   93%        { color: #ef4444; transform: translate(10px,5px) skew(-20deg); clip-path: polygon(0 10%,100% 0,100% 30%,0 35%); }
   95%        { opacity: 0; }
 }
@@ -127,12 +127,6 @@
    glitching "VISIBILITY" was counted at 4.5s; Lighthouse kept reporting
    that one (5.7s LCP, performance 49 on mobile). */
 
-/* Tagline pulse */
-@keyframes qhero-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.6; }
-}
-.qhero-tagline-pulse { animation: qhero-pulse 2s ease-in-out infinite; }
 
 /* Hero CTA button */
 .qhero-btn {
@@ -157,13 +151,10 @@
 .qhero-btn:hover,
 .qhero-btn:focus-visible {
   background: linear-gradient(135deg, var(--qh-btnHoverFrom), var(--qh-btnHoverTo));
-  transform: scale(1.05);
   box-shadow: 0 14px 40px var(--qh-btnHoverShadow), 0 0 0 4px var(--qh-btnRing);
   outline: none;
 }
-.qhero-btn:active { transform: scale(0.96); }
 .qhero-btn svg { transition: transform 200ms; }
-.qhero-btn:hover svg { transform: translateX(4px); }
 
 /* Secondary hero CTA — outline, doesn't compete with the primary button */
 .qhero-btn-outline {
@@ -179,6 +170,21 @@
   background: var(--qh-outlineHoverBg);
   color: var(--qh-outlineText);
   border-color: var(--qh-outlineHoverBorder);
-  transform: scale(1.05);
   box-shadow: 0 0 0 4px var(--qh-btnRing);
+}
+
+/* Scale only for a real mouse, never on keyboard focus or a tap that sticks. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .qhero-btn:hover, .qhero-btn-outline:hover { transform: scale(1.03); }
+  .qhero-btn:hover svg { transform: translateX(4px); }
+  .qhero-btn:active { transform: scale(0.97); }
+}
+
+/* Phones: the wordmark already names the brand, so the big mark goes and
+   the CTA rises clear of the fold at 320px. */
+@media (max-width: 640px) { .qhero-logo { display: none !important; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .qhero-glitch { animation: none; }
+  .qhero-glitch::before, .qhero-glitch::after { animation: none; display: none; }
 }
