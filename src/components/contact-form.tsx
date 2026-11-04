@@ -11,8 +11,27 @@ import { sendContactMessage, type ContactFormState } from "@/lib/send-contact-em
 
 const initialState: ContactFormState = { status: "idle", message: "" };
 
+// A dropped connection or a stale deploy makes the action call itself throw.
+// Without this the page would crash to a blank error screen and lose the form.
+async function sendSafely(prev: ContactFormState, fd: FormData): Promise<ContactFormState> {
+  try {
+    return await sendContactMessage(prev, fd);
+  } catch {
+    const get = (k: string) => String(fd.get(k) || "");
+    return {
+      status: "error",
+      message: "We couldn't reach the server. Check your connection and try again, or send it as an email instead.",
+      mailto: `mailto:rushil@ruvisibility.com?subject=${encodeURIComponent("Message via ruvisibility.com")}&body=${encodeURIComponent(
+        `Name: ${get("name")}\nEmail: ${get("email")}\nPhone: ${get("phone")}\n\n${get("message")}`
+      )}`,
+      fields: { name: get("name"), email: get("email"), phone: get("phone"), message: get("message") },
+    };
+  }
+}
+
 export default function ContactForm() {
-  const [state, formAction, pending] = useActionState(sendContactMessage, initialState);
+  const [state, formAction, pending] = useActionState(sendSafely, initialState);
+  const f = state.fields ?? {};
 
   if (state.status === "success") {
     return (
@@ -42,28 +61,30 @@ export default function ContactForm() {
       {/* Honeypot — hidden from real visitors, catches basic bots */}
       <input
         type="text"
-        name="company"
+        name="botcheck"
         tabIndex={-1}
-        autoComplete="off"
+        autoComplete="new-password"
         style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
         aria-hidden="true"
       />
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="name">Name</Label>
-        <Input id="name" name="name" type="text" required />
+        <Input id="name" name="name" type="text" autoComplete="name" required defaultValue={f.name} />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" name="email" type="email" required />
+        <Input id="email" name="email" type="email" autoComplete="email" required defaultValue={f.email} />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="phone">Phone</Label>
-        <Input id="phone" name="phone" type="tel" />
+        <Label htmlFor="phone">
+          Phone <span className="text-muted-foreground font-normal">(optional)</span>
+        </Label>
+        <Input id="phone" name="phone" type="tel" autoComplete="tel" defaultValue={f.phone} />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="message">Message</Label>
-        <Textarea id="message" name="message" required />
+        <Textarea id="message" name="message" required defaultValue={f.message} />
       </div>
       <HeardFromField id="contact-heard-from" />
 
@@ -86,7 +107,7 @@ export default function ContactForm() {
         type="submit"
         disabled={pending}
       >
-        {pending ? "Sending…" : "Submit"}
+        {pending ? "Sending…" : "Send message"}
         {pending && (
           <span
             aria-hidden="true"
@@ -96,6 +117,15 @@ export default function ContactForm() {
           </span>
         )}
       </Button>
+
+      <p className="text-muted-foreground text-xs leading-relaxed">
+        We use your details to reply to you, nothing else. No mailing list, no
+        reselling —{" "}
+        <a href="/privacy" className="underline underline-offset-4">
+          privacy policy
+        </a>
+        .
+      </p>
     </form>
   );
 }

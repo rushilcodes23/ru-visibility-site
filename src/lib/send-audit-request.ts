@@ -14,6 +14,8 @@ export type AuditRequestState = {
    * in it, and they can send it in one click instead.
    */
   mailto?: string;
+  /** What the visitor typed, handed back on an error so the form can refill. */
+  fields?: Record<string, string>;
 };
 
 function mailtoFallback(fields: Record<string, string>) {
@@ -45,7 +47,12 @@ export async function sendAuditRequest(
   prevState: AuditRequestState,
   formData: FormData
 ): Promise<AuditRequestState> {
-  return atLeast(deliverAuditRequest(prevState, formData));
+  const result = await atLeast(deliverAuditRequest(prevState, formData));
+  if (result.status !== "error") return result;
+  const fields = Object.fromEntries(
+    ["name", "email", "website", "businessTypeOther"].map((k) => [k, String(formData.get(k) || "").slice(0, 500)])
+  );
+  return { ...result, fields };
 }
 
 async function deliverAuditRequest(
@@ -54,7 +61,7 @@ async function deliverAuditRequest(
 ): Promise<AuditRequestState> {
   // Same honeypot approach as the contact form: pretend it worked rather than
   // telling a bot which field gave it away.
-  if (formData.get("company")) {
+  if (formData.get("botcheck")) {
     return { status: "success", message: SENT_MESSAGE };
   }
 
@@ -91,7 +98,7 @@ async function deliverAuditRequest(
     return { status: "error", message: "Please fill in your name, email, and website." };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return { status: "error", message: "That email address doesn't look right." };
+    return { status: "error", message: "Check the email address. It should look like name@yourbusiness.com." };
   }
   const site = normalizeWebsite(website);
   if (!site) {

@@ -33,6 +33,24 @@ const Select = dynamic(
 
 const initialState: AuditRequestState = { status: "idle", message: "" };
 
+// A dropped connection or a stale deploy makes the action call itself throw.
+// Without this the page would crash to a blank error screen and lose the form.
+async function sendSafely(prev: AuditRequestState, fd: FormData): Promise<AuditRequestState> {
+  try {
+    return await sendAuditRequest(prev, fd);
+  } catch {
+    const get = (k: string) => String(fd.get(k) || "");
+    return {
+      status: "error",
+      message: "We couldn't reach the server. Check your connection and try again, or send it as an email instead.",
+      mailto: `mailto:rushil@ruvisibility.com?subject=${encodeURIComponent("Visibility audit request")}&body=${encodeURIComponent(
+        `Name: ${get("name")}\nEmail: ${get("email")}\nWebsite: ${get("website")}`
+      )}`,
+      fields: { name: get("name"), email: get("email"), website: get("website"), businessTypeOther: get("businessTypeOther") },
+    };
+  }
+}
+
 // Lives here rather than in the action: a "use server" module can only export
 // async functions, so a plain array exported from there arrives as a proxy and
 // blows up on .map during prerender.
@@ -50,7 +68,8 @@ const BUSINESS_TYPES = [
 ];
 
 export default function AuditRequestForm() {
-  const [state, formAction, pending] = useActionState(sendAuditRequest, initialState);
+  const [state, formAction, pending] = useActionState(sendSafely, initialState);
+  const f = state.fields ?? {};
   const [businessType, setBusinessType] = useState("");
   const [wantSelect, setWantSelect] = useState(false);
   const selectField = useRef<HTMLDivElement>(null);
@@ -99,9 +118,9 @@ export default function AuditRequestForm() {
     >
       <input
         type="text"
-        name="company"
+        name="botcheck"
         tabIndex={-1}
-        autoComplete="off"
+        autoComplete="new-password"
         style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
         aria-hidden="true"
       />
@@ -109,11 +128,11 @@ export default function AuditRequestForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label htmlFor="audit-name">Name</Label>
-          <Input id="audit-name" name="name" type="text" autoComplete="name" required />
+          <Input id="audit-name" name="name" type="text" autoComplete="name" required defaultValue={f.name} />
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="audit-email">Email</Label>
-          <Input id="audit-email" name="email" type="email" autoComplete="email" required />
+          <Input id="audit-email" name="email" type="email" autoComplete="email" required defaultValue={f.email} />
         </div>
       </div>
 
@@ -127,6 +146,7 @@ export default function AuditRequestForm() {
           placeholder="example.com"
           autoComplete="url"
           required
+          defaultValue={f.website}
         />
       </div>
 
@@ -146,13 +166,17 @@ export default function AuditRequestForm() {
 
       {businessType === OTHER && (
         <div className="flex flex-col gap-2">
-          <Label htmlFor="audit-business-other">What kind of business is it?</Label>
+          <Label htmlFor="audit-business-other">
+            What kind of business is it?{" "}
+            <span className="text-muted-foreground font-normal">(optional)</span>
+          </Label>
           <Input
             id="audit-business-other"
             name="businessTypeOther"
             type="text"
             placeholder="In your own words — e.g. wedding venue, driving school"
             maxLength={120}
+            defaultValue={f.businessTypeOther}
             autoFocus
           />
           <p className="text-muted-foreground text-xs">
@@ -183,7 +207,7 @@ export default function AuditRequestForm() {
         type="submit"
         disabled={pending}
       >
-        {pending ? "Sending…" : "Get my free visibility check"}
+        {pending ? "Sending…" : "Get my free visibility audit"}
         {pending && (
           <span
             aria-hidden="true"

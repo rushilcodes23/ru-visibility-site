@@ -12,6 +12,8 @@ export type ContactFormState = {
    * delivery failure hands back a mailto with what they already typed.
    */
   mailto?: string;
+  /** What the visitor typed, handed back on an error so the form can refill. */
+  fields?: Record<string, string>;
 };
 
 const TO_EMAIL = "rushil@ruvisibility.com";
@@ -45,7 +47,12 @@ export async function sendContactMessage(
   prevState: ContactFormState,
   formData: FormData
 ): Promise<ContactFormState> {
-  return atLeast(deliverContactMessage(prevState, formData));
+  const result = await atLeast(deliverContactMessage(prevState, formData));
+  if (result.status !== "error") return result;
+  const fields = Object.fromEntries(
+    ["name", "email", "phone", "message"].map((k) => [k, String(formData.get(k) || "").slice(0, 5000)])
+  );
+  return { ...result, fields };
 }
 
 async function deliverContactMessage(
@@ -55,7 +62,7 @@ async function deliverContactMessage(
   // Honeypot — a hidden field real visitors never fill in. Bots that
   // auto-fill every field will trip this; we just pretend it worked so we
   // don't tip them off, and skip actually sending.
-  if (formData.get("company")) {
+  if (formData.get("botcheck")) {
     return { status: "success", message: SENT_MESSAGE };
   }
 
@@ -84,7 +91,7 @@ async function deliverContactMessage(
     return { status: "error", message: "Please fill in your name, email, and message." };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return { status: "error", message: "That email address doesn't look right." };
+    return { status: "error", message: "Check the email address. It should look like name@yourbusiness.com." };
   }
 
   const undelivered: ContactFormState = {
