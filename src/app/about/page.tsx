@@ -215,12 +215,12 @@ export default function AboutPage() {
                 taken on at once.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                There is no office to visit — the work is remote, for clients
-                in the US, India and elsewhere. The{" "}
+                There is no office to visit. The work is remote, for
+                businesses in the US and India. The{" "}
                 <a href="/locations" className="underline underline-offset-4 text-foreground">
                   markets page
                 </a>{" "}
-                lists where work has actually been done, and{" "}
+                lists the cities we cover, and{" "}
                 <a href="/accessibility" className="underline underline-offset-4 text-foreground">
                   this site&apos;s own accessibility scan
                 </a>{" "}

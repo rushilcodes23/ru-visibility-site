@@ -13,9 +13,9 @@ export function ClosingCta({ ctaHref = "/contact" }: { ctaHref?: string }) {
               See where you actually stand.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              One check tells you whether ChatGPT, Gemini and Google can
-              actually find you and name you. No guessing. No promises we
-              cannot keep. Just where you stand today.
+              One check tells you whether ChatGPT, Gemini and Google can find
+              you and name you today. You get measured results, and we will
+              not promise a ranking we cannot control.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" render={<a href={ctaHref}>Get Your Visibility Audit</a>} />

@@ -91,8 +91,9 @@ export default function PrivacyPage() {
             <ul className="text-muted-foreground leading-relaxed list-disc pl-5 flex flex-col gap-2 mb-4">
               <li>
                 <strong className="text-foreground font-medium">Resend</strong>{" "}
-                delivers the contact form as an email to us. Your name, email,
-                phone and message pass through them on the way.
+                delivers both forms to us as email. Everything you type into
+                them (name, email, phone, website, business type, message, how
+                you heard about us) passes through them on the way.
               </li>
               <li>
                 <strong className="text-foreground font-medium">

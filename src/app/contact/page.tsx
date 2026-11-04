@@ -126,8 +126,9 @@ export default function ContactPage() {
           <p className="text-muted-foreground leading-relaxed">
             The form sends straight to us over an encrypted connection. We
             use what you send to reply to you and nothing else. You are not
-            added to a mailing list, and your details are never sold or
-            passed to anyone. The full detail is in our{" "}
+            added to a mailing list, and your details are never sold. The
+            only services they pass through are the two that run this site
+            (Resend for email, Cloudflare for hosting). The full detail is in our{" "}
             <a href="/privacy" className="underline underline-offset-4 text-foreground">
               privacy policy
             </a>
