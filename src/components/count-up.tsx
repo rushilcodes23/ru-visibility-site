@@ -14,16 +14,15 @@ const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
  * the animation only ever replaces a number that was already there. That also
  * means no hydration mismatch: both sides render the same string.
  *
- * It runs even with the "reduce motion" setting on (Windows switches that on
- * whenever its animation effects are off). Nothing moves on screen — only
- * the digits change — so it is not the kind of motion that setting is for.
+ * It does not run with the "reduce motion" setting on: the real number just
+ * stays. Screen readers always get the final figure, never a number mid-count.
  */
 export default function CountUp({
   value,
   decimals = 0,
   prefix = "",
   suffix = "",
-  durationMs = 2600,
+  durationMs = 1400,
   className,
   compact = false,
 }: {
@@ -42,7 +41,7 @@ export default function CountUp({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let frame = 0;
     let cancelled = false;
@@ -88,9 +87,16 @@ export default function CountUp({
 
   return (
     <span ref={ref} className={className}>
-      {prefix}
-      {shown}
-      {suffix}
+      <span aria-hidden="true">
+        {prefix}
+        {shown}
+        {suffix}
+      </span>
+      <span className="sr-only">
+        {prefix}
+        {compact ? compactCount(value) : value.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
+        {suffix}
+      </span>
     </span>
   );
 }
