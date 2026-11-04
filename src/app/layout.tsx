@@ -6,7 +6,7 @@ import SiteFooter from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import ThemeToggle from "@/components/theme-toggle";
 import SiteBackground from "@/components/site-background";
-import { LOCATIONS } from "@/lib/locations";
+import { LOCATIONS, isIndexedCity } from "@/lib/locations";
 // globals.css is imported from template.tsx; see the note there.
 
 // Only confirmed facts — no address/founding date, those don't exist yet.
@@ -104,32 +104,27 @@ const organizationJsonLd = {
     "Analytics and conversion tracking",
   ],
   areaServed: [
-    ...LOCATIONS.map((l) => ({
-      "@type": "City",
-      name: l.city,
-      containedInPlace: l.country,
-    })),
-    { "@type": "Country", name: "International" },
+    { "@type": "Country", name: "United States" },
+    { "@type": "Country", name: "India" },
+    ...LOCATIONS.filter(isIndexedCity).map((l) => ({ "@type": "City", name: l.city })),
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Ru Visibility Services",
     itemListElement: [
-      "AI Visibility (GEO) Management",
-      "Answer Engine Optimization (AEO)",
-      "LLM Optimization (LLMO) & AI SEO",
-      "E-E-A-T Content & Authority Building",
-      "Technical SEO Management",
-      "Accessibility (ADA) Risk Audits",
-      "Blog & Content Writing",
-      "Website Design & Development",
-      "Website Monetization Consulting",
+      // Same twelve as the /services "full list": schema only describes what the page says.
+      "AI Visibility (GEO)",
+      "Technical SEO",
+      "Local SEO and Google Business Profile",
+      "Site Speed and Core Web Vitals",
+      "Online Store SEO",
+      "Tracking and Reports",
+      "Accessibility (ADA) Checks",
+      "Blog and Content Writing",
+      "Website Design and Development",
       "Digital Marketing",
-      "AI Integration for Business",
-      "Local SEO & Google Business Profile",
-      "Site Speed & Core Web Vitals",
-      "E-commerce & Product SEO",
-      "Analytics & Conversion Tracking",
+      "AI Tools for Your Business",
+      "Turning Visits Into Money",
     ].map((name) => ({
       "@type": "Offer",
       itemOffered: { "@type": "Service", name },
@@ -208,6 +203,9 @@ const sourceSerif = localFont({
     { prop: "unicode-range", value: "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD" },
   ],
   adjustFontFallback: false,
+  // Only blog articles use it, so no preload: it was ~104 KB queued ahead of
+  // Space Grotesk on every page. Articles still get it when .article-body renders.
+  preload: false,
   fallback: ["Source Serif Fallback"],
 });
 // Space Grotesk only ships up to weight 700 — the hero's font-weight:900
@@ -320,7 +318,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             __html: "window.__name||(window.__name=function(f){return f});",
           }}
         />
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
