@@ -30,8 +30,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-space-grotesk), "Space Grotesk Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -157,15 +157,10 @@
        is actually active, instead of always forcing light regardless. */
     color-scheme: only light;
   }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
 }
 
-/* Used by TestimonialsColumn's infinite vertical scroll (duration varies
-   per column via inline style) — plain CSS in place of an animation
-   library, matching how motion is handled everywhere else in this app. */
-@keyframes testimonial-scroll {
-  from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
-}
 /* ── Reading surfaces ──────────────────────────────────────────────────
    The animated dot grid is a fixed layer behind the whole site. Text set
    straight onto it competes with the dots, so every section that carries
@@ -194,8 +189,8 @@
    that was measured. Emerald rather than a pure green because the palette is
    a cool navy, and a warm green fights it. Both values clear 4.5:1 against
    their own background so it can carry text, not just decoration. */
-:root { --accent-green: #047857; }
-.dark  { --accent-green: #34d399; }
+:root { --accent-green: #b45309; }
+.dark  { --accent-green: #fbbf24; }
 
 /* Page headers were badge + heading + paragraph on flat colour, which read
    as nothing. The rule gives every page one consistent anchor point. */
@@ -306,8 +301,15 @@
 .footer-link:hover,
 .footer-link:focus-visible {
   color: var(--accent-line);
-  transform: translateX(2px);
-  outline: none;
+}
+.footer-link:focus-visible,
+.footer-legal:focus-visible {
+  outline: 2px solid var(--accent-line);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .footer-link:hover { transform: translateX(2px); }
 }
 
 /* Legal links are underlined by default so they read as links without
@@ -323,7 +325,13 @@
 .footer-legal:focus-visible {
   color: var(--accent-line);
   text-decoration-color: var(--accent-line);
-  outline: none;
+}
+
+/* Floating theme toggle: on phones it sat on top of the hero CTA and form
+   fields, so there it lives in the mobile menu instead. */
+@media (max-width: 767px) { .theme-toggle-float { display: none !important; } }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .theme-toggle-float:hover { transform: scale(1.08); }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
