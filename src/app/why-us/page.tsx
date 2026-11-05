@@ -100,7 +100,7 @@ export default function WhyUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
             {REASONS.map((r, i) => (
               <ScrollReveal key={r.title} delay={i * 80}>
-                <div className="card-surface rounded-md p-6 flex flex-col gap-3 h-full transition-transform duration-200 hover:scale-[1.03]">
+                <div className="card-surface rounded-md p-6 flex flex-col gap-3 h-full">
                   <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
                     <r.icon className="w-6 h-6 stroke-1 text-primary" />
                   </div>

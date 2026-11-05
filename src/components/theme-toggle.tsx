@@ -8,7 +8,7 @@ import { Sun, Moon } from "lucide-react";
 // this only exists to give useSyncExternalStore a client/server split.
 const noSubscription = () => () => {};
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ inline = false }: { inline?: boolean }) {
   const { resolvedTheme, setTheme } = useTheme();
   // Theme is only known client-side — avoid rendering the wrong icon (or a
   // mismatch warning) before hydration settles. useSyncExternalStore gives
@@ -24,11 +24,11 @@ export default function ThemeToggle() {
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className={inline ? undefined : "theme-toggle-float"}
       style={{
-        position: "fixed",
-        bottom: "20px",
-        right: "20px",
-        zIndex: 100,
+        ...(inline
+          ? { marginTop: "0.5rem" }
+          : { position: "fixed", bottom: "20px", right: "20px", zIndex: 100 }),
         width: "44px",
         height: "44px",
         borderRadius: "9999px",
@@ -44,8 +44,6 @@ export default function ThemeToggle() {
         color: "var(--foreground)",
         transition: "transform 200ms, box-shadow 200ms",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
-      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       {isDark ? <Sun size={18} /> : <Moon size={18} />}
     </button>

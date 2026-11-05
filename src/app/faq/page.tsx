@@ -87,7 +87,7 @@ export default function FaqPage() {
             {FAQS.map((item) => (
               <div
                 key={item.q}
-                className="card-surface rounded-md p-6 transition-transform duration-200 hover:scale-[1.01]"
+                className="card-surface rounded-md p-6"
               >
                 <h2 className="text-xl tracking-tight mb-3">{item.q}</h2>
                 <p className="text-base md:text-lg font-medium leading-relaxed text-foreground mb-3 border-l-2 border-primary pl-4">
@@ -114,7 +114,7 @@ export default function FaqPage() {
               </p>
               <a
                 href="/contact"
-                className="inline-flex items-center gap-1 rounded-full bg-primary-foreground text-primary text-sm font-medium px-4 py-2 transition-transform duration-200 hover:scale-105"
+                className="inline-flex items-center gap-1 rounded-full bg-primary-foreground text-primary text-sm font-medium px-4 py-2 transition-transform duration-200 motion-safe:hover:scale-[1.03]"
               >
                 Talk to Us
                 <ArrowRight className="w-4 h-4" />

@@ -97,7 +97,7 @@ export default function WhyItMattersPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
           {REASONS.map((r) => (
-            <div key={r.title} className="card-surface rounded-md p-6 flex flex-col gap-3 transition-transform duration-200 hover:scale-[1.02]">
+            <div key={r.title} className="card-surface rounded-md p-6 flex flex-col gap-3">
               <r.icon className="w-8 h-8 stroke-1" />
               <h3 className="text-xl tracking-tight">{r.title}</h3>
               <p className="text-muted-foreground text-base leading-relaxed">

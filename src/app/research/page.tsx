@@ -1,4 +1,3 @@
-import CountUp from "@/components/count-up";
 import { compactCount } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { AuditCta } from "@/components/ui/audit-cta";
@@ -156,7 +155,7 @@ export default function ResearchPage() {
               <Badge>Research</Badge>
               <h1 className="text-3xl md:text-5xl tracking-tighter font-regular text-left">
                 What we found auditing{" "}
-                <CountUp value={corpus.uniqueDomains} compact /> websites.
+                {compactCount(corpus.uniqueDomains)} websites.
               </h1>
               <p className="text-lg leading-relaxed tracking-tight text-muted-foreground text-left">
                 We crawled and scored {N} real business websites with our own

@@ -26,14 +26,14 @@ const STATS = [
   },
   {
     value: LOCATIONS.length,
-    label: "markets we work in",
-    detail: "Across the US, India and internationally.",
+    label: "cities we cover",
+    detail: "US and Indian cities, each with its own page.",
     href: "/locations",
   },
   {
     value: 11,
     label: "AI readers we test for",
-    detail: "We knock as each one — ChatGPT, Claude, Perplexity, Google, Bing — and see who gets in.",
+    detail: "We knock on your door as each one (ChatGPT, Claude, Perplexity, Google, Bing) and see who gets in.",
     href: "/research",
   },
   {

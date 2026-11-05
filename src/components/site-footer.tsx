@@ -69,7 +69,7 @@ export default function SiteFooter() {
               rel="me noopener noreferrer"
               className="footer-link text-sm"
             >
-              LinkedIn
+              LinkedIn<span className="sr-only"> (opens in a new tab)</span>
             </a>
             <a
               href="https://x.com/RushilA_Bajpai"
@@ -77,7 +77,7 @@ export default function SiteFooter() {
               rel="me noopener noreferrer"
               className="footer-link text-sm"
             >
-              X
+              X<span className="sr-only"> (Twitter, opens in a new tab)</span>
             </a>
           </div>
           <p className="text-xs text-muted-foreground mt-2 max-w-md lg:max-w-xs">

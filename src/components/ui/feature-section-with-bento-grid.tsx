@@ -25,7 +25,7 @@ const SERVICES: { icon: typeof Bot; art: ArtName; title: string; body: string }[
     icon: Globe,
     art: "technical",
     title: "Technical SEO",
-    body: "The hidden faults that stop Google ranking you. We find them, fix them, and keep checking. We do not just hand you a list.",
+    body: "The hidden faults that stop Google ranking you. We find them, fix them, and keep checking every month.",
   },
   {
     icon: Accessibility,
@@ -61,7 +61,7 @@ const SERVICES: { icon: typeof Bot; art: ArtName; title: string; body: string }[
     icon: Sparkles,
     art: "ai-integration",
     title: "AI Integration for Your Business",
-    body: "AI tools built around how your business really works: a chatbot to answer customers, reports that write themselves, jobs that run without you. This whole site was built that way.",
+    body: "AI tools built around how your business really works: a chatbot to answer customers, reports that write themselves, jobs that run without you.",
   },
   {
     icon: Wrench,
@@ -99,7 +99,7 @@ function Feature() {
             </div>
             <div className="flex gap-2 flex-col">
               <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-left">
-                Not just an audit. Agency work on your site, every month.
+                After the audit, we keep working on your site every month.
               </h2>
               <p className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-muted-foreground text-left">
                 We do not hand you a report and vanish. Every month we keep
@@ -114,7 +114,7 @@ function Feature() {
                 {/* h-full rather than square: with the picture panel the
                     content is taller than wide, and h-full keeps every card in
                     a row the same height instead of each finding its own. */}
-                <div className="card-surface rounded-md p-6 h-full flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.03]">
+                <div className="card-surface rounded-md p-6 h-full flex flex-col gap-4">
                   <ArtPanel name={s.art} />
                   <div className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10">
                     <s.icon className="w-6 h-6 stroke-1 text-primary" />

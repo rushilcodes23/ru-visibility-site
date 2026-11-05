@@ -46,8 +46,12 @@ export default function ScrollReveal({
       { threshold: 0.15 }
     );
     observer.observe(el);
+    // Printing (or saving as PDF) before scrolling would print hidden sections.
+    const show = () => { el.style.opacity = ""; el.style.transform = ""; };
+    window.addEventListener("beforeprint", show);
     // Never leave a section stuck invisible.
     return () => {
+      window.removeEventListener("beforeprint", show);
       observer.disconnect();
       el.style.opacity = "";
       el.style.transform = "";

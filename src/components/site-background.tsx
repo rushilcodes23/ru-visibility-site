@@ -50,6 +50,7 @@ export default function SiteBackground() {
     const SCAN_LEAD = 45;
     const SCAN_SECONDS = 4;
     let scanY = 0;
+    let sweeps = 0;
 
     class Particle {
       x = 0; y = 0; vx = 0; vy = 0; size = 0;
@@ -195,7 +196,16 @@ export default function SiteBackground() {
         // scanY is the front edge. It runs until the whole tail has left the
         // bottom of the screen, then starts again at the top.
         scanY += (dt * canvas.height) / (SCAN_SECONDS * 1000);
-        if (scanY - SCAN_TAIL > canvas.height) scanY = -SCAN_LEAD;
+        if (scanY - SCAN_TAIL > canvas.height) {
+          scanY = -SCAN_LEAD;
+          // ponytail: rests after 2 sweeps so an idle phone stops repainting; a scroll restarts it.
+          if (++sweeps >= 2) {
+            sweeps = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stop();
+            return;
+          }
+        }
 
         // Brightest at the front, fading to nothing SCAN_TAIL px behind it.
         // Squaring the brightness keeps the front crisp and lets the tail thin
