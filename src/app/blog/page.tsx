@@ -158,7 +158,7 @@ export default function BlogPage() {
                       </span>
                       <ArrowRight
                         aria-hidden="true"
-                        className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
+                        className="h-4 w-4 shrink-0 transition-transform duration-200 motion-safe:group-hover:translate-x-1"
                       />
                     </a>
                   </li>

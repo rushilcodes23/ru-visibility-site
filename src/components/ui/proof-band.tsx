@@ -59,7 +59,7 @@ export function ProofBand() {
                 {...(s.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="group flex flex-col gap-2 rounded-md -m-2 p-2 transition-colors hover:bg-primary/5 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
               >
-                <span className="text-3xl md:text-5xl tracking-tighter font-medium tabular-nums transition-transform duration-300 group-hover:-translate-y-0.5">
+                <span className="text-3xl md:text-5xl tracking-tighter font-medium tabular-nums transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5">
                   <CountUp value={s.value} suffix={s.suffix ?? ""} compact={s.compact} />
                 </span>
                 <span className="text-sm font-medium leading-snug">{s.label}</span>

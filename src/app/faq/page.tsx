@@ -136,7 +136,7 @@ export default function FaqPage() {
                         </span>
                         {r.note}
                       </span>
-                      <ArrowRight className="w-4 h-4 mt-0.5 shrink-0 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 mt-0.5 shrink-0 transition-transform motion-safe:group-hover:translate-x-1" />
                     </a>
                   </li>
                 ))}
