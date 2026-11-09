@@ -1,3 +1,4 @@
+import { RelatedAnswers } from "@/components/ui/related-answers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/scroll-reveal";
@@ -678,6 +679,7 @@ export default function ServicesPage() {
         </div>
       </div>
 
+      <RelatedAnswers title="Questions owners ask before hiring" slugs={["what-does-an-seo-audit-include", "how-much-does-an-seo-audit-cost", "is-seo-worth-it-for-small-business", "how-long-does-seo-take", "what-is-an-ai-visibility-audit", "what-is-local-seo"]} />
       <div className="band-surface w-full border-t py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <ScrollReveal>
