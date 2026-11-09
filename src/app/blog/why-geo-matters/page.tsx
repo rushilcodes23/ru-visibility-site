@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { PostVisual } from "@/components/ui/post-visual";
+import { RelatedAnswers } from "@/components/ui/related-answers";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -207,6 +208,7 @@ export default function WhyGeoMattersPost() {
           </div>
         </div>
       </div>
+      <RelatedAnswers slugs={["why-ai-visibility-matters-for-small-business", "how-to-get-chatgpt-to-recommend-your-business", "how-chatgpt-chooses-businesses-to-recommend", "how-to-check-your-websites-ai-visibility", "does-social-media-help-seo", "do-backlinks-still-matter"]} />
       <AuditCta />
     </article>
   );

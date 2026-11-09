@@ -1,3 +1,4 @@
+import { RelatedAnswers } from "@/components/ui/related-answers";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { POSTS, formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
@@ -123,6 +124,7 @@ export default function UpTourismHackPost() {
           </p>
         </div>
       </div>
+      <RelatedAnswers slugs={["is-wordpress-good-for-seo", "what-is-google-search-console", "how-to-check-if-your-website-is-indexed"]} />
       <AuditCta />
     </article>
   );

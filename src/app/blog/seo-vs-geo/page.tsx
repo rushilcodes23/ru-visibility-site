@@ -1,5 +1,6 @@
 import { compactCount } from "@/lib/format";
 import { PostVisual } from "@/components/ui/post-visual";
+import { RelatedAnswers } from "@/components/ui/related-answers";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -483,6 +484,7 @@ export default function SeoVsGeoPost() {
           </div>
         </div>
       </div>
+      <RelatedAnswers slugs={["seo-vs-geo-vs-aeo", "what-is-generative-engine-optimization", "is-geo-replacing-seo", "how-to-appear-in-google-ai-overviews", "how-to-increase-ai-visibility", "what-is-eeat"]} />
       <AuditCta />
     </article>
   );

@@ -1,6 +1,7 @@
 import { compactCount } from "@/lib/format";
 import { PostVisual } from "@/components/ui/post-visual";
 import { Button } from "@/components/ui/button";
+import { RelatedAnswers } from "@/components/ui/related-answers";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { POSTS, formatPostDate } from "@/lib/posts";
 import { pageMetadata } from "@/lib/seo";
@@ -987,6 +988,7 @@ export default function SeoMistakesPost() {
           </div>
         </div>
       </div>
+      <RelatedAnswers slugs={["what-is-a-title-tag", "what-is-a-meta-description", "what-is-a-sitemap", "what-is-a-canonical-tag", "what-is-schema-markup", "what-does-an-seo-audit-include"]} />
       <AuditCta />
     </article>
   );

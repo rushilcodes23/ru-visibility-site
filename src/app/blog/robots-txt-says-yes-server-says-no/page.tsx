@@ -1,5 +1,6 @@
 import { compactCount } from "@/lib/format";
 import { PostVisual } from "@/components/ui/post-visual";
+import { RelatedAnswers } from "@/components/ui/related-answers";
 import { AuditCta } from "@/components/ui/audit-cta";
 import ReadingProgress from "@/components/reading-progress";
 import { POSTS, formatPostDate } from "@/lib/posts";
@@ -460,6 +461,7 @@ export default function RobotsTxtVsServerPost() {
           </div>
         </div>
       </div>
+      <RelatedAnswers slugs={["what-is-robots-txt", "check-if-ai-crawlers-can-access-your-website", "should-you-block-ai-crawlers", "does-cloudflare-block-ai-crawlers", "what-is-gptbot", "what-is-llms-txt"]} />
       <AuditCta />
     </article>
   );
