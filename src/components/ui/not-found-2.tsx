@@ -10,7 +10,7 @@ import { HomeIcon, MailIcon } from "lucide-react";
 
 export function NotFound() {
 	return (
-		<div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden">
+		<div className="relative flex min-h-dvh w-full items-center justify-center overflow-hidden">
 			<Empty>
 				<EmptyHeader>
 					<EmptyTitle className="mask-b-from-20% mask-b-to-80% font-extrabold text-9xl">
