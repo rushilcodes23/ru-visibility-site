@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RelatedAnswers } from "@/components/ui/related-answers";
 import { AuditCta } from "@/components/ui/audit-cta";
 import { CityAuditStats } from "@/components/ui/city-audit-stats";
 import { LOCATIONS, OTHER_AREAS, isIndexedCity } from "@/lib/locations";
@@ -170,6 +171,7 @@ export default async function LocationPage({
         </ScrollReveal>
         </div>
       </div>
+      <RelatedAnswers title="Questions local business owners ask" slugs={["what-is-local-seo", "how-to-rank-higher-on-google-maps", "how-to-get-more-google-reviews", "why-is-my-business-not-on-google-maps", "what-is-a-service-area-business", "how-long-does-seo-take"]} />
       <AuditCta />
     </div>
   );
