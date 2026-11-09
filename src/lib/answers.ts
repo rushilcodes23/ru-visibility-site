@@ -589,6 +589,47 @@ export const ANSWERS: Answer[] = [
     related: ["how-to-rank-higher-on-google-maps", "what-is-local-seo", "what-is-eeat"],
     published: N,
   },
+  {
+    slug: "how-long-does-seo-take",
+    seoTitle: "How Long Does SEO Take to Show Results?",
+    question: "How long does SEO take to work?",
+    description: "Usually four months to a year before the changes show clear results, according to Google. Fixing a technical block can show sooner. New sites take longer.",
+    topic: "seo-basics",
+    related: ["is-seo-worth-it-for-small-business", "how-long-for-a-new-website-to-show-up-on-google", "do-backlinks-still-matter"],
+    published: N,
+  },
+  {
+    slug: "do-backlinks-still-matter",
+    question: "Do backlinks still matter for SEO?",
+    description: "Yes, but quality beats quantity. Links from real, relevant sites still help Google find and trust you. Bought or swapped links break Google's rules.",
+    topic: "seo-basics",
+    related: ["what-is-internal-linking", "what-is-eeat", "how-long-does-seo-take"],
+    published: N,
+  },
+  {
+    slug: "does-social-media-help-seo",
+    question: "Does social media help SEO?",
+    description: "Not directly. Likes and shares are not a Google ranking factor. Social media helps by getting your business seen, searched for by name and mentioned elsewhere.",
+    topic: "seo-basics",
+    related: ["do-backlinks-still-matter", "how-to-increase-ai-visibility", "what-is-local-seo"],
+    published: N,
+  },
+  {
+    slug: "is-wordpress-good-for-seo",
+    question: "Is WordPress good for SEO?",
+    description: "Yes. Google does not prefer any website builder. WordPress ranks well when fast, well built and updated; heavy themes and plugins hold it back.",
+    topic: "seo-basics",
+    related: ["does-page-speed-affect-seo", "what-are-core-web-vitals", "what-is-schema-markup"],
+    published: N,
+  },
+  {
+    slug: "what-is-google-search-console",
+    question: "What is Google Search Console?",
+    description: "A free Google tool that shows which searches your site appears for, how many clicks you get, which pages are indexed, and any problems Google finds.",
+    topic: "seo-basics",
+    related: ["how-to-submit-a-sitemap-to-google", "how-to-check-if-your-website-is-indexed", "how-to-do-keyword-research-for-free"],
+    published: N,
+  },
 ];
 
 export const answerBySlug = (slug: string) => ANSWERS.find((a) => a.slug === slug);
