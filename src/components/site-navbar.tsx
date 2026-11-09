@@ -114,7 +114,10 @@ const STYLES = `
     background: color-mix(in srgb, var(--primary) 85%, var(--background));
     box-shadow: 0 8px 22px rgba(0,0,0,0.22),
                 0 0 0 5px color-mix(in srgb, var(--primary) 26%, transparent);
-    outline: none;
+  }
+  .ru-nav-cta:focus-visible {
+    outline: 2px solid var(--accent-line);
+    outline-offset: 3px;
   }
 
   .ru-hamburger {
@@ -151,13 +154,16 @@ const STYLES = `
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: safe center;
+    overflow-y: auto;
+    padding: 5.5rem 1rem;
     gap: 1.75rem;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 200ms;
+    visibility: hidden;
+    transition: opacity 200ms, visibility 0s 200ms;
   }
-  .ru-mobile-overlay.open { opacity: 1; pointer-events: auto; }
+  .ru-mobile-overlay.open { opacity: 1; pointer-events: auto; visibility: visible; transition: opacity 200ms; }
   .ru-mobile-link {
     font-size: 1.6rem;
     font-weight: 700;
@@ -186,7 +192,10 @@ const STYLES = `
   .ru-mobile-cta:focus-visible {
     background: color-mix(in srgb, var(--primary) 85%, var(--background));
     box-shadow: 0 0 0 5px color-mix(in srgb, var(--primary) 26%, transparent);
-    outline: none;
+  }
+  .ru-mobile-cta:focus-visible {
+    outline: 2px solid var(--accent-line);
+    outline-offset: 3px;
   }
 
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
