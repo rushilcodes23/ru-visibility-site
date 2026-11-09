@@ -381,6 +381,16 @@
 
 .article-body h2 + * { margin-top: 1.25rem; }
 
+/* Step lists in the answers. Same colour as a paragraph, a plain dot. */
+.article-body ul {
+  margin-block: 0;
+  padding-left: 1.25em;
+  list-style: disc;
+  color: color-mix(in oklch, var(--foreground) 74%, var(--background));
+}
+.article-body li + li { margin-top: 0.5rem; }
+.article-body li::marker { color: var(--muted-foreground); }
+
 /* ── A numbered mistake ────────────────────────────────────────────────────
    The number is load-bearing here: this is an ordered list of 21 problems and
    a reader who leaves and comes back needs to know where they were. It is set
