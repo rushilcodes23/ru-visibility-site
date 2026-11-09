@@ -64,6 +64,7 @@ export function CodeBlock({ label, children }: { label: string; children: string
   return (
     <pre
       tabIndex={0}
+      role="region"
       aria-label={label}
       className="overflow-x-auto rounded-md border bg-muted/50 p-4 text-sm leading-relaxed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
