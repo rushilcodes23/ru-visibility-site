@@ -27,7 +27,7 @@ export default function Page() {
       <h2>What breaks the rules</h2>
 
       <p>
-        Adding keywords or a town name to your business name, for example &quot;Smith Dental | Best Dentist Leeds&quot;, goes against Google&apos;s guidelines and can get the profile suspended. So can a virtual office address, or a second profile for the same business.
+        Adding keywords or a town name to your business name, for example &quot;Smith Dental | Best Dentist Dallas&quot;, goes against Google&apos;s guidelines and can get the profile suspended. So can a virtual office address, or a second profile for the same business.
       </p>
 
       <h2>Be realistic about distance</h2>

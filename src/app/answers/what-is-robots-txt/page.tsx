@@ -24,7 +24,7 @@ Sitemap: https://www.example.com/sitemap.xml`}
       </CodeBlock>
 
       <p>
-        An empty Disallow line means nothing is blocked. &quot;Disallow: /&quot; on its own blocks the whole site, which is the most common and most costly mistake. It often gets left in after a website is built.
+        An empty Disallow line means nothing is blocked. &quot;Disallow: /&quot; on its own blocks the whole site, which is a common and costly mistake. It often gets left in after a website is built.
       </p>
 
       <h2>Blocking a page does not hide it</h2>
@@ -36,7 +36,7 @@ Sitemap: https://www.example.com/sitemap.xml`}
       <h2>AI crawlers read it too</h2>
 
       <p>
-        ChatGPT, Claude, Perplexity and Google&apos;s AI each have their own crawler names, and robots.txt is where you allow or block them. Blocking the wrong one can remove you from AI answers. See <a href="/answers/should-you-block-ai-crawlers">should you block AI crawlers</a> before copying a block list from somewhere else.
+        ChatGPT, Claude and Perplexity each have their own crawler names, Google has a separate setting for Gemini (Google-Extended), and robots.txt is where you allow or block them. Blocking the wrong one can remove you from AI answers. See <a href="/answers/should-you-block-ai-crawlers">should you block AI crawlers</a> before copying a block list from somewhere else.
       </p>
     </AnswerPage>
   );

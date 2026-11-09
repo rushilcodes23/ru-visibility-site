@@ -28,7 +28,7 @@ export default function Page() {
       <h2>Why more is not always better</h2>
 
       <p>
-        Google&apos;s spam policies name scaled content abuse: many pages made mainly to catch searches, with little value of their own. Thirty copies of one page with a different town name is the classic example. Weak pages can also drag down how Google sees the whole site.
+        Google&apos;s spam policies name doorway abuse and scaled content abuse: many pages made mainly to catch searches, with little value of their own. Thirty copies of one page with a different town name is the classic doorway example. Weak pages can also drag down how Google sees the whole site.
       </p>
 
       <h2>How to judge a page</h2>

@@ -24,7 +24,7 @@ export default function Page() {
       </ul>
 
       <p>
-        These are also the mentions AI tools pick up when deciding which businesses to name.
+        AI tools that search the web can find these mentions too.
       </p>
 
       <h2>Links to avoid</h2>

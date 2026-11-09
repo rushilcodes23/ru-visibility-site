@@ -9,20 +9,20 @@ export default function Page() {
       slug={SLUG}
       short={
         <>
-          llms.txt is a proposed file, placed at yoursite.com/llms.txt, that gives AI tools a short plain-text summary of your website with links to its most useful pages. It was suggested in 2024 as a way to help language models read sites. Google has said it does not use it for Search, and the big AI companies have not confirmed reading it.
+          llms.txt is a proposed file, placed at yoursite.com/llms.txt, that gives AI tools a short plain-text summary of your website with links to its most useful pages. It was suggested in 2024 as a way to help language models read sites. Google says its AI features need no special AI text files like it, and the big AI companies have not confirmed reading it.
         </>
       }
-      sources={[SRC.llmsTxt]}
+      sources={[SRC.llmsTxt, SRC.googleAi]}
     >
       <h2>What it looks like</h2>
 
       <CodeBlock label="A short llms.txt file">
         {`# Smith Plumbing
 
-> Emergency and planned plumbing in Leeds since 2009.
+> Emergency and planned plumbing in Dallas since 2009.
 
 ## Services
-- [Boiler repair](https://www.example.com/boiler-repair): prices and areas
+- [Water heater repair](https://www.example.com/water-heater-repair): prices and areas
 - [Leak detection](https://www.example.com/leaks): how we find hidden leaks`}
       </CodeBlock>
 

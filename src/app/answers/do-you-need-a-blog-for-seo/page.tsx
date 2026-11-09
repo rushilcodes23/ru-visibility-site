@@ -17,7 +17,7 @@ export default function Page() {
       <h2>When articles help</h2>
 
       <p>
-        Articles earn their place when customers ask questions before they buy: &quot;how much does a new boiler cost&quot;, &quot;is teeth whitening safe&quot;. A good answer page can bring those searchers to you, and link them on to the service page. AI tools like ChatGPT also tend to cite pages that answer a question directly.
+        Articles earn their place when customers ask questions before they buy: &quot;how much does a new water heater cost&quot;, &quot;is teeth whitening safe&quot;. A good answer page can bring those searchers to you, and link them on to the service page. AI tools that search the web can also quote a page that answers a question directly.
       </p>
 
       <h2>When a blog does not help</h2>

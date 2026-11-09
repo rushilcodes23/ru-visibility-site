@@ -17,7 +17,7 @@ export default function Page() {
       <h2>What each part means</h2>
 
       <ul>
-        <li>Experience: the writer has done the thing, such as fitted the boiler or treated the patient.</li>
+        <li>Experience: the writer has done the thing, such as fixed the AC or treated the patient.</li>
         <li>Expertise: the writer knows the subject well.</li>
         <li>Authoritativeness: others in the field recognise the business or person.</li>
         <li>Trust: the page is accurate, honest and safe, and it is clear who is behind it.</li>

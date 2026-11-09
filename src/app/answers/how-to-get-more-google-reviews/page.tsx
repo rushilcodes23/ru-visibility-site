@@ -9,7 +9,7 @@ export default function Page() {
       slug={SLUG}
       short={
         <>
-          Ask every customer, soon after the job is done, and make it one tap: Google Business Profile gives you a short review link and a QR code to share. Ask in person, then send the link by WhatsApp, text or email. Most people who are happy will leave a review if asked simply.
+          Ask every customer, soon after the job is done, and make it one tap: Google Business Profile gives you a short review link and a QR code to share. Ask in person, then send the link by WhatsApp, text or email. Many happy customers will leave one if you ask simply.
         </>
       }
       sources={[SRC.gbpReviews, SRC.mapsContentPolicy]}
@@ -30,7 +30,7 @@ export default function Page() {
         <li>Paying for reviews or giving discounts, gifts or entries to a draw in return.</li>
         <li>Asking only happy customers, or filtering people before sending the link.</li>
         <li>Reviews from staff, family or the owner, or written by an agency.</li>
-        <li>Buying reviews. Google removes fake reviews and can restrict the profile.</li>
+        <li>Posting fake reviews of any kind. Google removes them and can restrict the profile.</li>
       </ul>
 
       <h2>Why it is worth the effort</h2>

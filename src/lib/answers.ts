@@ -510,7 +510,7 @@ export const ANSWERS: Answer[] = [
   {
     slug: "what-is-duplicate-content",
     question: "What is duplicate content in SEO?",
-    description: "The same or nearly the same text at more than one web address. Google does not penalise it, but it shows only one version and you do not choose which.",
+    description: "The same or nearly the same text at more than one web address. Google does not penalize it, but it shows only one version and you do not choose which.",
     topic: "on-page",
     related: ["what-is-a-canonical-tag", "how-many-pages-should-a-website-have", "is-chatgpt-content-bad-for-seo"],
     published: N,
@@ -550,7 +550,7 @@ export const ANSWERS: Answer[] = [
   {
     slug: "what-is-eeat",
     question: "What is E-E-A-T in SEO?",
-    description: "Experience, Expertise, Authoritativeness and Trust: what Google's raters look for in content. Trust matters most. It is a guide, not a score.",
+    description: "Experience, Expertise, Authoritativeness and Trustworthiness: what Google's raters look for. Trust matters most. It is a guide, not a score.",
     topic: "on-page",
     related: ["do-you-need-a-blog-for-seo", "is-chatgpt-content-bad-for-seo", "how-to-get-more-google-reviews"],
     published: N,
@@ -633,7 +633,7 @@ export const ANSWERS: Answer[] = [
   {
     slug: "what-is-llms-txt",
     question: "What is llms.txt?",
-    description: "A proposed file that gives AI tools a plain summary of your site. Google says it does not use it, and no major AI tool has confirmed reading it.",
+    description: "A proposed file that gives AI tools a plain summary of your site. Google says its AI features do not need it, and no major AI tool has confirmed reading it.",
     topic: "ai-crawlers",
     related: ["check-if-ai-crawlers-can-access-your-website", "how-to-increase-ai-visibility", "what-is-robots-txt"],
     published: N,

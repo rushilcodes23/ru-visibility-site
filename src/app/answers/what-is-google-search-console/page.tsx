@@ -9,7 +9,7 @@ export default function Page() {
       slug={SLUG}
       short={
         <>
-          Google Search Console is a free tool from Google for website owners. It shows the searches your site appears for, how often people click, which pages Google has indexed, and problems such as pages it cannot read, slow pages or security issues. It is the only place Google reports on your site directly.
+          Google Search Console is a free tool from Google for website owners. It shows the searches your site appears for, how often people click, which pages Google has indexed, and problems such as pages it cannot read, slow pages or security issues. It is where Google reports directly on how Search sees your site.
         </>
       }
       sources={[SRC.searchConsole]}

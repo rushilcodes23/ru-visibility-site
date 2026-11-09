@@ -18,7 +18,7 @@ export default function Page() {
 
       <ul>
         <li>Give every page its own title. Repeated titles such as &quot;Home&quot; or &quot;Services&quot; on many pages make them hard to tell apart.</li>
-        <li>Put what the page offers first, then your brand: &quot;Emergency Plumber in Leeds | Smith Plumbing&quot;.</li>
+        <li>Put what the page offers first, then your brand: &quot;Emergency Plumber in Dallas | Smith Plumbing&quot;.</li>
         <li>Write it for a person scanning results, not as a list of keywords.</li>
         <li>Keep it short enough to read in full. Google has no fixed character limit, but cuts titles to fit the screen, which is usually around 50 to 60 characters.</li>
       </ul>

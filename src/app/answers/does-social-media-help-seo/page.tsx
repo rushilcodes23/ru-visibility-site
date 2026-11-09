@@ -9,7 +9,7 @@ export default function Page() {
       slug={SLUG}
       short={
         <>
-          Not directly. Google does not use likes, followers or shares to rank your website, and links from social posts do not pass ranking value. Social media helps in other ways: more people learn your name and search for it, other sites mention you, and your profiles can show up when people search your business.
+          Not directly. Google does not use likes, followers or shares to rank your website, and links in social posts are usually tagged so they pass little or no ranking value. Social media helps in other ways: more people learn your name and search for it, other sites mention you, and your profiles can show up when people search your business.
         </>
       }
       sources={[SRC.googleStarter]}
@@ -20,7 +20,7 @@ export default function Page() {
         <li>Brand searches: people who see you on Instagram later search your name on Google.</li>
         <li>Your profiles: Facebook, Instagram, LinkedIn and YouTube pages often rank for your business name, which fills the first page with places you control.</li>
         <li>Mentions: posts that spread can lead journalists, bloggers and local sites to write about you.</li>
-        <li>AI answers: tools like ChatGPT read the wider web, and a business discussed in many places is more likely to be named.</li>
+        <li>AI answers: tools like ChatGPT can search the wider web, so mentions elsewhere give them more to find.</li>
       </ul>
 
       <h2>Where it does not</h2>

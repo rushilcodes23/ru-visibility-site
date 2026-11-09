@@ -27,7 +27,7 @@ export default function Page() {
       <h2>How to use what you find</h2>
 
       <p>
-        Group searches that mean the same thing, such as &quot;dentist near me open Saturday&quot; and &quot;weekend dentist&quot;, and answer them on one page. Prefer specific searches that show intent to buy, like &quot;boiler repair cost&quot;, over broad single words.
+        Group searches that mean the same thing, such as &quot;dentist near me open Saturday&quot; and &quot;weekend dentist&quot;, and answer them on one page. Prefer specific searches that show intent to buy, like &quot;AC repair cost&quot;, over broad single words.
       </p>
 
       <h2>A common mistake</h2>

@@ -9,7 +9,7 @@ export default function Page() {
       slug={SLUG}
       short={
         <>
-          Local SEO is the work of getting a business found when people search for something nearby, such as &quot;dentist near me&quot; or &quot;electrician in Leeds&quot;. Those searches show a map with three businesses, then normal results. Your Google Business Profile, your reviews and your website all feed into both.
+          Local SEO is the work of getting a business found when people search for something nearby, such as &quot;dentist near me&quot; or &quot;electrician in Dallas&quot;. Those searches show a map with three businesses, then normal results. Your Google Business Profile, your reviews and your website all feed into both.
         </>
       }
       sources={[SRC.gbpLocalRanking]}

@@ -27,7 +27,7 @@ export default function Page() {
       <ul>
         <li>Heavy page-builder themes that load slowly on phones.</li>
         <li>Twenty plugins where five would do, each adding code to every page.</li>
-        <li>Out-of-date plugins, which are the most common way small sites get hacked. A hacked site can be flagged or dropped by Google.</li>
+        <li>Out-of-date plugins, which are a common way WordPress sites get hacked. A hacked site can be flagged or dropped by Google.</li>
         <li>Cheap hosting with slow server response.</li>
       </ul>
 

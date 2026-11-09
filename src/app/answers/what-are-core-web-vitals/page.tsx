@@ -23,7 +23,7 @@ export default function Page() {
       </ul>
 
       <p>
-        A page passes when 75% of real visits meet all three.
+        A page passes when at least 75% of real visits are good on each of the three.
       </p>
 
       <h2>Where to see your scores</h2>

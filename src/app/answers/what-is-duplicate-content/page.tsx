@@ -9,7 +9,7 @@ export default function Page() {
       slug={SLUG}
       short={
         <>
-          Duplicate content is the same or very similar text at more than one web address, on your site or across sites. Google does not penalise it in normal cases. It picks one version to show and leaves out the rest, which may not be the one you want.
+          Duplicate content is the same or very similar text at more than one web address, on your site or across sites. Google does not penalize it in normal cases. It picks one version to show and leaves out the rest, which may not be the one you want.
         </>
       }
       sources={[SRC.googleCanonical, SRC.googleSpam]}
@@ -17,7 +17,7 @@ export default function Page() {
       <h2>When it is a real problem</h2>
 
       <ul>
-        <li>Many pages that differ only in a word, such as one service page copied for 30 towns with the town name swapped. Google may treat this as spam under its scaled content abuse policy.</li>
+        <li>Many pages that differ only in a word, such as one service page copied for 30 towns with the town name swapped. Google may treat this as spam under its doorway abuse policy.</li>
         <li>Product descriptions copied from the manufacturer, which hundreds of other shops also use. Your page has no reason to be chosen.</li>
         <li>Your content copied by another site that Google sees first.</li>
       </ul>
