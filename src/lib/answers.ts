@@ -85,7 +85,7 @@ export const ANSWERS: Answer[] = [
     question: "What is an AI visibility audit?",
     description: "A check of whether ChatGPT, Gemini, Perplexity and Google's AI answers can reach your website, understand it, and have reason to mention your business.",
     topic: "ai-visibility",
-    related: ["how-to-check-your-websites-ai-visibility", "check-if-ai-crawlers-can-access-your-website", "what-does-an-seo-audit-include"],
+    related: ["how-to-check-your-websites-ai-visibility", "check-if-ai-crawlers-can-access-your-website", "what-does-an-seo-audit-include", "why-ai-visibility-matters-for-small-business"],
     published: P,
   },
   {
@@ -103,7 +103,7 @@ export const ANSWERS: Answer[] = [
     question: "How do I increase my website's AI visibility?",
     description: "Let AI crawlers in, answer real customer questions in plain sentences, keep your details consistent everywhere, and give other sites reasons to mention you.",
     topic: "ai-visibility",
-    related: ["how-to-get-chatgpt-to-recommend-your-business", "how-to-appear-in-google-ai-overviews", "should-you-block-ai-crawlers"],
+    related: ["how-to-get-chatgpt-to-recommend-your-business", "how-to-appear-in-google-ai-overviews", "should-you-block-ai-crawlers", "what-is-llms-txt"],
     published: P,
   },
   {
@@ -124,7 +124,7 @@ export const ANSWERS: Answer[] = [
     question: "How do I get ChatGPT to recommend my business?",
     description: "Nobody can make ChatGPT recommend you. You can make sure it can read your site, understands exactly what you do and where, and finds others vouching for you.",
     topic: "chatgpt",
-    related: ["how-chatgpt-chooses-businesses-to-recommend", "how-long-to-show-up-in-chatgpt", "what-is-gptbot"],
+    related: ["how-chatgpt-chooses-businesses-to-recommend", "how-long-to-show-up-in-chatgpt", "what-is-gptbot", "do-backlinks-still-matter"],
     published: P,
   },
   {
@@ -133,7 +133,7 @@ export const ANSWERS: Answer[] = [
     question: "How does ChatGPT decide which businesses to recommend?",
     description: "OpenAI doesn't publish how ChatGPT picks businesses. What is known: it works from what it learned in training and from pages its search can reach.",
     topic: "chatgpt",
-    related: ["how-to-get-chatgpt-to-recommend-your-business", "how-does-generative-engine-optimization-work", "what-is-gptbot"],
+    related: ["how-to-get-chatgpt-to-recommend-your-business", "how-does-generative-engine-optimization-work", "what-is-gptbot", "does-social-media-help-seo"],
     published: P,
   },
   {
@@ -186,7 +186,7 @@ export const ANSWERS: Answer[] = [
     question: "What is the difference between SEO, GEO and AEO?",
     description: "SEO gets pages found and ranked. GEO gets a business named in AI answers. AEO shapes a page so an answer can be lifted from it.",
     topic: "geo",
-    related: ["is-geo-replacing-seo", "what-is-generative-engine-optimization", "how-to-appear-in-google-ai-overviews"],
+    related: ["is-geo-replacing-seo", "what-is-generative-engine-optimization", "how-to-appear-in-google-ai-overviews", "what-is-eeat"],
     published: "2026-10-19",
   },
 
@@ -197,7 +197,7 @@ export const ANSWERS: Answer[] = [
     question: "How do I get my business into Google AI Overviews?",
     description: "Google says there is no special trick: a page must be indexed and eligible for a snippet. Then answer the question clearly enough to be worth linking.",
     topic: "ai-overviews",
-    related: ["where-google-ai-overviews-get-information", "are-google-ai-overviews-accurate", "how-to-check-if-your-website-is-indexed"],
+    related: ["where-google-ai-overviews-get-information", "are-google-ai-overviews-accurate", "how-to-check-if-your-website-is-indexed", "what-is-schema-markup"],
     published: P,
   },
   {
@@ -241,7 +241,7 @@ export const ANSWERS: Answer[] = [
     question: "What does an SEO audit include?",
     description: "Whether Google can reach and index your pages, how each page is labelled, speed and mobile use, links, structured data, and now whether AI tools can read you.",
     topic: "seo-audit",
-    related: ["how-much-does-an-seo-audit-cost", "what-is-an-ai-visibility-audit", "why-is-my-website-not-showing-up-on-google"],
+    related: ["how-much-does-an-seo-audit-cost", "what-is-an-ai-visibility-audit", "why-is-my-website-not-showing-up-on-google", "what-are-core-web-vitals"],
     published: P,
   },
   {
@@ -249,7 +249,7 @@ export const ANSWERS: Answer[] = [
     question: "Is SEO worth it for a small business?",
     description: "Usually, if people search for what you sell where you sell it. It is slow, nobody can guarantee rankings, and the basics are mostly one-off fixes.",
     topic: "seo-audit",
-    related: ["how-much-does-an-seo-audit-cost", "is-geo-replacing-seo", "why-is-my-website-not-showing-up-on-google"],
+    related: ["how-much-does-an-seo-audit-cost", "is-geo-replacing-seo", "why-is-my-website-not-showing-up-on-google", "how-long-does-seo-take"],
     published: P,
   },
 
@@ -267,7 +267,7 @@ export const ANSWERS: Answer[] = [
     question: "Is ChatGPT content bad for SEO?",
     description: "Not by itself. Google's warning is about mass-producing pages that add nothing, and about publishing AI text without checking it for mistakes.",
     topic: "chatgpt-seo",
-    related: ["how-to-use-chatgpt-for-seo", "can-chatgpt-do-an-seo-audit", "is-seo-worth-it-for-small-business"],
+    related: ["how-to-use-chatgpt-for-seo", "can-chatgpt-do-an-seo-audit", "is-seo-worth-it-for-small-business", "what-is-eeat"],
     published: P,
   },
   {
@@ -275,7 +275,7 @@ export const ANSWERS: Answer[] = [
     question: "How do I use ChatGPT for SEO?",
     description: "As a fast assistant, not an author: drafting from your own facts, tightening titles, first drafts of structured data. Then check every word.",
     topic: "chatgpt-seo",
-    related: ["is-chatgpt-content-bad-for-seo", "can-chatgpt-do-an-seo-audit", "how-to-increase-ai-visibility"],
+    related: ["is-chatgpt-content-bad-for-seo", "can-chatgpt-do-an-seo-audit", "how-to-increase-ai-visibility", "how-to-do-keyword-research-for-free"],
     published: P,
   },
 
@@ -286,7 +286,7 @@ export const ANSWERS: Answer[] = [
     question: "How do I check if AI crawlers can access my website?",
     description: "Read your robots.txt for the AI crawler names, then check your security or CDN settings, because that is where most blocks we find come from.",
     topic: "ai-crawlers",
-    related: ["should-you-block-ai-crawlers", "does-cloudflare-block-ai-crawlers", "what-is-gptbot"],
+    related: ["should-you-block-ai-crawlers", "does-cloudflare-block-ai-crawlers", "what-is-gptbot", "what-is-llms-txt"],
     published: P,
   },
   {
@@ -294,7 +294,7 @@ export const ANSWERS: Answer[] = [
     question: "Should I block AI crawlers?",
     description: "Block the ones that only collect training data if you want to. Blocking the ones that fetch pages for live answers keeps you out of those answers.",
     topic: "ai-crawlers",
-    related: ["check-if-ai-crawlers-can-access-your-website", "what-is-gptbot", "does-cloudflare-block-ai-crawlers"],
+    related: ["check-if-ai-crawlers-can-access-your-website", "what-is-gptbot", "does-cloudflare-block-ai-crawlers", "what-is-robots-txt"],
     published: P,
   },
   {
@@ -318,7 +318,7 @@ export const ANSWERS: Answer[] = [
     question: "Do AI crawlers render JavaScript?",
     description: "The major ones don't, according to Vercel's analysis. Anything your site only shows after JavaScript runs may be invisible to them.",
     topic: "ai-crawlers",
-    related: ["check-if-ai-crawlers-can-access-your-website", "does-cloudflare-block-ai-crawlers", "why-is-my-website-not-showing-up-on-google"],
+    related: ["check-if-ai-crawlers-can-access-your-website", "does-cloudflare-block-ai-crawlers", "why-is-my-website-not-showing-up-on-google", "what-is-mobile-first-indexing"],
     published: P,
   },
 
@@ -328,7 +328,7 @@ export const ANSWERS: Answer[] = [
     question: "Why is my website not showing up on Google?",
     description: "Usually one of four things: Google hasn't found it yet, it is told not to index it, it can't reach it, or other pages answer the search better.",
     topic: "not-on-google",
-    related: ["how-to-check-if-your-website-is-indexed", "how-long-for-a-new-website-to-show-up-on-google", "why-is-my-business-not-on-google-maps"],
+    related: ["how-to-check-if-your-website-is-indexed", "how-long-for-a-new-website-to-show-up-on-google", "why-is-my-business-not-on-google-maps", "what-is-robots-txt"],
     published: P,
   },
   {
@@ -337,7 +337,7 @@ export const ANSWERS: Answer[] = [
     question: "How long does it take for a new website to show up on Google?",
     description: "Google says crawling can take anywhere from a few days to a few weeks. Ranking well for competitive searches usually takes far longer.",
     topic: "not-on-google",
-    related: ["how-to-check-if-your-website-is-indexed", "why-is-my-website-not-showing-up-on-google", "how-long-to-show-up-in-chatgpt"],
+    related: ["how-to-check-if-your-website-is-indexed", "why-is-my-website-not-showing-up-on-google", "how-long-to-show-up-in-chatgpt", "how-to-submit-a-sitemap-to-google"],
     published: P,
   },
   {
@@ -346,7 +346,7 @@ export const ANSWERS: Answer[] = [
     question: "How do I check if my website is indexed by Google?",
     description: "Use the URL Inspection tool in Google Search Console. A site: search gives a rough idea, but Google says it doesn't show every indexed page.",
     topic: "not-on-google",
-    related: ["why-is-my-website-not-showing-up-on-google", "how-long-for-a-new-website-to-show-up-on-google", "how-to-appear-in-google-ai-overviews"],
+    related: ["why-is-my-website-not-showing-up-on-google", "how-long-for-a-new-website-to-show-up-on-google", "how-to-appear-in-google-ai-overviews", "what-is-google-search-console"],
     published: P,
   },
   {
@@ -355,7 +355,7 @@ export const ANSWERS: Answer[] = [
     question: "Why is my business not showing up on Google Maps?",
     description: "Often it is unverified, incomplete, or simply further away than other businesses. Google ranks local results on relevance, distance and prominence.",
     topic: "not-on-google",
-    related: ["google-business-profile-without-an-address", "what-is-a-service-area-business", "why-is-my-website-not-showing-up-on-google"],
+    related: ["google-business-profile-without-an-address", "what-is-a-service-area-business", "why-is-my-website-not-showing-up-on-google", "how-to-rank-higher-on-google-maps"],
     published: P,
   },
 
@@ -386,7 +386,7 @@ export const ANSWERS: Answer[] = [
     question: "What is a website accessibility audit?",
     description: "A test of whether people with disabilities can use your site, measured against WCAG, with automated scans plus checks only a person can do.",
     topic: "accessibility",
-    related: ["how-to-know-if-your-website-is-ada-compliant", "do-small-business-websites-need-to-be-ada-compliant", "what-is-an-ai-visibility-audit"],
+    related: ["how-to-know-if-your-website-is-ada-compliant", "do-small-business-websites-need-to-be-ada-compliant", "what-is-an-ai-visibility-audit", "does-alt-text-help-seo"],
     published: P,
   },
 
@@ -397,7 +397,7 @@ export const ANSWERS: Answer[] = [
     question: "Can I have a Google Business Profile without an address?",
     description: "Yes, if you travel to your customers. Google calls that a service-area business and tells you to hide your address. A virtual office doesn't qualify.",
     topic: "local",
-    related: ["what-is-a-service-area-business", "home-address-on-google-business-profile", "why-is-my-business-not-on-google-maps"],
+    related: ["what-is-a-service-area-business", "home-address-on-google-business-profile", "why-is-my-business-not-on-google-maps", "how-to-get-more-google-reviews"],
     published: P,
   },
   {
@@ -405,7 +405,7 @@ export const ANSWERS: Answer[] = [
     question: "What is a service-area business on Google?",
     description: "Google's term for a business that visits or delivers to customers but doesn't serve them at its own address. A plumber, for example.",
     topic: "local",
-    related: ["google-business-profile-without-an-address", "home-address-on-google-business-profile", "why-is-my-business-not-on-google-maps"],
+    related: ["google-business-profile-without-an-address", "home-address-on-google-business-profile", "why-is-my-business-not-on-google-maps", "what-is-local-seo"],
     published: P,
   },
   {
