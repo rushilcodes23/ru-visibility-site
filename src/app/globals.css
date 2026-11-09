@@ -181,8 +181,8 @@
 
 /* A restrained blue, the one non-monochrome note on the site. Used for the
    page-header rule and the ambient glows, nowhere loud. */
-:root { --accent-line: #5b7fc4; }
-.dark { --accent-line: #7ea0e0; }
+:root { --accent-line: #5b7fc4; --accent-text: #4a6fb5; }
+.dark { --accent-line: #7ea0e0; --accent-text: #7ea0e0; }
 
 /* Signal green. The blue accent-line above is the site's structural colour —
    rules, focus, borders. This one is the editorial accent: it marks the thing
@@ -300,7 +300,7 @@
 }
 .footer-link:hover,
 .footer-link:focus-visible {
-  color: var(--accent-line);
+  color: var(--accent-text);
 }
 .footer-link:focus-visible,
 .footer-legal:focus-visible {
@@ -323,7 +323,7 @@
 }
 .footer-legal:hover,
 .footer-legal:focus-visible {
-  color: var(--accent-line);
+  color: var(--accent-text);
   text-decoration-color: var(--accent-line);
 }
 
@@ -907,3 +907,7 @@
     border-left-color: var(--accent-green);
   }
 }
+
+/* Selection and tap feedback in the site's blue instead of the browser default. */
+::selection { background: color-mix(in srgb, var(--accent-line) 35%, transparent); }
+a, button { -webkit-tap-highlight-color: color-mix(in srgb, var(--accent-line) 18%, transparent); }
