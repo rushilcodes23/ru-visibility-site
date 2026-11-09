@@ -630,6 +630,14 @@ export const ANSWERS: Answer[] = [
     related: ["how-to-submit-a-sitemap-to-google", "how-to-check-if-your-website-is-indexed", "how-to-do-keyword-research-for-free"],
     published: N,
   },
+  {
+    slug: "what-is-llms-txt",
+    question: "What is llms.txt?",
+    description: "A proposed file that gives AI tools a plain summary of your site. Google says it does not use it, and no major AI tool has confirmed reading it.",
+    topic: "ai-crawlers",
+    related: ["check-if-ai-crawlers-can-access-your-website", "how-to-increase-ai-visibility", "what-is-robots-txt"],
+    published: N,
+  },
 ];
 
 export const answerBySlug = (slug: string) => ANSWERS.find((a) => a.slug === slug);
