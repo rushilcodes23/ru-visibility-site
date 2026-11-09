@@ -983,7 +983,7 @@ export default function SeoMistakesPost() {
         </div>
 
         <div className="mt-12 pt-8 border-t">
-          <Button render={<a href="#audit">Get Your Visibility Audit</a>} />
+          <Button size="lg" render={<a href="#audit">Get Your Visibility Audit</a>} />
         </div>
           </div>
         </div>
