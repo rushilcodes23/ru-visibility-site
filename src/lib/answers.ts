@@ -563,6 +563,32 @@ export const ANSWERS: Answer[] = [
     related: ["what-is-google-search-console", "do-you-need-a-blog-for-seo", "how-many-pages-should-a-website-have"],
     published: N,
   },
+  {
+    slug: "what-is-local-seo",
+    question: "What is local SEO?",
+    description: "Getting a business found in local searches and on Google Maps, like 'plumber near me'. It runs on your Business Profile, reviews and website together.",
+    topic: "local-seo",
+    related: ["how-to-rank-higher-on-google-maps", "how-to-get-more-google-reviews", "why-is-my-business-not-on-google-maps"],
+    published: N,
+  },
+  {
+    slug: "how-to-rank-higher-on-google-maps",
+    seoTitle: "How to Rank Higher on Google Maps",
+    question: "How do I rank higher on Google Maps?",
+    description: "Complete your Google Business Profile, choose the right main category, earn steady genuine reviews, and make your website match the services you list.",
+    topic: "local-seo",
+    related: ["what-is-local-seo", "how-to-get-more-google-reviews", "why-is-my-business-not-on-google-maps"],
+    published: N,
+  },
+  {
+    slug: "how-to-get-more-google-reviews",
+    seoTitle: "How to Get More Google Reviews (Without Breaking Rules)",
+    question: "How do I get more Google reviews?",
+    description: "Ask every customer, at the right moment, with a direct review link from your Google Business Profile. Never pay for reviews or only ask the happy ones.",
+    topic: "local-seo",
+    related: ["how-to-rank-higher-on-google-maps", "what-is-local-seo", "what-is-eeat"],
+    published: N,
+  },
 ];
 
 export const answerBySlug = (slug: string) => ANSWERS.find((a) => a.slug === slug);
