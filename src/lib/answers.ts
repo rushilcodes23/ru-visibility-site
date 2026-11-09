@@ -28,7 +28,11 @@ export type TopicKey =
   | "ai-crawlers"
   | "not-on-google"
   | "accessibility"
-  | "local";
+  | "local"
+  | "technical"
+  | "on-page"
+  | "local-seo"
+  | "seo-basics";
 
 export const TOPICS: { key: TopicKey; title: string; search: string }[] = [
   { key: "ai-visibility", title: "AI visibility audits", search: "AI visibility audit for small business" },
@@ -41,6 +45,10 @@ export const TOPICS: { key: TopicKey; title: string; search: string }[] = [
   { key: "not-on-google", title: "Not showing up on Google", search: "why is my business website not showing up on Google" },
   { key: "accessibility", title: "Website accessibility (ADA)", search: "ADA website accessibility audit for small business" },
   { key: "local", title: "Google Business Profile without an office", search: "Google Business Profile for a service-area business without an office" },
+  { key: "technical", title: "Technical SEO basics", search: "what is a sitemap for a website" },
+  { key: "on-page", title: "Titles, content and links", search: "what is a meta description in seo" },
+  { key: "local-seo", title: "Google Maps and reviews", search: "how to rank higher on google maps" },
+  { key: "seo-basics", title: "How SEO works", search: "how long does seo take to see results" },
 ];
 
 export type Answer = {
@@ -67,6 +75,8 @@ export type Answer = {
 };
 
 const P = "2026-10-02";
+/** Second batch, also from Google autocomplete, checked 2026-11-10. */
+const N = "2026-11-10";
 
 export const ANSWERS: Answer[] = [
   // AI visibility audits
@@ -406,6 +416,80 @@ export const ANSWERS: Answer[] = [
     topic: "local",
     related: ["google-business-profile-without-an-address", "what-is-a-service-area-business", "why-is-my-business-not-on-google-maps"],
     published: P,
+  },
+  // Batch 2 (10 Nov 2026): technical SEO, page basics, local, how SEO works.
+  {
+    slug: "what-is-a-sitemap",
+    question: "What is a sitemap?",
+    description: "A file that lists the pages on your website you want search engines to find, with the date each one last changed. It helps Google find pages, not rank them.",
+    topic: "technical",
+    related: ["how-to-submit-a-sitemap-to-google", "what-is-robots-txt", "how-to-check-if-your-website-is-indexed"],
+    published: N,
+  },
+  {
+    slug: "how-to-submit-a-sitemap-to-google",
+    seoTitle: "How to Submit a Sitemap to Google (Search Console)",
+    question: "How do I submit a sitemap to Google?",
+    description: "Add your site to Google Search Console, open Sitemaps, paste your sitemap address and press Submit. Also list it in your robots.txt file.",
+    topic: "technical",
+    related: ["what-is-a-sitemap", "what-is-google-search-console", "how-to-check-if-your-website-is-indexed"],
+    published: N,
+  },
+  {
+    slug: "what-is-robots-txt",
+    question: "What is robots.txt?",
+    description: "A text file at your site's root that tells search and AI crawlers what they may crawl. It controls crawling, not whether a page shows in Google.",
+    topic: "technical",
+    related: ["should-you-block-ai-crawlers", "check-if-ai-crawlers-can-access-your-website", "what-is-a-sitemap"],
+    published: N,
+  },
+  {
+    slug: "what-is-schema-markup",
+    question: "What is schema markup?",
+    description: "Code that labels the facts on a page, like your business name, address, hours or prices, so search engines read them without guessing. It can earn rich results.",
+    topic: "technical",
+    related: ["what-is-a-title-tag", "how-to-appear-in-google-ai-overviews", "what-is-local-seo"],
+    published: N,
+  },
+  {
+    slug: "what-are-core-web-vitals",
+    question: "What are Core Web Vitals?",
+    description: "Three Google measures of how a page feels to use: how fast the main content loads (LCP), how fast it reacts (INP) and how much it jumps around (CLS).",
+    topic: "technical",
+    related: ["does-page-speed-affect-seo", "what-is-mobile-first-indexing", "what-does-an-seo-audit-include"],
+    published: N,
+  },
+  {
+    slug: "does-page-speed-affect-seo",
+    question: "Does page speed affect SEO?",
+    description: "Yes, but less than most think. Speed is part of Google's page experience signals; relevance still decides most rankings. Slow pages mostly lose visitors.",
+    topic: "technical",
+    related: ["what-are-core-web-vitals", "is-wordpress-good-for-seo", "why-is-my-website-not-showing-up-on-google"],
+    published: N,
+  },
+  {
+    slug: "what-is-a-canonical-tag",
+    question: "What is a canonical tag?",
+    description: "A line of code that tells Google which address is the main version of a page when the same content sits at several addresses. Google treats it as a hint.",
+    topic: "technical",
+    related: ["what-is-duplicate-content", "how-to-check-if-your-website-is-indexed", "what-is-a-sitemap"],
+    published: N,
+  },
+  {
+    slug: "what-is-mobile-first-indexing",
+    question: "What is mobile-first indexing?",
+    description: "Google reads and ranks the phone version of your website, not the desktop one. Anything missing from your phone pages is, for Google, missing from your site.",
+    topic: "technical",
+    related: ["does-page-speed-affect-seo", "what-are-core-web-vitals", "why-is-my-website-not-showing-up-on-google"],
+    published: N,
+  },
+  {
+    slug: "do-404-errors-hurt-seo",
+    question: "Do 404 errors hurt SEO?",
+    description: "Not your whole site. Google treats 404s as normal. What hurts is a broken link to a page that should exist, or a moved page with no redirect.",
+    topic: "technical",
+    related: ["what-is-internal-linking", "what-does-an-seo-audit-include", "why-is-my-website-not-showing-up-on-google"],
+    published: N,
   },
 ];
 
