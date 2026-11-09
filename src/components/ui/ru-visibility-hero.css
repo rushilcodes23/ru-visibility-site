@@ -188,3 +188,18 @@
   .qhero-glitch { animation: none; }
   .qhero-glitch::before, .qhero-glitch::after { animation: none; display: none; }
 }
+
+/* Phones: the background's moving dots pass behind the subtitle, so a soft
+   fade in the page colour keeps the words readable. Desktop is unchanged. */
+@media (max-width: 767px) {
+  .qhero-subtitle { position: relative; isolation: isolate; }
+  .qhero-subtitle::before {
+    content: "";
+    position: absolute;
+    inset: -1.5rem -1rem;
+    z-index: -1;
+    /* A gradient, not a blur filter: same soft edge without the paint cost on slow phones. */
+    background: radial-gradient(farthest-side, color-mix(in srgb, var(--background) 80%, transparent) 72%, transparent);
+    pointer-events: none;
+  }
+}

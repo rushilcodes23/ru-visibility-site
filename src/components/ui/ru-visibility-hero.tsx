@@ -118,6 +118,7 @@ export default function RuVisibilityHero() {
 
         {/* Subtitle */}
         <p
+          className="qhero-subtitle"
           style={{
             fontSize: "clamp(1.02rem, 2.4vw, 1.1rem)",
             fontWeight: 400,
