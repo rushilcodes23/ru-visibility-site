@@ -246,6 +246,7 @@ export function AnswerPage({
                 </a>
               ))}
               <a href="/answers">All answers</a>
+              <a href="/glossary">Glossary of terms</a>
             </nav>
           </aside>
 
@@ -313,6 +314,9 @@ export function AnswerPage({
                   {relatedList}
                   <li>
                     <a href="/answers">All answers</a>
+                  </li>
+                  <li>
+                    <a href="/glossary">Glossary of terms</a>
                   </li>
                 </ul>
               </div>
